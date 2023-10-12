@@ -29,3 +29,16 @@ This tasks will use various implementation techniques such as particles, complex
 
 ## Sprints reviews
 
+
+### Emoji for commit
+You can find a lot of them [here](https://gist.github.com/parmentf/035de27d6ed1dce0b36a). 
+There also a lot of others but they don't always work. The ones of this repositories are all ok.
+
+The ones we often use:
+- 🗑️ (to use this one on terminal you should add space before **"** and press **space** after paste. Ex: "SPACE🗑️SPACESPACEmy commit name)
+- 📦 : package :
+- 🔧 : wrench : 
+- 🔨 : hammer :
+- 🔥 : fire :
+- ✨ : sparkles :
+- 📚 : books :
