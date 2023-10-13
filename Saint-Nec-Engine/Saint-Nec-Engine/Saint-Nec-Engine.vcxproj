@@ -76,7 +76,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)Saint-Nec-Engine\Dependencies\GLFW\include;$(SolutionDir)Saint-Nec-Engine\Dependencies\GLAD\include;</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)Saint-Nec-Engine\Dependencies\GLFW\include;$(SolutionDir)Saint-Nec-Engine\Dependencies\GLAD\include;$(SolutionDir)Lib-Saint-Nec-Engine</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -93,7 +93,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)Saint-Nec-Engine\Dependencies\GLFW\include;$(SolutionDir)Saint-Nec-Engine\Dependencies\GLAD\include;</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)Saint-Nec-Engine\Dependencies\GLFW\include;$(SolutionDir)Saint-Nec-Engine\Dependencies\GLAD\include;$(SolutionDir)Lib-Saint-Nec-Engine</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -135,6 +135,11 @@
   <ItemGroup>
     <ClCompile Include="src\Application.cpp" />
     <ClCompile Include="src\glad.c" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Lib-Saint-Nec-Engine\Lib-Saint-Nec-Engine.vcxproj">
+      <Project>{fc4bc8d1-0e00-4e3d-a035-1c908bfe227f}</Project>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
