@@ -7,7 +7,7 @@ This 240h project aim to create a physic and graphic engine using C++ and OpenGL
 ## Technologies
 
 - C++ 17
-- OpenGL 4.
+- OpenGL 3.3
 - Visual Studio 2022.
 
 In this project, we are reinventing the wheel because we can’t create better things without understanding the base of what we are working on.
