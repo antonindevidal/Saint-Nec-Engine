@@ -76,7 +76,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)Saint-Nec-Engine\Dependencies\GLFW\include;$(SolutionDir)Saint-Nec-Engine\Dependencies\GLAD\include;D:\travail\isima\ZZ3\Projet\Saint-Nec-Engine\Saint-Nec-Engine\Saint-Nec-Engine-Lib\src</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)Saint-Nec-Engine\Dependencies\GLFW\include;$(SolutionDir)Saint-Nec-Engine\Dependencies\GLAD\include;$(SolutionDir)Saint-Nec-Engine-Lib\src;$(SolutionDir)Saint-Nec-Engine\Dependencies\imgui</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -93,7 +93,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)Saint-Nec-Engine\Dependencies\GLFW\include;$(SolutionDir)Saint-Nec-Engine\Dependencies\GLAD\include;D:\travail\isima\ZZ3\Projet\Saint-Nec-Engine\Saint-Nec-Engine\Saint-Nec-Engine-Lib\src</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)Saint-Nec-Engine\Dependencies\GLFW\include;$(SolutionDir)Saint-Nec-Engine\Dependencies\GLAD\include;$(SolutionDir)Saint-Nec-Engine-Lib\src;$(SolutionDir)Saint-Nec-Engine\Dependencies\imgui</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -133,6 +133,13 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Dependencies\imgui\imgui.cpp" />
+    <ClCompile Include="Dependencies\imgui\imgui_demo.cpp" />
+    <ClCompile Include="Dependencies\imgui\imgui_draw.cpp" />
+    <ClCompile Include="Dependencies\imgui\imgui_impl_glfw.cpp" />
+    <ClCompile Include="Dependencies\imgui\imgui_impl_opengl3.cpp" />
+    <ClCompile Include="Dependencies\imgui\imgui_tables.cpp" />
+    <ClCompile Include="Dependencies\imgui\imgui_widgets.cpp" />
     <ClCompile Include="src\Application.cpp" />
     <ClCompile Include="src\glad.c" />
   </ItemGroup>
@@ -140,6 +147,17 @@
     <ProjectReference Include="..\Saint-Nec-Engine-Lib\Saint-Nec-Engine-Lib.vcxproj">
       <Project>{b7be29b8-230a-45ef-b1b3-9359a6589a2f}</Project>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Dependencies\imgui\imconfig.h" />
+    <ClInclude Include="Dependencies\imgui\imgui.h" />
+    <ClInclude Include="Dependencies\imgui\imgui_impl_glfw.h" />
+    <ClInclude Include="Dependencies\imgui\imgui_impl_opengl3.h" />
+    <ClInclude Include="Dependencies\imgui\imgui_impl_opengl3_loader.h" />
+    <ClInclude Include="Dependencies\imgui\imgui_internal.h" />
+    <ClInclude Include="Dependencies\imgui\imstb_rectpack.h" />
+    <ClInclude Include="Dependencies\imgui\imstb_textedit.h" />
+    <ClInclude Include="Dependencies\imgui\imstb_truetype.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
