@@ -7,8 +7,8 @@ namespace saintNecEngine
 
 	class GameObject
 	{
-		std::vector<int> position;
-		std::vector<int> rotation;
+		float position[3];
+		float rotation[3];
 		std::vector<Component*> components;
 
 	public:
