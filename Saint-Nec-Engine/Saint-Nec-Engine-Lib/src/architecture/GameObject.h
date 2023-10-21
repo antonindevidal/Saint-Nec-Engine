@@ -1,14 +1,15 @@
 #pragma once
 #include <vector>
 #include "Component.h"
+#include "Vector3.hpp"
 
 namespace saintNecEngine
 {
 
 	class GameObject
 	{
-		float position[3];
-		float rotation[3];
+		Vector3 position;
+		Vector3 rotation;
 		std::vector<Component*> components;
 
 	public:

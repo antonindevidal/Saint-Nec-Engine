@@ -1,5 +1,6 @@
 # Visual Studio cache/options directory
 .vs/
+.vscode/
 
 # Build results
 [Dd]ebug/
@@ -19,3 +20,9 @@ bld/
 
 # Build for Make
 out/
+
+# CMake files
+CMakeFiles/
+CMakeCache.txt
+cmake_install.cmake
+Makefile
