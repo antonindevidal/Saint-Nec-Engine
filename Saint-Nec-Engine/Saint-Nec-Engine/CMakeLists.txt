@@ -4,8 +4,8 @@
 
 # Ajoutez une source à l'exécutable de ce projet.
 add_executable (Saint-Nec-Engine "src/Saint-Nec-Engine.cpp" "src/Saint-Nec-Engine.h")
-target_link_directories(Saint-Nec-Engine PUBLIC ../Saint-nec-Engine-lib/src ../Physics-Lib)
-target_link_libraries(Saint-Nec-Engine Saint-Nec-Engine-Lib Physics-Lib)
+target_link_directories(Saint-Nec-Engine PUBLIC ../Saint-nec-Engine-lib/src)
+target_link_libraries(Saint-Nec-Engine Saint-Nec-Engine-Lib)
 
 if (CMAKE_VERSION VERSION_GREATER 3.12)
   set_property(TARGET Saint-Nec-Engine PROPERTY CXX_STANDARD 20)
