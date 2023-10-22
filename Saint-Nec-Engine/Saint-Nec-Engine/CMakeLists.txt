@@ -1,8 +1,10 @@
 ﻿# CMakeList.txt : projet CMake pour Saint-Nec-Engine, incluez la source et définissez
 # la logique spécifique au projet ici.
 
-add_executable (Saint-Nec-Engine "src/Saint-Nec-Engine.cpp" "src/Saint-Nec-Engine.h")
-
+add_executable (Saint-Nec-Engine 
+	"src/Saint-Nec-Engine.cpp"
+	"src/Saint-Nec-Engine.h"
+)
 
 
 # Saint Nec lib ---------------------------------------------------------------------------------------
@@ -24,6 +26,11 @@ add_subdirectory ("Dependencies/GLAD/include")
 target_link_directories(Saint-Nec-Engine PUBLIC Dependencies/GLAD)
 target_link_libraries(Saint-Nec-Engine GLAD-Lib)
 
+
+# imgui -----------------------------------------------------------------------------------------------
+add_subdirectory ("Dependencies/imgui")
+target_link_directories(Saint-Nec-Engine PUBLIC Dependencies/imgui)
+target_link_libraries(Saint-Nec-Engine imgui)
 
 if (CMAKE_VERSION VERSION_GREATER 3.12)
   set_property(TARGET Saint-Nec-Engine PROPERTY CXX_STANDARD 20)
