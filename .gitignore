@@ -1,6 +1,9 @@
 # Visual Studio cache/options directory
 .vs/
 
+# Visual Studio Code cache
+.vscode/
+
 # Build results
 [Dd]ebug/
 [Dd]ebugPublic/
@@ -17,5 +20,11 @@ bld/
 [Ll]og/
 [Ll]ogs/
 
-# Build for Make
+# Build for CMake
 out/
+CMakeCache.txt
+CMakeFiles/
+Makefile
+Saint-Nec-Engine/Saint-Nec-Engine/
+*.cmake
+
