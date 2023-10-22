@@ -12,7 +12,7 @@ namespace saintNecEngine
             Vector3 _points[8];
 
         public:
-            BoxCollider(Vector3 center, double height, double width, double deepth);
+            BoxCollider(Vector3 center, double height, double width, double depth);
             void update() override
             {
                 // Je suis une fraude
