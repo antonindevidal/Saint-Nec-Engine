@@ -4,10 +4,10 @@
 
 # Ajoutez une source à l'exécutable de ce projet.
 add_library (Saint-Nec-Engine-Lib 
-				"src/architecture/Component.cpp"
-				"src/architecture/Scene.cpp" 
-				"src/architecture/GameObject.cpp"
-				"src/architecture/SceneManager.cpp" 
+				"architecture/Component.cpp"
+				"architecture/Scene.cpp" 
+				"architecture/GameObject.cpp"
+				"architecture/SceneManager.cpp" 
 				)
 
 target_include_directories(Saint-Nec-Engine-Lib  PUBLIC

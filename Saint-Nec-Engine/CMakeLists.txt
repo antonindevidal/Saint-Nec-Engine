@@ -13,6 +13,6 @@ project ("Saint-Nec-Engine")
 
 # Incluez les sous-projets.
 add_subdirectory ("Saint-Nec-Engine")
-add_subdirectory ("Saint-Nec-Engine-Lib")
+add_subdirectory ("Saint-Nec-Engine-Lib/src")
 
 # Librabry linking
