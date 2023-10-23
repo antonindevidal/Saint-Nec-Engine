@@ -6,10 +6,8 @@ namespace saintNecEngine
     namespace saintNecPhysics
 
     {
-        SphereCollider::SphereCollider(Vector3 center, double radius)
+        SphereCollider::SphereCollider(Vector3 center, double radius) : _center(center), _radius(radius)
         {
-            _center = center;
-            _radius = radius;
         }
     }
 }

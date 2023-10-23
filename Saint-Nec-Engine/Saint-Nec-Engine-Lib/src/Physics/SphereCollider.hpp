@@ -9,6 +9,7 @@ namespace saintNecEngine
     {
         class SphereCollider : public Component
         {
+        private:
             Vector3 _center;
             double _radius;
 

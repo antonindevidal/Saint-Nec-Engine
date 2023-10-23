@@ -9,6 +9,7 @@ namespace saintNecEngine
     {
         class BoxCollider : public saintNecEngine::Component
         {
+        private:
             Vector3 _points[8];
 
         public:
