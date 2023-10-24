@@ -23,9 +23,3 @@ bld/
 # Build for CMake
 out/
 build/
-CMakeCache.txt
-CMakeFiles/
-Makefile
-Saint-Nec-Engine/Saint-Nec-Engine/
-*.cmake
-
