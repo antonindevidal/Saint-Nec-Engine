@@ -1,7 +1,7 @@
 cmake_minimum_required (VERSION 3.8)
 project(TestProject) # Ajoutez cette ligne avec le nom de votre projet
 
-add_executable(test1 "test/main_test.cpp" "test/test1.cpp" )
+add_executable(test1 "test/test1.cpp" )
 
 enable_testing()
 
