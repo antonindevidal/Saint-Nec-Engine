@@ -2,6 +2,9 @@
 .vs/
 .vscode/
 
+# Visual Studio Code cache
+.vscode/
+
 # Build results
 [Dd]ebug/
 [Dd]ebugPublic/
@@ -18,12 +21,6 @@ bld/
 [Ll]og/
 [Ll]ogs/
 
-# Build for Make
+# Build for CMake
 out/
-
-# CMake files
-CMakeFiles/
-CMakeCache.txt
-cmake_install.cmake
-Makefile
-*.a
+build/

@@ -1,8 +1,11 @@
-﻿# CMakeList.txt : fichier projet CMake de niveau supérieur, effectuez une configuration globale
-# et incluez les sous-projets ici.
-#
-cmake_minimum_required (VERSION 3.8)
+﻿
+cmake_minimum_required (VERSION 3.21)
 
+#SET CPP Version for all platforms and projects
+set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+set(CMAKE_CXX_EXTENSIONS OFF)
+ 
 # Enable Hot Reload for MSVC compilers if supported.
 if (POLICY CMP0141)
   cmake_policy(SET CMP0141 NEW)
@@ -14,5 +17,5 @@ project ("Saint-Nec-Engine")
 # Incluez les sous-projets.
 add_subdirectory ("Saint-Nec-Engine")
 add_subdirectory ("Saint-Nec-Engine-Lib/src")
+add_subdirectory ("Saint-Nec-Engine-Test")
 
-# Librabry linking
