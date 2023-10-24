@@ -7,3 +7,5 @@ add_library (CATCH-Lib
 				"CATCH/catch.cpp"
 				"CATCH/catch.hpp"
 				)
+
+target_include_directories(CATCH-Lib INTERFACE CATCH)

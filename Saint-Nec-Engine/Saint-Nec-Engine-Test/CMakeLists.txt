@@ -10,8 +10,6 @@ target_link_directories(test1 PUBLIC ../Saint-nec-Engine-lib)
 target_link_libraries(test1 Saint-Nec-Engine-Lib)
 
 
-
-
 # CATCH ------------------------------------------------------------------------------------------------
 add_subdirectory ("Dependencies")
 target_link_libraries(test1 CATCH-Lib)
