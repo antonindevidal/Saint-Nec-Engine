@@ -1,7 +1,7 @@
 // Entetes //---------------------------------------------------------------------------------------
 #include "../Dependencies/CATCH/catch.hpp"
 #include <cmath>
-#include <src/architecture/Component.h>
+#include <architecture/Component.h>
 
 // Tests //-----------------------------------------------------------------------------------------
 

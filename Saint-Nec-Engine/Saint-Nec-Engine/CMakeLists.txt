@@ -21,6 +21,7 @@ set( GLFW_BUILD_DOCS OFF CACHE BOOL  "GLFW lib only" )
 set( GLFW_INSTALL OFF CACHE BOOL  "GLFW lib only" )
 target_link_libraries( Saint-Nec-Engine glfw )
 
+
 # GLAD ------------------------------------------------------------------------------------------------
 add_subdirectory ("Dependencies/GLAD/include")
 target_link_directories(Saint-Nec-Engine PUBLIC Dependencies/GLAD)

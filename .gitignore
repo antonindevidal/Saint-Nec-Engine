@@ -22,6 +22,7 @@ bld/
 
 # Build for CMake
 out/
+build/
 CMakeCache.txt
 CMakeFiles/
 Makefile
