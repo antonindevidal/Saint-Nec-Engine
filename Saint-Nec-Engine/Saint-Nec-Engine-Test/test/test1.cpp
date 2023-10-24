@@ -1,5 +1,5 @@
 // Entetes //---------------------------------------------------------------------------------------
-#include "../Dependencies/CATCH/catch.hpp"
+#include <catch.hpp>
 #include <cmath>
 #include <architecture/Component.h>
 
