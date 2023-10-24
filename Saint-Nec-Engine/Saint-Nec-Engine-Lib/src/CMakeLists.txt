@@ -10,14 +10,5 @@ add_library (Saint-Nec-Engine-Lib
 				"architecture/SceneManager.cpp" 
 				)
 
-target_include_directories(Saint-Nec-Engine-Lib  PUBLIC
-  "$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>"
-  "$<BUILD_INTERFACE:${CMAKE_CURRENT_BINARY_DIR}>"
-  ... other required includes
-)
+target_include_directories(Saint-Nec-Engine-Lib  PUBLIC .)
 
-if (CMAKE_VERSION VERSION_GREATER 3.12)
-  set_property(TARGET Saint-Nec-Engine PROPERTY CXX_STANDARD 20)
-endif()
-
-# TODO: Ajoutez des tests et installez des cibles si nécessaire.
