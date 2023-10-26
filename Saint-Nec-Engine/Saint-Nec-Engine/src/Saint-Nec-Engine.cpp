@@ -16,8 +16,8 @@ void framebuffer_size_callback(GLFWwindow* window, int width, int height)
 void draw_imgui(bool& show_demo_window, bool& show_another_window, ImVec4& clear_color, ImGuiIO& io)
 {
     //Demo window (can be commented if needed)
-    if (show_demo_window)
-        ImGui::ShowDemoWindow(&show_demo_window);
+    //if (show_demo_window)
+        //ImGui::ShowDemoWindow(&show_demo_window);
 
     {
         static float f = 0.0f;
@@ -57,7 +57,7 @@ int main(void)
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
     /* Create a windowed mode window and its OpenGL context */
-    window = glfwCreateWindow(640, 480, "Hello World", NULL, NULL);
+    window = glfwCreateWindow(1280, 720, "Hello World", NULL, NULL);
     if (!window)
     {
         glfwTerminate();
@@ -72,7 +72,6 @@ int main(void)
         std::cout << "Failed to initialize GLAD" << std::endl;
         return -1;
     }
-    glViewport(0, 0, 640, 480);
     glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
 
     //Init ImGUI
@@ -98,8 +97,11 @@ int main(void)
     {
 
         /* Render here */
-        glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
+        glClearColor(clear_color.x,clear_color.y,clear_color.z,clear_color.w);
         glClear(GL_COLOR_BUFFER_BIT);
+
+        c.draw();
+
 
         // Start the Dear ImGui frame
         ImGui_ImplOpenGL3_NewFrame();
@@ -114,7 +116,6 @@ int main(void)
         ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 
 
-        c.draw();
 
 
 
