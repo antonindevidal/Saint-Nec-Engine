@@ -5,7 +5,7 @@
 #include <imgui_impl_glfw.h>
 #include <imgui_impl_opengl3.h>
 
-
+#include <graphics/Cube.hpp>
 
 void framebuffer_size_callback(GLFWwindow* window, int width, int height)
 {
@@ -42,6 +42,7 @@ void draw_imgui(bool& show_demo_window, bool& show_another_window, ImVec4& clear
     }
 
 }
+using namespace saintNecEngine::graphics;
 
 int main(void)
 {
@@ -90,10 +91,14 @@ int main(void)
     bool show_another_window = true;
     ImVec4 clear_color = ImVec4(0.45f, 0.55f, 0.60f, 1.00f);
 
+    Cube c{};
+
     /* Loop until the user closes the window */
     while (!glfwWindowShouldClose(window))
     {
+
         /* Render here */
+        glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT);
 
         // Start the Dear ImGui frame
@@ -108,14 +113,18 @@ int main(void)
         ImGui::Render();
         ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 
+
+        c.draw();
+
+
+
+
         /* Swap front and back buffers */
         glfwSwapBuffers(window);
 
         /* Poll for and process events */
         glfwPollEvents();
-
-
-
+        
     }
 
     // Cleanup ImGUI
