@@ -28,4 +28,4 @@ In this project, we are reinventing the wheel because we can’t create better t
 This tasks will use various implementation techniques such as particles, complex shaders, lighting, level of detail and multi-threading.
 
 ## Sprints reviews
-
+- [Sprint 1](Doc\SprintReviews\Sprint_1.md)
