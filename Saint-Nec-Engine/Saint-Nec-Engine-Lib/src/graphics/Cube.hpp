@@ -18,15 +18,13 @@ namespace saintNecEngine::graphics
 		void draw() const override;
 
 	private:
-		const char* vertexShaderSource;
-		const char* fragmentShaderSource;
-		unsigned int VBO;
+		unsigned int VBO; // Vertex data
 		unsigned int VAO;
+		unsigned int EBO; // Indices data
 		unsigned int vertexShader;
 		unsigned int fragmentShader;
 		unsigned int shaderProgram;
 
-		float *vertices;
 	};
 	
 }
