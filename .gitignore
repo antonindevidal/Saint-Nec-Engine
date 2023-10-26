@@ -1,5 +1,6 @@
 # Visual Studio cache/options directory
 .vs/
+.vscode/
 
 # Visual Studio Code cache
 .vscode/

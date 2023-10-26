@@ -7,7 +7,9 @@ add_library (Saint-Nec-Engine-Lib
 				"architecture/Component.cpp"
 				"architecture/Scene.cpp" 
 				"architecture/GameObject.cpp"
-				"architecture/SceneManager.cpp" 
+				"architecture/SceneManager.cpp"
+				"Physics/BoxCollider.cpp"
+				"Physics/SphereCollider.cpp"
 				)
 
 target_include_directories(Saint-Nec-Engine-Lib  PUBLIC .)
