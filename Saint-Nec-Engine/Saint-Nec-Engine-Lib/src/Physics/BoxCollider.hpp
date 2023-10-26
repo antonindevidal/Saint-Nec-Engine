@@ -14,15 +14,7 @@ namespace saintNecEngine
 
         public:
             BoxCollider(Vector3 center, double height, double width, double depth);
-            void update() override
-            {
-                // Je suis une fraude
-            }
-
-            void draw() const override
-            {
-                // Je suis une fraude
-            }
+            ~BoxCollider() = default;
         };
     }
 }

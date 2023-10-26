@@ -4,11 +4,11 @@
 namespace saintNecEngine
 {
     class Vector3
-	{ // OpenGL like + permet la fonction d'affichage
+	{
 		double vect[3];
 
 	public:
-		Vector3() : Vector3(0, 0, 0) {} // Pas de 'point par default' ?
+		Vector3() : Vector3(0, 0, 0) {}
         
         Vector3(const Vector3 &c)
         {

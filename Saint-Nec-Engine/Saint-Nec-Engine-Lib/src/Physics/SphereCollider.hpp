@@ -15,15 +15,7 @@ namespace saintNecEngine
 
         public:
             SphereCollider(Vector3 center, double radius);
-            void update() override
-            {
-                // Je suis une fraude
-            }
-
-            void draw() const override
-            {
-                // Je suis une fraude
-            }
+            ~SphereCollider() = default;
         };
     }
 }
