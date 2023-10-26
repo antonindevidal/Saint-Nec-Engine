@@ -1,7 +1,7 @@
 #pragma once
 
 #include <vector>
-#include "GameObject.h"
+#include "GameObject.hpp"
 
 namespace saintNecEngine
 {

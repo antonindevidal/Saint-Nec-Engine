@@ -1,7 +1,7 @@
 #pragma once
 #include "../..pch.h"
 #include <string>
-#include "Scene.h"
+#include "Scene.hpp"
 
 namespace SaintNecLib
 {

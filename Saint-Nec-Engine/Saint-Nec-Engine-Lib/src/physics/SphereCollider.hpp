@@ -1,5 +1,5 @@
 #pragma once
-#include "architecture/Component.h"
+#include "architecture/Component.hpp"
 #include "architecture/Vector3.hpp"
 
 namespace saintNecEngine

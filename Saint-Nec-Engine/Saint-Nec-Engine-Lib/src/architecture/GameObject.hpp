@@ -1,6 +1,6 @@
 #pragma once
 #include <vector>
-#include "Component.h"
+#include "Component.hpp"
 #include "Vector3.hpp"
 
 namespace saintNecEngine
