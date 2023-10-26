@@ -8,7 +8,7 @@ This 240h project aim to create a physic and graphic engine using C++ and OpenGL
 
 - C++ 17
 - OpenGL 3.3
-- Visual Studio 2022.
+- CMake (tested on Windows and Linux)
 
 In this project, we are reinventing the wheel because we can’t create better things without understanding the base of what we are working on.
 
@@ -28,4 +28,4 @@ In this project, we are reinventing the wheel because we can’t create better t
 This tasks will use various implementation techniques such as particles, complex shaders, lighting, level of detail and multi-threading.
 
 ## Sprints reviews
-
+- [Sprint 1](Doc\SprintReviews\Sprint_1.md)
