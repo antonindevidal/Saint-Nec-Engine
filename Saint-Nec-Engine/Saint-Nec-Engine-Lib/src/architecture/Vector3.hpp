@@ -1,11 +1,13 @@
 #pragma once
 #include <cmath>
+#include <iostream>
+
 namespace saintNecEngine
 {
 	class Vector3
 	{
 	private:
-		double vect[3];
+		double vect[3]; // {x, y, z}
 
 	public:
 		Vector3();
@@ -19,5 +21,10 @@ namespace saintNecEngine
 		bool operator>(const Vector3 &v) const;
 		bool operator<=(const Vector3 &v) const;
 		bool operator>=(const Vector3 &v) const;
+		friend std::ostream &operator<<(std::ostream &oss, const Vector3 &v)
+		{
+			oss << "(" << v[0] << ", " << v[1] << ", " << v[2] << ")";
+			return oss;
+		}
 	};
 }

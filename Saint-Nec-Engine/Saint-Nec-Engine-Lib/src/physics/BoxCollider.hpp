@@ -17,6 +17,7 @@ namespace saintNecEngine
             ~BoxCollider() = default;
             const Vector3& operator[](int) const;
             bool hasPoint(const Vector3 &) const;
+            int getNbPoints() const;
         };
     }
 }

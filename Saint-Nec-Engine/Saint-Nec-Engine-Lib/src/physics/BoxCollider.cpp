@@ -35,5 +35,9 @@ namespace saintNecEngine
             return false;
         }
 
+        int BoxCollider::getNbPoints() const
+        {
+            return 8;
+        }
     }
 }

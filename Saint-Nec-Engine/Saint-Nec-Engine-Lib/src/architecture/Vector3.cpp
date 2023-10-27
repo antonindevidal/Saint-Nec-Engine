@@ -72,4 +72,10 @@ namespace saintNecEngine
     {
         return v > (*this) || v == (*this);
     }
+
+    // std::ostream& Vector3::operator<<(std::ostream &oss, const Vector3 &v) 
+    // {
+    //     oss << "(" << vect[0] <<", " << vect[1] << ", " << vect[2] << ")";
+    //     return oss;
+    // }
 }
