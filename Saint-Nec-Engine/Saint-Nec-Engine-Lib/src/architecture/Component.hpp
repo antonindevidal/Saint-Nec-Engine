@@ -4,12 +4,12 @@ namespace saintNecEngine
 {
 	class Component
 	{
-	protected:
-		Component() = default;
 
 	public:
-		~Component() = default;
-		virtual void update(){};
+		Component() = default;
+		virtual~Component() = 0;
+		virtual void update() {};
 		virtual void draw() const {};
 	};
+	
 }
