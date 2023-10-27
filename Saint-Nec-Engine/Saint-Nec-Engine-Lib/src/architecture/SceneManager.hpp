@@ -7,12 +7,14 @@ namespace SaintNecLib
 {
 	class SceneManager
 	{
-		std::vector<Scene*> scenes;
+	private:
+		std::vector<Scene *> scenes;
+
 	public:
 		SceneManager() = default;
 		~SceneManager() = default;
-		void addScene(Scene& scene);
-		void changeScene(std::string& name);
+		void addScene(Scene &scene);
+		void changeScene(std::string &name);
 
 		void update();
 		void draw() const;

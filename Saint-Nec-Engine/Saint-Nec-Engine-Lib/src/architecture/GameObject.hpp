@@ -8,9 +8,10 @@ namespace saintNecEngine
 
 	class GameObject
 	{
+	private:
 		Vector3 position;
 		Vector3 rotation;
-		std::vector<Component*> components;
+		std::vector<Component *> components;
 
 	public:
 		GameObject() = default;
