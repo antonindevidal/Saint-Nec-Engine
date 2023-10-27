@@ -1,5 +1,5 @@
 #pragma once
-
+#include <cmath>
 namespace saintNecEngine
 {
 	class Vector3
@@ -35,6 +35,26 @@ namespace saintNecEngine
 		bool operator==(const Vector3 &v) const
 		{
 			return v[0] == vect[0] && v[1] == vect[1] && v[2] == vect[2];
+		}
+
+		bool operator<(const Vector3 &v) const
+		{
+			if ((*this) == v)
+				return false;
+
+			double hypothenuse1 = sqrt((vect[0] * vect[0] + vect[1] * vect[1])),
+				   hypothenuse2 = sqrt((v[0] * v[0] + v[1] * v[1])),
+				   dist_from_origin1 = sqrt(hypothenuse1 * hypothenuse1),
+				   dist_from_origin2 = sqrt(hypothenuse2 * hypothenuse2);
+
+			// TODO later:
+			// Define with our own criteria (x pref, y pref and z pref?)
+			return dist_from_origin1 < dist_from_origin2;
+		}
+		
+		bool operator>(const Vector3 &v) const
+		{
+			return v < (*this);
 		}
 	};
 }
