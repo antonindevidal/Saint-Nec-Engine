@@ -1,6 +1,7 @@
 #include "Component.hpp"
 
-namespace saintNecEngine
-{
+
+namespace saintNecEngine{
+
     Component::~Component() {}
 }
