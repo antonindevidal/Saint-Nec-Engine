@@ -31,5 +31,10 @@ namespace saintNecEngine
 		{
 			return vect[i];
 		}
+
+		bool operator==(const Vector3 &v) const
+		{
+			return v[0] == vect[0] && v[1] == vect[1] && v[2] == vect[2];
+		}
 	};
 }
