@@ -11,4 +11,5 @@ namespace saintNecEngine
 		virtual void update() {};
 		virtual void draw() const {};
 	};
+	
 }

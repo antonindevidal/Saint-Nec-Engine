@@ -5,7 +5,7 @@ namespace saintNecEngine
 
     namespace saintNecPhysics
     {
-        BoxCollider::BoxCollider(Vector3 center, double height, double width, double depth)
+        BoxCollider::BoxCollider(const Vector3 center, double width, double depth, double height)
         {
             double offsetX = width / 2,
                    offsetY = depth / 2,
@@ -21,5 +21,23 @@ namespace saintNecEngine
             _points[7] = Vector3(center[0] + offsetX, center[1] + offsetY, center[2] + offsetZ);
         }
 
+
+        const Vector3& BoxCollider::operator[](int i) const
+        {
+            return _points[i];
+        }
+
+        bool BoxCollider::hasPoint(const Vector3 &p) const
+        {
+            for(Vector3 v: _points)
+                if(v == p) return true;
+
+            return false;
+        }
+
+        int BoxCollider::getNbPoints() const
+        {
+            return 8;
+        }
     }
 }
