@@ -1,6 +1,6 @@
 #include "Component.h"
 
-namespace saintNecEngine
+namespace sne
 {
 	Component::~Component()
 	{

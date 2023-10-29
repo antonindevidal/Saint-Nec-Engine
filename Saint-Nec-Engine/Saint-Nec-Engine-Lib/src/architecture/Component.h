@@ -1,6 +1,6 @@
 #pragma once
 
-namespace saintNecEngine
+namespace sne
 {
 	class Component
 	{

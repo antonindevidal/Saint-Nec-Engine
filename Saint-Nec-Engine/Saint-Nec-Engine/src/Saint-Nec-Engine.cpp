@@ -5,11 +5,18 @@
 #include <imgui_impl_glfw.h>
 #include <imgui_impl_opengl3.h>
 
-#include <graphics/Cube.hpp>
+#include "Game.hpp"
+
 
 void framebuffer_size_callback(GLFWwindow* window, int width, int height)
 {
     glViewport(0, 0, width, height);
+}
+
+void processInput(GLFWwindow* window)
+{
+    if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
+        glfwSetWindowShouldClose(window, true);        
 }
 
 
@@ -42,7 +49,6 @@ void draw_imgui(bool& show_demo_window, bool& show_another_window, ImVec4& clear
     }
 
 }
-using namespace saintNecEngine::graphics;
 
 int main(void)
 {
@@ -90,17 +96,18 @@ int main(void)
     bool show_another_window = true;
     ImVec4 clear_color = ImVec4(0.45f, 0.55f, 0.60f, 1.00f);
 
-    Cube c{};
+    Game g{};
 
     /* Loop until the user closes the window */
     while (!glfwWindowShouldClose(window))
     {
-
+        processInput(window);
+        g.update();
         /* Render here */
         glClearColor(clear_color.x,clear_color.y,clear_color.z,clear_color.w);
         glClear(GL_COLOR_BUFFER_BIT);
 
-        c.draw();
+        g.draw();
 
 
         // Start the Dear ImGui frame
@@ -114,9 +121,6 @@ int main(void)
         //Render ImGUI
         ImGui::Render();
         ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
-
-
-
 
 
 

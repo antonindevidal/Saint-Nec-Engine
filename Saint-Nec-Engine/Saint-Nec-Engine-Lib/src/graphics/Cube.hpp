@@ -4,14 +4,16 @@
 #include <GLFW/glfw3.h>
 #include <iostream>
 #include "architecture/Component.h"
+#include "graphics/Shader.hpp"
 
-namespace saintNecEngine::graphics
+namespace sne::graphics
 {
 	class Cube: public Component
 	{
 	public:
 
 		Cube();
+		Cube(const char* vertexShaderPath, const char* fragmentShaderPath);
 		~Cube();
 
 		void update() override;
@@ -21,9 +23,8 @@ namespace saintNecEngine::graphics
 		unsigned int VBO; // Vertex data
 		unsigned int VAO;
 		unsigned int EBO; // Indices data
-		unsigned int vertexShader;
-		unsigned int fragmentShader;
-		unsigned int shaderProgram;
+
+		Shader shader;
 
 	};
 	

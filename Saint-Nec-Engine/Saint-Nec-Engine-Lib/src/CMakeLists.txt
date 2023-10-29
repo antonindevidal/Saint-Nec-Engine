@@ -11,8 +11,8 @@ add_library (Saint-Nec-Engine-Lib
 				"Physics/BoxCollider.cpp"
 				"Physics/SphereCollider.cpp"
 				"graphics/Cube.cpp"
-				)
+				 "graphics/Shader.cpp")
 
 target_include_directories(Saint-Nec-Engine-Lib  PUBLIC .)
 
-target_link_libraries(Saint-Nec-Engine-Lib glfw glad)
+target_link_libraries(Saint-Nec-Engine-Lib glfw glad glm)

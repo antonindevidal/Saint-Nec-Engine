@@ -2,12 +2,12 @@
 #include "architecture/Component.h"
 #include "architecture/Vector3.hpp"
 
-namespace saintNecEngine
+namespace sne
 {
 
     namespace saintNecPhysics
     {
-        class BoxCollider : public saintNecEngine::Component
+        class BoxCollider : public sne::Component
         {
         private:
             Vector3 _points[8];

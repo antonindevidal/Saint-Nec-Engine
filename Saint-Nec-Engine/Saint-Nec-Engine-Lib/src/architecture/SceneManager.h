@@ -1,18 +1,21 @@
 #pragma once
-#include "../..pch.h"
 #include <string>
 #include "Scene.h"
 
-namespace SaintNecLib
+
+namespace sne
 {
 	class SceneManager
 	{
+	private:
 		std::vector<Scene*> scenes;
+		Scene *currentScene;
+
 	public:
-		SceneManager() = default;
+		SceneManager();
 		~SceneManager() = default;
-		void addScene(Scene& scene);
-		void changeScene(std::string& name);
+		void addScene(Scene* scene);
+		void changeScene(const std::string& name);
 
 		void update();
 		void draw() const;

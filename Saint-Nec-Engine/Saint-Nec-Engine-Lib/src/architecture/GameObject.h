@@ -3,7 +3,7 @@
 #include "Component.h"
 #include "Vector3.hpp"
 
-namespace saintNecEngine
+namespace sne
 {
 
 	class GameObject
@@ -13,9 +13,12 @@ namespace saintNecEngine
 		std::vector<Component*> components;
 
 	public:
-		GameObject() = default;
+		GameObject();
 		~GameObject() = default;
 		void update();
 		void draw() const;
+
+		void addComponent(Component* component);
+
 	};
 }
