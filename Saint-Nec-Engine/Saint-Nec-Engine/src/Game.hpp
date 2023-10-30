@@ -15,6 +15,6 @@ public:
 	void draw() const;
 
 private:
-	sne::SceneManager sceneManager;
+	sne::SceneManager* sceneManager;
 
 };

@@ -2,10 +2,22 @@
 
 namespace sne
 {
+	SceneManager* SceneManager::instance = nullptr;
+
 	SceneManager::SceneManager(): scenes(), currentScene(nullptr)
 	{
 
 	}
+
+	SceneManager* SceneManager::getInstance()
+	{
+		if (instance == nullptr)
+		{
+			instance = new SceneManager();
+		}
+		return instance;
+	}
+
 
 	void SceneManager::addScene(Scene* scene)
 	{

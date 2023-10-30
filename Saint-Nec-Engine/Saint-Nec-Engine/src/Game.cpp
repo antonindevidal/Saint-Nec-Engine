@@ -1,6 +1,6 @@
 #include "Game.hpp"
 
-Game::Game(): sceneManager()
+Game::Game(): sceneManager(sne::SceneManager::getInstance())
 {
 	sne::Scene* scene = new sne::Scene("Scene1");
 	sne::GameObject* cube = new sne::GameObject();
@@ -8,8 +8,8 @@ Game::Game(): sceneManager()
 	cube->addComponent(new sne::graphics::Cube());
 	scene->addGameObject(cube);
 
-	sceneManager.addScene(scene);
-	sceneManager.changeScene(scene->getName());
+	sceneManager->addScene(scene);
+	sceneManager->changeScene(scene->getName());
 
 }
 
@@ -19,10 +19,10 @@ Game::~Game()
 
 void Game::update()
 {
-	sceneManager.update();
+	sceneManager->update();
 }
 
 void Game::draw() const
 {
-	sceneManager.draw();
+	sceneManager->draw();
 }
