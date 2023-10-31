@@ -55,3 +55,19 @@ TEST_CASE("TEST BASIC COLLISION WITHOUT ROTATION")
     CHECK(hasSATCollision(b1, b3) == false);
     CHECK(hasSATCollision(b2, b3) == false);
 }
+
+
+
+TEST_CASE("TEST NORM")
+{
+    using namespace saintNecEngine;
+    using namespace saintNecPhysics;
+
+    Vector3 v1 = {0, 0, 0};
+    Vector3 v2 = {1, 0, 0};
+    Vector3 v3 = {3, 4, 0};
+
+    CHECK(norm(v1) == Approx(0.0));
+    CHECK(norm(v2) == Approx(1.0));   
+    CHECK(norm(v3) == Approx(5.0));
+}

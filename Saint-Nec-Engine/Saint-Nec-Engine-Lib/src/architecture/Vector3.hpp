@@ -27,4 +27,12 @@ namespace saintNecEngine
 			return oss;
 		}
 	};
+
+	template <typename... ARGS>
+	double norm(ARGS... xi)
+	{
+		return sqrt(((xi * xi) + ...));
+	}
+
+	double norm(const Vector3 &v);
 }
