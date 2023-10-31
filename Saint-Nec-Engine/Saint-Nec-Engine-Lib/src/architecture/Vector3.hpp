@@ -21,6 +21,8 @@ namespace saintNecEngine
 		bool operator>(const Vector3 &v) const;
 		bool operator<=(const Vector3 &v) const;
 		bool operator>=(const Vector3 &v) const;
+		Vector3 operator-(const Vector3 &v) const;
+		Vector3 operator+(const Vector3 &v) const;
 		friend std::ostream &operator<<(std::ostream &oss, const Vector3 &v)
 		{
 			oss << "(" << v[0] << ", " << v[1] << ", " << v[2] << ")";
@@ -35,4 +37,6 @@ namespace saintNecEngine
 	}
 
 	double norm(const Vector3 &v);
+	Vector3 operator-(const Vector3 &p, double eps);
+	Vector3 operator+(const Vector3 &p, double eps);
 }

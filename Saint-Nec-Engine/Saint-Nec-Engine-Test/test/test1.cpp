@@ -38,10 +38,7 @@ TEST_CASE("TEST BOXCOLLIDER CONSTRUCTORS")
 //------------------------------------------------------------------------------------------------ 2
 TEST_CASE("TEST BASIC COLLISION WITHOUT ROTATION")
 {
-    using namespace saintNecEngine;
-    using namespace saintNecPhysics;
 
-    // Must collide
     const BoxCollider b1{
         Vector3{2, 2, 1}, 2, 2, 2};
 
@@ -56,18 +53,64 @@ TEST_CASE("TEST BASIC COLLISION WITHOUT ROTATION")
     CHECK(hasSATCollision(b2, b3) == false);
 }
 
-
-
 TEST_CASE("TEST NORM")
 {
-    using namespace saintNecEngine;
-    using namespace saintNecPhysics;
 
     Vector3 v1 = {0, 0, 0};
     Vector3 v2 = {1, 0, 0};
     Vector3 v3 = {3, 4, 0};
 
     CHECK(norm(v1) == Approx(0.0));
-    CHECK(norm(v2) == Approx(1.0));   
+    CHECK(norm(v2) == Approx(1.0));
     CHECK(norm(v3) == Approx(5.0));
+}
+
+TEST_CASE("TEST ROTATION")
+{
+
+    BoxCollider cube{
+        Vector3{1, 1, 1}, 2, 2, 2};
+
+    std::vector<Vector3> cube_points_before_rotation = {
+        Vector3{0, 0, 0},
+        Vector3{0, 0, 2},
+        Vector3{0, 2, 0},
+        Vector3{0, 2, 2},
+        Vector3{2, 0, 0},
+        Vector3{2, 0, 2},
+        Vector3{2, 2, 0},
+        Vector3{2, 2, 2}};
+
+    CHECK(cube.hasPoint(cube_points_before_rotation[0]) == true);
+    CHECK(cube.hasPoint(cube_points_before_rotation[1]) == true);
+    CHECK(cube.hasPoint(cube_points_before_rotation[2]) == true);
+    CHECK(cube.hasPoint(cube_points_before_rotation[3]) == true);
+    CHECK(cube.hasPoint(cube_points_before_rotation[4]) == true);
+    CHECK(cube.hasPoint(cube_points_before_rotation[5]) == true);
+    CHECK(cube.hasPoint(cube_points_before_rotation[6]) == true);
+    CHECK(cube.hasPoint(cube_points_before_rotation[7]) == true);
+
+
+    cube.setRotation({M_PI, 0, 0});
+    std::vector<Vector3> cube_points_after_rotation = cube_points_before_rotation;
+
+    CHECK(cube.contains(cube_points_after_rotation[0]) == true);
+    CHECK(cube.contains(cube_points_after_rotation[1]) == true);
+    CHECK(cube.contains(cube_points_after_rotation[2]) == true);
+    CHECK(cube.contains(cube_points_after_rotation[3]) == true);
+    CHECK(cube.contains(cube_points_after_rotation[4]) == true);
+    CHECK(cube.contains(cube_points_after_rotation[5]) == true);
+    CHECK(cube.contains(cube_points_after_rotation[6]) == true);
+    CHECK(cube.contains(cube_points_after_rotation[7]) == true);
+
+
+    cube.setRotation({M_PI, M_PI, M_PI});
+    CHECK(cube.contains(cube_points_after_rotation[0]) == true);
+    CHECK(cube.contains(cube_points_after_rotation[1]) == true);
+    CHECK(cube.contains(cube_points_after_rotation[2]) == true);
+    CHECK(cube.contains(cube_points_after_rotation[3]) == true);
+    CHECK(cube.contains(cube_points_after_rotation[4]) == true);
+    CHECK(cube.contains(cube_points_after_rotation[5]) == true);
+    CHECK(cube.contains(cube_points_after_rotation[6]) == true);
+    CHECK(cube.contains(cube_points_after_rotation[7]) == true);
 }

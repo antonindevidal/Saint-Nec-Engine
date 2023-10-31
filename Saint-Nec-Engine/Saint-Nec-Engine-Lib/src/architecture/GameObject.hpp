@@ -10,7 +10,7 @@ namespace saintNecEngine
 	{
 	private:
 		Vector3 position;
-		Vector3 rotation;
+		Vector3 rotation; // ° or Radian? Current : °
 		std::vector<Component *> components;
 
 	public:
