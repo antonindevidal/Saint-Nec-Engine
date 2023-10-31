@@ -135,7 +135,7 @@ TEST_CASE("TEST ROTATION 1 - center origin")
         Vector3{1.41421, 1, 0},
         Vector3{0, 1, -1.41421},
         Vector3{0, 1, 1.41421}};
-    REQUIRE(cube.contains(cube_points_after_rotation[0]) == true);
+    CHECK(cube.contains(cube_points_after_rotation[0]) == true);
     CHECK(cube.contains(cube_points_after_rotation[1]) == true);
     CHECK(cube.contains(cube_points_after_rotation[2]) == true);
     CHECK(cube.contains(cube_points_after_rotation[3]) == true);
@@ -213,4 +213,20 @@ TEST_CASE("TEST ROTATION 2 - center any")
     CHECK(cube.contains(cube_points_after_rotation[5]) == true);
     CHECK(cube.contains(cube_points_after_rotation[6]) == true);
     CHECK(cube.contains(cube_points_after_rotation[7]) == true);
+}
+
+TEST_CASE("TEST BASIC COLLISION WITH ROTATION")
+{
+    BoxCollider b1{
+        Vector3{0, 0, 0}, 2, 2, 2};
+
+    BoxCollider b2{
+        Vector3{2.1, 0, 0}, 2, 2, 2};
+
+    std::cout << b2 << "\n";
+    CHECK(hasSATCollision(b1, b2) == false);
+
+    b2.setRotation(Vector3{0, M_PI/4, 0});
+    std::cout << b2 << "\n";
+    CHECK(hasSATCollision(b1, b2) == true);
 }
