@@ -10,7 +10,10 @@ set(_SAINT_NEC_ENGINE_SRC
 set(_SAINT_NEC_ENGINE_HDR
 	"src/Saint-Nec-Engine.h"
 	"src/Game.hpp"
+
 )
+
+add_custom_command(TARGET Saint-Nec-Engine  POST_BUILD COMMAND ${CMAKE_COMMAND} -E copy_directory ${CMAKE_SOURCE_DIR}/Saint-Nec-Engine/resources/ ${CMAKE_BINARY_DIR}/Saint-Nec-Engine/resources/ )
 target_sources(Saint-Nec-Engine PRIVATE ${_SAINT_NEC_ENGINE_SRC})
 target_sources(Saint-Nec-Engine PUBLIC ${_SAINT_NEC_ENGINE_HDR})
 
