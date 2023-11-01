@@ -13,7 +13,14 @@ set(_SAINT_NEC_ENGINE_HDR
 
 )
 
-add_custom_command(TARGET Saint-Nec-Engine  POST_BUILD COMMAND ${CMAKE_COMMAND} -E copy_directory ${CMAKE_SOURCE_DIR}/Saint-Nec-Engine/resources/ ${CMAKE_BINARY_DIR}/Saint-Nec-Engine/resources/ )
+# Make the copy of the resource fil every time
+add_custom_target(copy_resources ALL 
+					COMMAND ${CMAKE_COMMAND} -E copy_directory
+						${CMAKE_SOURCE_DIR}/Saint-Nec-Engine/resources/ 
+						${CMAKE_BINARY_DIR}/Saint-Nec-Engine/resources/
+)
+add_dependencies(Saint-Nec-Engine copy_resources)
+
 target_sources(Saint-Nec-Engine PRIVATE ${_SAINT_NEC_ENGINE_SRC})
 target_sources(Saint-Nec-Engine PUBLIC ${_SAINT_NEC_ENGINE_HDR})
 
