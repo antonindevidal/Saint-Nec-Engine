@@ -3,7 +3,7 @@
 namespace sne::graphics
 {
 
-	Cube::Cube(): shader()
+	Cube::Cube():shader()
 	{
 		float vertices[] = {
 			 0.5f,  0.5f, 0.0f,  // top right
@@ -34,7 +34,7 @@ namespace sne::graphics
 		glEnableVertexAttribArray(0);
 
 	}
-	Cube::Cube(const char* vertexShaderPath, const char* fragmentShaderPath): shader(vertexShaderPath,fragmentShaderPath)
+	Cube::Cube(const char* vertexShaderPath, const char* fragmentShaderPath):shader(vertexShaderPath,fragmentShaderPath)
 	{
 		float vertices[] = {
 			 0.5f,  0.5f, 0.0f,  // top right
@@ -63,6 +63,9 @@ namespace sne::graphics
 		//interpret vertex data array
 		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
 		glEnableVertexAttribArray(0);
+
+
+
 	}
 
 
@@ -75,7 +78,7 @@ namespace sne::graphics
 	}
 	void Cube::update()
 	{
-
+		shader.setMat4("view", SceneManager::getInstance()->getCurrentScene().getView());
 	}
 
 	void Cube::draw() const

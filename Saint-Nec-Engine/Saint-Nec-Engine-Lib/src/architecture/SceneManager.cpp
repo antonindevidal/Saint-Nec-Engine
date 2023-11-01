@@ -51,5 +51,10 @@ namespace sne
 			currentScene->draw();
 		}
 	}
+	const Scene& SceneManager::getCurrentScene() const
+	{
+		return *currentScene;
+	}
+
 
 }

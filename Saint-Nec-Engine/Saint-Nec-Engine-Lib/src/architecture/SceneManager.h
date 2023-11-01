@@ -23,5 +23,7 @@ namespace sne
 
 		void update();
 		void draw() const;
+
+		const Scene& getCurrentScene() const;
 	};
 }

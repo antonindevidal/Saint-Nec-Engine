@@ -3,6 +3,7 @@
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
 #include <iostream>
+#include "architecture/SceneManager.h"
 #include "architecture/Component.h"
 #include "graphics/Shader.hpp"
 
@@ -25,7 +26,6 @@ namespace sne::graphics
 		unsigned int EBO; // Indices data
 
 		Shader shader;
-
 	};
 	
 }
