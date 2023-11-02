@@ -1,5 +1,4 @@
 #include "GameObject.h"
-#include <iostream>
 
 namespace sne
 {
@@ -13,14 +12,8 @@ namespace sne
 
 	}
 
-
 	void GameObject::update()
 	{
-		/*
-		if (shader != NULL)
-		{
-			shader->setMat4("view", SceneManager::getInstance()->getCurrentScene().getView());
-		}*/
 		for (Component *c : components)
 		{
 			c->update();
@@ -29,11 +22,6 @@ namespace sne
 
 	void GameObject::draw() const
 	{
-		/*
-		if (shader != NULL)
-		{
-			shader->use();
-		}*/
 		for (Component* c : components)
 		{
 			c->draw();

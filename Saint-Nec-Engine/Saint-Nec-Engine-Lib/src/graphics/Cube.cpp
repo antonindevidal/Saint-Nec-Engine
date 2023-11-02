@@ -1,5 +1,4 @@
 #include "Cube.hpp"
-#include <glm/gtx/string_cast.hpp>
 
 namespace sne::graphics
 {
