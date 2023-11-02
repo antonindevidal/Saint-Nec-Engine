@@ -27,5 +27,7 @@ namespace sne
 
 		const glm::mat4& getModel();
 		void setModel(const glm::mat4& newModel);
+		void translate(const glm::vec3& translation);
+		void rotate(const float angle, const glm::vec3& axis);
 	};
 }

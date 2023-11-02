@@ -7,13 +7,13 @@ namespace sne::graphics
 	{
 		float vertices[] = {
 			//Positions         //Colors            //Texture coords
-			-0.5,  0.5,  0.5,   1.0f, 1.0f, 1.0f,   0.0f, 1.0f,
-			 0.5,  0.5,  0.5,   1.0f, 1.0f, 1.0f,   1.0f, 1.0f,
-			 0.5, -0.5,  0.5,   1.0f, 1.0f, 1.0f,   1.0f, 0.0f,
+			-0.5,  0.5,  0.5,   1.0f, 0.0f, 0.0f,   0.0f, 1.0f,
+			 0.5,  0.5,  0.5,   0.0f, 1.0f, 0.0f,   1.0f, 1.0f,
+			 0.5, -0.5,  0.5,   0.0f, 0.0f, 1.0f,   1.0f, 0.0f,
 			-0.5, -0.5,  0.5,   1.0f, 1.0f, 1.0f,   0.0f, 0.0f,
-			-0.5,  0.5, -0.5,   1.0f, 1.0f, 1.0f,   0.0f, 1.0f,
-			 0.5,  0.5, -0.5,   1.0f, 1.0f, 1.0f,   1.0f, 1.0f,
-			 0.5, -0.5, -0.5,   1.0f, 1.0f, 1.0f,   1.0f, 0.0f,
+			-0.5,  0.5, -0.5,   1.0f, 0.0f, 0.0f,   0.0f, 1.0f,
+			 0.5,  0.5, -0.5,   0.0f, 1.0f, 0.0f,   1.0f, 1.0f,
+			 0.5, -0.5, -0.5,   0.0f, 0.0f, 1.0f,   1.0f, 0.0f,
 			-0.5, -0.5, -0.5,   1.0f, 1.0f, 1.0f,   0.0f, 0.0f,
 		};
 		unsigned int indices[] = { 
@@ -148,7 +148,8 @@ namespace sne::graphics
 	}
 	void Cube::update()
 	{
-		parent->setModel(glm::rotate(parent->getModel(), 1 * glm::radians(1.0f), glm::vec3(0.5f, 0.8f, 0.4f)));
+		// Example to rotate the cube
+		//parent->setModel(glm::rotate(parent->getModel(), 1 * glm::radians(1.0f), glm::vec3(0.5f, 0.8f, 0.4f)));
 	}
 
 	void Cube::draw() const

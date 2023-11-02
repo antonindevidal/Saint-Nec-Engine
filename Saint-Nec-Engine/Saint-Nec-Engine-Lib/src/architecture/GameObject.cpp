@@ -44,5 +44,14 @@ namespace sne
 		model = newModel;
 	}
 
+	void GameObject::translate(const glm::vec3& translation)
+	{
+		model = glm::translate(model, translation);
+	}
+
+	void GameObject::rotate(const float angle, const glm::vec3& axis)
+	{
+		model = glm::rotate(model, glm::radians(angle), axis);
+	}
 
 }
