@@ -43,9 +43,15 @@ add_library (imgui
 				"imgui/imstb_rectpack.h"
 				"imgui/imstb_textedit.h"
 				"imgui/imstb_truetype.h"
-				)
+				 "stb_image/stb_image.h" "stb_image/stb_image.cpp")
 target_include_directories(imgui INTERFACE imgui)
 target_link_libraries( imgui glfw )
+
+add_library(stb_image
+				"stb_image/stb_image.h"
+				"stb_image/stb_image.cpp"
+)
+target_include_directories(stb_image INTERFACE stb_image)
 
 
 FetchContent_Declare(

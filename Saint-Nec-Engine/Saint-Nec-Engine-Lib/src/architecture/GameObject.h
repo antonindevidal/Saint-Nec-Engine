@@ -15,8 +15,7 @@ namespace sne
 		Vector3 position;
 		Vector3 rotation;
 		std::vector<Component*> components;
-		//graphics::Shader* shader;
-		glm::mat4 model;
+ 		glm::mat4 model;
 
 	public:
 		GameObject();
@@ -26,6 +25,7 @@ namespace sne
 
 		void addComponent(Component* component);
 
-		glm::mat4 getModel();
+		const glm::mat4& getModel();
+		void setModel(const glm::mat4& newModel);
 	};
 }

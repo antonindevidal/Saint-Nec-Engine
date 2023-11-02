@@ -3,6 +3,8 @@
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
 #include <iostream>
+#include <stb_image.h>
+
 #include "architecture/SceneManager.h"
 #include "architecture/Component.h"
 #include "graphics/Shader.hpp"
@@ -15,6 +17,9 @@ namespace sne::graphics
 	public:
 
 		Cube(const char* vertexShaderPath, const char* fragmentShaderPath);
+		Cube(const char* vertexShaderPath, const char* fragmentShaderPath, const char* texturePath);
+		Cube(const char* vertexShaderPath, const char* fragmentShaderPath, glm::vec3 color);
+
 		~Cube();
 
 		void update() override;
@@ -25,6 +30,7 @@ namespace sne::graphics
 		unsigned int VBO; // Vertex data
 		unsigned int VAO;
 		unsigned int EBO; // Indices data
+		unsigned int texture;
 
 		Shader shader;
 	};

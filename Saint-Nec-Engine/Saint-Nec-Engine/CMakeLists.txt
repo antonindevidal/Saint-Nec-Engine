@@ -26,7 +26,7 @@ target_sources(Saint-Nec-Engine PUBLIC ${_SAINT_NEC_ENGINE_HDR})
 
 
 # Saint Nec lib ---------------------------------------------------------------------------------------
-target_link_libraries(Saint-Nec-Engine Saint-Nec-Engine-Lib glfw glad imgui glm)
+target_link_libraries(Saint-Nec-Engine Saint-Nec-Engine-Lib glfw glad imgui glm stb_image)
 
 
 

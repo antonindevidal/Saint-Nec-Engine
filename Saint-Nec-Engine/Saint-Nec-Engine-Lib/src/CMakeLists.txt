@@ -15,4 +15,4 @@ add_library (Saint-Nec-Engine-Lib
 
 target_include_directories(Saint-Nec-Engine-Lib  PUBLIC .)
 
-target_link_libraries(Saint-Nec-Engine-Lib glfw glad glm)
+target_link_libraries(Saint-Nec-Engine-Lib glfw glad glm stb_image)

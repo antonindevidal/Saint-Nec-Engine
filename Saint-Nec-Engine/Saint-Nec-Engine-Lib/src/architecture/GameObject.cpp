@@ -35,9 +35,14 @@ namespace sne
 	}
 	
 	
-	glm::mat4 GameObject::getModel()
+	const glm::mat4& GameObject::getModel()
 	{
 		return model;
 	}
+	void GameObject::setModel(const glm::mat4& newModel)
+	{
+		model = newModel;
+	}
+
 
 }
