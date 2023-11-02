@@ -1,4 +1,5 @@
 #include "Cube.hpp"
+#include <glm/gtx/string_cast.hpp>
 
 namespace sne::graphics
 {
@@ -32,6 +33,8 @@ namespace sne::graphics
 		//interpret vertex data array
 		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
 		glEnableVertexAttribArray(0);
+		shader.setMat4("projection", SceneManager::getInstance()->getCurrentScene().getProjection());
+		shader.setMat4("view", SceneManager::getInstance()->getCurrentScene().getView());
 
 	}
 	Cube::Cube(const char* vertexShaderPath, const char* fragmentShaderPath):shader(vertexShaderPath,fragmentShaderPath)
@@ -64,8 +67,8 @@ namespace sne::graphics
 		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
 		glEnableVertexAttribArray(0);
 
-
-
+		shader.setMat4("projection", SceneManager::getInstance()->getCurrentScene().getProjection());
+		shader.setMat4("view", SceneManager::getInstance()->getCurrentScene().getView());
 	}
 
 
@@ -78,7 +81,9 @@ namespace sne::graphics
 	}
 	void Cube::update()
 	{
+		shader.setMat4("projection", SceneManager::getInstance()->getCurrentScene().getProjection());
 		shader.setMat4("view", SceneManager::getInstance()->getCurrentScene().getView());
+		shader.setMat4("model", parent->getModel());
 	}
 
 	void Cube::draw() const

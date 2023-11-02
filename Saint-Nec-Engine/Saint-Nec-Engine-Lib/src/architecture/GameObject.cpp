@@ -1,11 +1,11 @@
 #include "GameObject.h"
-
+#include <iostream>
 
 namespace sne
 {
 	GameObject::GameObject(): components(),model(1.0f)
 	{
-
+		model = glm::rotate(model, glm::radians(-55.0f), glm::vec3(1.0f, 0.0f, 0.0f));
 	}
 
 	GameObject::~GameObject()
@@ -42,14 +42,14 @@ namespace sne
 
 	void GameObject::addComponent(Component* component)
 	{
+		component->parent = this;
 		components.push_back(component);
 	}
-	/*
-	void GameObject::addComponent(graphics::Shader* component)
+	
+	
+	glm::mat4 GameObject::getModel()
 	{
-		shader = component;
-		shader->setMat4("projection", SceneManager::getInstance()->getCurrentScene().getProjection());
-		shader->setMat4("view", SceneManager::getInstance()->getCurrentScene().getView());
-	}*/
+		return model;
+	}
 
 }

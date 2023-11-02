@@ -18,7 +18,7 @@ namespace sne::graphics
 		~Shader();
 		void use() const;
 
-		void Shader::setMat4(const std::string& name, glm::mat4 value) const;
+		void Shader::setMat4(const std::string& name, const glm::mat4& value) const;
 
 	private:
 		unsigned int shaderID;

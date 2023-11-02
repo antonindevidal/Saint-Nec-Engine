@@ -6,6 +6,7 @@
 #include "architecture/SceneManager.h"
 #include "architecture/Component.h"
 #include "graphics/Shader.hpp"
+#include "architecture/GameObject.h";
 
 namespace sne::graphics
 {
@@ -19,6 +20,7 @@ namespace sne::graphics
 
 		void update() override;
 		void draw() const override;
+
 
 	private:
 		unsigned int VBO; // Vertex data
