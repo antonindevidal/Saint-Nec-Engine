@@ -14,7 +14,6 @@ namespace sne::graphics
 	{
 	public:
 
-		Cube();
 		Cube(const char* vertexShaderPath, const char* fragmentShaderPath);
 		~Cube();
 
