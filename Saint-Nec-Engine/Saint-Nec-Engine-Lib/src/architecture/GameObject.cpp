@@ -9,7 +9,10 @@ namespace sne
 
 	GameObject::~GameObject()
 	{
-
+		for (Component* c : components)
+		{
+			delete c;
+		}
 	}
 
 	void GameObject::update()

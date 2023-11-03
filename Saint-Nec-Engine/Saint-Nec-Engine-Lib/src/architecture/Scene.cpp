@@ -14,6 +14,14 @@ namespace sne
 
 	}
 
+	Scene::~Scene()
+	{
+		for (GameObject* o : gameObjects)
+		{
+			delete o;
+		}
+	}
+
 	void Scene::update()
 	{
 		for (GameObject *g : gameObjects)

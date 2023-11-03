@@ -9,6 +9,15 @@ namespace sne
 
 	}
 
+	SceneManager::~SceneManager()
+	{
+		for (Scene *s : instance->scenes)
+		{
+			delete s;
+		}
+		delete instance;
+	}
+
 	SceneManager* SceneManager::getInstance()
 	{
 		if (instance == nullptr)
