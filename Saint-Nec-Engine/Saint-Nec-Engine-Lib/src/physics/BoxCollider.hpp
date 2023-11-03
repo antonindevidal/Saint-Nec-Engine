@@ -1,5 +1,5 @@
 #pragma once
-#include "architecture/Component.h"
+#include "architecture/Component.hpp"
 #include "architecture/Vector3.hpp"
 
 namespace sne
@@ -13,8 +13,11 @@ namespace sne
             Vector3 _points[8];
 
         public:
-            BoxCollider(Vector3 center, double height, double width, double depth);
+            BoxCollider(const Vector3 center, double width, double depth, double height);
             ~BoxCollider() = default;
+            const Vector3& operator[](int) const;
+            bool hasPoint(const Vector3 &) const;
+            int getNbPoints() const;
         };
     }
 }

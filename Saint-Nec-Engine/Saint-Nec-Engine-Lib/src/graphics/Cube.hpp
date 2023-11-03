@@ -14,10 +14,10 @@
 #include <iostream>
 #include <stb_image.h>
 
-#include "architecture/SceneManager.h"
-#include "architecture/Component.h"
+#include "architecture/SceneManager.hpp"
+#include "architecture/Component.hpp"
 #include "graphics/Shader.hpp"
-#include "architecture/GameObject.h";
+#include "architecture/GameObject.hpp";
 
 namespace sne::graphics
 {

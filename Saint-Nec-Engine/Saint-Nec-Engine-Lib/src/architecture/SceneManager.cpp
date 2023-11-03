@@ -1,4 +1,4 @@
-#include "SceneManager.h"
+#include "SceneManager.hpp"
 
 namespace sne
 {

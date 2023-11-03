@@ -1,7 +1,7 @@
 
-#include <architecture/SceneManager.h>
-#include <architecture/Scene.h>
-#include <architecture/GameObject.h>
+#include <architecture/SceneManager.hpp>
+#include <architecture/Scene.hpp>
+#include <architecture/GameObject.hpp>
 #include <graphics/Cube.hpp>
 
 class Game

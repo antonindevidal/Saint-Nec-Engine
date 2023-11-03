@@ -51,4 +51,5 @@ namespace sne
 		 */
 		virtual void draw() const {};
 	};
+	
 }

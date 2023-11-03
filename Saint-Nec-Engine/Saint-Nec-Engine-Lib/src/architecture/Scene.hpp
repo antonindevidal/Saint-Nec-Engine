@@ -12,7 +12,7 @@
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 
-#include "GameObject.h"
+#include "GameObject.hpp"
 
 namespace sne
 {

@@ -11,7 +11,7 @@
 #include <glm/glm.hpp>
 #include <glm/gtc/type_ptr.hpp>
 
-#include "Component.h"
+#include "Component.hpp"
 #include "Vector3.hpp"
 
 namespace sne

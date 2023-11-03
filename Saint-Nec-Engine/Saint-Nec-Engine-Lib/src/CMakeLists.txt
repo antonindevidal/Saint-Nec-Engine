@@ -1,17 +1,33 @@
-﻿# CMakeList.txt : projet CMake pour Saint-Nec-Engine-Lib, incluez la source et définissez
-# la logique spécifique au projet ici.
-#
+﻿
+add_library (Saint-Nec-Engine-Lib)
 
-# Ajoutez une source à l'exécutable de ce projet.
-add_library (Saint-Nec-Engine-Lib 
-				"architecture/Component.cpp"
-				"architecture/Scene.cpp" 
-				"architecture/GameObject.cpp"
-				"architecture/SceneManager.cpp"
-				"Physics/BoxCollider.cpp"
-				"Physics/SphereCollider.cpp"
-				"graphics/Cube.cpp"
-				 "graphics/Shader.cpp")
+set(_SAINT_NEC_ENGINE_LIB_SRC 
+	"architecture/Vector3.cpp"
+	"architecture/Component.cpp"
+	"architecture/Scene.cpp" 
+	"architecture/GameObject.cpp"
+	"architecture/SceneManager.cpp"
+	"physics/BoxCollider.cpp"
+	"physics/SphereCollider.cpp"
+	"graphics/Cube.cpp"
+	"graphics/Shader.cpp"
+)
+
+set(_SAINT_NEC_ENGINE_LIB_HDR
+	"architecture/Vector3.hpp"
+	"architecture/Component.hpp"
+	"architecture/Scene.hpp" 
+	"architecture/GameObject.hpp"
+	"architecture/SceneManager.hpp"
+	"physics/BoxCollider.hpp"
+	"physics/SphereCollider.hpp"
+	"physics/SAT.hpp"
+	"graphics/Cube.hpp"
+	"graphics/Shader.hpp"
+)
+target_sources(Saint-Nec-Engine-Lib INTERFACE ${_SAINT_NEC_ENGINE_LIB_HDR})
+target_sources(Saint-Nec-Engine-Lib PRIVATE ${_SAINT_NEC_ENGINE_LIB_SRC})
+
 
 target_include_directories(Saint-Nec-Engine-Lib  PUBLIC .)
 
