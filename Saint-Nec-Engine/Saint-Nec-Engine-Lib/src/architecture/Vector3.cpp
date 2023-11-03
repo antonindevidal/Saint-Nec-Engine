@@ -70,9 +70,9 @@ namespace saintNecEngine
     Vector3 Vector3::operator-(const Vector3 &v) const
     {
         Vector3 res{
-            v[0] - vect[0],
-            v[1] - vect[1],
-            v[2] - vect[2]};
+            vect[0] - v[0],
+            vect[1] - v[1],
+            vect[2] - v[2]};
 
         return res;
     }
@@ -106,5 +106,14 @@ namespace saintNecEngine
     Vector3 operator-(const Vector3 &p, double eps)
     {
         return Vector3(p[0] - eps, p[1] - eps, p[2] - eps);
+    }
+
+    Vector3 Vector3::operator*(double coeff) const
+    {
+        Vector3 v = *this;
+        v[0] = v[0] * coeff;
+        v[1] = v[1] * coeff;
+        v[2] = v[2] * coeff;
+        return v;
     }
 }

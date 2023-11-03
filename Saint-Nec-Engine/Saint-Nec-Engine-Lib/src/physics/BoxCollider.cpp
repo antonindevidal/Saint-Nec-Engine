@@ -42,16 +42,12 @@ namespace saintNecEngine
             return 8;
         }
 
-        void BoxCollider::setRotation(const Vector3 rotation)
+        // TO UPDATE
+
+        void BoxCollider::rotate(Vector3 points[], unsigned int taille, const Vector3 &center, double alpha, double beta, double gamma)
         {
             // Documentation:
             // https://en.wikipedia.org/wiki/Rotation_matrix#General_3D_rotations
-
-            // Angles calcul
-            Vector3 delta_rot = rotation - _rotation;
-            double alpha = delta_rot[0],
-                   beta = delta_rot[1],
-                   gamma = delta_rot[2];
 
             // Considering the rotation matrix:
             //      |a b c|
@@ -67,22 +63,45 @@ namespace saintNecEngine
                    g = -sin(beta),
                    h = cos(beta) * sin(gamma),
                    i = cos(beta) * cos(gamma);
-
+            
+            // Display Rotation matrix
+            // std::cout << "|" << alpha << " " << beta << " " << gamma << "|\n";
+            // std::cout << "Rotation matrix:\n";
+            // std::cout << "|" << a << " " << b << " " << c << "|\n";
+            // std::cout << "|" << d << " " << e << " " << f << "|\n";
+            // std::cout << "|" << g << " " << h << " " << i << "|\n";
+            
             // Update points
             // Considering p = [x, y, z]^T
             //          | ax + by + cz |
             // R * p =  | dx + ey + fz | = new p
             //          | gx + hy + iz |
-            for (Vector3 &p : _points)
+            for (int index = 0; index < taille; index++)
             {
-                double x = p[0] - _center[0],
-                       y = p[1] - _center[1],
-                       z = p[2] - _center[2];
+                double x = points[index][0] - center[0];
+                double y = points[index][1] - center[1];
+                double z = points[index][2] - center[2];
 
-                p[0] = a * x + b * y + c * z + _center[0];
-                p[1] = d * x + e * y + f * z + _center[1];
-                p[2] = g * x + h * y + i * z + _center[2];
+                points[index][0] = a * x + b * y + c * z + center[0];
+                points[index][1] = d * x + e * y + f * z + center[1];
+                points[index][2] = g * x + h * y + i * z + center[2];
             }
+        }
+
+        void BoxCollider::rotate(Vector3 points[], unsigned int taille, const Vector3 &center, const Vector3 &rotation)
+        {
+            rotate(points, taille, center, rotation[0], rotation[1], rotation[2]);
+        }
+
+        void BoxCollider::setRotation(const Vector3 rotation)
+        {
+            Vector3 delta_rot = rotation - _rotation;
+            double alpha = delta_rot[0],
+                   beta = delta_rot[1],
+                   gamma = delta_rot[2];
+
+            rotate(_points, 8, _center, alpha, beta, gamma);
+            _rotation = rotation;
         }
 
         const Vector3 BoxCollider::getRotation() const
@@ -110,6 +129,20 @@ namespace saintNecEngine
             }
 
             return oss;
+        }
+
+        std::vector<Vector3> BoxCollider::getAxis() const
+        {
+            Vector3 axis[] = {{1, 0, 0}, {0, 1, 0}, {0, 0, 1}};
+
+            rotate(axis, 3, {0, 0, 0}, _rotation);
+
+            std::vector<Vector3> v{};
+            v.push_back(axis[0]);
+            v.push_back(axis[1]);
+            v.push_back(axis[2]);
+
+            return v;
         }
     }
 }

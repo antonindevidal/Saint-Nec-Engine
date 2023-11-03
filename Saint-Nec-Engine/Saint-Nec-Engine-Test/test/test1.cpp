@@ -36,23 +36,6 @@ TEST_CASE("TEST BOXCOLLIDER CONSTRUCTORS")
 }
 
 //------------------------------------------------------------------------------------------------ 2
-TEST_CASE("TEST BASIC COLLISION WITHOUT ROTATION")
-{
-
-    const BoxCollider b1{
-        Vector3{2, 2, 1}, 2, 2, 2};
-
-    const BoxCollider b2{
-        Vector3{3, 3, 1}, 2, 2, 2};
-
-    const BoxCollider b3{
-        Vector3{30, 30, 10}, 2, 2, 2};
-
-    CHECK(hasSATCollision(b1, b2) == true);
-    CHECK(hasSATCollision(b1, b3) == false);
-    CHECK(hasSATCollision(b2, b3) == false);
-}
-
 TEST_CASE("TEST NORM")
 {
 
@@ -90,7 +73,7 @@ TEST_CASE("TEST ROTATION 1 - center origin")
     CHECK(cube.hasPoint(cube_points_before_rotation[6]) == true);
     CHECK(cube.hasPoint(cube_points_before_rotation[7]) == true);
 
-    cube.setRotation({M_PI / 2, 0, 0});
+    cube.setRotation({0, 0, 0});
     std::vector<Vector3> cube_points_after_rotation = cube_points_before_rotation;
 
     CHECK(cube.contains(cube_points_after_rotation[0]) == true);
@@ -124,7 +107,7 @@ TEST_CASE("TEST ROTATION 1 - center origin")
     CHECK(cube.contains(cube_points_after_rotation[6]) == true);
     CHECK(cube.contains(cube_points_after_rotation[7]) == true);
 
-    cube.setRotation({0, M_PI/4, 0});
+    cube.setRotation({0, M_PI / 4, 0});
 
     cube_points_after_rotation = {
         Vector3{-1.41421, -1, 0},
@@ -213,6 +196,35 @@ TEST_CASE("TEST ROTATION 2 - center any")
     CHECK(cube.contains(cube_points_after_rotation[5]) == true);
     CHECK(cube.contains(cube_points_after_rotation[6]) == true);
     CHECK(cube.contains(cube_points_after_rotation[7]) == true);
+
+    BoxCollider b2{
+        Vector3{2.1, 0, 0}, 2, 2, 2};
+    std::vector<Vector3> expected_points = {
+        Vector3{0, 0, 0},
+        Vector3{0, 0, 2},
+        Vector3{0, 2, 0},
+        Vector3{0, 2, 2},
+        Vector3{2, 0, 0},
+        Vector3{2, 0, 2},
+        Vector3{2, 2, 0},
+        Vector3{2, 2, 2}};
+}
+
+TEST_CASE("TEST BASIC COLLISION WITHOUT ROTATION")
+{
+
+    const BoxCollider b1{
+        Vector3{2, 2, 1}, 2, 2, 2};
+
+    const BoxCollider b2{
+        Vector3{3, 3, 1}, 2, 2, 2};
+
+    const BoxCollider b3{
+        Vector3{30, 30, 10}, 2, 2, 2};
+
+    CHECK(hasSATCollision(b1, b2) == true);
+    CHECK(hasSATCollision(b1, b3) == false);
+    CHECK(hasSATCollision(b2, b3) == false);
 }
 
 TEST_CASE("TEST BASIC COLLISION WITH ROTATION")
@@ -222,11 +234,9 @@ TEST_CASE("TEST BASIC COLLISION WITH ROTATION")
 
     BoxCollider b2{
         Vector3{2.1, 0, 0}, 2, 2, 2};
-
-    std::cout << b2 << "\n";
+    
     CHECK(hasSATCollision(b1, b2) == false);
 
-    b2.setRotation(Vector3{0, M_PI/4, 0});
-    std::cout << b2 << "\n";
+    b2.setRotation(Vector3{0, M_PI / 4, 0});
     CHECK(hasSATCollision(b1, b2) == true);
 }

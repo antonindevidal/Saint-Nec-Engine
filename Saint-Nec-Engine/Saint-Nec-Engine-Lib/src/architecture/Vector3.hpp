@@ -23,6 +23,7 @@ namespace saintNecEngine
 		bool operator>=(const Vector3 &v) const;
 		Vector3 operator-(const Vector3 &v) const;
 		Vector3 operator+(const Vector3 &v) const;
+		Vector3 operator*(double) const;
 		friend std::ostream &operator<<(std::ostream &oss, const Vector3 &v)
 		{
 			oss << "(" << v[0] << ", " << v[1] << ", " << v[2] << ")";
