@@ -146,11 +146,6 @@ namespace sne::graphics
 		glDeleteBuffers(1, &VBO);
 		glDeleteBuffers(1, &EBO);
 	}
-	void Cube::update()
-	{
-		// Example to rotate the cube
-		//parent->setModel(glm::rotate(parent->getModel(), 1 * glm::radians(1.0f), glm::vec3(0.5f, 0.8f, 0.4f)));
-	}
 
 	void Cube::draw() const
 	{		
