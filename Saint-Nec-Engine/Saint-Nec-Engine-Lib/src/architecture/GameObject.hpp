@@ -24,7 +24,7 @@ namespace sne
 	{
 	private:
 		Vector3 position; //TODO: remove 
-		Vector3 rotation; //TODO: remove
+		Vector3 rotation; //TODO: remove - Radian
 		
 		/**
 		 * Vector of components used by the GameObject.

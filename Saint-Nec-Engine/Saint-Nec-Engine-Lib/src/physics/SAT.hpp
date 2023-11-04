@@ -12,59 +12,116 @@ namespace sne
         bool areDisjoint(double x1_min, double x1_max, double x2_min, double x2_max)
         {
             // Returns true if: [x1_min ; x1_max] ∩ [x2_min; x2_max] = ∅
-            
-            return !(x1_min <= x2_min && x2_min <= x1_max || x1_min <= x2_max && x2_max <= x1_max);
+
+            return x1_max < x2_min || x2_max < x1_min;
+        }
+
+        double dot(const Vector3 v1, const Vector3 v2)
+        {
+            // If one of the vector norm is 1 then it's a simple projection
+
+            return v1[0] * v2[0] + v1[1] * v2[1] + v1[2] * v2[2];
+        }
+
+        std::vector<Vector3> operator+(const std::vector<Vector3> v1, const std::vector<Vector3> v2)
+        {
+            std::vector<Vector3> v = v1;
+            for (auto elt : v2)
+            {
+                v.push_back(elt);
+            }
+
+            return v;
         }
 
         bool hasSATCollision(const BoxCollider &boxe1, const BoxCollider &boxe2)
         {
             // TODO
             // Projection
-            // Using rotation
+            // Each BoxCollider has 3 normal axis
+            std::vector<Vector3> v1 = boxe1.getAxis();
+            std::vector<Vector3> v2 = boxe2.getAxis();
+            std::vector<Vector3> v = v1 + v2;
 
             // SAT
-
-            // X axis
-            double x_min_1 = boxe1[0][0],
-                   x_max_1 = boxe1[0][0],
-                   x_min_2 = boxe2[0][0],
-                   x_max_2 = boxe2[0][0];
-            // Y axis
-            double y_min_1 = boxe1[0][1],
-                   y_max_1 = boxe1[0][1],
-                   y_min_2 = boxe2[0][1],
-                   y_max_2 = boxe2[0][1];
-            // Z axis
-            double z_min_1 = boxe1[0][2],
-                   z_max_1 = boxe1[0][2],
-                   z_min_2 = boxe2[0][2],
-                   z_max_2 = boxe2[0][2];
-
-            for (int i = 1; i < boxe1.getNbPoints(); i++)
+            for (Vector3 axis : v)
             {
-                x_min_1 = (boxe1[i][0] < x_min_1) ? boxe1[i][0] : x_min_1;
-                y_min_1 = (boxe1[i][1] < y_min_1) ? boxe1[i][1] : y_min_1;
-                y_min_1 = (boxe1[i][2] < z_min_1) ? boxe1[i][2] : z_min_1;
+                // We check a if a gap exist on each axis
+                double boxe1_min = dot(axis, boxe1[0]),
+                       boxe1_max = boxe1_min,
+                       boxe2_min = dot(axis, boxe2[0]),
+                       boxe2_max = boxe2_min;
 
-                x_max_1 = (boxe1[i][0] > x_max_1) ? boxe1[i][0] : x_max_1;
-                y_max_1 = (boxe1[i][1] > y_max_1) ? boxe1[i][1] : y_max_1;
-                z_max_1 = (boxe1[i][2] > z_max_1) ? boxe1[i][2] : z_max_1;
+                for (int i = 1; i < boxe1.getNbPoints(); i++)
+                {
+                    double boxe1_projection = dot(axis, boxe1[i]),
+                           boxe2_projection = dot(axis, boxe2[i]);
 
-                x_min_2 = (boxe2[i][0] < x_min_2) ? boxe2[i][0] : x_min_2;
-                y_min_2 = (boxe2[i][1] < y_min_2) ? boxe2[i][1] : y_min_2;
-                z_min_2 = (boxe2[i][2] < z_min_2) ? boxe2[i][2] : z_min_2;
+                    boxe1_min = (boxe1_min < boxe1_projection) ? boxe1_min : boxe1_projection;
+                    boxe1_max = (boxe1_max > boxe1_projection) ? boxe1_max : boxe1_projection;
+                    boxe2_min = (boxe2_min < boxe2_projection) ? boxe2_min : boxe2_projection;
+                    boxe2_max = (boxe2_max > boxe2_projection) ? boxe2_max : boxe2_projection;
+                }
 
-                x_max_2 = (boxe2[i][0] > x_max_2) ? boxe2[i][0] : x_max_2;
-                y_max_2 = (boxe2[i][1] > y_max_2) ? boxe2[i][1] : y_max_2;
-                z_max_2 = (boxe2[i][2] > z_max_2) ? boxe2[i][2] : z_max_2;
+                // Theoreme:
+                // If there is any gap (one disjoint) then there is no collision
+
+                if (areDisjoint(boxe1_min, boxe1_max, boxe2_min, boxe2_max))
+                { // We have a gap, there is no collision
+                    return false;
+                }
             }
 
             // Theoreme:
             // If there is any gap (one disjoint) then there is no collision
 
-            return !(areDisjoint(x_min_1, x_max_1, x_min_2, x_max_2) 
-                || areDisjoint(y_min_1, y_max_1, y_min_2, y_max_2) 
-                || areDisjoint(z_min_1, z_max_1, z_min_2, z_max_2));
+            return true;
+        }
+
+        bool hasSATCollision(const SphereCollider &sphere1, const SphereCollider &sphere2)
+        {
+            // Evaluate the distance between the 2 centers
+            double distance = norm(sphere1.getCenter() - sphere2.getCenter());
+            return distance <= (sphere1.getRadius() + sphere2.getRadius());
+        }
+
+        bool hasSATCollision(const BoxCollider &boxe, const SphereCollider &sphere)
+        {
+            // Evaluate the distance between the 2 centers
+            std::vector<Vector3> v = boxe.getAxis();
+
+            // SAT
+            for (Vector3 axis : v)
+            {
+                // We check a if a gap exist on each axis
+                double boxe_min = dot(axis, boxe[0]),
+                       boxe_max = boxe_min,
+                       sphere_min = dot(axis, sphere.getCenter()) - sphere.getRadius(),
+                       sphere_max = dot(axis, sphere.getCenter()) + sphere.getRadius();
+
+                for (int i = 1; i < boxe.getNbPoints(); i++)
+                {
+                    double boxe_projection = dot(axis, boxe[i]);
+
+                    boxe_min = (boxe_min < boxe_projection) ? boxe_min : boxe_projection;
+                    boxe_max = (boxe_max > boxe_projection) ? boxe_max : boxe_projection;
+                }
+
+                // Theoreme:
+                // If there is any gap (one disjoint) then there is no collision
+
+                if (areDisjoint(boxe_min, boxe_max, sphere_min, sphere_max))
+                { // We have a gap, there is no collision
+                    return false;
+                }
+            }
+
+            return true;
+        }
+
+        bool hasSATCollision(const SphereCollider &sphere, const BoxCollider &boxe)
+        {
+            return hasSATCollision(boxe, sphere);
         }
     }
 }
