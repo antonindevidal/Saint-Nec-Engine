@@ -7,7 +7,7 @@
 #include <physics/SAT.hpp>
 
 // Tests //-----------------------------------------------------------------------------------------
-using namespace saintNecEngine;
+using namespace sne;
 using namespace saintNecPhysics;
 
 //--------------------------------------------------------------------------------------------------
