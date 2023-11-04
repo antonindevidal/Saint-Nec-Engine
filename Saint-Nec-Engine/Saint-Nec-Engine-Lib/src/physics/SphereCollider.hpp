@@ -16,6 +16,8 @@ namespace saintNecEngine
         public:
             SphereCollider(Vector3 center, double radius);
             ~SphereCollider() = default;
+            const double getRadius() const;
+            const Vector3& getCenter() const;
         };
     }
 }
