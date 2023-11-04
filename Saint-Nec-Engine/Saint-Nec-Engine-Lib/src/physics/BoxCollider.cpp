@@ -42,9 +42,9 @@ namespace sne
             return 8;
         }
 
-        // TO UPDATE
+        // TO UPDATE WITH GML
 
-        void BoxCollider::rotate(Vector3 points[], unsigned int taille, const Vector3 &center, double alpha, double beta, double gamma)
+        void BoxCollider::rotate(Vector3 points[], unsigned int size, const Vector3 &center, double alpha, double beta, double gamma)
         {
             // Documentation:
             // https://en.wikipedia.org/wiki/Rotation_matrix#General_3D_rotations
@@ -70,13 +70,13 @@ namespace sne
             // std::cout << "|" << a << " " << b << " " << c << "|\n";
             // std::cout << "|" << d << " " << e << " " << f << "|\n";
             // std::cout << "|" << g << " " << h << " " << i << "|\n";
-            
+
             // Update points
             // Considering p = [x, y, z]^T
             //          | ax + by + cz |
             // R * p =  | dx + ey + fz | = new p
             //          | gx + hy + iz |
-            for (int index = 0; index < taille; index++)
+            for (int index = 0; index < size; index++)
             {
                 double x = points[index][0] - center[0];
                 double y = points[index][1] - center[1];
@@ -88,18 +88,20 @@ namespace sne
             }
         }
 
-        void BoxCollider::rotate(Vector3 points[], unsigned int taille, const Vector3 &center, const Vector3 &rotation)
+        void BoxCollider::rotate(Vector3 points[], unsigned int size, const Vector3 &center, const Vector3 &rotation)
         {
-            rotate(points, taille, center, rotation[0], rotation[1], rotation[2]);
+            rotate(points, size, center, rotation[0], rotation[1], rotation[2]);
         }
 
         void BoxCollider::setRotation(const Vector3 rotation)
         {
+            // Evalute the angle of rotation
             Vector3 delta_rot = rotation - _rotation;
             double alpha = delta_rot[0],
                    beta = delta_rot[1],
                    gamma = delta_rot[2];
-
+            
+            // Rotate
             rotate(_points, 8, _center, alpha, beta, gamma);
             _rotation = rotation;
         }
@@ -111,10 +113,8 @@ namespace sne
 
         bool BoxCollider::contains(const Vector3 &p, double eps) const
         {
-            // std::cout << "Recherche: " << p << "\n";
             for (Vector3 v : _points)
             {
-                // std::cout << "Entre :" << (v-eps) << " et " << (v+eps) << "\n";
                 if ((v - eps) <= p && p <= (v + eps))
                     return true;
             }
@@ -133,8 +133,10 @@ namespace sne
 
         std::vector<Vector3> BoxCollider::getAxis() const
         {
+            // absolute axis
             Vector3 axis[] = {{1, 0, 0}, {0, 1, 0}, {0, 0, 1}};
 
+            // rotate axis considering the state of the Box
             rotate(axis, 3, {0, 0, 0}, _rotation);
 
             std::vector<Vector3> v{};
