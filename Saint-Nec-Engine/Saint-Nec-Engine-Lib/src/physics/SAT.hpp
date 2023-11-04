@@ -3,7 +3,7 @@
 #include "SphereCollider.hpp"
 
 
-namespace saintNecEngine
+namespace sne
 {
 
     namespace saintNecPhysics

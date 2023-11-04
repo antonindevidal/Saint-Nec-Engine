@@ -8,7 +8,7 @@
 #include <physics/SAT.hpp>
 
 // Tests //-----------------------------------------------------------------------------------------
-using namespace saintNecEngine;
+using namespace sne;
 using namespace saintNecPhysics;
 
 //------------------------------------------------------------------------------------------------ 1
@@ -38,7 +38,7 @@ TEST_CASE("TEST BOXCOLLIDER CONSTRUCTORS")
 //------------------------------------------------------------------------------------------------ 2
 TEST_CASE("TEST BASIC COLLISION WITHOUT ROTATION")
 {
-    using namespace saintNecEngine;
+    using namespace sne;
     using namespace saintNecPhysics;
 
     // Must collide
