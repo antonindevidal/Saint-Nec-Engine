@@ -2,7 +2,7 @@
 #include <cmath>
 #include <iostream>
 
-namespace saintNecEngine
+namespace sne
 {
 	class Vector3
 	{

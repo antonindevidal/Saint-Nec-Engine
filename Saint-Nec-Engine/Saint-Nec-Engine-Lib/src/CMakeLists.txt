@@ -9,6 +9,8 @@ set(_SAINT_NEC_ENGINE_LIB_SRC
 	"architecture/SceneManager.cpp"
 	"physics/BoxCollider.cpp"
 	"physics/SphereCollider.cpp"
+	"graphics/Cube.cpp"
+	"graphics/Shader.cpp"
 )
 
 set(_SAINT_NEC_ENGINE_LIB_HDR
@@ -20,10 +22,13 @@ set(_SAINT_NEC_ENGINE_LIB_HDR
 	"physics/BoxCollider.hpp"
 	"physics/SphereCollider.hpp"
 	"physics/SAT.hpp"
+	"graphics/Cube.hpp"
+	"graphics/Shader.hpp"
 )
+target_sources(Saint-Nec-Engine-Lib INTERFACE ${_SAINT_NEC_ENGINE_LIB_HDR})
 target_sources(Saint-Nec-Engine-Lib PRIVATE ${_SAINT_NEC_ENGINE_LIB_SRC})
-target_sources(Saint-Nec-Engine-Lib PUBLIC ${_SAINT_NEC_ENGINE_LIB_HDR})
 
 
 target_include_directories(Saint-Nec-Engine-Lib  PUBLIC .)
 
+target_link_libraries(Saint-Nec-Engine-Lib glfw glad glm stb_image)

@@ -2,7 +2,8 @@
 #include "BoxCollider.hpp"
 #include "SphereCollider.hpp"
 
-namespace saintNecEngine
+
+namespace sne
 {
 
     namespace saintNecPhysics

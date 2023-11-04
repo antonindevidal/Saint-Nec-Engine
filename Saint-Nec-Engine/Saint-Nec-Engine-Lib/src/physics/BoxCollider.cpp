@@ -1,6 +1,6 @@
 #include "BoxCollider.hpp"
 
-namespace saintNecEngine
+namespace sne
 {
 
     namespace saintNecPhysics

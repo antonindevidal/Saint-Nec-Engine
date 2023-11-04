@@ -2,7 +2,7 @@
 #include "architecture/Component.hpp"
 #include "architecture/Vector3.hpp"
 
-namespace saintNecEngine
+namespace sne
 {
 
     namespace saintNecPhysics

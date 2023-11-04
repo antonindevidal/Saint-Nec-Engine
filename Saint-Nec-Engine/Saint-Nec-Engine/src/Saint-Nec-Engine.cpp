@@ -1,3 +1,5 @@
+#define GLM_ENABLE_EXPERIMENTAL
+
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
 #include <iostream>
@@ -5,6 +7,7 @@
 #include <imgui_impl_glfw.h>
 #include <imgui_impl_opengl3.h>
 
+#include "Game.hpp"
 
 
 void framebuffer_size_callback(GLFWwindow* window, int width, int height)
@@ -12,12 +15,18 @@ void framebuffer_size_callback(GLFWwindow* window, int width, int height)
     glViewport(0, 0, width, height);
 }
 
+void processInput(GLFWwindow* window)
+{
+    if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
+        glfwSetWindowShouldClose(window, true);        
+}
+
 
 void draw_imgui(bool& show_demo_window, bool& show_another_window, ImVec4& clear_color, ImGuiIO& io)
 {
     //Demo window (can be commented if needed)
-    if (show_demo_window)
-        ImGui::ShowDemoWindow(&show_demo_window);
+    //if (show_demo_window)
+        //ImGui::ShowDemoWindow(&show_demo_window);
 
     {
         static float f = 0.0f;
@@ -56,7 +65,7 @@ int main(void)
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
     /* Create a windowed mode window and its OpenGL context */
-    window = glfwCreateWindow(640, 480, "Hello World", NULL, NULL);
+    window = glfwCreateWindow(1280, 720, "Hello World", NULL, NULL);
     if (!window)
     {
         glfwTerminate();
@@ -71,8 +80,8 @@ int main(void)
         std::cout << "Failed to initialize GLAD" << std::endl;
         return -1;
     }
-    glViewport(0, 0, 640, 480);
     glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
+    glEnable(GL_DEPTH_TEST);
 
     //Init ImGUI
     ImGui::CreateContext();
@@ -90,11 +99,19 @@ int main(void)
     bool show_another_window = true;
     ImVec4 clear_color = ImVec4(0.45f, 0.55f, 0.60f, 1.00f);
 
+    Game g{};
+
     /* Loop until the user closes the window */
     while (!glfwWindowShouldClose(window))
     {
+        processInput(window);
+        g.update();
         /* Render here */
-        glClear(GL_COLOR_BUFFER_BIT);
+        glClearColor(clear_color.x,clear_color.y,clear_color.z,clear_color.w);
+        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+        g.draw();
+
 
         // Start the Dear ImGui frame
         ImGui_ImplOpenGL3_NewFrame();
@@ -108,14 +125,14 @@ int main(void)
         ImGui::Render();
         ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 
+
+
         /* Swap front and back buffers */
         glfwSwapBuffers(window);
 
         /* Poll for and process events */
         glfwPollEvents();
-
-
-
+        
     }
 
     // Cleanup ImGUI

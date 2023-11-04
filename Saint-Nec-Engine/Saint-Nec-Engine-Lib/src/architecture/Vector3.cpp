@@ -1,6 +1,6 @@
 #include "Vector3.hpp"
 
-namespace saintNecEngine
+namespace sne
 {
 
     Vector3::Vector3() : Vector3(0, 0, 0)
