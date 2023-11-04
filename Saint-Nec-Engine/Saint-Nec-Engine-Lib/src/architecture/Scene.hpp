@@ -51,7 +51,7 @@ namespace sne
 		 * Default constructor of Scene.
 		 * (might get removed)
 		 */
-		Scene::Scene();
+		Scene();
 
 		/**
 		 * Scene constructor.
