@@ -17,7 +17,7 @@
 #include "architecture/SceneManager.hpp"
 #include "architecture/Component.hpp"
 #include "graphics/Shader.hpp"
-#include "architecture/GameObject.hpp";
+#include "architecture/GameObject.hpp"
 
 namespace sne::graphics
 {

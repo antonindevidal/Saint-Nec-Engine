@@ -49,7 +49,7 @@ namespace sne::graphics
 		 * @param name Name of the uniform.
 		 * @param value Matrix to set.
 		 */
-		void Shader::setMat4(const std::string& name, const glm::mat4& value) const;
+		void setMat4(const std::string& name, const glm::mat4& value) const;
 		
 		/**
 		 * Set Vector 3 uniform to th shader program.
@@ -57,7 +57,7 @@ namespace sne::graphics
 		 * @param name Name of the uniform.
 		 * @param value Vector 3 to set.
 		 */
-		void Shader::setVec3(const std::string& name, const glm::vec3& value) const;
+		void setVec3(const std::string& name, const glm::vec3& value) const;
 
 	private:
 		/**
