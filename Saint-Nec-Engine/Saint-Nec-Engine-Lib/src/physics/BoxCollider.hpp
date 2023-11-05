@@ -90,7 +90,7 @@ namespace sne
              * 
              * @return std::vector<glm::vec3> 
              */
-            // std::vector<glm::vec3> getAxis() const;
+            std::vector<glm::vec3> getAxis() const;
 
             /**
              * @brief 

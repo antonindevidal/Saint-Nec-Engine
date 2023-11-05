@@ -17,17 +17,17 @@ namespace sne
 	// 	glm::vec3 operator*(double) const;
 	std::ostream &operator<<(std::ostream &oss, const glm::vec3 &v);
 
-	template <typename GLMVect>
-	double norm(const GLMVect &v)
-	{
-		float res = 0;
-		for (auto elt : v)
-			res += elt * elt;
+	// template <typename GLMVect>
+	// double norm(const GLMVect &v)
+	// {
+	// 	float res = 0;
+	// 	for (auto elt : v)
+	// 		res += elt * elt;
 
-		return sqrt(res);
-	}
+	// 	return sqrt(res);
+	// }
 
-	// double norm(const glm::vec3 &v);
+	double norm(const glm::vec3 &v);
 	// glm::vec3 operator-(const glm::vec3 &p, double eps);
 	// glm::vec3 operator+(const glm::vec3 &p, double eps);
 	glm::mat3 buildRotationMatrix(float alpha, float beta, float gamma);

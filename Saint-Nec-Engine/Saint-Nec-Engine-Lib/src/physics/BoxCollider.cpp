@@ -100,20 +100,20 @@ namespace sne
             return oss;
         }
 
-        // std::vector<glm::vec3> BoxCollider::getAxis() const
-        // {
-        //     // absolute axis
-        //     glm::vec3 axis[] = {{1, 0, 0}, {0, 1, 0}, {0, 0, 1}};
+        std::vector<glm::vec3> BoxCollider::getAxis() const
+        {
+            // absolute axis
+            glm::vec3 axis[] = {{1, 0, 0}, {0, 1, 0}, {0, 0, 1}};
 
-        //     // rotate axis considering the state of the Box
-        //     rotate(axis, 3, {0, 0, 0}, _rotation);
+            // rotate axis considering the state of the Box
+            rotate(axis, 3, {0, 0, 0}, _rotation);
 
-        //     std::vector<glm::vec3> v{};
-        //     v.push_back(axis[0]);
-        //     v.push_back(axis[1]);
-        //     v.push_back(axis[2]);
+            std::vector<glm::vec3> v{};
+            v.push_back(axis[0]);
+            v.push_back(axis[1]);
+            v.push_back(axis[2]);
 
-        //     return v;
-        // }
+            return v;
+        }
     }
 }

@@ -59,17 +59,6 @@ namespace sne
         return res;
     }
 
-    // std::ostream& operator<<(std::ostream &oss, const glm::vec3 &v)
-    // {
-    //     oss << "(" << vect[0] <<", " << vect[1] << ", " << vect[2] << ")";
-    //     return oss;
-    // }
-
-    // double norm(const glm::vec3 &v)
-    // {
-    //     return sqrt(v[0] * v[0] + v[1] * v[1] + v[2] * v[2]);
-    // }
-
     glm::vec3 operator+(const glm::vec3 &p, float &eps)
     {
         return glm::vec3{p[0] + eps, p[1] + eps, p[2] + eps};
@@ -135,5 +124,11 @@ namespace sne
             }
             std::cout << "|\n";
         }
+    }
+
+
+    double norm(const glm::vec3 &v)
+    {
+        return sqrt(v[0] * v[0] + v[1] * v[1] + v[2] * v[2]);
     }
 }
