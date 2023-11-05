@@ -108,18 +108,13 @@ TEST_CASE("TEST ROTATION 1 - center origin")
         glm::vec3{0, 1, -1.41421},
         glm::vec3{0, 1, 1.41421}};
     CHECK(cube.contains(cube_points_after_rotation[0]) == true);
-    // CHECK(cube.contains(cube_points_after_rotation[1]) == true);
-    // CHECK(cube.contains(cube_points_after_rotation[2]) == true);
-    // CHECK(cube.contains(cube_points_after_rotation[3]) == true);
-    // CHECK(cube.contains(cube_points_after_rotation[4]) == true);
-    // CHECK(cube.contains(cube_points_after_rotation[5]) == true);
-    // CHECK(cube.contains(cube_points_after_rotation[6]) == true);
-    // CHECK(cube.contains(cube_points_after_rotation[7]) == true);
-
-    glm::mat3 R{1,2,3,4,5,6,7,8,9};
-    glm::vec3 V{1,1,1};
-    sne::displayRotationMatrix(R, 0, 0, 0);
-    std::cout << R * V << "\n";
+    CHECK(cube.contains(cube_points_after_rotation[1]) == true);
+    CHECK(cube.contains(cube_points_after_rotation[2]) == true);
+    CHECK(cube.contains(cube_points_after_rotation[3]) == true);
+    CHECK(cube.contains(cube_points_after_rotation[4]) == true);
+    CHECK(cube.contains(cube_points_after_rotation[5]) == true);
+    CHECK(cube.contains(cube_points_after_rotation[6]) == true);
+    CHECK(cube.contains(cube_points_after_rotation[7]) == true);
 
 }
 

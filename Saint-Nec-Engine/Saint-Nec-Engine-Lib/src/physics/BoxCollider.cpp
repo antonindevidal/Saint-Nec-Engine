@@ -60,22 +60,8 @@ namespace sne
 
             for (int index = 0; index < size; index++)
             {
-                glm::vec3 tmp = points[index] - center;
-
-                // std::cout << "J'affice \n";
-                // displayRotationMatrix(R, alpha, beta, gamma);
-                // std::cout << "tmp: (" << tmp[0] << ", " << tmp[1] << ", " << tmp[2] << ")\n";
-                points[index] = R * tmp;
-                // std::cout << "Result:\n";
-                // sne::operator<<(std::cout, points[index]);
-                // std::cout << "\n";
-
-                std::cout << "\n\n\n\n\nJ'affiche tmp:\n";
-                sne::operator<<(std::cout, tmp) << "\n";
-                std::cout << "\nJ'affiche point:\n";
-                sne::operator<<(std::cout, points[index]);
-
-
+                points[index] -= center;
+                points[index] = points[index] * R;
                 points[index] += center;
             }
         }
