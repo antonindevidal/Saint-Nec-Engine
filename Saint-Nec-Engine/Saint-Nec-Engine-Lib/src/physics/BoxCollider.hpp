@@ -1,7 +1,4 @@
 #pragma once
-#include "architecture/Component.hpp"
-#include "architecture/Vector3.hpp"
-#include <vector>
 /**
  * @file BoxCollider.hpp
  * @brief Box to detect collision.
@@ -9,6 +6,11 @@
  * @date november 6rd 2023.
  *
  */
+
+#include "architecture/Component.hpp"
+#include "architecture/Vector3.hpp"
+#include <vector>
+
 namespace sne
 {
 

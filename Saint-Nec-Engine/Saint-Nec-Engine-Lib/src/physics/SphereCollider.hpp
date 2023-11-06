@@ -1,7 +1,4 @@
 #pragma once
-#include "architecture/Component.hpp"
-#include "architecture/Vector3.hpp"
-
 /**
  * @file SphereCollider.hpp
  * @brief Sphere to detect collision.
@@ -9,6 +6,9 @@
  * @date november 6rd 2023.
  *
  */
+
+#include "architecture/Component.hpp"
+#include "architecture/Vector3.hpp"
 
 namespace sne
 {

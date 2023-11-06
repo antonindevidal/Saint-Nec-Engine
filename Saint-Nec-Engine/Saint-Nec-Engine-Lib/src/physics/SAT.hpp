@@ -1,7 +1,4 @@
 #pragma once
-#include "BoxCollider.hpp"
-#include "SphereCollider.hpp"
-
 /**
  * @file SAT.hpp
  * @brief Code implementation of SAT algorithm for collision detection.
@@ -9,6 +6,11 @@
  * @date november 6rd 2023.
  *
  */
+
+
+#include "BoxCollider.hpp"
+#include "SphereCollider.hpp"
+
 
 namespace sne
 {
