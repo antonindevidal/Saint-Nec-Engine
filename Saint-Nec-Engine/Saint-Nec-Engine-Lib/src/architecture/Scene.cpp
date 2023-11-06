@@ -53,6 +53,11 @@ namespace sne
 		return projection;
 	}
 
+	const std::vector<GameObject*> Scene::getGameObjects() const
+	{
+		return gameObjects;
+	}
+
 	void Scene::addGameObject(GameObject* gameObject)
 	{
 		gameObjects.push_back(gameObject);

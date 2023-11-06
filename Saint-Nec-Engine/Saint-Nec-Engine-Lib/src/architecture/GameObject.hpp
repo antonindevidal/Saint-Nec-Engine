@@ -36,6 +36,8 @@ namespace sne
 		 */
  		glm::mat4 model;
 
+		std::string name;
+
 	public:
 
 		/**
@@ -67,12 +69,14 @@ namespace sne
 		 */
 		void addComponent(Component* component);
 
+		const std::vector<Component*> getComponent() const;
+
 		/**
 		 * Getter for the model matrix.
 		 * 
 		 * @return Model matrix .
 		 */
-		const glm::mat4& getModel();
+		const glm::mat4& getModel() const;
 
 		/**
 		 * Setter for the model matrix.
@@ -95,5 +99,10 @@ namespace sne
 		 * @param axis Axis of rotation.
 		 */
 		void rotate(const float angle, const glm::vec3& axis);
+
+		glm::vec3 getTranslation() const ; //return COPY of translation
+
+		const std::string& getName() const;
+		void setName(const std::string& newName);
 	};
 }

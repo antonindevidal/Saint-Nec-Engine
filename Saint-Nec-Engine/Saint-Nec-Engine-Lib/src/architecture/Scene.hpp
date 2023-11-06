@@ -96,6 +96,8 @@ namespace sne
 		 */
 		const glm::mat4& getProjection() const;
 
+		const std::vector<GameObject*> getGameObjects() const;
+
 		/**
 		 * Add a GameObject to the scene.
 		 * 

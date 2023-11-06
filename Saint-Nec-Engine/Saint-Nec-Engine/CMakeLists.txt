@@ -5,12 +5,13 @@ add_executable (Saint-Nec-Engine)
 set(_SAINT_NEC_ENGINE_SRC 
 	"src/Saint-Nec-Engine.cpp"
 	"src/Game.cpp"
+	"src/ui_helper/UiHelper.cpp"
 )
 
 set(_SAINT_NEC_ENGINE_HDR
 	"src/Saint-Nec-Engine.h"
 	"src/Game.hpp"
-
+	"src/ui_helper/UiHelper.hpp"
 )
 
 # Make the copy of the resource fil every time
