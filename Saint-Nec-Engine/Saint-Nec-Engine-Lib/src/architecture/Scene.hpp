@@ -96,6 +96,9 @@ namespace sne
 		 */
 		const glm::mat4& getProjection() const;
 
+		/**
+		* Return the vector of GameObject of the scene.
+		*/
 		const std::vector<GameObject*> getGameObjects() const;
 
 		/**

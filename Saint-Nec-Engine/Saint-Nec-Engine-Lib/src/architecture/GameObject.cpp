@@ -2,7 +2,7 @@
 
 namespace sne
 {
-	GameObject::GameObject() : components(), model(1.0f), name("GameObject")
+	GameObject::GameObject(): components(), model(1.0f), name("GameObject")
 	{
 		model = glm::rotate(model, glm::radians(-55.0f), glm::vec3(1.0f, 0.0f, 0.0f));
 	}
@@ -60,11 +60,6 @@ namespace sne
 	void GameObject::rotate(const float angle, const glm::vec3& axis)
 	{
 		model = glm::rotate(model, glm::radians(angle), axis);
-	}
-
-	glm::vec3 GameObject::getTranslation() const
-	{
-		return glm::vec3(model[3]);
 	}
 
 	const std::string& GameObject::getName() const

@@ -36,6 +36,9 @@ namespace sne
 		 */
  		glm::mat4 model;
 
+		/**
+		* Name for the GameObject
+		*/
 		std::string name;
 
 	public:
@@ -100,9 +103,16 @@ namespace sne
 		 */
 		void rotate(const float angle, const glm::vec3& axis);
 
-		glm::vec3 getTranslation() const ; //return COPY of translation
-
+		/**
+		*  Getter for the name of an instance of GamObject.
+		*/
 		const std::string& getName() const;
+
+		/**
+		* Setter for the name
+		* 
+		* @param newName Name to set.
+		*/
 		void setName(const std::string& newName);
 	};
 }
