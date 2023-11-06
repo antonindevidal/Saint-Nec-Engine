@@ -1,4 +1,13 @@
 #pragma once
+/**
+ * @file SAT.hpp
+ * @brief Code implementation of SAT algorithm for collision detection.
+ * @author Abdeljalil ZOGHLAMI, Antonin DEVIDAL.
+ * @date november 6rd 2023.
+ *
+ */
+
+
 #include "BoxCollider.hpp"
 #include "SphereCollider.hpp"
 #include <glm/glm.hpp>

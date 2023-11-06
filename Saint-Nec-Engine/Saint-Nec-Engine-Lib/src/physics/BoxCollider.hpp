@@ -1,4 +1,12 @@
 #pragma once
+/**
+ * @file BoxCollider.hpp
+ * @brief Box to detect collision.
+ * @author Abdeljalil ZOGHLAMI, Antonin DEVIDAL.
+ * @date november 6rd 2023.
+ *
+ */
+
 #include "architecture/Component.hpp"
 #include <vector>
 #include <glm/glm.hpp>
@@ -26,9 +34,9 @@ namespace sne
              * @brief Construct a new Box Collider object
              * 
              * @param center 
-             * @param width 
-             * @param depth 
-             * @param height 
+             * @param width (X axis)
+             * @param depth (Y axis)
+             * @param height (Z axis)
              */
             BoxCollider(const glm::vec3 center, double width, double depth, double height);
 
@@ -39,11 +47,11 @@ namespace sne
             ~BoxCollider() = default;
 
             /**
-            * 
-            * Create multicolor cube of size 1*1*1.
-            * 
-            * @param i index of the point we aer looking for.
-            */
+             * @brief access to point number i
+             * 
+             * @param i 
+             * @return const glm::vec3& 
+             */
             const glm::vec3 &operator[](int i) const;
 
             /**

@@ -1,4 +1,12 @@
 #pragma once
+/**
+ * @file SphereCollider.hpp
+ * @brief Sphere to detect collision.
+ * @author Abdeljalil ZOGHLAMI, Antonin DEVIDAL.
+ * @date november 6rd 2023.
+ *
+ */
+
 #include "architecture/Component.hpp"
 #include <glm/glm.hpp>
 #include <glm/gtc/type_ptr.hpp>
