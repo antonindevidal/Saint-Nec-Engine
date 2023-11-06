@@ -1,4 +1,12 @@
 #pragma once
+/**
+ * @file SphereCollider.hpp
+ * @brief Sphere to detect collision.
+ * @author Abdeljalil ZOGHLAMI, Antonin DEVIDAL.
+ * @date november 6rd 2023.
+ *
+ */
+
 #include "architecture/Component.hpp"
 #include "architecture/Vector3.hpp"
 
@@ -7,6 +15,10 @@ namespace sne
 
     namespace saintNecPhysics
     {
+        /**
+         * @class SphereCollider
+         * @brief SphereCollider physics component
+         */
         class SphereCollider : public Component
         {
         private:
@@ -16,8 +28,20 @@ namespace sne
         public:
             SphereCollider(Vector3 center, double radius);
             ~SphereCollider() = default;
+
+            /**
+             * @brief Get the Radius object
+             * 
+             * @return const double 
+             */
             const double getRadius() const;
-            const Vector3& getCenter() const;
+            
+            /**
+             * @brief Get the Center object
+             * 
+             * @return const Vector3& 
+             */
+            const Vector3 &getCenter() const;
         };
     }
 }

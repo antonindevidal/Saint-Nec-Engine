@@ -9,6 +9,7 @@ set(_SAINT_NEC_ENGINE_LIB_SRC
 	"architecture/SceneManager.cpp"
 	"physics/BoxCollider.cpp"
 	"physics/SphereCollider.cpp"
+	"physics/SAT.cpp"
 	"graphics/Cube.cpp"
 	"graphics/Shader.cpp"
 )
