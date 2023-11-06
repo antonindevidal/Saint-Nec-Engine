@@ -30,9 +30,9 @@ namespace sne
              * @brief Construct a new Box Collider object
              * 
              * @param center 
-             * @param width 
-             * @param depth 
-             * @param height 
+             * @param width (X axis)
+             * @param depth (Y axis)
+             * @param height (Z axis)
              */
             BoxCollider(const Vector3 center, double width, double depth, double height);
 
