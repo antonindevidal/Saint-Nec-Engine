@@ -2,6 +2,13 @@
 #include "BoxCollider.hpp"
 #include "SphereCollider.hpp"
 
+/**
+ * @file SAT.hpp
+ * @brief Code implementation of SAT algorithm for collision detection.
+ * @author Abdeljalil ZOGHLAMI, Antonin DEVIDAL.
+ * @date november 6rd 2023.
+ *
+ */
 
 namespace sne
 {

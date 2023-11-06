@@ -2,7 +2,13 @@
 #include "architecture/Component.hpp"
 #include "architecture/Vector3.hpp"
 #include <vector>
-
+/**
+ * @file BoxCollider.hpp
+ * @brief Box to detect collision.
+ * @author Abdeljalil ZOGHLAMI, Antonin DEVIDAL.
+ * @date november 6rd 2023.
+ *
+ */
 namespace sne
 {
 
@@ -37,11 +43,11 @@ namespace sne
             ~BoxCollider() = default;
 
             /**
-            * 
-            * Create multicolor cube of size 1*1*1.
-            * 
-            * @param i index of the point we aer looking for.
-            */
+             * @brief access to point number i
+             * 
+             * @param i 
+             * @return const glm::vec3& 
+             */
             const Vector3 &operator[](int i) const;
 
             /**

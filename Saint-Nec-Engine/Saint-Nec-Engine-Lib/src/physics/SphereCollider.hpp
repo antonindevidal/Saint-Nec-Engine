@@ -2,6 +2,14 @@
 #include "architecture/Component.hpp"
 #include "architecture/Vector3.hpp"
 
+/**
+ * @file SphereCollider.hpp
+ * @brief Sphere to detect collision.
+ * @author Abdeljalil ZOGHLAMI, Antonin DEVIDAL.
+ * @date november 6rd 2023.
+ *
+ */
+
 namespace sne
 {
 
