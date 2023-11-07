@@ -1,8 +1,10 @@
 
 #include <architecture/SceneManager.hpp>
-#include <architecture/Scene.hpp>
 #include <architecture/GameObject.hpp>
 #include <graphics/Cube.hpp>
+
+#include "ui_helper/UiHelper.hpp"
+#include "scenes/FirstScene.hpp"
 
 class Game
 {

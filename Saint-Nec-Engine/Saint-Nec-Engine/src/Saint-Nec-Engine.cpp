@@ -26,7 +26,7 @@ void draw_imgui(bool& show_demo_window, bool& show_another_window, ImVec4& clear
 {
     //Demo window (can be commented if needed)
     //if (show_demo_window)
-        //ImGui::ShowDemoWindow(&show_demo_window);
+        ImGui::ShowDemoWindow(&show_demo_window);
 
     {
         static float f = 0.0f;
@@ -110,22 +110,20 @@ int main(void)
         glClearColor(clear_color.x,clear_color.y,clear_color.z,clear_color.w);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-        g.draw();
-
-
         // Start the Dear ImGui frame
         ImGui_ImplOpenGL3_NewFrame();
         ImGui_ImplGlfw_NewFrame();
         ImGui::NewFrame();
 
 
+
+
         draw_imgui(show_demo_window, show_another_window, clear_color, io);
+        g.draw();
 
         //Render ImGUI
         ImGui::Render();
         ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
-
-
 
         /* Swap front and back buffers */
         glfwSwapBuffers(window);

@@ -36,6 +36,11 @@ namespace sne
 		 */
  		glm::mat4 model;
 
+		/**
+		* Name for the GameObject
+		*/
+		std::string name;
+
 	public:
 
 		/**
@@ -67,12 +72,14 @@ namespace sne
 		 */
 		void addComponent(Component* component);
 
+		const std::vector<Component*> getComponent() const;
+
 		/**
 		 * Getter for the model matrix.
 		 * 
 		 * @return Model matrix .
 		 */
-		const glm::mat4& getModel();
+		const glm::mat4& getModel() const;
 
 		/**
 		 * Setter for the model matrix.
@@ -95,5 +102,17 @@ namespace sne
 		 * @param axis Axis of rotation.
 		 */
 		void rotate(const float angle, const glm::vec3& axis);
+
+		/**
+		*  Getter for the name of an instance of GamObject.
+		*/
+		const std::string& getName() const;
+
+		/**
+		* Setter for the name
+		* 
+		* @param newName Name to set.
+		*/
+		void setName(const std::string& newName);
 	};
 }
