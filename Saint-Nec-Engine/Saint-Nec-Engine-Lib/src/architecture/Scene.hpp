@@ -103,7 +103,7 @@ namespace sne
 		/**
 		* Return the vector of GameObject of the scene.
 		*/
-		const std::vector<GameObject*> getGameObjects() const;
+		const std::vector<GameObject*>& getGameObjects() const;
 
 		/**
 		 * Add a GameObject to the scene.

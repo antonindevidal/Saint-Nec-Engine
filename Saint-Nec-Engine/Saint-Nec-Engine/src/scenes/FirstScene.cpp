@@ -2,14 +2,14 @@
 
 
 
-FirstScene::FirstScene()
+FirstScene::FirstScene(): Scene::Scene()
 {
 
 }
 
 void FirstScene::load()
 {
-
+	gameObjects = std::vector<sne::GameObject*>();
 	// Multicolor cube example
 	sne::GameObject* cube = new sne::GameObject();
 	cube->setName("Basic cube");

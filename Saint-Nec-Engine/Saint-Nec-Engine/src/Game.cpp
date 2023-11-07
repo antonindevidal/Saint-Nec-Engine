@@ -3,9 +3,8 @@
 Game::Game(): sceneManager(sne::SceneManager::getInstance())
 {
 	FirstScene* scene = new FirstScene();
-
-	//sceneManager->addScene(scene);
-	//sceneManager->changeScene(scene->getName());
+	sceneManager->addScene(scene);
+	sceneManager->changeScene(scene->getName());
 
 	
 }

@@ -31,6 +31,10 @@ namespace sne
 	void SceneManager::addScene(Scene* scene)
 	{
 		scenes.push_back(scene);
+		if (scenes.size() == 1)
+		{
+			changeScene(scene->getName());
+		}
 	}
 
 	void SceneManager::changeScene(const std::string& name)
@@ -39,7 +43,10 @@ namespace sne
 		{
 			if (s->getName() == name)
 			{
-				currentScene->unload();
+				if (currentScene != nullptr)
+				{
+					currentScene->unload();
+				}
 				currentScene = s;
 				currentScene->load();
 

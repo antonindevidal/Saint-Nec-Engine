@@ -13,7 +13,8 @@ void UiHelper::SceneManagerHelper(const sne::SceneManager& sceneManager)
 
 void UiHelper::SceneHelper(const sne::Scene& scene)
 {
-	for (sne::GameObject *g : scene.getGameObjects())
+	const std::vector<sne::GameObject*> list = scene.getGameObjects();
+	for (sne::GameObject *g : list)
 	{
 		GameObjectHelper(*g);
 	}
