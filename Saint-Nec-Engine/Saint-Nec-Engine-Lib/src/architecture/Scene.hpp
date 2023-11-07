@@ -22,7 +22,7 @@ namespace sne
 	*/
 	class Scene
 	{
-	private:
+	protected:
 		/**
 		 * Name of the scene.
 		 * Must be unique.
@@ -63,17 +63,21 @@ namespace sne
 		 */
 		~Scene();
 
+		virtual void load();
+
+		virtual void unload();
+
 		/**
 		 * Update function.
 		 * All the logic happens here.
 		 */
-		void update();
+		virtual void update();
 
 		/**
 		 * Draw function.
 		 * No logic should happen there.
 		 */
-		void draw() const;
+		virtual void draw() const;
 
 		/**
 		 * Getter for the scene's name.

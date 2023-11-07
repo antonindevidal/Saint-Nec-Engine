@@ -22,6 +22,14 @@ namespace sne
 		}
 	}
 
+	void Scene::load()
+	{
+	}
+
+	void Scene::unload()
+	{
+	}
+
 	void Scene::update()
 	{
 		for (GameObject *g : gameObjects)

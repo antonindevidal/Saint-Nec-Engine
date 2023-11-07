@@ -39,7 +39,10 @@ namespace sne
 		{
 			if (s->getName() == name)
 			{
+				currentScene->unload();
 				currentScene = s;
+				currentScene->load();
+
 				break;
 			}
 		}
