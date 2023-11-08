@@ -7,12 +7,9 @@ namespace sne
 	{
 
 	}
-	Scene::Scene(std::string name) : gameObjects(), name(name), projection(glm::mat4(1.0f))
+	Scene::Scene(std::string name) : gameObjects(), name(name), projection(glm::mat4(1.0f)), camera()
 	{
 		projection = glm::perspective(glm::radians(45.0f), 1280.0f / 720.0f, 0.1f, 100.0f);// TODO change this to accept different aspect ratio
-
-		//view = glm::translate(view, glm::vec3(0.0f,0.0f,-3.0f));
-		//view = glm::lookAt(cameraPos, cameraPos + cameraFront, cameraUp);
 	}
 
 	Scene::~Scene()
@@ -68,6 +65,12 @@ namespace sne
 	{
 		return projection;
 	}
+
+	const Camera& Scene::getCamera() const
+	{
+		return camera;
+	}
+
 
 	const std::vector<GameObject*>& Scene::getGameObjects() const
 	{

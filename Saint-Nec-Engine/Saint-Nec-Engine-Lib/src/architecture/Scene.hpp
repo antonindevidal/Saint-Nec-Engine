@@ -39,28 +39,13 @@ namespace sne
 		std::vector<GameObject*> gameObjects;
 		
 		/**
-		 * View matrix of the scene.
-		 * Represent the camera.
-		 */
-		/*
-		glm::mat4 view;
-
-		glm::vec3 cameraPos;
-		glm::vec3 cameraFront;
-		glm::vec3 cameraUp;
-
-		float cameraSpeed;
-		int lastMouseX;
-		int lastMouseY;
-		float yaw;
-		float pitch;
-		bool firstMouse;
-		*/
-		/**
 		 * Projection matrix of the scene.
 		 */
 		glm::mat4 projection;
 
+		/**
+		 * Camera object for the scene.
+		 */
 		Camera camera;
 
 	public:
@@ -81,10 +66,23 @@ namespace sne
 		 */
 		~Scene();
 
+		/**
+		 * Load the scene.
+		 */
 		virtual void load();
 
+		/**
+		 * Unload the scene.
+		 */
 		virtual void unload();
 
+		/**
+		 * Process GLFW inputs here.
+		 *
+		 * @param window GLFW window.
+		 * @param mouseX Position of the mouse on horizontal axis.
+		 * @param mouseY Position of the mouse on vertical axis.
+		 */
 		void processInput(GLFWwindow* window, int mouseX, int mouseY);
 
 		/**
@@ -107,7 +105,7 @@ namespace sne
 		const std::string& getName()const;
 
 		/**
-		 * Getter for View matrix of the scene.
+		 * Getter for View matrix of the scene (from the camera).
 		 * 
 		 * @return View matrix.
 		 */
@@ -119,6 +117,13 @@ namespace sne
 		 * @return Projection matrix.
 		 */
 		const glm::mat4& getProjection() const;
+
+		/**
+		 * Getter for Camera of the scene.
+		 *
+		 * @return camera.
+		 */
+		const Camera& getCamera() const;
 
 		/**
 		* Return the vector of GameObject of the scene.
