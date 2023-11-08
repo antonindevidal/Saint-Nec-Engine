@@ -12,6 +12,7 @@ set(_SAINT_NEC_ENGINE_LIB_SRC
 	"physics/SAT.cpp"
 	"graphics/Cube.cpp"
 	"graphics/Shader.cpp"
+	"architecture/Time.cpp"
 )
 
 set(_SAINT_NEC_ENGINE_LIB_HDR
@@ -25,6 +26,7 @@ set(_SAINT_NEC_ENGINE_LIB_HDR
 	"physics/SAT.hpp"
 	"graphics/Cube.hpp"
 	"graphics/Shader.hpp"
+	"architecture/Time.hpp"
 )
 target_sources(Saint-Nec-Engine-Lib INTERFACE ${_SAINT_NEC_ENGINE_LIB_HDR})
 target_sources(Saint-Nec-Engine-Lib PRIVATE ${_SAINT_NEC_ENGINE_LIB_SRC})
