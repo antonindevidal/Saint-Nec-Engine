@@ -4,7 +4,6 @@ namespace sne
 {
 	GameObject::GameObject(): components(), model(1.0f), name("GameObject")
 	{
-		model = glm::rotate(model, glm::radians(-55.0f), glm::vec3(1.0f, 0.0f, 0.0f));
 	}
 
 	GameObject::~GameObject()

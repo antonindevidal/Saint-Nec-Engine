@@ -48,7 +48,11 @@ namespace sne
 		glm::vec3 cameraUp;
 
 		float cameraSpeed;
-
+		int lastMouseX;
+		int lastMouseY;
+		float yaw;
+		float pitch;
+		bool firstMouse;
 		/**
 		 * Projection matrix of the scene.
 		 */
@@ -76,7 +80,7 @@ namespace sne
 
 		virtual void unload();
 
-		void Scene::processInput(GLFWwindow* window);
+		void Scene::processInput(GLFWwindow* window, int mouseX, int mouseY);
 
 		/**
 		 * Update function.
