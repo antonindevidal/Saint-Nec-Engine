@@ -105,6 +105,13 @@ namespace sne
 		const std::string& getName()const;
 
 		/**
+		 * Setter for the scene's name.
+		 * 
+		 * @param newName Name for the scene.
+		 */
+		void setName(const std::string& newName);
+
+		/**
 		 * Getter for View matrix of the scene (from the camera).
 		 * 
 		 * @return View matrix.

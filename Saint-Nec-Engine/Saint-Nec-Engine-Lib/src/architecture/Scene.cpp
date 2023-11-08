@@ -56,6 +56,11 @@ namespace sne
 		return name;
 	}
 
+	void Scene::setName(const std::string& newName)
+	{
+		name = newName;
+	}
+
 	const glm::mat4& Scene::getView() const
 	{
 		return camera.getView();

@@ -3,6 +3,7 @@
 #include <architecture/Scene.hpp>
 #include <graphics/Cube.hpp>
 
+
 class FirstScene: public sne::Scene
 {
 public:

@@ -1,7 +1,11 @@
 #pragma once
 #include <string>
+#include <vector>
+#include <stb_image.h>
 #include <architecture/Component.hpp>
+#include <architecture/SceneManager.hpp>
 #include <graphics/Shader.hpp>
+
 
 /**
  * Component that draw a terrain from a heightmap.
@@ -18,12 +22,36 @@ public:
 	 * @param height Height of the terrain.
 	 * @param density Number of vertices per unite.
 	 */
-	TerrainComponent(const std::string& heightmapPath, const unsigned int& width, const unsigned int& depth, const unsigned int& density);
+	TerrainComponent::TerrainComponent(const char* heightmapPath, const char* vertexShaderPath, const char* fragmentShaderPath, const unsigned int& terrainWidth, const unsigned int& terrainDepth, const unsigned int& density);
 	~TerrainComponent();
 
-	void update() const override;
+	void update() override;
 	void draw() const override;
 
 private:
-	unsigned long heightmapID;
+	unsigned int terrainWidth;
+	unsigned int terrainDepth;
+	std::vector<float> vertices;
+	std::vector<float> indices;
+	unsigned int heightmapID;
+
+	/**
+	* Vertex Buffer Object.
+	*/
+	unsigned int VBO;
+
+	/**
+	* Vertex Array Object.
+	*/
+	unsigned int VAO;
+
+	/**
+	* Element Buffer Object.
+	*/
+	unsigned int EBO;
+
+	/**
+	* Shader used to draw the terrain.
+	*/
+	sne::graphics::Shader shader;
 };
