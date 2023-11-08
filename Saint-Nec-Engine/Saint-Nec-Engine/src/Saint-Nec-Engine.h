@@ -4,5 +4,16 @@
 #pragma once
 
 #include <iostream>
+#include <glad/glad.h>
+#include <GLFW/glfw3.h>
+#include <iostream>
+#include <imgui.h>
+#include <imgui_impl_glfw.h>
+#include <imgui_impl_opengl3.h>
+#include <architecture/Time.hpp>
+
+#include "Game.hpp"
+
+#define GLM_ENABLE_EXPERIMENTAL
 
 // TODO: Référencez ici les en-têtes supplémentaires nécessaires à votre programme.

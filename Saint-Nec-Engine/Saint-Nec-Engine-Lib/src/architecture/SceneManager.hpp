@@ -68,6 +68,8 @@ namespace sne
 		 */
 		void changeScene(const std::string& name);
 
+		void SceneManager::processInput(GLFWwindow* window);
+
 		/**
 		 * Update function for the current scene.
 		 * All the logic happens here.

@@ -9,9 +9,12 @@
 
 #include <vector>
 #include <string>
+#include <glad/glad.h>
+#include <GLFW/glfw3.h>
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 
+#include "Time.hpp"
 #include "GameObject.hpp"
 
 namespace sne
@@ -40,6 +43,12 @@ namespace sne
 		 */
 		glm::mat4 view;
 
+		glm::vec3 cameraPos;
+		glm::vec3 cameraFront;
+		glm::vec3 cameraUp;
+
+		float cameraSpeed;
+
 		/**
 		 * Projection matrix of the scene.
 		 */
@@ -66,6 +75,8 @@ namespace sne
 		virtual void load();
 
 		virtual void unload();
+
+		void Scene::processInput(GLFWwindow* window);
 
 		/**
 		 * Update function.

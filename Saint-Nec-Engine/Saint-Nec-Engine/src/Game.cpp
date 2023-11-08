@@ -13,6 +13,11 @@ Game::~Game()
 {
 }
 
+void Game::processInput(GLFWwindow* window)
+{
+	sceneManager->processInput(window);
+}
+
 void Game::update()
 {
 	sceneManager->update();

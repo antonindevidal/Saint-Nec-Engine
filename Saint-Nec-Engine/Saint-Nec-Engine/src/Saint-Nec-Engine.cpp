@@ -1,13 +1,6 @@
-#define GLM_ENABLE_EXPERIMENTAL
+#include "Saint-Nec-Engine.h"
 
-#include <glad/glad.h>
-#include <GLFW/glfw3.h>
-#include <iostream>
-#include <imgui.h>
-#include <imgui_impl_glfw.h>
-#include <imgui_impl_opengl3.h>
 
-#include "Game.hpp"
 
 
 void framebuffer_size_callback(GLFWwindow* window, int width, int height)
@@ -15,8 +8,9 @@ void framebuffer_size_callback(GLFWwindow* window, int width, int height)
     glViewport(0, 0, width, height);
 }
 
-void processInput(GLFWwindow* window)
+void processInput(GLFWwindow* window,Game& g)
 {
+    g.processInput(window);
     if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
         glfwSetWindowShouldClose(window, true);        
 }
@@ -82,6 +76,7 @@ int main(void)
     }
     glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
     glEnable(GL_DEPTH_TEST);
+    glfwSwapInterval(1);
 
     //Init ImGUI
     ImGui::CreateContext();
@@ -104,7 +99,9 @@ int main(void)
     /* Loop until the user closes the window */
     while (!glfwWindowShouldClose(window))
     {
-        processInput(window);
+        Time::getInstance()->calculateDeltaTime(); // TODO: Move this call to the scene manager for it to be abstract for the user
+        //std::cout << Time::getDeltaTime() << std::endl;
+        processInput(window,g);
         g.update();
         /* Render here */
         glClearColor(clear_color.x,clear_color.y,clear_color.z,clear_color.w);

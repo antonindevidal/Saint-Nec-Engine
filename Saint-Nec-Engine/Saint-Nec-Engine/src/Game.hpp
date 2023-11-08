@@ -13,6 +13,7 @@ public:
 	Game();
 	~Game();
 
+	void processInput(GLFWwindow* window);
 	void update();
 	void draw() const;
 

@@ -55,6 +55,15 @@ namespace sne
 		}
 	}
 
+	void SceneManager::processInput(GLFWwindow* window)
+	{
+		if (currentScene != nullptr)
+		{
+			currentScene->processInput(window);
+		}
+	}
+
+
 	void SceneManager::update()
 	{
 		if (currentScene != nullptr)
