@@ -4,7 +4,7 @@
 int mouseX = 640;
 int mouseY = 360;
 
-bool mouseMode = false;
+bool mouseMode = true;
 
 void framebuffer_size_callback(GLFWwindow* window, int width, int height)
 {
@@ -100,6 +100,7 @@ int main(void)
     //glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
     glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
     glfwSetCursorPosCallback(window, mouse_callback);
+    glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
 
     glEnable(GL_DEPTH_TEST);
     glfwSwapInterval(1);

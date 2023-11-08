@@ -83,7 +83,7 @@ namespace sne
 		 * @param mouseX Position of the mouse on horizontal axis.
 		 * @param mouseY Position of the mouse on vertical axis.
 		 */
-		void processInput(GLFWwindow* window, int mouseX, int mouseY);
+		virtual void processInput(GLFWwindow* window, int mouseX, int mouseY);
 
 		/**
 		 * Update function.
