@@ -13,6 +13,7 @@ set(_SAINT_NEC_ENGINE_LIB_SRC
 	"graphics/Cube.cpp"
 	"graphics/Shader.cpp"
 	"architecture/Time.cpp"
+	"architecture/Camera.cpp"
 )
 
 set(_SAINT_NEC_ENGINE_LIB_HDR
@@ -27,6 +28,7 @@ set(_SAINT_NEC_ENGINE_LIB_HDR
 	"graphics/Cube.hpp"
 	"graphics/Shader.hpp"
 	"architecture/Time.hpp"
+	"architecture/Camera.hpp"
 )
 target_sources(Saint-Nec-Engine-Lib INTERFACE ${_SAINT_NEC_ENGINE_LIB_HDR})
 target_sources(Saint-Nec-Engine-Lib PRIVATE ${_SAINT_NEC_ENGINE_LIB_SRC})

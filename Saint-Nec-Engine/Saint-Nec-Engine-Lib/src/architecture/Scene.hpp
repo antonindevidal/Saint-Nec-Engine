@@ -16,6 +16,7 @@
 
 #include "Time.hpp"
 #include "GameObject.hpp"
+#include "Camera.hpp"
 
 namespace sne
 {
@@ -36,11 +37,12 @@ namespace sne
 		 * Vector of the GameObjects present in the scene.
 		 */
 		std::vector<GameObject*> gameObjects;
-
+		
 		/**
 		 * View matrix of the scene.
 		 * Represent the camera.
 		 */
+		/*
 		glm::mat4 view;
 
 		glm::vec3 cameraPos;
@@ -53,10 +55,13 @@ namespace sne
 		float yaw;
 		float pitch;
 		bool firstMouse;
+		*/
 		/**
 		 * Projection matrix of the scene.
 		 */
 		glm::mat4 projection;
+
+		Camera camera;
 
 	public:
 
@@ -80,7 +85,7 @@ namespace sne
 
 		virtual void unload();
 
-		void Scene::processInput(GLFWwindow* window, int mouseX, int mouseY);
+		void processInput(GLFWwindow* window, int mouseX, int mouseY);
 
 		/**
 		 * Update function.

@@ -1,16 +1,22 @@
 #include "Saint-Nec-Engine.h"
 
 
-
+int mouseX = 640;
+int mouseY = 360;
 
 void framebuffer_size_callback(GLFWwindow* window, int width, int height)
 {
     glViewport(0, 0, width, height);
 }
+void mouse_callback(GLFWwindow* window, double xpos, double ypos)
+{
+    mouseX = xpos;
+    mouseY = ypos;
+}
 
 void processInput(GLFWwindow* window,Game& g)
 {
-    g.processInput(window);
+    g.processInput(window,mouseX,mouseY);
     if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
         glfwSetWindowShouldClose(window, true);        
 }
@@ -74,7 +80,10 @@ int main(void)
         std::cout << "Failed to initialize GLAD" << std::endl;
         return -1;
     }
+    glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
     glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
+    glfwSetCursorPosCallback(window, mouse_callback);
+
     glEnable(GL_DEPTH_TEST);
     glfwSwapInterval(1);
 
