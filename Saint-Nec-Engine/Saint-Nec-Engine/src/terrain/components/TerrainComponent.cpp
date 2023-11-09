@@ -32,15 +32,15 @@ TerrainComponent::TerrainComponent(const char* heightmapPath, const char* vertex
 	stbi_image_free(data);
 	*/
 	//Plane generation
-	
 	for (unsigned int i = 0; i < terrainWidth +1; i++)
 	{
 		for (unsigned int j = 0; j < terrainDepth + 1; j++)
 		{
 			//Create every vertices
-			vertices.push_back( i * 1.0f );
+
+			vertices.push_back( i * 1.0f  - (terrainWidth/2.0f)   );
 			vertices.push_back(0.0f); // Can be removed for optimization
-			vertices.push_back( j * 1.0f);
+			vertices.push_back( j * 1.0f - (terrainDepth/ 2.0f) );
 		}
 	}
 
@@ -60,30 +60,6 @@ TerrainComponent::TerrainComponent(const char* heightmapPath, const char* vertex
 		}
 	}
 	
-	/*
-	vertices.push_back(0.0f);
-	vertices.push_back(0.0f);
-	vertices.push_back(0.0f);
-
-	vertices.push_back(1.0f);
-	vertices.push_back(0.0f);
-	vertices.push_back(0.0f);
-
-	vertices.push_back(1.0f);
-	vertices.push_back(0.0f);
-	vertices.push_back(1.0f);
-
-	vertices.push_back(0.0f);
-	vertices.push_back(0.0f);
-	vertices.push_back(1.0f);
-
-	indices.push_back(0);
-	indices.push_back();
-	indices.push_back();
-
-	indices.push_back();
-	indices.push_back();
-	indices.push_back();*/
 	
 	glGenVertexArrays(1, &VAO);
 	glGenBuffers(1, &VBO); // Generate VBO
@@ -106,15 +82,6 @@ TerrainComponent::TerrainComponent(const char* heightmapPath, const char* vertex
 	shader.setMat4("projection", sne::SceneManager::getInstance()->getCurrentScene().getProjection()); //Set projection matrice once because it never changes 
 	shader.setMat4("view", sne::SceneManager::getInstance()->getCurrentScene().getView());
 	
-	for (float a: vertices)
-	{
-		std::cout << a << std::endl;
-	}
-	std::cout << "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" << std::endl;
-	for (int a : indices)
-	{
-		std::cout << a << std::endl;
-	}
 }
 
 TerrainComponent::~TerrainComponent()

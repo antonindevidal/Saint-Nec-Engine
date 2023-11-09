@@ -11,7 +11,7 @@ void TerrainScene::load()
 	sne::GameObject* cube = new sne::GameObject();
 	cube->setName("Terrain");
 	addGameObject(cube);
-	cube->addComponent(new TerrainComponent("resources/textures/heightmap_puy_de_dome.jpg","resources/shaders/terrain/basic_terrain.vert", "resources/shaders/terrain/basic_terrain.frag", 5, 2, 1));
+	cube->addComponent(new TerrainComponent("resources/textures/heightmap_puy_de_dome.jpg","resources/shaders/terrain/basic_terrain.vert", "resources/shaders/terrain/basic_terrain.frag", 100, 100, 1));
 
 	
 	sne::GameObject* cubeMonoColor = new sne::GameObject();
