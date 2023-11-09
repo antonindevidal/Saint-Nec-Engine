@@ -32,7 +32,7 @@ private:
 	unsigned int terrainWidth;
 	unsigned int terrainDepth;
 	std::vector<float> vertices;
-	std::vector<float> indices;
+	std::vector<int> indices;
 	unsigned int heightmapID;
 
 	/**

@@ -3,7 +3,7 @@
 TerrainComponent::TerrainComponent(const char* heightmapPath, const char* vertexShaderPath , const char* fragmentShaderPath
 	, const unsigned int& terrainWidth, const unsigned int& terrainDepth, const unsigned int& density): terrainDepth(terrainDepth), terrainWidth(terrainWidth), vertices(), indices(), shader(vertexShaderPath, fragmentShaderPath)
 {
-	
+	/*	
 	//Image Loading
 	int textWidth, textHeight, nrChannels;
 
@@ -30,7 +30,7 @@ TerrainComponent::TerrainComponent(const char* heightmapPath, const char* vertex
 
 
 	stbi_image_free(data);
-	
+	*/
 	//Plane generation
 	
 	for (unsigned int i = 0; i < terrainWidth +1; i++)
@@ -49,15 +49,42 @@ TerrainComponent::TerrainComponent(const char* heightmapPath, const char* vertex
 		for (unsigned int j = 0; j < terrainDepth; j++)
 		{
 			//Create every indices (2 triangles per quad)
-			indices.push_back(i * terrainDepth + j);
-			indices.push_back((i + 1) * terrainDepth + j);
-			indices.push_back((i + 1) * terrainDepth + j + 1);
+			indices.push_back( i * (terrainDepth + 1)+ j);
+			indices.push_back((i + 1) * (terrainDepth +1 ) + j );
+			indices.push_back((i + 1) * (terrainDepth + 1) + j + 1);
+			
+			indices.push_back((i + 1) * (terrainDepth + 1) + j + 1);
+			indices.push_back(i * (terrainDepth + 1) + j +1);
+			indices.push_back(i * (terrainDepth + 1) + j);
 
-			indices.push_back((i + 1) * terrainDepth + j);
-			indices.push_back((i + 1) * terrainDepth + j + 1);
-			indices.push_back(i * terrainDepth + j + 1);
 		}
 	}
+	
+	/*
+	vertices.push_back(0.0f);
+	vertices.push_back(0.0f);
+	vertices.push_back(0.0f);
+
+	vertices.push_back(1.0f);
+	vertices.push_back(0.0f);
+	vertices.push_back(0.0f);
+
+	vertices.push_back(1.0f);
+	vertices.push_back(0.0f);
+	vertices.push_back(1.0f);
+
+	vertices.push_back(0.0f);
+	vertices.push_back(0.0f);
+	vertices.push_back(1.0f);
+
+	indices.push_back(0);
+	indices.push_back();
+	indices.push_back();
+
+	indices.push_back();
+	indices.push_back();
+	indices.push_back();*/
+	
 	glGenVertexArrays(1, &VAO);
 	glGenBuffers(1, &VBO); // Generate VBO
 	glGenBuffers(1, &EBO); // generate EBO
@@ -69,7 +96,7 @@ TerrainComponent::TerrainComponent(const char* heightmapPath, const char* vertex
 	glBufferData(GL_ARRAY_BUFFER, sizeof(float) * vertices.size(), &vertices[0], GL_STATIC_DRAW);
 
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
-	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(float) * indices.size(), &indices[0], GL_STATIC_DRAW);
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(int) * indices.size(), &indices[0], GL_STATIC_DRAW);
 	
 	//interpret vertex data array (position)
 	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
@@ -79,7 +106,15 @@ TerrainComponent::TerrainComponent(const char* heightmapPath, const char* vertex
 	shader.setMat4("projection", sne::SceneManager::getInstance()->getCurrentScene().getProjection()); //Set projection matrice once because it never changes 
 	shader.setMat4("view", sne::SceneManager::getInstance()->getCurrentScene().getView());
 	
-
+	for (float a: vertices)
+	{
+		std::cout << a << std::endl;
+	}
+	std::cout << "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" << std::endl;
+	for (int a : indices)
+	{
+		std::cout << a << std::endl;
+	}
 }
 
 TerrainComponent::~TerrainComponent()
@@ -97,7 +132,7 @@ void TerrainComponent::update()
 void TerrainComponent::draw() const
 {
 	
-	glBindTexture(GL_TEXTURE_2D, heightmapID);
+	//glBindTexture(GL_TEXTURE_2D, heightmapID);
 
 	shader.use();
 
@@ -105,7 +140,7 @@ void TerrainComponent::draw() const
 	shader.setMat4("model", parent->getModel());
 
 	glBindVertexArray(VAO);
-	glDrawElements(GL_TRIANGLES, terrainDepth * terrainWidth * 2, GL_UNSIGNED_INT, 0);
+	glDrawElements(GL_TRIANGLES, terrainDepth * terrainWidth * 6, GL_UNSIGNED_INT, 0);
 	glBindVertexArray(0);
 	
 }
