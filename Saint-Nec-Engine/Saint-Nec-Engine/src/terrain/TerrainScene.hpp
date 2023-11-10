@@ -1,7 +1,7 @@
 #pragma once
 #include <architecture/Scene.hpp>
 #include <graphics/Cube.hpp>
-#include "components/TerrainComponent.hpp"
+#include <graphics/Plane.hpp>
 
 
 class TerrainScene: public sne::Scene

@@ -8,7 +8,6 @@ set(_SAINT_NEC_ENGINE_SRC
 	"src/ui_helper/UiHelper.cpp"
 	"src/scenes/FirstScene.cpp"
 	"src/terrain/TerrainScene.cpp"
-	"src/terrain/components/TerrainComponent.cpp"
 )
 
 set(_SAINT_NEC_ENGINE_HDR
@@ -17,7 +16,6 @@ set(_SAINT_NEC_ENGINE_HDR
 	"src/ui_helper/UiHelper.hpp"
 	"src/scenes/FirstScene.hpp"
 	"src/terrain/TerrainScene.hpp"
-	"src/terrain/components/TerrainComponent.hpp"
 )
 
 # Make the copy of the resource fil every time

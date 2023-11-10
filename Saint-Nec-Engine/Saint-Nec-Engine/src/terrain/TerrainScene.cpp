@@ -8,13 +8,16 @@ void TerrainScene::load()
 {
 	gameObjects = std::vector<sne::GameObject*>();
 
-	// Multicolor cube example
+	
 	sne::GameObject* terrain = new sne::GameObject();
 	terrain->setName("Terrain");
-	addGameObject(terrain);
-	terrain->addComponent(new TerrainComponent("resources/textures/heightmap_puy_de_dome.jpg","resources/shaders/terrain/basic_terrain.vert", "resources/shaders/terrain/basic_terrain.frag", 20, 20, 5));
+	addGameObject(terrain);	
+	sne::graphics::Plane* plane = new sne::graphics::Plane(20, 20, 5, "resources/shaders/terrain/basic_terrain.vert", "resources/shaders/terrain/basic_terrain.frag");
+	plane->setTexture("resources/textures/heightmap_puy_de_dome.jpg","heightmap");
+	terrain->addComponent(plane);
 
-	
+
+
 	sne::GameObject* cubeMonoColor = new sne::GameObject();
 	addGameObject(cubeMonoColor);
 	cubeMonoColor->setName("Monocolor cube");
@@ -25,4 +28,9 @@ void TerrainScene::load()
 
 void TerrainScene::unload()
 {
+	for (sne::GameObject* g : gameObjects)
+	{
+		delete g;
+	}
+	gameObjects = std::vector<sne::GameObject*>();
 }
