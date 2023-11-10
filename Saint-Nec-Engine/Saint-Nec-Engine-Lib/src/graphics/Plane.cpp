@@ -3,7 +3,7 @@
 
 namespace sne::graphics
 {
-	Plane::Plane(const unsigned int& width, const unsigned int& depth, const unsigned int& density, const char* vertexShaderPath, const char* fragmentShaderPath):
+	Plane::Plane(const unsigned int& width, const unsigned int& depth, const unsigned int& density, const char* vertexShaderPath, const char* fragmentShaderPath) :
 		GraphicComponent::GraphicComponent(vertexShaderPath, fragmentShaderPath)
 	{
 		std::vector<float> vertices{};
@@ -15,9 +15,8 @@ namespace sne::graphics
 			for (unsigned int j = 0; j < (depth * density) + 1; j++)
 			{
 				//Create every vertices
-
 				vertices.push_back((i * 1.0f / density) - (width / 2.0f));
-				vertices.push_back(0.0f); // Can be removed for optimization
+				vertices.push_back(0.0f);
 				vertices.push_back((j * 1.0f / density) - (depth / 2.0f));
 
 				//Create UV coordinates

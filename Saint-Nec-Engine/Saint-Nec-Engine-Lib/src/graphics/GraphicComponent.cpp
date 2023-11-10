@@ -3,8 +3,8 @@
 namespace sne::graphics
 {
 
-	GraphicComponent::GraphicComponent(const char* vertexShaderPath, const char* fragmentShaderPath):
-		VBO(0), VAO(0), EBO(0), renderedElementCount(0), shader(vertexShaderPath,fragmentShaderPath), textureID(0), hasTexture(false), hasGeometry(false)
+	GraphicComponent::GraphicComponent(const char* vertexShaderPath, const char* fragmentShaderPath) :
+		VBO(0), VAO(0), EBO(0), renderedElementCount(0), shader(vertexShaderPath, fragmentShaderPath), textureID(0), hasTexture(false), hasGeometry(false)
 	{
 		shader.use();
 		shader.setMat4("projection", sne::SceneManager::getInstance()->getCurrentScene().getProjection()); //Set projection matrice once because it never changes 
@@ -13,7 +13,7 @@ namespace sne::graphics
 
 	void GraphicComponent::setGeometry(const std::vector<float>& vertices, const VertexDataType& vertexDataType, const std::vector<int>& indices)
 	{
-		
+
 		glGenVertexArrays(1, &VAO);
 		glGenBuffers(1, &VBO); // Generate VBO
 		glGenBuffers(1, &EBO); // generate EBO
@@ -25,7 +25,7 @@ namespace sne::graphics
 
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
 		glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(int) * indices.size(), &indices[0], GL_STATIC_DRAW);
-		
+
 		switch (vertexDataType)
 		{
 		case VertexDataType::SNE_VERTICES:
@@ -76,7 +76,7 @@ namespace sne::graphics
 		{
 			glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, textWidth, textHeight, 0, GL_RGB, GL_UNSIGNED_BYTE, data);
 			glGenerateMipmap(GL_TEXTURE_2D);
-			std::cout << "Texture loaded correctly "<< texturePath << std::endl;
+			std::cout << "Texture loaded correctly " << texturePath << std::endl;
 		}
 		else
 		{
@@ -87,13 +87,13 @@ namespace sne::graphics
 		stbi_image_free(data);
 		shader.use();
 		shader.setInt(name, 0);
-		
+
 		hasTexture = true;
 	}
 
 	void GraphicComponent::draw() const
 	{
-		
+
 		if (hasTexture)
 		{
 			glActiveTexture(GL_TEXTURE0);
