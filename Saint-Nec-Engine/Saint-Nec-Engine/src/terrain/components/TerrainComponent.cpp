@@ -32,33 +32,16 @@ TerrainComponent::TerrainComponent(const char* heightmapPath, const char* vertex
 	stbi_image_free(data);
 	*/
 	//Plane generation
-	for (unsigned int i = 0; i < terrainWidth; i++)
+	for (unsigned int i = 0; i < terrainWidth +1; i++)
 	{
-		for (unsigned int j = 0; j < terrainDepth; j++)
+		for (unsigned int j = 0; j < terrainDepth + 1; j++)
 		{
 			//Create every vertices
 
-			
-			for (unsigned int k = 0; k < density; k++)
-			{
-				vertices.push_back(i * 1.0f - (terrainWidth / 2.0f) + i / density);
-				vertices.push_back(0.0f); // Can be removed for optimization
-				vertices.push_back(j * 1.0f - (terrainDepth / 2.0f) + j / density);
-			}
+			vertices.push_back( i * 1.0f  - (terrainWidth/2.0f)   );
+			vertices.push_back(0.0f); // Can be removed for optimization
+			vertices.push_back( j * 1.0f - (terrainDepth/ 2.0f) );
 		}
-	}
-	//For edge of plane
-	for (unsigned int i = 0; i < terrainWidth; i++)
-	{
-		vertices.push_back(i * 1.0f - (terrainWidth / 2.0f));
-		vertices.push_back(0.0f); // Can be removed for optimization
-		vertices.push_back(terrainDepth);
-	}
-	for (unsigned int i = 0; i < terrainDepth; i++)
-	{
-		vertices.push_back( terrainWidth);
-		vertices.push_back(0.0f); // Can be removed for optimization
-		vertices.push_back(i * 1.0f - (terrainDepth / 2.0f));
 	}
 
 	for (unsigned int i = 0; i < terrainWidth; i++)
