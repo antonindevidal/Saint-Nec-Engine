@@ -54,33 +54,18 @@ namespace sne
             return false;
         }
 
-        void BoxCollider::rotate(glm::vec3 points[], unsigned int size, const glm::vec3 &center, double alpha, double beta, double gamma)
-        {
-            glm::mat3 R = buildRotationMatrix(alpha, beta, gamma);
-
-            for (int index = 0; index < size; index++)
-            {
-                points[index] -= center;
-                points[index] = points[index] * R;
-                points[index] += center;
-            }
-        }
-
-        void BoxCollider::rotate(glm::vec3 points[], unsigned int size, const glm::vec3 &center, const glm::vec3 &rotation)
-        {
-            rotate(points, size, center, rotation[0], rotation[1], rotation[2]);
-        }
-
         void BoxCollider::setRotation(const glm::vec3 rotation)
         {
             // Evalute the angle of rotation
+            // rotation is absolute : if rotation == _rotation then angles = 0
             glm::vec3 delta_rot = rotation - _rotation;
-            double alpha = delta_rot[0],
-                   beta = delta_rot[1],
-                   gamma = delta_rot[2];
 
             // Rotate
-            rotate(_points, 8, _center, alpha, beta, gamma);
+            const glm::mat3 R = buildRotationMatrix(delta_rot[0], delta_rot[1], delta_rot[2]);
+            for (int i = 0; i < 8; i++)
+                rotate(R, _points[i], _center);
+
+            // Update new rotation
             _rotation = rotation;
         }
 
@@ -93,8 +78,7 @@ namespace sne
         {
             for (int i = 0; i < b.getNbPoints(); i++)
             {
-                // oss << b[i] << "\n";
-                sne::operator<<(oss, b[i]) << "\n";
+                oss << b[i] << "\n";
             }
 
             return oss;
@@ -103,15 +87,16 @@ namespace sne
         std::vector<glm::vec3> BoxCollider::getAxis() const
         {
             // absolute axis
-            glm::vec3 axis[] = {{1, 0, 0}, {0, 1, 0}, {0, 0, 1}};
+            std::vector<glm::vec3> v{}, v2{};
+            v.push_back({1, 0, 0});
+            v.push_back({0, 1, 0});
+            v.push_back({0, 0, 1});            
 
             // rotate axis considering the state of the Box
-            rotate(axis, 3, {0, 0, 0}, _rotation);
-
-            std::vector<glm::vec3> v{};
-            v.push_back(axis[0]);
-            v.push_back(axis[1]);
-            v.push_back(axis[2]);
+            const glm::mat3 R = buildRotationMatrix(_rotation);
+            glm::vec3 center{0, 0, 0};
+            for (int i=0; i<v.size(); i++)
+                rotate(R, v[i], center);
 
             return v;
         }

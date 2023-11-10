@@ -1,6 +1,6 @@
 #include "util.hpp"
 
-namespace sne
+namespace glm
 {
 
     bool operator==(const glm::vec3 &v1, const glm::vec3 &v2)
@@ -8,19 +8,8 @@ namespace sne
         return v1[0] == v2[0] && v1[1] == v2[1] && v1[2] == v2[2];
     }
 
-    bool operator<(const glm::vec3 &v1, const glm::vec3 &v2) // TO DISCUSS
+    bool operator<(const glm::vec3 &v1, const glm::vec3 &v2)
     {
-        // if ((*this) == v)
-        //     return false;
-
-        // double norm1 = norm(*this),
-        //        norm2 = norm(v);
-
-        // // TODO later:
-        // // Define with our own criteria (x pref, y pref and z pref?)
-        // return norm1 < norm2;
-
-        // Critera for delta:
         return v1[0] < v2[0] && v1[1] < v2[1] && v1[2] < v2[2];
     }
 
@@ -69,20 +58,19 @@ namespace sne
         return glm::vec3{p[0] - eps, p[1] - eps, p[2] - eps};
     }
 
-    // glm::vec3 glm::vec3::operator*(double coeff) const
-    // {
-    //     glm::vec3 v = *this;
-    //     v[0] = v[0] * coeff;
-    //     v[1] = v[1] * coeff;
-    //     v[2] = v[2] * coeff;
-    //     return v;
-    // }
-
     std::ostream &operator<<(std::ostream &oss, const glm::vec3 &v)
-	{
-		oss << "(" << v[0] << ", " << v[1] << ", " << v[2] << ")";
-		return oss;
-	}
+    {
+        oss << "(" << v[0] << ", " << v[1] << ", " << v[2] << ")";
+        return oss;
+    }
+}
+
+namespace sne
+{
+    double norm(const glm::vec3 &v)
+    {
+        return sqrt(v[0] * v[0] + v[1] * v[1] + v[2] * v[2]);
+    }
 
     glm::mat3 buildRotationMatrix(float alpha, float beta, float gamma)
     {
@@ -110,6 +98,11 @@ namespace sne
             -sin(beta), cos(beta) * sin(gamma), cos(beta) * cos(gamma)};
     }
 
+    glm::mat3 buildRotationMatrix(const glm::vec3 &rotation)
+    {
+        return buildRotationMatrix(rotation[0], rotation[1], rotation[2]);
+    }
+
     void displayRotationMatrix(glm::mat3 &R, float alpha, float beta, float gamma)
     {
 
@@ -126,9 +119,10 @@ namespace sne
         }
     }
 
-
-    double norm(const glm::vec3 &v)
+    void rotate(const glm::mat3 &R, glm::vec3 &point, const glm::vec3 &center)
     {
-        return sqrt(v[0] * v[0] + v[1] * v[1] + v[2] * v[2]);
+        point -= center;
+        point = point * R;
+        point += center;
     }
 }

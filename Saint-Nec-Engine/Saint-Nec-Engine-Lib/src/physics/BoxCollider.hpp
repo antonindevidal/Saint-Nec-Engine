@@ -99,19 +99,6 @@ namespace sne
              * @return std::vector<glm::vec3> 
              */
             std::vector<glm::vec3> getAxis() const;
-
-            /**
-             * @brief 
-             * 
-             * @param points array of the point to rotate
-             * @param size number of points
-             * @param center rotation center
-             * @param alpha rotation angle for 1st axis
-             * @param beta rotation angle for 2nd axis
-             * @param gamma rotation angle for 3rd axis
-             */
-            static void rotate(glm::vec3 points[], unsigned int size, const glm::vec3 &center, double alpha, double beta, double gamma);
-            static void rotate(glm::vec3 points[], unsigned int size, const glm::vec3 &center, const glm::vec3 &rotation);
         };
 
         std::ostream &operator<<(std::ostream &oss, const BoxCollider &b);
