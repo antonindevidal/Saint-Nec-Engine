@@ -35,6 +35,18 @@ namespace sne::graphics
 		glUniform3fv(glGetUniformLocation(shaderID, name.c_str()), 1, glm::value_ptr(value));
 	}
 
+	void Shader::setInt(const std::string& name, const int& value) const
+	{
+		glUniform1i(glGetUniformLocation(shaderID, name.c_str()), value);
+	}
+
+	const unsigned int& Shader::getID() const
+	{
+		return shaderID;
+	}
+
+	
+
 	void Shader::readFromFile(const std::string& filePath, std::string& sourceCode)
 	{
 		int success;

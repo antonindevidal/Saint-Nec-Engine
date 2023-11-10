@@ -3,7 +3,6 @@
 TerrainComponent::TerrainComponent(const char* heightmapPath, const char* vertexShaderPath , const char* fragmentShaderPath
 	, const unsigned int& terrainWidth, const unsigned int& terrainDepth, const unsigned int& density): terrainDepth(terrainDepth), terrainWidth(terrainWidth), terrainDensity(density), vertices(), indices(), shader(vertexShaderPath, fragmentShaderPath)
 {
-	/*	
 	//Image Loading
 	int textWidth, textHeight, nrChannels;
 
@@ -19,8 +18,8 @@ TerrainComponent::TerrainComponent(const char* heightmapPath, const char* vertex
 	
 	if (data)
 	{
-		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, textWidth, textHeight, 0, GL_RED, GL_UNSIGNED_BYTE, data);
-		//glGenerateMipmap(GL_TEXTURE_2D);
+		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, textWidth, textHeight, 0, GL_RGB, GL_UNSIGNED_BYTE, data);
+		glGenerateMipmap(GL_TEXTURE_2D);
 		std::cout << "Texture loaded correctly" << std::endl;
 	}
 	else
@@ -30,7 +29,10 @@ TerrainComponent::TerrainComponent(const char* heightmapPath, const char* vertex
 
 
 	stbi_image_free(data);
-	*/
+
+
+
+	
 	//Plane generation
 	for (unsigned int i = 0; i < (terrainWidth * density) +1; i++)
 	{
@@ -42,6 +44,9 @@ TerrainComponent::TerrainComponent(const char* heightmapPath, const char* vertex
 			vertices.push_back(0.0f); // Can be removed for optimization
 			vertices.push_back((j * 1.0f / density) -(terrainDepth / 2.0f) );
 
+			//Create UV coordinates
+			vertices.push_back(i / (terrainWidth * density * 1.0));
+			vertices.push_back(j / (terrainDepth * density * 1.0));
 		}
 	}
 
@@ -75,13 +80,16 @@ TerrainComponent::TerrainComponent(const char* heightmapPath, const char* vertex
 	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(int) * indices.size(), &indices[0], GL_STATIC_DRAW);
 	
 	//interpret vertex data array (position)
-	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
+	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)0);
 	glEnableVertexAttribArray(0);
+	glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)(3 * sizeof(float)));
+	glEnableVertexAttribArray(1);
 
 	shader.use(); //Set default value for matrices
 	shader.setMat4("projection", sne::SceneManager::getInstance()->getCurrentScene().getProjection()); //Set projection matrice once because it never changes 
 	shader.setMat4("view", sne::SceneManager::getInstance()->getCurrentScene().getView());
-	
+	shader.setInt("heightmap", 0);
+
 }
 
 TerrainComponent::~TerrainComponent()
@@ -99,9 +107,11 @@ void TerrainComponent::update()
 void TerrainComponent::draw() const
 {
 	
-	//glBindTexture(GL_TEXTURE_2D, heightmapID);
+	glActiveTexture(GL_TEXTURE0);
+	glBindTexture(GL_TEXTURE_2D, heightmapID);
 
 	shader.use();
+	
 
 	shader.setMat4("view", sne::SceneManager::getInstance()->getCurrentScene().getView());
 	shader.setMat4("model", parent->getModel());
