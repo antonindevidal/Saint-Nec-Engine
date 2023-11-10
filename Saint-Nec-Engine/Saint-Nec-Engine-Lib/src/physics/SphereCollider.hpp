@@ -8,7 +8,8 @@
  */
 
 #include "architecture/Component.hpp"
-#include "architecture/Vector3.hpp"
+#include <glm/glm.hpp>
+#include <glm/gtc/type_ptr.hpp>
 
 namespace sne
 {
@@ -22,11 +23,11 @@ namespace sne
         class SphereCollider : public Component
         {
         private:
-            Vector3 _center;
+            glm::vec3 _center;
             double _radius;
 
         public:
-            SphereCollider(Vector3 center, double radius);
+            SphereCollider(glm::vec3 center, double radius);
             ~SphereCollider() = default;
 
             /**
@@ -41,7 +42,7 @@ namespace sne
              * 
              * @return const Vector3& 
              */
-            const Vector3 &getCenter() const;
+            const glm::vec3 &getCenter() const;
         };
     }
 }

@@ -6,7 +6,7 @@ namespace sne
     namespace saintNecPhysics
 
     {
-        SphereCollider::SphereCollider(Vector3 center, double radius) : _center(center), _radius(radius)
+        SphereCollider::SphereCollider(glm::vec3 center, double radius) : _center(center), _radius(radius)
         {
         }
 
@@ -15,7 +15,7 @@ namespace sne
             return _radius;
         }
         
-        const Vector3 &SphereCollider::getCenter() const
+        const glm::vec3 &SphereCollider::getCenter() const
         {
             return _center;
         }

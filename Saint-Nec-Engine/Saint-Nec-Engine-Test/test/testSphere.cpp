@@ -2,9 +2,9 @@
 #include <iostream>
 #include <catch.hpp>
 #include <cmath>
-#include <architecture/Component.hpp>
 #include <physics/SphereCollider.hpp>
-#include <physics/SAT.hpp>
+#include <glm/glm.hpp>
+#include <glm/gtc/type_ptr.hpp>
 
 // Tests //-----------------------------------------------------------------------------------------
 using namespace sne;
@@ -13,8 +13,8 @@ using namespace saintNecPhysics;
 //--------------------------------------------------------------------------------------------------
 TEST_CASE("TEST SPHERECOLLIDER CONSTRUCTORS")
 {
-    const SphereCollider sphere{Vector3{2, 2, 1}, 2.7589};
+    const SphereCollider sphere{glm::vec3{2, 2, 1}, 2.7589};
 
     CHECK(sphere.getRadius() == 2.7589);
-    CHECK(sphere.getCenter() == Vector3{2, 2, 1});
+    CHECK(sphere.getCenter() == glm::vec3{2, 2, 1});
 }

@@ -1,6 +1,7 @@
 #include "BoxCollider.hpp"
 #include "SphereCollider.hpp"
 #include "SAT.hpp"
+#include <architecture/util.hpp>
 
 namespace sne
 {
@@ -15,16 +16,16 @@ namespace sne
             return x1_max < x2_min || x2_max < x1_min;
         }
 
-        double dot(const Vector3 v1, const Vector3 v2)
+        double dot(const glm::vec3 v1, const glm::vec3 v2)
         {
             // If one of the vector norm is 1 then it's a simple projection
 
             return v1[0] * v2[0] + v1[1] * v2[1] + v1[2] * v2[2];
         }
 
-        std::vector<Vector3> operator+(const std::vector<Vector3> v1, const std::vector<Vector3> v2)
+        std::vector<glm::vec3> operator+(const std::vector<glm::vec3> v1, const std::vector<glm::vec3> v2)
         {
-            std::vector<Vector3> v = v1;
+            std::vector<glm::vec3> v = v1;
             for (auto elt : v2)
             {
                 v.push_back(elt);
@@ -36,12 +37,12 @@ namespace sne
         bool hasSATCollision(const BoxCollider &boxe1, const BoxCollider &boxe2)
         {
             // Each BoxCollider has 3 normal axis
-            std::vector<Vector3> v1 = boxe1.getAxis();
-            std::vector<Vector3> v2 = boxe2.getAxis();
-            std::vector<Vector3> v = v1 + v2;
+            std::vector<glm::vec3> v1 = boxe1.getAxis();
+            std::vector<glm::vec3> v2 = boxe2.getAxis();
+            std::vector<glm::vec3> v = v1 + v2;
 
             // SAT
-            for (Vector3 axis : v)
+            for (glm::vec3 axis : v)
             {
                 // We check a if a gap exist on each axis
                 double boxe1_min = dot(axis, boxe1[0]),
@@ -83,10 +84,10 @@ namespace sne
         bool hasSATCollision(const BoxCollider &boxe, const SphereCollider &sphere)
         {
             // Evaluate the distance between the 2 centers
-            std::vector<Vector3> v = boxe.getAxis();
+            std::vector<glm::vec3> v = boxe.getAxis();
 
             // SAT
-            for (Vector3 axis : v)
+            for (glm::vec3 axis : v)
             {
                 // We check a if a gap exist on each axis
                 double boxe_min = dot(axis, boxe[0]),

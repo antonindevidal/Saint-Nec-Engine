@@ -1,36 +1,38 @@
 #include "BoxCollider.hpp"
+#include <architecture/util.hpp>
+#include <iostream>
 
 namespace sne
 {
 
     namespace saintNecPhysics
     {
-        BoxCollider::BoxCollider(const Vector3 center, double width, double depth, double height)
+        BoxCollider::BoxCollider(const glm::vec3 center, double width, double depth, double height)
         {
             double offsetX = width / 2,
                    offsetY = depth / 2,
                    offsetZ = height / 2;
 
-            _points[0] = Vector3(center[0] - offsetX, center[1] - offsetY, center[2] - offsetZ);
-            _points[1] = Vector3(center[0] - offsetX, center[1] - offsetY, center[2] + offsetZ);
-            _points[2] = Vector3(center[0] - offsetX, center[1] + offsetY, center[2] - offsetZ);
-            _points[3] = Vector3(center[0] - offsetX, center[1] + offsetY, center[2] + offsetZ);
-            _points[4] = Vector3(center[0] + offsetX, center[1] - offsetY, center[2] - offsetZ);
-            _points[5] = Vector3(center[0] + offsetX, center[1] - offsetY, center[2] + offsetZ);
-            _points[6] = Vector3(center[0] + offsetX, center[1] + offsetY, center[2] - offsetZ);
-            _points[7] = Vector3(center[0] + offsetX, center[1] + offsetY, center[2] + offsetZ);
+            _points[0] = glm::vec3(center[0] - offsetX, center[1] - offsetY, center[2] - offsetZ);
+            _points[1] = glm::vec3(center[0] - offsetX, center[1] - offsetY, center[2] + offsetZ);
+            _points[2] = glm::vec3(center[0] - offsetX, center[1] + offsetY, center[2] - offsetZ);
+            _points[3] = glm::vec3(center[0] - offsetX, center[1] + offsetY, center[2] + offsetZ);
+            _points[4] = glm::vec3(center[0] + offsetX, center[1] - offsetY, center[2] - offsetZ);
+            _points[5] = glm::vec3(center[0] + offsetX, center[1] - offsetY, center[2] + offsetZ);
+            _points[6] = glm::vec3(center[0] + offsetX, center[1] + offsetY, center[2] - offsetZ);
+            _points[7] = glm::vec3(center[0] + offsetX, center[1] + offsetY, center[2] + offsetZ);
 
             _center = center;
         }
 
-        const Vector3 &BoxCollider::operator[](int i) const
+        const glm::vec3 &BoxCollider::operator[](int i) const
         {
             return _points[i];
         }
 
-        bool BoxCollider::hasPoint(const Vector3 &p) const
+        bool BoxCollider::hasPoint(const glm::vec3 &p) const
         {
-            for (Vector3 v : _points)
+            for (glm::vec3 v : _points)
                 if (v == p)
                     return true;
 
@@ -42,83 +44,34 @@ namespace sne
             return 8;
         }
 
-        // TO UPDATE WITH GML
-
-        void BoxCollider::rotate(Vector3 points[], unsigned int size, const Vector3 &center, double alpha, double beta, double gamma)
+        bool BoxCollider::contains(const glm::vec3 &p, float eps) const
         {
-            // Documentation:
-            // https://en.wikipedia.org/wiki/Rotation_matrix#General_3D_rotations
-
-            // Considering the rotation matrix:
-            //      |a b c|
-            //  R = |d e f|
-            //      |g h i|
-
-            double a = cos(alpha) * cos(beta),
-                   b = cos(alpha) * sin(beta) * sin(gamma) - sin(alpha) * cos(gamma),
-                   c = cos(alpha) * sin(beta) * cos(gamma) + sin(alpha) * sin(gamma),
-                   d = sin(alpha) * cos(beta),
-                   e = sin(alpha) * sin(beta) * sin(gamma) + cos(alpha) * cos(gamma),
-                   f = sin(alpha) * sin(beta) * cos(gamma) - cos(alpha) * sin(gamma),
-                   g = -sin(beta),
-                   h = cos(beta) * sin(gamma),
-                   i = cos(beta) * cos(gamma);
-            
-            // Display Rotation matrix
-            // std::cout << "|" << alpha << " " << beta << " " << gamma << "|\n";
-            // std::cout << "Rotation matrix:\n";
-            // std::cout << "|" << a << " " << b << " " << c << "|\n";
-            // std::cout << "|" << d << " " << e << " " << f << "|\n";
-            // std::cout << "|" << g << " " << h << " " << i << "|\n";
-
-            // Update points
-            // Considering p = [x, y, z]^T
-            //          | ax + by + cz |
-            // R * p =  | dx + ey + fz | = new p
-            //          | gx + hy + iz |
-            for (int index = 0; index < size; index++)
-            {
-                double x = points[index][0] - center[0];
-                double y = points[index][1] - center[1];
-                double z = points[index][2] - center[2];
-
-                points[index][0] = a * x + b * y + c * z + center[0];
-                points[index][1] = d * x + e * y + f * z + center[1];
-                points[index][2] = g * x + h * y + i * z + center[2];
-            }
-        }
-
-        void BoxCollider::rotate(Vector3 points[], unsigned int size, const Vector3 &center, const Vector3 &rotation)
-        {
-            rotate(points, size, center, rotation[0], rotation[1], rotation[2]);
-        }
-
-        void BoxCollider::setRotation(const Vector3 rotation)
-        {
-            // Evalute the angle of rotation
-            Vector3 delta_rot = rotation - _rotation;
-            double alpha = delta_rot[0],
-                   beta = delta_rot[1],
-                   gamma = delta_rot[2];
-            
-            // Rotate
-            rotate(_points, 8, _center, alpha, beta, gamma);
-            _rotation = rotation;
-        }
-
-        const Vector3 BoxCollider::getRotation() const
-        {
-            return _rotation;
-        }
-
-        bool BoxCollider::contains(const Vector3 &p, double eps) const
-        {
-            for (Vector3 v : _points)
+            for (glm::vec3 v : _points)
             {
                 if ((v - eps) <= p && p <= (v + eps))
                     return true;
             }
             return false;
+        }
+
+        void BoxCollider::setRotation(const glm::vec3 rotation)
+        {
+            // Evalute the angle of rotation
+            // rotation is absolute : if rotation == _rotation then angles = 0
+            glm::vec3 delta_rot = rotation - _rotation;
+
+            // Rotate
+            const glm::mat3 R = buildRotationMatrix(delta_rot[0], delta_rot[1], delta_rot[2]);
+            for (int i = 0; i < 8; i++)
+                rotate(R, _points[i], _center);
+
+            // Update new rotation
+            _rotation = rotation;
+        }
+
+        const glm::vec3 BoxCollider::getRotation() const
+        {
+            return _rotation;
         }
 
         std::ostream &operator<<(std::ostream &oss, const BoxCollider &b)
@@ -131,18 +84,19 @@ namespace sne
             return oss;
         }
 
-        std::vector<Vector3> BoxCollider::getAxis() const
+        std::vector<glm::vec3> BoxCollider::getAxis() const
         {
             // absolute axis
-            Vector3 axis[] = {{1, 0, 0}, {0, 1, 0}, {0, 0, 1}};
+            std::vector<glm::vec3> v{}, v2{};
+            v.push_back({1, 0, 0});
+            v.push_back({0, 1, 0});
+            v.push_back({0, 0, 1});            
 
             // rotate axis considering the state of the Box
-            rotate(axis, 3, {0, 0, 0}, _rotation);
-
-            std::vector<Vector3> v{};
-            v.push_back(axis[0]);
-            v.push_back(axis[1]);
-            v.push_back(axis[2]);
+            const glm::mat3 R = buildRotationMatrix(_rotation);
+            glm::vec3 center{0, 0, 0};
+            for (int i=0; i<v.size(); i++)
+                rotate(R, v[i], center);
 
             return v;
         }

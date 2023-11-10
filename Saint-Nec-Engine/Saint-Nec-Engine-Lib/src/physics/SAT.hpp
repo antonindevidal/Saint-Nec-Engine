@@ -10,7 +10,8 @@
 
 #include "BoxCollider.hpp"
 #include "SphereCollider.hpp"
-
+#include <glm/glm.hpp>
+#include <glm/gtc/type_ptr.hpp>
 
 namespace sne
 {
@@ -46,16 +47,16 @@ namespace sne
          * @param v2 
          * @return double 
          */
-        double dot(const Vector3 v1, const Vector3 v2);
+        double dot(const glm::vec3 v1, const glm::vec3 v2);
         
         /**
          * @brief concatenation of v1 and v2 into an other vector
          * 
          * @param v1 
          * @param v2 
-         * @return std::vector<Vector3> 
+         * @return std::vector<glm::vec3> 
          */
-        std::vector<Vector3> operator+(const std::vector<Vector3> v1, const std::vector<Vector3> v2);
+        std::vector<glm::vec3> operator+(const std::vector<glm::vec3> v1, const std::vector<glm::vec3> v2);
 
         /**
          * @brief detect collision relating to Separate Axis Theorem algorithm
