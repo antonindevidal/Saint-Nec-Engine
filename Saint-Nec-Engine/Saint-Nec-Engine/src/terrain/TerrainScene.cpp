@@ -7,11 +7,12 @@ TerrainScene::TerrainScene(): Scene::Scene()
 void TerrainScene::load()
 {
 	gameObjects = std::vector<sne::GameObject*>();
+
 	// Multicolor cube example
-	sne::GameObject* cube = new sne::GameObject();
-	cube->setName("Terrain");
-	addGameObject(cube);
-	cube->addComponent(new TerrainComponent("resources/textures/heightmap_puy_de_dome.jpg","resources/shaders/terrain/basic_terrain.vert", "resources/shaders/terrain/basic_terrain.frag", 100, 100, 1));
+	sne::GameObject* terrain = new sne::GameObject();
+	terrain->setName("Terrain");
+	addGameObject(terrain);
+	terrain->addComponent(new TerrainComponent("resources/textures/heightmap_puy_de_dome.jpg","resources/shaders/terrain/basic_terrain.vert", "resources/shaders/terrain/basic_terrain.frag", 8, 8, 5));
 
 	
 	sne::GameObject* cubeMonoColor = new sne::GameObject();

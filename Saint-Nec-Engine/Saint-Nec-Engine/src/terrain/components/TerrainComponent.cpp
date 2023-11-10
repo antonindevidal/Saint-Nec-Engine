@@ -1,7 +1,7 @@
 #include "TerrainComponent.hpp"
 
 TerrainComponent::TerrainComponent(const char* heightmapPath, const char* vertexShaderPath , const char* fragmentShaderPath
-	, const unsigned int& terrainWidth, const unsigned int& terrainDepth, const unsigned int& density): terrainDepth(terrainDepth), terrainWidth(terrainWidth), vertices(), indices(), shader(vertexShaderPath, fragmentShaderPath)
+	, const unsigned int& terrainWidth, const unsigned int& terrainDepth, const unsigned int& density): terrainDepth(terrainDepth), terrainWidth(terrainWidth), terrainDensity(density), vertices(), indices(), shader(vertexShaderPath, fragmentShaderPath)
 {
 	/*	
 	//Image Loading
@@ -32,31 +32,31 @@ TerrainComponent::TerrainComponent(const char* heightmapPath, const char* vertex
 	stbi_image_free(data);
 	*/
 	//Plane generation
-	for (unsigned int i = 0; i < terrainWidth +1; i++)
+	for (unsigned int i = 0; i < (terrainWidth * density) +1; i++)
 	{
-		for (unsigned int j = 0; j < terrainDepth + 1; j++)
+		for (unsigned int j = 0; j < (terrainDepth * density) + 1; j++)
 		{
 			//Create every vertices
 
-			vertices.push_back( i * 1.0f  - (terrainWidth/2.0f)   );
+			vertices.push_back((i * 1.0f / density)- (terrainWidth/2.0f)   );
 			vertices.push_back(0.0f); // Can be removed for optimization
-			vertices.push_back( j * 1.0f - (terrainDepth/ 2.0f) );
+			vertices.push_back((j * 1.0f / density) -(terrainDepth / 2.0f) );
+
 		}
 	}
 
-	for (unsigned int i = 0; i < terrainWidth; i++)
+	for (unsigned int i = 0; i < terrainWidth*density; i++)
 	{
-		for (unsigned int j = 0; j < terrainDepth; j++)
+		for (unsigned int j = 0; j < terrainDepth*density; j++)
 		{
 			//Create every indices (2 triangles per quad)
-			indices.push_back( i * (terrainDepth + 1)+ j);
-			indices.push_back((i + 1) * (terrainDepth +1 ) + j );
-			indices.push_back((i + 1) * (terrainDepth + 1) + j + 1);
-			
-			indices.push_back((i + 1) * (terrainDepth + 1) + j + 1);
-			indices.push_back(i * (terrainDepth + 1) + j +1);
-			indices.push_back(i * (terrainDepth + 1) + j);
+			indices.push_back( i * (terrainDepth*density + 1)+ j);
+			indices.push_back((i + 1) * (terrainDepth * density +1 ) + j );
+			indices.push_back((i + 1) * (terrainDepth * density + 1) + j + 1);
 
+			indices.push_back((i + 1) * (terrainDepth * density + 1) + j + 1);
+			indices.push_back(i * (terrainDepth * density + 1) + j +1);
+			indices.push_back(i * (terrainDepth * density + 1) + j);
 		}
 	}
 	
@@ -107,7 +107,7 @@ void TerrainComponent::draw() const
 	shader.setMat4("model", parent->getModel());
 
 	glBindVertexArray(VAO);
-	glDrawElements(GL_TRIANGLES, terrainDepth * terrainWidth * 6, GL_UNSIGNED_INT, 0);
+	glDrawElements(GL_TRIANGLES, terrainDepth * terrainWidth * terrainDensity * terrainDensity * 6, GL_UNSIGNED_INT, 0);
 	glBindVertexArray(0);
 	
 }
