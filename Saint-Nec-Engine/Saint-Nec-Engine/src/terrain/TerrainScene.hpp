@@ -1,13 +1,13 @@
-#pragma once 
-
+#pragma once
 #include <architecture/Scene.hpp>
 #include <graphics/Cube.hpp>
+#include <graphics/Plane.hpp>
 
 
-class FirstScene: public sne::Scene
+class TerrainScene: public sne::Scene
 {
 public:
-	FirstScene();
+	TerrainScene();
 
 	void load() override;
 	void unload() override;

@@ -1,0 +1,113 @@
+/**
+ * @file GraphicComponent.hpp
+ * @brief GraphicComponent class.
+ * @author Antonin DEVIDAL
+ * @date November 10 2023
+ *
+ */
+
+#include <glad/glad.h>
+#include <GLFW/glfw3.h>
+#include <vector>
+#include <stb_image.h>
+#include "Shader.hpp"
+#include "../architecture/Component.hpp"
+#include "../architecture/SceneManager.hpp"
+#include "../architecture/GameObject.hpp"
+
+namespace sne::graphics
+{
+	/**
+	 * All the types of vertex data.
+	 */
+	enum VertexDataType
+	{
+		SNE_VERTICES, // 3 floats
+		SNE_VERTICES_TEXTURE, // 3 floats + 2 floats
+		SNE_VERTICES_COLOR, //3 floats + 3 floats
+		SNE_VERTICES_COLOR_TEXTURE //3 floats + 3 floats + 2 floats
+	};
+
+	/**
+	 * @class GraphicComponent
+	 * @brief This class abstracts EBO VBO VAO draw call and Shader uniforms
+	 *
+	 * This class only uses triangles as primitives.
+	 */
+	class GraphicComponent : public sne::Component
+	{
+	public:
+		/**
+		 * @brief Constructor.
+		 *
+		 * @param vertexShaderPath Path of the vertex shader.
+		 * @param fragmentShaderPath Path of the fragment shader.
+		 */
+		GraphicComponent(const char* vertexShaderPath, const char* fragmentShaderPath);
+
+		/**
+		* @brief Set the geometry of the graphic component
+		*
+		* @param vertices Vertex data for the instance.
+		* @param vertexDataType Type of vertex data used for the instance.
+		* @param indices Geometry indices.
+		*/
+		void setGeometry(const std::vector<float>& vertices, const VertexDataType& vertexDataType, const std::vector<int>& indices);
+
+		/**
+		 * @brief Set the texture for the graphic component.
+		 * Note: A graphic component can only have one texture.
+		 *
+		 * @param texturePath Path for the texture.
+		 * @param name Name for the uniform inside the shader.
+		 */
+		void setTexture(const char* texturePath, const char* name);
+
+		/**
+		* @brief Draw the cube instance.
+		*/
+		void draw() const override;
+
+	private:
+		/**
+		* Vertex Buffer Object.
+		*/
+		unsigned int VBO;
+
+		/**
+		* Vertex Array Object.
+		*/
+		unsigned int VAO;
+
+		/**
+		* Element Buffer Object.
+		*/
+		unsigned int EBO;
+
+		/**
+		 * Number of elements to be rendered (points).
+		 */
+		unsigned int renderedElementCount;
+
+		/**
+		 * Shader object for graphic component.
+		 */
+		Shader shader;
+
+		/**
+		 * Texture ID.
+		 */
+		unsigned int textureID; // For now, only one texture per graphic component is suppported
+
+		/**
+		 * Has the texture been set.
+		 */
+		bool hasTexture;
+
+		/**
+		 * has the geometry been set.
+		 */
+		bool hasGeometry;
+	};
+}
+

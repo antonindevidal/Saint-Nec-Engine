@@ -59,6 +59,10 @@ namespace sne::graphics
 		 */
 		void setVec3(const std::string& name, const glm::vec3& value) const;
 
+		void setInt(const std::string& name, const int& value) const;
+
+		const unsigned int& getID() const;
+
 	private:
 		/**
 		 * Shader ID.

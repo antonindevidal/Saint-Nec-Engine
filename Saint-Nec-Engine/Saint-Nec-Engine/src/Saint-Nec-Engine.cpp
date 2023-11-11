@@ -1,24 +1,41 @@
-#define GLM_ENABLE_EXPERIMENTAL
+#include "Saint-Nec-Engine.h"
 
-#include <glad/glad.h>
-#include <GLFW/glfw3.h>
-#include <iostream>
-#include <imgui.h>
-#include <imgui_impl_glfw.h>
-#include <imgui_impl_opengl3.h>
 
-#include "Game.hpp"
+int mouseX = 640;
+int mouseY = 360;
 
+bool mouseMode = true;
 
 void framebuffer_size_callback(GLFWwindow* window, int width, int height)
 {
     glViewport(0, 0, width, height);
 }
-
-void processInput(GLFWwindow* window)
+void mouse_callback(GLFWwindow* window, double xpos, double ypos)
 {
+    mouseX = xpos;
+    mouseY = ypos;
+}
+
+void processInput(GLFWwindow* window, Game& g)
+{
+    g.processInput(window, mouseX, mouseY);
     if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
-        glfwSetWindowShouldClose(window, true);        
+        glfwSetWindowShouldClose(window, true);
+
+    // Press F1 to change from mouse used for camera to mouse used for UI
+    if (glfwGetKey(window, GLFW_KEY_F1) == GLFW_PRESS)
+    {
+        if (mouseMode)
+        {
+            glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+        }
+        else
+        {
+            glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
+        }
+        mouseMode = !mouseMode;
+    }
+
 }
 
 
@@ -26,7 +43,7 @@ void draw_imgui(bool& show_demo_window, bool& show_another_window, ImVec4& clear
 {
     //Demo window (can be commented if needed)
     //if (show_demo_window)
-        ImGui::ShowDemoWindow(&show_demo_window);
+        //ImGui::ShowDemoWindow(&show_demo_window);
 
     {
         static float f = 0.0f;
@@ -80,8 +97,14 @@ int main(void)
         std::cout << "Failed to initialize GLAD" << std::endl;
         return -1;
     }
+    //glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
     glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
+    glfwSetCursorPosCallback(window, mouse_callback);
+    glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+
     glEnable(GL_DEPTH_TEST);
+    glfwSwapInterval(1);
+    //glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 
     //Init ImGUI
     ImGui::CreateContext();
@@ -104,7 +127,9 @@ int main(void)
     /* Loop until the user closes the window */
     while (!glfwWindowShouldClose(window))
     {
-        processInput(window);
+        Time::getInstance()->calculateDeltaTime(); // TODO: Move this call to the scene manager for it to be abstract for the user
+        //std::cout << Time::getDeltaTime() << std::endl;
+        processInput(window,g);
         g.update();
         /* Render here */
         glClearColor(clear_color.x,clear_color.y,clear_color.z,clear_color.w);
@@ -118,7 +143,7 @@ int main(void)
 
 
 
-        draw_imgui(show_demo_window, show_another_window, clear_color, io);
+        //draw_imgui(show_demo_window, show_another_window, clear_color, io);
         g.draw();
 
         //Render ImGUI

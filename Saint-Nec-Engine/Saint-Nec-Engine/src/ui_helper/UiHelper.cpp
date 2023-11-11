@@ -2,7 +2,14 @@
 
 void UiHelper::WindowSceneTree(const sne::Scene& scene)
 {
+	ImGuiIO& io = ImGui::GetIO();
 	ImGui::Begin("Scene tree");
+	ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / io.Framerate, io.Framerate);
+	ImGui::Separator();
+	ImGui::Text("Camera:");
+	ImGui::Text("Position: %f %f %f", scene.getCamera().getPosition().x, scene.getCamera().getPosition().y, scene.getCamera().getPosition().z);
+	ImGui::Separator();
+
 	SceneHelper(scene);
 	ImGui::End();
 }

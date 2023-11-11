@@ -9,10 +9,14 @@
 
 #include <vector>
 #include <string>
+#include <glad/glad.h>
+#include <GLFW/glfw3.h>
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 
+#include "Time.hpp"
 #include "GameObject.hpp"
+#include "Camera.hpp"
 
 namespace sne
 {
@@ -33,17 +37,16 @@ namespace sne
 		 * Vector of the GameObjects present in the scene.
 		 */
 		std::vector<GameObject*> gameObjects;
-
-		/**
-		 * View matrix of the scene.
-		 * Represent the camera.
-		 */
-		glm::mat4 view;
-
+		
 		/**
 		 * Projection matrix of the scene.
 		 */
 		glm::mat4 projection;
+
+		/**
+		 * Camera object for the scene.
+		 */
+		Camera camera;
 
 	public:
 
@@ -63,9 +66,24 @@ namespace sne
 		 */
 		~Scene();
 
+		/**
+		 * Load the scene.
+		 */
 		virtual void load();
 
+		/**
+		 * Unload the scene.
+		 */
 		virtual void unload();
+
+		/**
+		 * Process GLFW inputs here.
+		 *
+		 * @param window GLFW window.
+		 * @param mouseX Position of the mouse on horizontal axis.
+		 * @param mouseY Position of the mouse on vertical axis.
+		 */
+		void processInput(GLFWwindow* window, int mouseX, int mouseY);
 
 		/**
 		 * Update function.
@@ -87,7 +105,14 @@ namespace sne
 		const std::string& getName()const;
 
 		/**
-		 * Getter for View matrix of the scene.
+		 * Setter for the scene's name.
+		 * 
+		 * @param newName Name for the scene.
+		 */
+		void setName(const std::string& newName);
+
+		/**
+		 * Getter for View matrix of the scene (from the camera).
 		 * 
 		 * @return View matrix.
 		 */
@@ -99,6 +124,13 @@ namespace sne
 		 * @return Projection matrix.
 		 */
 		const glm::mat4& getProjection() const;
+
+		/**
+		 * Getter for Camera of the scene.
+		 *
+		 * @return camera.
+		 */
+		const Camera& getCamera() const;
 
 		/**
 		* Return the vector of GameObject of the scene.

@@ -12,7 +12,11 @@ set(_SAINT_NEC_ENGINE_LIB_SRC
 	"physics/SphereCollider.cpp"
 	"physics/SAT.cpp"
 	"graphics/Cube.cpp"
+	"graphics/GraphicComponent.cpp"
+	"graphics/Plane.cpp"
 	"graphics/Shader.cpp"
+	"architecture/Time.cpp"
+	"architecture/Camera.cpp"
 )
 
 set(_SAINT_NEC_ENGINE_LIB_HDR
@@ -26,7 +30,11 @@ set(_SAINT_NEC_ENGINE_LIB_HDR
 	"physics/SphereCollider.hpp"
 	"physics/SAT.hpp"
 	"graphics/Cube.hpp"
+	"graphics/GraphicComponent.hpp"
+	"graphics/Plane.hpp"
 	"graphics/Shader.hpp"
+	"architecture/Time.hpp"
+	"architecture/Camera.hpp"
 )
 target_sources(Saint-Nec-Engine-Lib INTERFACE ${_SAINT_NEC_ENGINE_LIB_HDR})
 target_sources(Saint-Nec-Engine-Lib PRIVATE ${_SAINT_NEC_ENGINE_LIB_SRC})

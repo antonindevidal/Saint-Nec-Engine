@@ -5,6 +5,7 @@
 
 #include "ui_helper/UiHelper.hpp"
 #include "scenes/FirstScene.hpp"
+#include "terrain/TerrainScene.hpp"
 
 class Game
 {
@@ -13,6 +14,7 @@ public:
 	Game();
 	~Game();
 
+	void processInput(GLFWwindow* window, int mouseX, int mouseY);
 	void update();
 	void draw() const;
 
