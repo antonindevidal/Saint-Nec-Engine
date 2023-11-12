@@ -104,7 +104,7 @@ int main(void)
 
     glEnable(GL_DEPTH_TEST);
     glfwSwapInterval(1);
-    //glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+    glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 
     //Init ImGUI
     ImGui::CreateContext();

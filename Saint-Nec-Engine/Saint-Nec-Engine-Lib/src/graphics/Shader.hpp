@@ -32,6 +32,10 @@ namespace sne::graphics
 		 * @param fragmentPath Path of the fragment shader.
 		 */
 		Shader(const char* vertexPath, const char* fragmentPath);
+		
+		Shader(const char* vertexPath, const char* fragmentPath, const char* tessellationControlPath, const char* tessellationEvaluationPath);
+
+
 
 		/**
 		 * Destructor of Shader class.
@@ -83,5 +87,8 @@ namespace sne::graphics
 		 * @param Code for fragment shader.
 		 */
 		static void createShader(unsigned int& shaderID, const char* vertexCode, const char* fragmentCode);
+
+		static void createShader(unsigned int& shaderID, const char* vertexCode, const char* fragmentCode, const char* controlCode, const char* evaluationCode);
+
 	};
 }

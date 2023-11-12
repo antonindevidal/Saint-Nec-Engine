@@ -3,6 +3,8 @@
 #include <graphics/Cube.hpp>
 #include <graphics/Plane.hpp>
 
+#include "TessellationTerrain.hpp"
+
 
 class TerrainScene: public sne::Scene
 {
