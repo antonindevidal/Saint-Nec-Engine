@@ -100,7 +100,7 @@ namespace sne::graphics
 
 		stbi_image_free(data);
 		shader.use();
-		shader.setInt(name, 0);
+		shader.setInt(name, textureIDs.size());;
 
 		textureIDs.push_back(textureID);
 		hasTexture = true;
