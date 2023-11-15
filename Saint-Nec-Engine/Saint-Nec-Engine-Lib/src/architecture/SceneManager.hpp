@@ -75,7 +75,7 @@ namespace sne
 		 * @param mouseX Position of the mouse on horizontal axis.
 		 * @param mouseY Position of the mouse on vertical axis.
 		 */
-		void SceneManager::processInput(GLFWwindow* window, int mouseX, int mouseY);
+		void processInput(GLFWwindow* window, int mouseX, int mouseY);
 
 		/**
 		 * Update function for the current scene.
