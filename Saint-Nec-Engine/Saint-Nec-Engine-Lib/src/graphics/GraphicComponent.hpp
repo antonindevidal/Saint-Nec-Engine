@@ -55,13 +55,12 @@ namespace sne::graphics
 		void setGeometry(const std::vector<float>& vertices, const VertexDataType& vertexDataType, const std::vector<int>& indices);
 
 		/**
-		 * @brief Set the texture for the graphic component.
-		 * Note: A graphic component can only have one texture.
+		 * @brief Add a texture for the graphic component.
 		 *
 		 * @param texturePath Path for the texture.
 		 * @param name Name for the uniform inside the shader.
 		 */
-		void setTexture(const char* texturePath, const char* name);
+		void addTexture(const char* texturePath, const char* name);
 
 		/**
 		* @brief Draw the cube instance.
@@ -95,9 +94,9 @@ namespace sne::graphics
 		Shader shader;
 
 		/**
-		 * Texture ID.
+		 * Ids for all the textures
 		 */
-		unsigned int textureID; // For now, only one texture per graphic component is suppported
+		std::vector<unsigned int> textureIDs;
 
 		/**
 		 * Has the texture been set.

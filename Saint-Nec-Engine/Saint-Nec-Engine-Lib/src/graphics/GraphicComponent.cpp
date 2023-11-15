@@ -4,7 +4,7 @@ namespace sne::graphics
 {
 
 	GraphicComponent::GraphicComponent(const char* vertexShaderPath, const char* fragmentShaderPath) :
-		VBO(0), VAO(0), EBO(0), renderedElementCount(0), shader(vertexShaderPath, fragmentShaderPath), textureID(0), hasTexture(false), hasGeometry(false)
+		VBO(0), VAO(0), EBO(0), renderedElementCount(0), shader(vertexShaderPath, fragmentShaderPath),textureIDs(), hasTexture(false), hasGeometry(false)
 	{
 		shader.use();
 		shader.setMat4("projection", sne::SceneManager::getInstance()->getCurrentScene().getProjection()); //Set projection matrice once because it never changes 
@@ -58,10 +58,16 @@ namespace sne::graphics
 		hasGeometry = true;
 	}
 
-	void GraphicComponent::setTexture(const char* texturePath, const char* name)
-	{
-		int textWidth, textHeight, nrChannels;
 
+	void GraphicComponent::addTexture(const char* texturePath, const char* name)
+	{
+		if (textureIDs.size() > GL_MAX_TEXTURE_IMAGE_UNITS)
+		{
+			std::cout << "ERROR::ADD TEXTURE::EXCEEDED MAXIMUM NUMBER OF TEXTURE SUPPORTED FOR A GRAPHIC COMPONENT: " << texturePath << std::endl;
+		}
+
+		int textWidth, textHeight, nrChannels;
+		unsigned int textureID;
 		glGenTextures(1, &textureID);
 		glBindTexture(GL_TEXTURE_2D, textureID);
 
@@ -74,20 +80,29 @@ namespace sne::graphics
 
 		if (data)
 		{
+			if (nrChannels == 1)
+			{
+				glTexImage2D(GL_TEXTURE_2D, 0, GL_RED, textWidth, textHeight, 0, GL_RED, GL_UNSIGNED_BYTE, data);
+			}
+			else
+			{
+				glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, textWidth, textHeight, 0, GL_RGB, GL_UNSIGNED_BYTE, data);
+			}
 			glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, textWidth, textHeight, 0, GL_RGB, GL_UNSIGNED_BYTE, data);
 			glGenerateMipmap(GL_TEXTURE_2D);
 			std::cout << "Texture loaded correctly " << texturePath << std::endl;
 		}
 		else
 		{
-			std::cout << "ERROR::TEXTURE::FILE_NOT_SUCCESFULLY_READ: " << texturePath << std::endl;
+			std::cout << "ERROR::ADD TEXTURE::FILE_NOT_SUCCESFULLY_READ: " << texturePath << " " << stbi_failure_reason()<< std::endl;
 		}
 
 
 		stbi_image_free(data);
 		shader.use();
-		shader.setInt(name, 0);
+		shader.setInt(name, textureIDs.size());;
 
+		textureIDs.push_back(textureID);
 		hasTexture = true;
 	}
 
@@ -96,8 +111,11 @@ namespace sne::graphics
 
 		if (hasTexture)
 		{
-			glActiveTexture(GL_TEXTURE0);
-			glBindTexture(GL_TEXTURE_2D, textureID);
+			for (int i = 0; i < textureIDs.size(); i ++)
+			{
+				glActiveTexture(GL_TEXTURE0 + i);
+				glBindTexture(GL_TEXTURE_2D, textureIDs[i]);
+			}
 		}
 		if (hasGeometry)
 		{
