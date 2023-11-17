@@ -1,4 +1,5 @@
 #include "PhysicObject.hpp"
+#include "../architecture/util.hpp"
 
 namespace sne
 {
@@ -77,12 +78,23 @@ namespace sne
         {
             glm::vec3 v = dt * _acceleration;
             _velocity += v;
-            _position += ((float)0.5) *_velocity * dt;
+            _position += ((float)0.5) * _velocity * dt;
         }
 
         void PhysicObject::update()
         {
-            compute(1 /FPS);
+            compute(1 / FPS);
+        }
+
+        void PhysicObject::computeCollide(PhysicObject &obj)
+        {   
+            // Calcul
+            float v1Before = norm(_velocity),
+                  v2Before = norm(obj._velocity);
+            
+            // Vectore orientation
+            // Considere line between 2 center
+
         }
 
     }
