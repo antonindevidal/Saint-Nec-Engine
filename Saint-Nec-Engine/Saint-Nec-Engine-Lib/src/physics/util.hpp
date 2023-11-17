@@ -15,6 +15,6 @@ namespace sne
 
     namespace saintNecPhysics
     {
-        glm::vec3 getNormal(const glm::vec3&, const glm::vec3);
+        glm::vec3 getNormal(const glm::vec3&, const glm::vec3&);
     }   
 }
