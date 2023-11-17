@@ -20,21 +20,22 @@ namespace sne
          * m
          * s
          */
-        using Forces = glm::vec3;
+        using Force = glm::vec3;
         class PhysicObject : public Component
         {
-            glm::vec3 acceleration{0, 0, -9.81};
-            glm::vec3 velocity{0, 0, 0};
-            double mass; // kg
-            float amortissement; // [0; 1]
+            glm::vec3 _acceleration{0, 0, -9.81};
+            glm::vec3 _velocity{0, 0, 0};
+            float _mass;          // kg
+            float _amortissement = 1; // [0; 1]
+
             // To update with Component::parent
             glm::vec3 _position;
             glm::vec3 _rotation;
-        public:
 
+        public:
             /**
              * @brief Construct a new PhysicObject object positionned on origin
-             * 
+             *
              */
             PhysicObject();
             ~PhysicObject() = default;
@@ -42,20 +43,37 @@ namespace sne
             /**
              * @brief Construct a new PhysicObject object positionned at
              * a defined point
-             * 
-             * @param position 
+             *
+             * @param position
              */
-            PhysicObject(const glm::vec3& position);
+            PhysicObject(const glm::vec3 &position);
+
+            /************************************************************************/
+            /*                      GETTER & SETTER                                 */
+            /************************************************************************/
+            const glm::vec3 &getAcceleration() const;
+            const glm::vec3 &getVelocity() const;
+            const glm::vec3 &getPosition() const;
+            const glm::vec3 &getRotation() const;
+            float getAmortissement() const;
+            float getMass() const;
+
+            void setAcceleration(const glm::vec3 &);
+            void setVelocity(const glm::vec3 &);
+            void setPosition(const glm::vec3 &);
+            void setRotation(const glm::vec3 &);
+            void setMass(float);
+            /************************************************************************/
 
             /**
              * @brief applies a Force on the object
-             * 
+             *
              */
-            void applyForce(const Forces &);
+            void applyForce(const Force &);
 
             /**
              * @brief update the object over the time
-             * 
+             *
              */
             void update() override;
 
@@ -63,7 +81,7 @@ namespace sne
 
             /**
              * @brief update the object over a done time
-             * 
+             *
              * @param dt delta time
              */
             void compute(float dt);
