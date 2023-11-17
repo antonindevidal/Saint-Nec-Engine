@@ -80,5 +80,10 @@ namespace sne
             _position += ((float)0.5) *_velocity * dt;
         }
 
+        void PhysicObject::update()
+        {
+            compute(1 /FPS);
+        }
+
     }
 }

@@ -64,36 +64,36 @@ TEST_CASE("TEST ROTATION 1 - center origin")
     cube.setRotation({0, 0, 0});
     std::vector<glm::vec3> cube_points_after_rotation = cube_points_before_rotation;
 
-    CHECK(cube.contains(cube_points_after_rotation[0]) == true);
-    CHECK(cube.contains(cube_points_after_rotation[1]) == true);
-    CHECK(cube.contains(cube_points_after_rotation[2]) == true);
-    CHECK(cube.contains(cube_points_after_rotation[3]) == true);
-    CHECK(cube.contains(cube_points_after_rotation[4]) == true);
-    CHECK(cube.contains(cube_points_after_rotation[5]) == true);
-    CHECK(cube.contains(cube_points_after_rotation[6]) == true);
-    CHECK(cube.contains(cube_points_after_rotation[7]) == true);
+    CHECK(cube.hasPoint(cube_points_after_rotation[0], 1E-3) == true);
+    CHECK(cube.hasPoint(cube_points_after_rotation[1], 1E-3) == true);
+    CHECK(cube.hasPoint(cube_points_after_rotation[2], 1E-3) == true);
+    CHECK(cube.hasPoint(cube_points_after_rotation[3], 1E-3) == true);
+    CHECK(cube.hasPoint(cube_points_after_rotation[4], 1E-3) == true);
+    CHECK(cube.hasPoint(cube_points_after_rotation[5], 1E-3) == true);
+    CHECK(cube.hasPoint(cube_points_after_rotation[6], 1E-3) == true);
+    CHECK(cube.hasPoint(cube_points_after_rotation[7], 1E-3) == true);
 
     cube.setRotation({0, M_PI / 2, 0});
 
-    CHECK(cube.contains(cube_points_after_rotation[0]) == true);
-    CHECK(cube.contains(cube_points_after_rotation[1]) == true);
-    CHECK(cube.contains(cube_points_after_rotation[2]) == true);
-    CHECK(cube.contains(cube_points_after_rotation[3]) == true);
-    CHECK(cube.contains(cube_points_after_rotation[4]) == true);
-    CHECK(cube.contains(cube_points_after_rotation[5]) == true);
-    CHECK(cube.contains(cube_points_after_rotation[6]) == true);
-    CHECK(cube.contains(cube_points_after_rotation[7]) == true);
+    CHECK(cube.hasPoint(cube_points_after_rotation[0], 1E-3) == true);
+    CHECK(cube.hasPoint(cube_points_after_rotation[1], 1E-3) == true);
+    CHECK(cube.hasPoint(cube_points_after_rotation[2], 1E-3) == true);
+    CHECK(cube.hasPoint(cube_points_after_rotation[3], 1E-3) == true);
+    CHECK(cube.hasPoint(cube_points_after_rotation[4], 1E-3) == true);
+    CHECK(cube.hasPoint(cube_points_after_rotation[5], 1E-3) == true);
+    CHECK(cube.hasPoint(cube_points_after_rotation[6], 1E-3) == true);
+    CHECK(cube.hasPoint(cube_points_after_rotation[7], 1E-3) == true);
 
     cube.setRotation({0, 0, M_PI / 2});
 
-    CHECK(cube.contains(cube_points_after_rotation[0]) == true);
-    CHECK(cube.contains(cube_points_after_rotation[1]) == true);
-    CHECK(cube.contains(cube_points_after_rotation[2]) == true);
-    CHECK(cube.contains(cube_points_after_rotation[3]) == true);
-    CHECK(cube.contains(cube_points_after_rotation[4]) == true);
-    CHECK(cube.contains(cube_points_after_rotation[5]) == true);
-    CHECK(cube.contains(cube_points_after_rotation[6]) == true);
-    CHECK(cube.contains(cube_points_after_rotation[7]) == true);
+    CHECK(cube.hasPoint(cube_points_after_rotation[0], 1E-3) == true);
+    CHECK(cube.hasPoint(cube_points_after_rotation[1], 1E-3) == true);
+    CHECK(cube.hasPoint(cube_points_after_rotation[2], 1E-3) == true);
+    CHECK(cube.hasPoint(cube_points_after_rotation[3], 1E-3) == true);
+    CHECK(cube.hasPoint(cube_points_after_rotation[4], 1E-3) == true);
+    CHECK(cube.hasPoint(cube_points_after_rotation[5], 1E-3) == true);
+    CHECK(cube.hasPoint(cube_points_after_rotation[6], 1E-3) == true);
+    CHECK(cube.hasPoint(cube_points_after_rotation[7], 1E-3) == true);
 
     cube.setRotation({0, M_PI / 4, 0});
 
@@ -107,14 +107,14 @@ TEST_CASE("TEST ROTATION 1 - center origin")
         glm::vec3{1.41421, 1, 0},
         glm::vec3{0, 1, -1.41421},
         glm::vec3{0, 1, 1.41421}};
-    CHECK(cube.contains(cube_points_after_rotation[0]) == true);
-    CHECK(cube.contains(cube_points_after_rotation[1]) == true);
-    CHECK(cube.contains(cube_points_after_rotation[2]) == true);
-    CHECK(cube.contains(cube_points_after_rotation[3]) == true);
-    CHECK(cube.contains(cube_points_after_rotation[4]) == true);
-    CHECK(cube.contains(cube_points_after_rotation[5]) == true);
-    CHECK(cube.contains(cube_points_after_rotation[6]) == true);
-    CHECK(cube.contains(cube_points_after_rotation[7]) == true);
+    CHECK(cube.hasPoint(cube_points_after_rotation[0], 1E-3) == true);
+    CHECK(cube.hasPoint(cube_points_after_rotation[1], 1E-3) == true);
+    CHECK(cube.hasPoint(cube_points_after_rotation[2], 1E-3) == true);
+    CHECK(cube.hasPoint(cube_points_after_rotation[3], 1E-3) == true);
+    CHECK(cube.hasPoint(cube_points_after_rotation[4], 1E-3) == true);
+    CHECK(cube.hasPoint(cube_points_after_rotation[5], 1E-3) == true);
+    CHECK(cube.hasPoint(cube_points_after_rotation[6], 1E-3) == true);
+    CHECK(cube.hasPoint(cube_points_after_rotation[7], 1E-3) == true);
 
 }
 
@@ -146,46 +146,46 @@ TEST_CASE("TEST ROTATION 2 - center any")
     cube.setRotation({M_PI, 0, 0});
     std::vector<glm::vec3> cube_points_after_rotation = cube_points_before_rotation;
 
-    CHECK(cube.contains(cube_points_after_rotation[0]) == true);
-    CHECK(cube.contains(cube_points_after_rotation[1]) == true);
-    CHECK(cube.contains(cube_points_after_rotation[2]) == true);
-    CHECK(cube.contains(cube_points_after_rotation[3]) == true);
-    CHECK(cube.contains(cube_points_after_rotation[4]) == true);
-    CHECK(cube.contains(cube_points_after_rotation[5]) == true);
-    CHECK(cube.contains(cube_points_after_rotation[6]) == true);
-    CHECK(cube.contains(cube_points_after_rotation[7]) == true);
+    CHECK(cube.hasPoint(cube_points_after_rotation[0], 1E-3) == true);
+    CHECK(cube.hasPoint(cube_points_after_rotation[1], 1E-3) == true);
+    CHECK(cube.hasPoint(cube_points_after_rotation[2], 1E-3) == true);
+    CHECK(cube.hasPoint(cube_points_after_rotation[3], 1E-3) == true);
+    CHECK(cube.hasPoint(cube_points_after_rotation[4], 1E-3) == true);
+    CHECK(cube.hasPoint(cube_points_after_rotation[5], 1E-3) == true);
+    CHECK(cube.hasPoint(cube_points_after_rotation[6], 1E-3) == true);
+    CHECK(cube.hasPoint(cube_points_after_rotation[7], 1E-3) == true);
 
     cube.setRotation({0, M_PI, 0});
 
-    CHECK(cube.contains(cube_points_after_rotation[0]) == true);
-    CHECK(cube.contains(cube_points_after_rotation[1]) == true);
-    CHECK(cube.contains(cube_points_after_rotation[2]) == true);
-    CHECK(cube.contains(cube_points_after_rotation[3]) == true);
-    CHECK(cube.contains(cube_points_after_rotation[4]) == true);
-    CHECK(cube.contains(cube_points_after_rotation[5]) == true);
-    CHECK(cube.contains(cube_points_after_rotation[6]) == true);
-    CHECK(cube.contains(cube_points_after_rotation[7]) == true);
+    CHECK(cube.hasPoint(cube_points_after_rotation[0], 1E-3) == true);
+    CHECK(cube.hasPoint(cube_points_after_rotation[1], 1E-3) == true);
+    CHECK(cube.hasPoint(cube_points_after_rotation[2], 1E-3) == true);
+    CHECK(cube.hasPoint(cube_points_after_rotation[3], 1E-3) == true);
+    CHECK(cube.hasPoint(cube_points_after_rotation[4], 1E-3) == true);
+    CHECK(cube.hasPoint(cube_points_after_rotation[5], 1E-3) == true);
+    CHECK(cube.hasPoint(cube_points_after_rotation[6], 1E-3) == true);
+    CHECK(cube.hasPoint(cube_points_after_rotation[7], 1E-3) == true);
 
     cube.setRotation({0, 0, M_PI});
 
-    CHECK(cube.contains(cube_points_after_rotation[0]) == true);
-    CHECK(cube.contains(cube_points_after_rotation[1]) == true);
-    CHECK(cube.contains(cube_points_after_rotation[2]) == true);
-    CHECK(cube.contains(cube_points_after_rotation[3]) == true);
-    CHECK(cube.contains(cube_points_after_rotation[4]) == true);
-    CHECK(cube.contains(cube_points_after_rotation[5]) == true);
-    CHECK(cube.contains(cube_points_after_rotation[6]) == true);
-    CHECK(cube.contains(cube_points_after_rotation[7]) == true);
+    CHECK(cube.hasPoint(cube_points_after_rotation[0], 1E-3) == true);
+    CHECK(cube.hasPoint(cube_points_after_rotation[1], 1E-3) == true);
+    CHECK(cube.hasPoint(cube_points_after_rotation[2], 1E-3) == true);
+    CHECK(cube.hasPoint(cube_points_after_rotation[3], 1E-3) == true);
+    CHECK(cube.hasPoint(cube_points_after_rotation[4], 1E-3) == true);
+    CHECK(cube.hasPoint(cube_points_after_rotation[5], 1E-3) == true);
+    CHECK(cube.hasPoint(cube_points_after_rotation[6], 1E-3) == true);
+    CHECK(cube.hasPoint(cube_points_after_rotation[7], 1E-3) == true);
 
     cube.setRotation({M_PI, M_PI, M_PI});
-    CHECK(cube.contains(cube_points_after_rotation[0]) == true);
-    CHECK(cube.contains(cube_points_after_rotation[1]) == true);
-    CHECK(cube.contains(cube_points_after_rotation[2]) == true);
-    CHECK(cube.contains(cube_points_after_rotation[3]) == true);
-    CHECK(cube.contains(cube_points_after_rotation[4]) == true);
-    CHECK(cube.contains(cube_points_after_rotation[5]) == true);
-    CHECK(cube.contains(cube_points_after_rotation[6]) == true);
-    CHECK(cube.contains(cube_points_after_rotation[7]) == true);
+    CHECK(cube.hasPoint(cube_points_after_rotation[0], 1E-3) == true);
+    CHECK(cube.hasPoint(cube_points_after_rotation[1], 1E-3) == true);
+    CHECK(cube.hasPoint(cube_points_after_rotation[2], 1E-3) == true);
+    CHECK(cube.hasPoint(cube_points_after_rotation[3], 1E-3) == true);
+    CHECK(cube.hasPoint(cube_points_after_rotation[4], 1E-3) == true);
+    CHECK(cube.hasPoint(cube_points_after_rotation[5], 1E-3) == true);
+    CHECK(cube.hasPoint(cube_points_after_rotation[6], 1E-3) == true);
+    CHECK(cube.hasPoint(cube_points_after_rotation[7], 1E-3) == true);
 
     BoxCollider b2{
         glm::vec3{2.1, 0, 0}, 2, 2, 2};

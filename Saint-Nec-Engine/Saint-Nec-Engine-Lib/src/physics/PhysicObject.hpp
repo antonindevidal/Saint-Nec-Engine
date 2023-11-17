@@ -12,6 +12,7 @@
 
 namespace sne
 {
+    const int FPS = 10;
     namespace saintNecPhysics
     {
         /**
@@ -76,7 +77,6 @@ namespace sne
              *
              */
             void update() override;
-
             // Proposition: take a dt in argument for update
 
             /**
