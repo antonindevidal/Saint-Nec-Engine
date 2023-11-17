@@ -1,8 +1,7 @@
 ﻿
 add_library (Saint-Nec-Engine-Lib)
 
-set(_SAINT_NEC_ENGINE_LIB_SRC 
-	"architecture/Vector3.cpp"
+set(_SAINT_NEC_ENGINE_LIB_SRC
 	"architecture/Component.cpp"
 	"architecture/Scene.cpp" 
 	"architecture/GameObject.cpp"
@@ -21,7 +20,6 @@ set(_SAINT_NEC_ENGINE_LIB_SRC
 )
 
 set(_SAINT_NEC_ENGINE_LIB_HDR
-	"architecture/Vector3.hpp"
 	"architecture/Component.hpp"
 	"architecture/Scene.hpp" 
 	"architecture/GameObject.hpp"
