@@ -69,8 +69,15 @@ namespace sne
             _mass = m;
         }
 
-        void PhysicObject::applyForce(const Force &)
+        void PhysicObject::applyForce(const Force &f)
         {
+        }
+
+        void PhysicObject::compute(float dt)
+        {
+            glm::vec3 v = dt * _acceleration;
+            _velocity += v;
+            _position += ((float)0.5) *_velocity * dt;
         }
 
     }
