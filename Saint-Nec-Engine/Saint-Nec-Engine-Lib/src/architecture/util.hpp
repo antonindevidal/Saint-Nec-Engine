@@ -28,6 +28,17 @@ namespace glm
 namespace sne
 {
 	/**
+	 * @brief Test approximative egality of 2 vectors
+	 * 
+	 * @param v1 
+	 * @param v2 
+	 * @param eps 
+	 * @return true 
+	 * @return false 
+	 */
+	bool areSimilar(const glm::vec3 &v1, const glm::vec3 &v2, float eps=1E-3);
+
+	/**
 	 * @brief evalute the norm of the vector
 	 *
 	 * @param v

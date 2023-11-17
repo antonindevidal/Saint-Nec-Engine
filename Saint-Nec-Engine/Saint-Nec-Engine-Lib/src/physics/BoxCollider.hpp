@@ -32,8 +32,8 @@ namespace sne
         public:
             /**
              * @brief Construct a new Box Collider object
-             * 
-             * @param center 
+             *
+             * @param center
              * @param width (X axis)
              * @param depth (Y axis)
              * @param height (Z axis)
@@ -42,61 +42,53 @@ namespace sne
 
             /**
              * @brief Destroy the Box Collider object
-             * 
+             *
              */
             ~BoxCollider() = default;
 
             /**
              * @brief access to point number i
-             * 
-             * @param i 
-             * @return const glm::vec3& 
+             *
+             * @param i
+             * @return const glm::vec3&
              */
             const glm::vec3 &operator[](int i) const;
 
             /**
-             * @brief Tell if the point is present
-             * 
-             * @return true 
-             * @return false 
-             */
-            bool hasPoint(const glm::vec3 &) const;
-
-            /**
              * @brief tell if this object contains a point approximatively close to p
-             * 
+             *
              * @param p point to search
              * @param eps approximation, sphere when we can look for this point
-             * @return true 
-             * @return false 
+             * @return true
+             * @return false
              */
-            bool contains(const glm::vec3 &p, float eps = 1E-3) const;
+            bool hasPoint(const glm::vec3 &p, float eps = 0) const;
 
             /**
              * @brief Get the Nb Points object
-             * 
-             * @return int 
+             *
+             * @return int
              */
             int getNbPoints() const;
 
             /**
              * @brief Set the Rotation object and update points
-             * 
+             *
              * @param rotation
              */
             void setRotation(const glm::vec3 rotation);
 
             /**
              * @brief Get the Rotation object
-             * 
-             * @return const glm::vec3 
+             *
+             * @return const glm::vec3
              */
             const glm::vec3 getRotation() const;
 
             /**
              * @brief Get the relative Axis of the object
-             * 
-             * @return std::vector<glm::vec3> 
+             *
+             * @return std::vector<glm::vec3>
              */
             std::vector<glm::vec3> getAxis() const;
         };

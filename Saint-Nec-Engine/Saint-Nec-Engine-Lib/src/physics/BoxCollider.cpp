@@ -30,10 +30,10 @@ namespace sne
             return _points[i];
         }
 
-        bool BoxCollider::hasPoint(const glm::vec3 &p) const
+        bool BoxCollider::hasPoint(const glm::vec3 &p, float eps) const
         {
             for (glm::vec3 v : _points)
-                if (v == p)
+                if (areSimilar(v, p))
                     return true;
 
             return false;
@@ -42,16 +42,6 @@ namespace sne
         int BoxCollider::getNbPoints() const
         {
             return 8;
-        }
-
-        bool BoxCollider::contains(const glm::vec3 &p, float eps) const
-        {
-            for (glm::vec3 v : _points)
-            {
-                if ((v - eps) <= p && p <= (v + eps))
-                    return true;
-            }
-            return false;
         }
 
         void BoxCollider::setRotation(const glm::vec3 rotation)
