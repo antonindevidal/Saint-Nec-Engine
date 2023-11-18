@@ -1,5 +1,6 @@
 #include "PhysicObject.hpp"
 #include "../architecture/util.hpp"
+#include "SAT.hpp"
 
 namespace sne
 {
@@ -71,6 +72,11 @@ namespace sne
             _mass = m;
         }
 
+        void PhysicObject::setCollider(Component *collider)
+        {
+            _collider = collider;
+        }
+
         void PhysicObject::applyForce(const Force &f)
         {
         }
@@ -88,6 +94,12 @@ namespace sne
 
         void PhysicObject::computeCollide(PhysicObject &obj)
         {
+            if(!_collider || !obj._collider)
+                throw std::exception_ptr();
+
+            if(!hasSATCollision(*_collider, *obj._collider))
+                return;
+
             // Calcul new vitesse
             float v1 = norm(_velocity),
                   v2 = norm(obj._velocity),

@@ -33,6 +33,7 @@ namespace sne
             // To update with Component::parent
             glm::vec3 _position;
             glm::vec3 _rotation;
+            Component *_collider = nullptr;
 
         public:
             /**
@@ -65,6 +66,7 @@ namespace sne
             void setPosition(const glm::vec3 &);
             void setRotation(const glm::vec3 &);
             void setMass(float);
+            void setCollider(Component *collider);
             /************************************************************************/
 
             /**

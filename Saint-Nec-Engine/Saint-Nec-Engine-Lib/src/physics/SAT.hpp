@@ -73,6 +73,11 @@ namespace sne
         {
             throw new SATIllegalUseException();
         }
+        template <typename ColliderType>
+        bool hasSatCollision(const ColliderType&, const ColliderType&)
+        {
+            throw new SATIllegalUseException();
+        }
         bool hasSATCollision(const BoxCollider &boxe1, const BoxCollider &boxe2);
         bool hasSATCollision(const SphereCollider &sphere1, const SphereCollider &sphere2);
         bool hasSATCollision(const BoxCollider &boxe, const SphereCollider &sphere);
