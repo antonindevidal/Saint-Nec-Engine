@@ -21,10 +21,7 @@ namespace sne
 	*/
 	class GameObject
 	{
-	private:
-		glm::vec3 position; //TODO: remove 
-		glm::vec3 rotation; //TODO: remove - Radian
-		
+	private:		
 		/**
 		 * Vector of components used by the GameObject.
 		 */
