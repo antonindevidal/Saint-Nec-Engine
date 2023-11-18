@@ -57,6 +57,11 @@ namespace sne::graphics
 		glUniform1i(glGetUniformLocation(shaderID, name.c_str()), value);
 	}
 
+	void Shader::setFloat(const std::string& name, const float& value) const
+	{
+		glUniform1f(glGetUniformLocation(shaderID, name.c_str()), value);
+	}
+
 	const unsigned int& Shader::getID() const
 	{
 		return shaderID;

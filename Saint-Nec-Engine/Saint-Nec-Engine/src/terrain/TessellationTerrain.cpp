@@ -6,6 +6,9 @@ TessellationTerrain::TessellationTerrain(const unsigned int& width, const unsign
 	shader.use();
 	shader.setMat4("projection", sne::SceneManager::getInstance()->getCurrentScene().getProjection()); //Set projection matrice once because it never changes 
 	shader.setMat4("view", sne::SceneManager::getInstance()->getCurrentScene().getView());
+	shader.setInt("minTess", 2);
+	shader.setInt("maxTess", 8);
+	shader.setFloat("maxDist", 8);
 
 	std::vector<float> vertices{};
 	std::vector<int> indices{};
@@ -21,8 +24,8 @@ TessellationTerrain::TessellationTerrain(const unsigned int& width, const unsign
 			vertices.push_back((j * 1.0f / density) - (depth / 2.0f));
 
 			//Create UV coordinates
-			vertices.push_back(i / (width * density * 1.0));
-			vertices.push_back(j / (depth * density * 1.0));
+			vertices.push_back(i / (width * density * 1.0f));
+			vertices.push_back(j / (depth * density * 1.0f));
 		}
 	}
 
@@ -62,6 +65,8 @@ void TessellationTerrain::draw() const
 
 		shader.setMat4("view", sne::SceneManager::getInstance()->getCurrentScene().getView());
 		shader.setMat4("model", parent->getModel());
+
+		shader.setVec3("cameraPos", sne::SceneManager::getInstance()->getCurrentScene().getCamera().getPosition());
 
 		glBindVertexArray(VAO);
 		glDrawElements(GL_PATCHES, nbIndices, GL_UNSIGNED_INT, 0);

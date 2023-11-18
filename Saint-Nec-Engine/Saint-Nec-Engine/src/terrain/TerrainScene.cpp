@@ -19,16 +19,17 @@ void TerrainScene::load()
 	sne::GameObject* terrainLOD = new sne::GameObject();
 	terrainLOD->setName("Terrain");
 	addGameObject(terrainLOD);
-	TessellationTerrain* planeLOD = new TessellationTerrain(1, 1, 1, "resources/shaders/terrain/tessellation/tessellation.vert", "resources/shaders/terrain/tessellation/tessellation.frag", "resources/shaders/terrain/tessellation/tessellation.tesc", "resources/shaders/terrain/tessellation/tessellation.tese");
+	TessellationTerrain* planeLOD = new TessellationTerrain(10, 10, 1, "resources/shaders/terrain/tessellation/tessellation.vert", "resources/shaders/terrain/tessellation/tessellation.frag", "resources/shaders/terrain/tessellation/tessellation.tesc", "resources/shaders/terrain/tessellation/tessellation.tese");
 	planeLOD->addTexture("resources/textures/noise.jpg", "heightmap");
 	terrainLOD->addComponent(planeLOD);
 
+	
 	sne::GameObject* cubeMonoColor = new sne::GameObject();
 	addGameObject(cubeMonoColor);
 	cubeMonoColor->setName("Monocolor cube");
 	cubeMonoColor->addComponent(new sne::graphics::Cube("resources/shaders/color.vert", "resources/shaders/color.frag", glm::vec3{ 0.5,0.2,0.6 }));
 	cubeMonoColor->translate(glm::vec3{ 0.0f, 0.0f, 0.0f });
-
+	
 	
 }
 

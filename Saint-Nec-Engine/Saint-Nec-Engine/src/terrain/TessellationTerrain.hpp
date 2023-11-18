@@ -1,4 +1,5 @@
 #pragma once
+#include <architecture/SceneManager.hpp>
 #include <graphics/GraphicComponent.hpp>
 
 class TessellationTerrain: public sne::graphics::GraphicComponent

@@ -65,6 +65,8 @@ namespace sne::graphics
 
 		void setInt(const std::string& name, const int& value) const;
 
+		void setFloat(const std::string& name, const float& value) const;
+
 		const unsigned int& getID() const;
 
 	private:
