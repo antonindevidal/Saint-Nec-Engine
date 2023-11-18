@@ -6,13 +6,14 @@ namespace sne
 
     namespace saintNecPhysics
     {
-        PhysicObject::PhysicObject()
+        PhysicObject::PhysicObject(float mass) : PhysicObject({0, 0, 0}, mass)
         {
         }
 
-        PhysicObject::PhysicObject(const glm::vec3 &position)
+        PhysicObject::PhysicObject(const glm::vec3 &position, float mass) : _position(position), _mass(mass)
         {
-            _position = position;
+            if(mass<=0)
+                throw IllegalMassException();
         }
 
         const glm::vec3 &PhysicObject::getAcceleration() const
@@ -76,9 +77,8 @@ namespace sne
 
         void PhysicObject::compute(float dt)
         {
-            glm::vec3 v = dt * _acceleration;
-            _velocity += v;
-            _position += ((float)0.5) * _velocity * dt;
+            _position += _velocity * dt + ((float)0.5) * _acceleration * dt * dt;
+            _velocity += _acceleration * dt;
         }
 
         void PhysicObject::update()
@@ -87,14 +87,28 @@ namespace sne
         }
 
         void PhysicObject::computeCollide(PhysicObject &obj)
-        {   
-            // Calcul
-            float v1Before = norm(_velocity),
-                  v2Before = norm(obj._velocity);
-            
-            // Vectore orientation
-            // Considere line between 2 center
+        {
+            // Calcul new vitesse
+            float v1 = norm(_velocity),
+                  v2 = norm(obj._velocity),
+                  m1 = _mass,
+                  m2 = obj._mass;
 
+            v1 = (m1 - m2) / (m1 + m2) * v1 + 2 * m2 * v2 / (m1 + m2);
+            v2 = 2 * m1 * v1 / (m1 + m2) - (m1 - m2) / (m1 + m2) * v2;
+
+            // Vector orientation
+            // Considering line between 2 centers
+            // TO UPDATE: considering plan where we touch the other and calcul with normal and angle ?
+            glm::vec3 direction = _position - obj._position;
+
+            std::cout << "direciton: " << direction << "\n";
+            std::cout << "v1 : " << v1 << "\n";
+            std::cout << "v2 : " << v2 << "\n";
+            _velocity = -direction * v1;
+            obj._velocity = direction * v2;
+            std::cout << "v1 : " << _velocity << "\n";
+            std::cout << "v2 : " << obj._velocity << "\n";
         }
 
     }

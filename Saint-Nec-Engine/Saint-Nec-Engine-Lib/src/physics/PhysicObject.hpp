@@ -9,6 +9,7 @@
 
 #include "architecture/Component.hpp"
 #include <glm/glm.hpp>
+#include <exception>
 
 namespace sne
 {
@@ -38,7 +39,7 @@ namespace sne
              * @brief Construct a new PhysicObject object positionned on origin
              *
              */
-            PhysicObject();
+            PhysicObject(float mass);
             ~PhysicObject() = default;
 
             /**
@@ -47,7 +48,7 @@ namespace sne
              *
              * @param position
              */
-            PhysicObject(const glm::vec3 &position);
+            PhysicObject(const glm::vec3 &position, float mass);
 
             /************************************************************************/
             /*                      GETTER & SETTER                                 */
@@ -85,8 +86,23 @@ namespace sne
              * @param dt delta time
              */
             void compute(float dt);
-            
-            void computeCollide(PhysicObject&);
+
+            /**
+             * @brief update the object considering interaction/choque with an over one.
+             * When BOTH are mobile !
+             *
+             * @param obj mobile object with wich one we collide
+             */
+            void computeCollide(PhysicObject &obj); // Reflexion architecture, not ok like that
+
+            class IllegalMassException : public std::exception
+            {
+            public:
+                const char* what() const noexcept
+                {
+                    return "Object must have a valide mass!";
+                } 
+            };
         };
     }
 }
