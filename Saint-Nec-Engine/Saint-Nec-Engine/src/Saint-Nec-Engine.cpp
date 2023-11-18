@@ -123,6 +123,7 @@ int main(void)
     ImVec4 clear_color = ImVec4(0.45f, 0.55f, 0.60f, 1.00f);
 
     Game g{};
+    TracyGpuContext
 
     /* Loop until the user closes the window */
     while (!glfwWindowShouldClose(window))
@@ -152,7 +153,7 @@ int main(void)
 
         /* Swap front and back buffers */
         glfwSwapBuffers(window);
-
+        TracyGpuCollect
         /* Poll for and process events */
         glfwPollEvents();
         

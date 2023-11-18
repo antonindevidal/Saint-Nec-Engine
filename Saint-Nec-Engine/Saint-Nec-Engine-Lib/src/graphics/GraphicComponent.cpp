@@ -125,6 +125,8 @@ namespace sne::graphics
 			shader.setMat4("view", sne::SceneManager::getInstance()->getCurrentScene().getView());
 			shader.setMat4("model", parent->getModel());
 
+			TracyGpuZone("GraphicComponentDraw");
+
 			glBindVertexArray(VAO);
 			glDrawElements(GL_TRIANGLES, renderedElementCount, GL_UNSIGNED_INT, 0);
 			glBindVertexArray(0);

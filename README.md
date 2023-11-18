@@ -9,6 +9,7 @@ This 240h project aim to create a physic and graphic engine using C++ and OpenGL
 - C++ 17
 - OpenGL 3.3
 - CMake (tested on Windows and Linux)
+- Tracy profiler (v0.10.0)
 
 In this project, we are reinventing the wheel because we can’t create better things without understanding the base of what we are working on.
 

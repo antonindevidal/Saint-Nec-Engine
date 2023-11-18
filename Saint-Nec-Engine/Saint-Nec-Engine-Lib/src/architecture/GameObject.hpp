@@ -10,6 +10,7 @@
 #include <vector>
 #include <glm/glm.hpp>
 #include <glm/gtc/type_ptr.hpp>
+#include <tracy/Tracy.hpp>
 
 #include "Component.hpp"
 #include "Vector3.hpp"

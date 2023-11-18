@@ -2,6 +2,7 @@
 #include <architecture/SceneManager.hpp>
 #include <architecture/GameObject.hpp>
 #include <graphics/Cube.hpp>
+#include <tracy/Tracy.hpp>
 
 #include "ui_helper/UiHelper.hpp"
 #include "scenes/FirstScene.hpp"

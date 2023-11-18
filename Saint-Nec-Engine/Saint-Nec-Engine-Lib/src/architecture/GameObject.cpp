@@ -16,6 +16,8 @@ namespace sne
 
 	void GameObject::update()
 	{
+		ZoneScopedN("GameObjectUpdate");
+
 		for (Component *c : components)
 		{
 			c->update();

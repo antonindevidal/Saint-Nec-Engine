@@ -10,6 +10,8 @@
 #include <GLFW/glfw3.h>
 #include <vector>
 #include <stb_image.h>
+#include <tracy/TracyOpenGL.hpp>
+
 #include "Shader.hpp"
 #include "../architecture/Component.hpp"
 #include "../architecture/SceneManager.hpp"

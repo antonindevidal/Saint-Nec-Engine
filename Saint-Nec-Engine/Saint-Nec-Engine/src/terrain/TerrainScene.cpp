@@ -6,6 +6,7 @@ TerrainScene::TerrainScene(): Scene::Scene()
 
 void TerrainScene::load()
 {
+	ZoneScopedN("TerrainSceneLoad");
 	gameObjects = std::vector<sne::GameObject*>();
 
 	
