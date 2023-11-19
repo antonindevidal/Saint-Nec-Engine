@@ -13,6 +13,8 @@ out vec2 uvs;
 
 void main()
 {
+	//vec4 text = texture(heightmap,aTexCoord);
+	//vec4 pos = vec4(aPos.x,text.x * 50.0f - 25f, aPos.z,1.0f);
 	uvs = aTexCoord;
 	gl_Position = vec4(aPos,1.0f);
 }

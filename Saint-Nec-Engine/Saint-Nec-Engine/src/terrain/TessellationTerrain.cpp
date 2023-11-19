@@ -6,9 +6,9 @@ TessellationTerrain::TessellationTerrain(const unsigned int& width, const unsign
 	shader.use();
 	shader.setMat4("projection", sne::SceneManager::getInstance()->getCurrentScene().getProjection()); //Set projection matrice once because it never changes 
 	shader.setMat4("view", sne::SceneManager::getInstance()->getCurrentScene().getView());
-	shader.setInt("minTess", 2);
-	shader.setInt("maxTess", 8);
-	shader.setFloat("maxDist", 8);
+	shader.setInt("minTess", 1);
+	shader.setInt("maxTess", 12);
+	shader.setFloat("maxDist", 30);
 
 	std::vector<float> vertices{};
 	std::vector<int> indices{};
@@ -65,7 +65,6 @@ void TessellationTerrain::draw() const
 
 		shader.setMat4("view", sne::SceneManager::getInstance()->getCurrentScene().getView());
 		shader.setMat4("model", parent->getModel());
-
 		shader.setVec3("cameraPos", sne::SceneManager::getInstance()->getCurrentScene().getCamera().getPosition());
 
 		glBindVertexArray(VAO);

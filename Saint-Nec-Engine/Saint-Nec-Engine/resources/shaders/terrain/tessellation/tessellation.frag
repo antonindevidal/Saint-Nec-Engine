@@ -8,6 +8,6 @@ uniform sampler2D heightmap;
 
 void main()
 {
-	//vec4 textColor = texture(heightmap, TexCoord);
-	FragColor = vec4(0.3f, 0.3f, 0.3f, 1.0f);//vec4(textColor.x, textColor.x, textColor.x, 1.0f);
+	vec4 textColor = texture(heightmap, uvs);
+	FragColor = vec4(textColor.x, textColor.x, textColor.x, 1.0f);
 }

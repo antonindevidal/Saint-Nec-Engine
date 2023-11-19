@@ -5,6 +5,7 @@ int mouseX = 640;
 int mouseY = 360;
 
 bool mouseMode = true;
+bool polygonMode = true;
 
 void framebuffer_size_callback(GLFWwindow* window, int width, int height)
 {
@@ -35,6 +36,19 @@ void processInput(GLFWwindow* window, Game& g)
         }
         mouseMode = !mouseMode;
     }
+    if (glfwGetKey(window, GLFW_KEY_F2) == GLFW_PRESS)
+    {
+        if (polygonMode)
+        {
+            glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+        }
+        else
+        {
+            glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+        }
+        polygonMode = !polygonMode;
+    }
+
 
 }
 
@@ -103,8 +117,8 @@ int main(void)
     glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
 
     glEnable(GL_DEPTH_TEST);
-    glfwSwapInterval(1);
-    //glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+    glfwSwapInterval(0);
+    
 
     //Init ImGUI
     ImGui::CreateContext();
