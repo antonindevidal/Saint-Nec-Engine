@@ -20,6 +20,9 @@ void TerrainScene::load()
 	addGameObject(terrainLOD);
 	TessellationTerrain* planeLOD = new TessellationTerrain(300, 300, 1, "resources/shaders/terrain/tessellation/tessellation.vert", "resources/shaders/terrain/tessellation/tessellation.frag", "resources/shaders/terrain/tessellation/tessellation.tesc", "resources/shaders/terrain/tessellation/tessellation.tese");
 	planeLOD->addTexture("resources/textures/noise.jpg", "heightmap");
+	planeLOD->addTexture("resources/textures/noise_normal.jpg", "heightmapNormal");
+	planeLOD->addTexture("resources/textures/rock.jpg", "rockTex");
+	planeLOD->addTexture("resources/textures/grass.jpg", "grassTex");
 	terrainLOD->addComponent(planeLOD);
 	//sne::graphics::Plane* p = new  sne::graphics::Plane(10, 10, 1, "resources/shaders/terrain/basic_terrain.vert", "resources/shaders/terrain/basic_terrain.frag");
 	//p->addTexture("resources/textures/noise.jpg", "heightmap");

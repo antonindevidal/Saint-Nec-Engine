@@ -3,12 +3,15 @@
 TessellationTerrain::TessellationTerrain(const unsigned int& width, const unsigned int& depth, const unsigned int& density, const char* vertexShaderPath, const char* fragmentShaderPath, const char* tessellationControlPath, const char* tessellationEvaluationPath):
 	GraphicComponent::GraphicComponent(vertexShaderPath,fragmentShaderPath,tessellationControlPath, tessellationEvaluationPath)
 {
+	lightDir = glm::vec3(0.0f, 0.8f, 0.3f);
 	shader.use();
 	shader.setMat4("projection", sne::SceneManager::getInstance()->getCurrentScene().getProjection()); //Set projection matrice once because it never changes 
 	shader.setMat4("view", sne::SceneManager::getInstance()->getCurrentScene().getView());
 	shader.setInt("minTess", 1);
 	shader.setInt("maxTess", 12);
 	shader.setFloat("maxDist", 30);
+	shader.setFloat("textureScaling", 300.0f);
+	shader.setVec3("lightDir", lightDir);
 
 	std::vector<float> vertices{};
 	std::vector<int> indices{};
@@ -47,6 +50,17 @@ TessellationTerrain::TessellationTerrain(const unsigned int& width, const unsign
 	nbIndices = indices.size();
 }
 
+
+void TessellationTerrain::update()
+{
+	GraphicComponent::update();
+
+	//lightDir = glm::vec3(glm::cos(Time::getTimeSinceStart()), glm::sin(Time::getTimeSinceStart()), 1.0f);
+	//std::cout << lightDir[0] << " " << lightDir[1] << " " << lightDir[2]<< std::endl;
+	
+
+}
+
 void TessellationTerrain::draw() const
 {
 	
@@ -62,7 +76,7 @@ void TessellationTerrain::draw() const
 	{
 		shader.use();
 
-
+		shader.setVec3("lightDir", lightDir);
 		shader.setMat4("view", sne::SceneManager::getInstance()->getCurrentScene().getView());
 		shader.setMat4("model", parent->getModel());
 		shader.setVec3("cameraPos", sne::SceneManager::getInstance()->getCurrentScene().getCamera().getPosition());
