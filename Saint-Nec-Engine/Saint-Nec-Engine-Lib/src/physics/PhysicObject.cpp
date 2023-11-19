@@ -114,6 +114,13 @@ namespace sne
                 std::cerr << e.what() << '\n';
             }
             
+            // if(isFixObject)
+            // {
+            //     // get axis
+            //     // _amortissement * V on this axis = NV
+            //     // new vitesse = old - NV/_amortissement - NV (cancel + opposite reaction)
+            // }
+
             addPunctualForce(*this, obj);
         }
 

@@ -28,7 +28,7 @@ namespace sne
             glm::vec3 _acceleration{0, 0, -9.81};
             glm::vec3 _velocity{0, 0, 0};
             float _mass = 1;          // kg
-            float _amortissement = 1; // [0; 1]
+            float _amortissement = 1; // [0; 1] 1 -> elastic choc
 
             // To update with Component::parent
             glm::vec3 _position;
