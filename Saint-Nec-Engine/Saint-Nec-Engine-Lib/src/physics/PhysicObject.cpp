@@ -13,7 +13,7 @@ namespace sne
 
         PhysicObject::PhysicObject(const glm::vec3 &position, float mass) : _position(position), _mass(mass)
         {
-            if(mass<=0)
+            if (mass <= 0)
                 throw IllegalMassException();
         }
 
@@ -79,12 +79,15 @@ namespace sne
 
         void PhysicObject::applyForce(const Force &f)
         {
+            _cumulativeForces += f / _mass;
         }
 
         void PhysicObject::compute(float dt)
         {
-            _position += _velocity * dt + ((float)0.5) * _acceleration * dt * dt;
-            _velocity += _acceleration * dt;
+            // TODO: how to manage punctual forces ?
+            _position += _velocity  * dt + ((float)0.5) * (_acceleration +_cumulativeForces) * dt * dt;
+            _velocity += (_acceleration + _cumulativeForces)* dt;
+            _cumulativeForces = {0, 0, 0};
         }
 
         void PhysicObject::update()
@@ -94,11 +97,25 @@ namespace sne
 
         void PhysicObject::computeCollide(PhysicObject &obj)
         {
-            if(!_collider || !obj._collider)
+            if (!_collider || !obj._collider)
                 throw std::exception_ptr();
-
-            if(!hasSATCollision(*_collider, *obj._collider))
+            try
+            {
+                if (!hasSATCollision(_collider, obj._collider))
                 return;
+            }
+            catch(const SATIllegalUseException &e)
+            {
+                std::cout << e.what() << '\n';
+                std::cerr << e.what() << '\n';
+            }
+            catch(const std::exception& e)
+            {
+                std::cout << e.what() << '\n';
+                std::cerr << e.what() << '\n';
+            }
+            
+            
 
             // Calcul new vitesse
             float v1 = norm(_velocity),

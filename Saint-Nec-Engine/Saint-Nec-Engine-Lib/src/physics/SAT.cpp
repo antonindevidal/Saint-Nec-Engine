@@ -69,7 +69,7 @@ namespace sne
                     return false;
                 }
             }
-            
+
             // We didn't find any gap
             return true;
         }
@@ -117,6 +117,33 @@ namespace sne
         bool hasSATCollision(const SphereCollider &sphere, const BoxCollider &boxe)
         {
             return hasSATCollision(boxe, sphere);
+        }
+
+        bool hasSATCollision(Component *elt1, Component *elt2)
+        {
+            BoxCollider *box1 = dynamic_cast<BoxCollider *>(elt1);
+            BoxCollider *box2 = dynamic_cast<BoxCollider *>(elt2);
+            SphereCollider *sphere1 = dynamic_cast<SphereCollider *>(elt1);
+            SphereCollider *sphere2 = dynamic_cast<SphereCollider *>(elt2);
+
+            if (box1 && box2)
+            {
+                return hasSATCollision(*box1, *box2);
+            }
+            else if (sphere1 && sphere2)
+            {
+                return hasSATCollision(*sphere1, *sphere2); 
+            }
+            else if ((box1 && sphere2) || (sphere1 && box2))
+            {
+                if(!box1)
+                    box1 = box2;
+                if(!sphere1)
+                    sphere1 = sphere2;
+                return hasSATCollision(*box1, *sphere1);
+            }
+            
+            throw new SATIllegalUseException();
         }
     }
 }
