@@ -35,9 +35,6 @@ namespace sne
             glm::vec3 _rotation;
             Component *_collider = nullptr;
 
-            // TO UPDATE: not clean
-            Force _cumulativeForces{0,0,0};
-
         public:
             /**
              * @brief Construct a new PhysicObject object positionned on origin
@@ -74,7 +71,7 @@ namespace sne
 
             /**
              * @brief applies a Force on the object
-             * This one must be ponctual otherwise we should directly update _acceleration
+             * This one must be a constante force such as gravity
              *
              * 
              * @param f force to apply, a vec3 representing both direction and intensity

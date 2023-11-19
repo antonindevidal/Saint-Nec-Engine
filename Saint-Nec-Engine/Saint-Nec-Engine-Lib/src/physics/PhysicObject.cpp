@@ -79,15 +79,13 @@ namespace sne
 
         void PhysicObject::applyForce(const Force &f)
         {
-            _cumulativeForces += f / _mass;
+            _acceleration += f / _mass;
         }
 
         void PhysicObject::compute(float dt)
         {
-            // TODO: how to manage punctual forces ?
-            _position += _velocity  * dt + ((float)0.5) * (_acceleration +_cumulativeForces) * dt * dt;
-            _velocity += (_acceleration + _cumulativeForces)* dt;
-            _cumulativeForces = {0, 0, 0};
+            _position += _velocity  * dt + ((float)0.5) * _acceleration  * dt * dt;
+            _velocity += _acceleration * dt;
         }
 
         void PhysicObject::update()
@@ -97,6 +95,7 @@ namespace sne
 
         void PhysicObject::computeCollide(PhysicObject &obj)
         {
+            // TODO: later moove this part out of this code to be clean
             if (!_collider || !obj._collider)
                 throw std::exception_ptr();
             try
