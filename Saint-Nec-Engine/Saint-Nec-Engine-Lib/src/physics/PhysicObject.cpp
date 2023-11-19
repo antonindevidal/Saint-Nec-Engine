@@ -114,13 +114,16 @@ namespace sne
                 std::cerr << e.what() << '\n';
             }
             
-            
+            addPunctualForce(*this, obj);
+        }
 
+        void addPunctualForce(PhysicObject &o1, PhysicObject &o2)
+        {
             // Calcul new vitesse
-            float v1 = norm(_velocity),
-                  v2 = norm(obj._velocity),
-                  m1 = _mass,
-                  m2 = obj._mass;
+            float v1 = norm(o1.getVelocity()),
+                  v2 = norm(o2.getVelocity()),
+                  m1 = o1.getMass(),
+                  m2 = o2.getMass();
 
             v1 = (m1 - m2) / (m1 + m2) * v1 + 2 * m2 * v2 / (m1 + m2);
             v2 = 2 * m1 * v1 / (m1 + m2) - (m1 - m2) / (m1 + m2) * v2;
@@ -128,15 +131,15 @@ namespace sne
             // Vector orientation
             // Considering line between 2 centers
             // TO UPDATE: considering plan where we touch the other and calcul with normal and angle ?
-            glm::vec3 direction = _position - obj._position;
+            glm::vec3 direction = o1.getPosition() - o2.getPosition();
 
             std::cout << "direciton: " << direction << "\n";
             std::cout << "v1 : " << v1 << "\n";
             std::cout << "v2 : " << v2 << "\n";
-            _velocity = -direction * v1;
-            obj._velocity = direction * v2;
-            std::cout << "v1 : " << _velocity << "\n";
-            std::cout << "v2 : " << obj._velocity << "\n";
+            o1.setVelocity(-direction * v1);
+            o2.setVelocity(direction * v2);
+            std::cout << "v1 : " << o1.getVelocity() << "\n";
+            std::cout << "v2 : " << o2.getVelocity() << "\n";
         }
 
     }

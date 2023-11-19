@@ -73,7 +73,7 @@ namespace sne
              * @brief applies a Force on the object
              * This one must be a constante force such as gravity
              *
-             * 
+             *
              * @param f force to apply, a vec3 representing both direction and intensity
              */
             void applyForce(const Force &f);
@@ -103,11 +103,13 @@ namespace sne
             class IllegalMassException : public std::exception
             {
             public:
-                const char* what() const noexcept
+                const char *what() const noexcept
                 {
                     return "Object must have a valide mass!";
-                } 
+                }
             };
         };
+
+        void addPunctualForce(PhysicObject &o1, PhysicObject &o2);
     }
 }
