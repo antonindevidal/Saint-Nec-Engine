@@ -119,6 +119,11 @@ namespace sne
             //     // get axis
             //     // _amortissement * V on this axis = NV
             //     // new vitesse = old - NV/_amortissement - NV (cancel + opposite reaction)
+                 
+            //     // TODO : when not going out -> frottement
+            //     // coeff = force opposite / weight
+            //     // during position update: counter_acceleration = coeff * weight
+            //     // finaly using of cumulativeForces ?
             // }
 
             addPunctualForce(*this, obj);
