@@ -69,12 +69,7 @@ namespace sne
          * @return false if no collision detected
          */
         template <typename ColliderType1, typename ColliderType2>
-        bool hasSatCollision(const ColliderType1&, const ColliderType2&)
-        {
-            throw new SATIllegalUseException();
-        }
-        template <typename ColliderType>
-        bool hasSatCollision(const ColliderType&, const ColliderType&)
+        bool hasSATCollision(const ColliderType1&, const ColliderType2&)
         {
             throw new SATIllegalUseException();
         }
