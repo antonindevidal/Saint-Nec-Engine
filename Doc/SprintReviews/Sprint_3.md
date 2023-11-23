@@ -16,4 +16,4 @@ Then we implement a basic texturing method and directionnal diffuse lighting mod
 
 For physic part we added the basic kinematics and forces applyied to an object. 
 We can now observe changes time after time and also apply reaction when 2 objects collides. There are 2 kind of collisions, collisions between 2 mobile objects, or with a fixed one. 
-If it is fixe, we apply an ‘amortissement’ coefficient simulating elastic (or not) collision (means conservation of energy, ex: ball boucing on the grown).
+If it is fix, we apply an ‘amortissement’ coefficient simulating elastic (or not) collision (means conservation of energy, ex: ball bouncing on the grown).
