@@ -1,4 +1,5 @@
 #include "SphereCollider.hpp"
+#include "SAT.hpp"
 
 namespace sne
 {
@@ -14,10 +15,20 @@ namespace sne
         {
             return _radius;
         }
-        
-        const glm::vec3 &SphereCollider::getCenter() const
+
+        bool SphereCollider::collide(const Collider *c) const 
         {
-            return _center;
+            return c->collide(*this);
+        }
+
+        bool SphereCollider::collide(const SphereCollider &s) const
+        {
+            return hasSATCollision(*this, s); 
+            // Used like that because in the futur, template foncteur
+        }
+        bool SphereCollider::collide(const BoxCollider& b) const 
+        {
+            return hasSATCollision(*this, b);
         }
     }
 }

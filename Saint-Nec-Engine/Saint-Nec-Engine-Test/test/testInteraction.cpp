@@ -54,7 +54,16 @@ TEST_CASE("TEST Newton Laws 1")
 
     REQUIRE(o1.getPosition() == o2.getPosition());
 
-    o1.computeCollide(o2);
+    try
+    {
+        o1.computeCollide(o2);
+        FAIL();
+    }
+    catch(const std::exception_ptr& e)
+    {
+        CHECK("No collider associed, checked" != "");
+    }
+    
     // glm::vec3 v1 = o1.getVelocity();
     // glm::vec3 v2 = o2.getVelocity();
     // CHECK(v1 == -v2);

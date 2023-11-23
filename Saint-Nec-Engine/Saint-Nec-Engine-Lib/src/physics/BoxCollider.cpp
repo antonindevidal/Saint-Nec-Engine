@@ -1,7 +1,7 @@
 #include "BoxCollider.hpp"
 #include <architecture/util.hpp>
 #include <iostream>
-
+#include "SAT.hpp"
 namespace sne
 {
 
@@ -80,15 +80,29 @@ namespace sne
             std::vector<glm::vec3> v{}, v2{};
             v.push_back({1, 0, 0});
             v.push_back({0, 1, 0});
-            v.push_back({0, 0, 1});            
+            v.push_back({0, 0, 1});
 
             // rotate axis considering the state of the Box
             const glm::mat3 R = buildRotationMatrix(_rotation);
             glm::vec3 center{0, 0, 0};
-            for (int i=0; i<v.size(); i++)
+            for (int i = 0; i < v.size(); i++)
                 rotate(R, v[i], center);
 
             return v;
+        }
+
+        bool BoxCollider::collide(const Collider *c) const 
+        {
+            return c->collide(*this);
+        }
+
+        bool BoxCollider::collide(const SphereCollider &s) const
+        {
+            return hasSATCollision(*this, s);
+        }
+        bool BoxCollider::collide(const BoxCollider& b) const 
+        {
+            return hasSATCollision(*this, b);
         }
     }
 }

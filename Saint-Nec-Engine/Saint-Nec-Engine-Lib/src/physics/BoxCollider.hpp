@@ -7,7 +7,7 @@
  *
  */
 
-#include "architecture/Component.hpp"
+#include "Collider.hpp"
 #include <vector>
 #include <glm/glm.hpp>
 #include <glm/gtc/type_ptr.hpp>
@@ -22,7 +22,7 @@ namespace sne
          * @class BoxCollider
          * @brief BoxCollider physics component
          */
-        class BoxCollider : public sne::Component
+        class BoxCollider : public Collider
         {
         private:
             glm::vec3 _points[8];         // TO UPDATE
@@ -91,6 +91,10 @@ namespace sne
              * @return std::vector<glm::vec3>
              */
             std::vector<glm::vec3> getAxis() const;
+
+            bool collide(const Collider*) const override;
+            bool collide(const SphereCollider&) const override;
+            bool collide(const BoxCollider&) const override;
         };
 
         std::ostream &operator<<(std::ostream &oss, const BoxCollider &b);

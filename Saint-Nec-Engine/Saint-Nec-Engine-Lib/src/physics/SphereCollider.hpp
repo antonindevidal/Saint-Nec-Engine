@@ -7,7 +7,7 @@
  *
  */
 
-#include "architecture/Component.hpp"
+#include "Collider.hpp"
 #include <glm/glm.hpp>
 #include <glm/gtc/type_ptr.hpp>
 
@@ -20,7 +20,7 @@ namespace sne
          * @class SphereCollider
          * @brief SphereCollider physics component
          */
-        class SphereCollider : public Component
+        class SphereCollider : public Collider
         {
         private:
             glm::vec3 _center;
@@ -32,17 +32,14 @@ namespace sne
 
             /**
              * @brief Get the Radius object
-             * 
-             * @return const double 
+             *
+             * @return const double
              */
             const double getRadius() const;
-            
-            /**
-             * @brief Get the Center object
-             * 
-             * @return const vec3& 
-             */
-            const glm::vec3 &getCenter() const;
+
+            bool collide(const Collider*) const override;
+            bool collide(const SphereCollider&) const override;
+            bool collide(const BoxCollider&) const override;
         };
     }
 }

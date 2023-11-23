@@ -1,5 +1,7 @@
 #include "PhysicObject.hpp"
 #include "../architecture/util.hpp"
+#include "SphereCollider.hpp"
+#include "BoxCollider.hpp"
 #include "SAT.hpp"
 
 namespace sne
@@ -72,7 +74,7 @@ namespace sne
             _mass = m;
         }
 
-        void PhysicObject::setCollider(Component *collider)
+        void PhysicObject::setCollider(Collider *collider)
         {
             _collider = collider;
         }
@@ -86,6 +88,9 @@ namespace sne
         {
             _position += _velocity  * dt + ((float)0.5) * _acceleration  * dt * dt;
             _velocity += _acceleration * dt;
+
+            if(_collider)
+                _collider->setCenter(_position);
         }
 
         void PhysicObject::update()
@@ -95,23 +100,21 @@ namespace sne
 
         void PhysicObject::computeCollide(PhysicObject &obj)
         {
-            // TODO: later moove this part out of this code to be clean
             if (!_collider || !obj._collider)
                 throw std::exception_ptr();
+        
             try
             {
-                if (!hasSATCollision(_collider, obj._collider))
+                if(!_collider->collide(obj._collider))
                 return;
             }
             catch(const SATIllegalUseException &e)
             {
                 std::cout << e.what() << '\n';
-                std::cerr << e.what() << '\n';
             }
             catch(const std::exception& e)
             {
                 std::cout << e.what() << '\n';
-                std::cerr << e.what() << '\n';
             }
             
             // if(isFixObject)

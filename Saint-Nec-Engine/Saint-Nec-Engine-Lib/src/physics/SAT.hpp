@@ -73,7 +73,7 @@ namespace sne
         {
             throw new SATIllegalUseException();
         }
-        bool hasSATCollision(Component *elt1, Component * elt2);
+        
         bool hasSATCollision(const BoxCollider &boxe1, const BoxCollider &boxe2);
         bool hasSATCollision(const SphereCollider &sphere1, const SphereCollider &sphere2);
         bool hasSATCollision(const BoxCollider &boxe, const SphereCollider &sphere);
