@@ -22,7 +22,7 @@ namespace sne::graphics
 	{
 	public:
 		/**
-		 * Constructor for plane.
+		 * @brief Constructor for plane.
 		 *
 		 * @param width Width of the plane.
 		 * @param depth Depth of the plane.
@@ -34,13 +34,14 @@ namespace sne::graphics
 		TessellatedPlane(const unsigned int& width, const unsigned int& depth, const unsigned int& density, const char* vertexShaderPath, const char* fragmentShaderPath, const char* tessellationControlPath, const char* tessellationEvaluationPath);
 
 		/**
-		 * Draw method for a tessellation plane.
+		 * @brief Draw method for a tessellation plane.
 		 */
 		void draw() const override;
 	
 	private:
+
 		/**
-		 * Number of indices for the plane.
+		 * @brief Number of indices for the plane.
 		 */
 		unsigned int nbIndices;
 	};
