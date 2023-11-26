@@ -9,12 +9,12 @@ uniform mat4 model;
 
 uniform sampler2D heightmap;
 
-out vec2 TexCoord;
+out vec2 uvs;
 
 void main()
 {
 	vec4 text = texture(heightmap,aTexCoord);
-	vec4 pos = vec4(aPos.x,text.x * 4.0f, aPos.z,1.0f);
-	TexCoord = aTexCoord;
+	vec4 pos = vec4(aPos.x,text.x * 50.0f - 25f, aPos.z,1.0f);
+	uvs = aTexCoord;
 	gl_Position = projection * view * model* pos;
 }

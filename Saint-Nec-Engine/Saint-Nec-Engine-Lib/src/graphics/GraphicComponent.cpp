@@ -138,4 +138,8 @@ namespace sne::graphics
 			glBindVertexArray(0);
 		}
 	}
+	const Shader& GraphicComponent::getShader()
+	{
+		return shader;
+	}
 }

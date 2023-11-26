@@ -2,8 +2,10 @@
 #include <architecture/Scene.hpp>
 #include <graphics/Cube.hpp>
 #include <graphics/Plane.hpp>
+#include <graphics/TessellatedPlane.hpp>
 
-#include "TessellationTerrain.hpp"
+
+
 
 
 class TerrainScene: public sne::Scene

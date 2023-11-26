@@ -68,6 +68,13 @@ namespace sne::graphics
 		*/
 		void draw() const override;
 
+		/**
+		 * @brief Getter for the shader object.
+		 * 
+		 * @return shader instance
+		 */
+		const Shader& getShader();
+
 	protected:
 		/**
 		* Vertex Buffer Object.
