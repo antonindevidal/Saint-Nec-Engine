@@ -16,6 +16,7 @@ set(_SAINT_NEC_ENGINE_LIB_SRC
 	"graphics/Shader.cpp"
 	"architecture/Time.cpp"
 	"architecture/Camera.cpp"
+	"graphics/TessellatedPlane.cpp"
 )
 
 set(_SAINT_NEC_ENGINE_LIB_HDR
@@ -33,6 +34,7 @@ set(_SAINT_NEC_ENGINE_LIB_HDR
 	"graphics/Shader.hpp"
 	"architecture/Time.hpp"
 	"architecture/Camera.hpp"
+	"graphics/TessellatedPlane.hpp"
 )
 target_sources(Saint-Nec-Engine-Lib INTERFACE ${_SAINT_NEC_ENGINE_LIB_HDR})
 target_sources(Saint-Nec-Engine-Lib PRIVATE ${_SAINT_NEC_ENGINE_LIB_SRC})

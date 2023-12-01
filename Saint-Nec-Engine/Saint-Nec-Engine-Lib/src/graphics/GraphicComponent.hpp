@@ -1,3 +1,4 @@
+#pragma once
 /**
  * @file GraphicComponent.hpp
  * @brief GraphicComponent class.
@@ -44,7 +45,7 @@ namespace sne::graphics
 		 * @param fragmentShaderPath Path of the fragment shader.
 		 */
 		GraphicComponent(const char* vertexShaderPath, const char* fragmentShaderPath);
-
+		GraphicComponent(const char* vertexShaderPath, const char* fragmentShaderPath, const char* tessellationControlPath, const char* tessellationEvaluationPath);
 		/**
 		* @brief Set the geometry of the graphic component
 		*
@@ -67,7 +68,14 @@ namespace sne::graphics
 		*/
 		void draw() const override;
 
-	private:
+		/**
+		 * @brief Getter for the shader object.
+		 * 
+		 * @return shader instance
+		 */
+		const Shader& getShader();
+
+	protected:
 		/**
 		* Vertex Buffer Object.
 		*/

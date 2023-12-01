@@ -16,5 +16,5 @@ void main()
 	vec4 text = texture(heightmap,aTexCoord);
 	vec4 pos = vec4(aPos.x,text.x * 50.0f - 25f, aPos.z,1.0f);
 	uvs = aTexCoord;
-	gl_Position = projection * view * model* pos;
+	gl_Position = pos;
 }
