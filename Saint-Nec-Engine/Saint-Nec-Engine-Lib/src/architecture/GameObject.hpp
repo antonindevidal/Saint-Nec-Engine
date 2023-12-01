@@ -7,12 +7,11 @@
  *
  */
 
+#include <string>
 #include <vector>
 #include <glm/glm.hpp>
 #include <glm/gtc/type_ptr.hpp>
-
 #include "Component.hpp"
-#include "Vector3.hpp"
 
 namespace sne
 {
@@ -22,10 +21,7 @@ namespace sne
 	*/
 	class GameObject
 	{
-	private:
-		Vector3 position; //TODO: remove 
-		Vector3 rotation; //TODO: remove - Radian
-		
+	private:		
 		/**
 		 * Vector of components used by the GameObject.
 		 */

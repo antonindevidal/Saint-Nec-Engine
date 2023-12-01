@@ -40,7 +40,7 @@ namespace sne
             /**
              * @brief Get the Center object
              * 
-             * @return const Vector3& 
+             * @return const vec3& 
              */
             const glm::vec3 &getCenter() const;
         };
