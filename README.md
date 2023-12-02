@@ -30,3 +30,4 @@ This tasks will use various implementation techniques such as particles, complex
 ## Sprints reviews
 - [Sprint 1](Doc/SprintReviews/Sprint_1.md)
 - [Sprint 2](Doc/SprintReviews/Sprint_2.md)
+- [Sprint 3](Doc/SprintReviews/Sprint_3.md)
