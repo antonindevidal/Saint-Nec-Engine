@@ -11,7 +11,7 @@ t = sqrt(2)
 def compute(t):
     global a, v, p
     v += a * t
-    p += 1 / 2 * v * t
+    p += v * t + 1/2 * a * t * t
     return p
 
 
