@@ -9,12 +9,7 @@
 
 #include <glm/glm.hpp>
 
-
-namespace sne
+namespace sne::saintNecPhysics
 {
-
-    namespace saintNecPhysics
-    {
-        glm::vec3 getNormal(const glm::vec3&, const glm::vec3&);
-    }   
+    glm::vec3 getNormal(const glm::vec3 &, const glm::vec3 &);
 }
