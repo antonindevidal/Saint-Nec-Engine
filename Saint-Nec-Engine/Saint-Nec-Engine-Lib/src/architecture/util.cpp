@@ -75,7 +75,7 @@ namespace sne
         return false;
     }
     
-    double norm(const glm::vec3 &v)
+    float norm(const glm::vec3 &v)
     {
         return sqrt(v[0] * v[0] + v[1] * v[1] + v[2] * v[2]);
     }

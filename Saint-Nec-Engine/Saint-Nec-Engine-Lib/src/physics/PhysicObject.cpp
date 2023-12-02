@@ -86,10 +86,10 @@ namespace sne
 
         void PhysicObject::compute(float dt)
         {
-            _position += _velocity  * dt + ((float)0.5) * _acceleration  * dt * dt;
+            _position += _velocity * dt + ((float)0.5) * _acceleration * dt * dt;
             _velocity += _acceleration * dt;
 
-            if(_collider)
+            if (_collider)
                 _collider->setCenter(_position);
         }
 
@@ -102,37 +102,34 @@ namespace sne
         {
             if (!_collider || !obj._collider)
                 throw std::exception_ptr();
-        
+
             try
             {
-                if(!_collider->collide(obj._collider))
-                return;
+                if (!_collider->collide(obj._collider))
+                    return;
             }
-            catch(const SATIllegalUseException &e)
+            catch (const SATIllegalUseException &e)
             {
                 std::cout << e.what() << '\n';
             }
-            catch(const std::exception& e)
+            catch (const std::exception &e)
             {
                 std::cout << e.what() << '\n';
             }
-            
-            // if(isFixObject)
-            // {
-            //     // get axis
-            //     // _amortissement * V on this axis = NV
-            //     // new vitesse = old - NV/_amortissement - NV (cancel + opposite reaction)
-                 
-            //     // TODO : when not going out -> frottement
-            //     // coeff = force opposite / weight
-            //     // during position update: counter_acceleration = coeff * weight
-            //     // finaly using of cumulativeForces ?
-            // }
 
-            addPunctualForce(*this, obj);
+            if (obj.isFix)
+            {
+                // We don't need to test this.isFix bc we won't use it 
+                glm::vec3 axis = obj._position - _position; // To update with impact point
+                _velocity = norm(_velocity) * _amortissement * axis;
+            }
+            else
+            {
+                addImpulsion(*this, obj);
+            }
         }
 
-        void addPunctualForce(PhysicObject &o1, PhysicObject &o2)
+        void addImpulsion(PhysicObject &o1, PhysicObject &o2)
         {
             // Calcul new vitesse
             float v1 = norm(o1.getVelocity()),
@@ -147,14 +144,8 @@ namespace sne
             // Considering line between 2 centers
             // TO UPDATE: considering plan where we touch the other and calcul with normal and angle ?
             glm::vec3 direction = o1.getPosition() - o2.getPosition();
-
-            std::cout << "direciton: " << direction << "\n";
-            std::cout << "v1 : " << v1 << "\n";
-            std::cout << "v2 : " << v2 << "\n";
             o1.setVelocity(-direction * v1);
             o2.setVelocity(direction * v2);
-            std::cout << "v1 : " << o1.getVelocity() << "\n";
-            std::cout << "v2 : " << o2.getVelocity() << "\n";
         }
 
     }

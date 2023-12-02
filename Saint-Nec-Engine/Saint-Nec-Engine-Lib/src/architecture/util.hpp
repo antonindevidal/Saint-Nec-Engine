@@ -42,9 +42,9 @@ namespace sne
 	 * @brief evalute the norm of the vector
 	 *
 	 * @param v
-	 * @return double
+	 * @return float
 	 */
-	double norm(const glm::vec3 &v);
+	float norm(const glm::vec3 &v);
 
 	/**
 	 * @brief build matrix for rotation

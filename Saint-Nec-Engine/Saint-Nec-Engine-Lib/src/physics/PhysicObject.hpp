@@ -2,7 +2,7 @@
 
 /**
  * @file PhysicObject.hpp
- * @brief PhysicObject representive of the object in the game.
+ * @brief PhysicObject representation of the object in the game.
  * @author Abdeljalil ZOGHLAMI
  * @date november 17th 2023.
  */
@@ -35,6 +35,9 @@ namespace sne
             glm::vec3 _position;
             glm::vec3 _rotation;
             Collider *_collider = nullptr;
+
+            // To update with inheritence
+            bool isFix = false;
 
         public:
             /**
@@ -111,6 +114,6 @@ namespace sne
             };
         };
 
-        void addPunctualForce(PhysicObject &o1, PhysicObject &o2);
+        void addImpulsion(PhysicObject &o1, PhysicObject &o2);
     }
 }
