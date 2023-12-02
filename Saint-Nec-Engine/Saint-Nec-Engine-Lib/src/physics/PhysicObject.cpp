@@ -103,11 +103,12 @@ namespace sne::saintNecPhysics
         }
         catch (const SATIllegalUseException &e)
         {
-            std::cout << e.what() << '\n';
+            std::cout << e.what() << " " << parent->getName() << "\n";
         }
         catch (const std::exception &e)
         {
-            std::cout << e.what() << '\n';
+            std::cout << e.what() << " " << parent->getName() << "\n";
+            throw std::exception();
         }
 
         if (obj.isFix)
