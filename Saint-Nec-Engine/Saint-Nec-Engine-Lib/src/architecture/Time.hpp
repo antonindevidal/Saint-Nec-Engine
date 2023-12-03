@@ -19,19 +19,14 @@ class Time
 {
 public:
 	/**
-	 * Instance of the singleton.
-	 */
-	static Time* instance;
+	* Copy Contructor does not exist since it is a Singleton.
+	*/
+	Time(const Time& sm) = delete;
 
 	/**
-	 * Default constructor.
+	 * Operator= does not exist since it is a Singleton.
 	 */
-	Time();
-
-	/**
-	 * Destructor.
-	 */
-	~Time();
+	void operator=(const Time& sm) = delete;
 
 	/**
 	 * Return the instance of the singleton.
@@ -55,6 +50,22 @@ public:
 	 */
 	static float getTimeSinceStart();
 private:
+
+	/**
+	 * Default constructor.
+	 */
+	Time();
+
+	/**
+	 * Destructor.
+	 */
+	~Time();
+
+	/**
+	 * Instance of the singleton.
+	 */
+	static Time* instance;
+
 	/**
 	 * Last frame time.
 	 */

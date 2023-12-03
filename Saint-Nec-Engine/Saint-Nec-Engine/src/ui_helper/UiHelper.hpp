@@ -8,6 +8,8 @@
 #include <architecture/SceneManager.hpp>
 #include <architecture/GameObject.hpp>
 
+#include <typeinfo>
+
 class UiHelper
 {
 
