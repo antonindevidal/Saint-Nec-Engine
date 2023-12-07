@@ -9,7 +9,12 @@ Game::Game(): sceneManager(sne::SceneManager::getInstance())
 	TerrainScene* terrainScene = new TerrainScene();
 	terrainScene->setName("TerrainScene");
 	sceneManager->addScene(terrainScene);
-	sceneManager->changeScene(terrainScene->getName());
+
+	GrassScene* grassScene = new GrassScene();
+	grassScene->setName("GrassScene");
+	sceneManager->addScene(grassScene);
+
+	sceneManager->changeScene(grassScene->getName());
 
 
 	

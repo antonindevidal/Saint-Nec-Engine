@@ -1,3 +1,4 @@
+#pragma once
 /**
  * @file plane.hpp
  * @brief Plane component class.

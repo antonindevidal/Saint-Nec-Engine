@@ -5,7 +5,9 @@
 
 #include "ui_helper/UiHelper.hpp"
 #include "scenes/FirstScene.hpp"
+#include "scenes/GrassScene.hpp"
 #include "terrain/TerrainScene.hpp"
+
 
 class Game
 {
