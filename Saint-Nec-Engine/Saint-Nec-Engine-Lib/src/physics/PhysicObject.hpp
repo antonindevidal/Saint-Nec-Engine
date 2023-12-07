@@ -16,7 +16,7 @@
 #include "SphereCollider.hpp"
 #include "BoxCollider.hpp"
 #include "SAT.hpp"
-
+#include <architecture/GameObject.hpp>
 
 const int FPS = 10; // Will be removed later
 
