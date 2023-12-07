@@ -7,14 +7,20 @@
  * @date november 17th 2023.
  */
 
-#include "architecture/Component.hpp"
-#include "Collider.hpp"
+
+
 #include <glm/glm.hpp>
 #include <exception>
+#include <architecture/Component.hpp>
+#include <architecture/util.hpp>
+#include "Collider.hpp"
+#include "SphereCollider.hpp"
+#include "BoxCollider.hpp"
+#include "SAT.hpp"
 
 namespace sne
 {
-    const int FPS = 10;
+    const int FPS = 10; // TO UPTADE later
     namespace saintNecPhysics
     {
         /**

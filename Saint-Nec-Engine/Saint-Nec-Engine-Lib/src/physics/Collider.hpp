@@ -9,39 +9,37 @@
 
 #include <glm/glm.hpp>
 #include <glm/gtc/type_ptr.hpp>
+#include <architecture/Component.hpp>
 
-namespace sne
+namespace sne::saintNecPhysics
 {
-    namespace saintNecPhysics
+    class SphereCollider;
+    class BoxCollider;
+
+    class Collider : public Component
     {
-        class SphereCollider;
-        class BoxCollider;
+    protected:
+        glm::vec3 _center;
+        Collider(glm::vec3 center) : _center(center) {}
 
-        class Collider
+    public:
+        /**
+         * @brief Get the Center object
+         *
+         * @return const vec3&
+         */
+        const glm::vec3 &getCenter() const
         {
-        protected:
-            glm::vec3 _center;
-            double _radius;
+            return _center;
+        }
 
-        public:
-            /**
-             * @brief Get the Center object
-             *
-             * @return const vec3&
-             */
-            const glm::vec3 &getCenter() const
-            {
-                return _center;
-            }
+        void setCenter(const glm::vec3 &v)
+        {
+            _center = v;
+        }
 
-            void setCenter(const glm::vec3 &v)
-            {
-                _center = v;
-            }
-
-            virtual bool collide(const Collider*) const = 0;
-            virtual bool collide(const SphereCollider&) const = 0;
-            virtual bool collide(const BoxCollider&) const = 0;
-        };
-    }
+        virtual bool collide(const Collider *) const = 0;
+        virtual bool collide(const SphereCollider &) const = 0;
+        virtual bool collide(const BoxCollider &) const = 0;
+    };
 }
