@@ -49,6 +49,11 @@ public:
 	 * Return delta time.
 	 */
 	static float getDeltaTime();
+
+	/**
+	 * Return OpenGL time.
+	 */
+	static float getTimeSinceStart();
 private:
 	/**
 	 * Last frame time.

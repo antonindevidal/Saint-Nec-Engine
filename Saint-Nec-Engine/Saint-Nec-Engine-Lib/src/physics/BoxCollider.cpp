@@ -27,7 +27,7 @@ namespace sne::saintNecPhysics
     bool BoxCollider::hasPoint(const glm::vec3 &p, float eps) const
     {
         for (glm::vec3 v : _points)
-            if (areSimilar(v, p))
+            if (areSimilar(v, p, eps))
                 return true;
 
         return false;

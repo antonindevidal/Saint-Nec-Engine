@@ -34,3 +34,8 @@ float Time::getDeltaTime()
 {
 	return deltaTime;
 }
+
+float Time::getTimeSinceStart()
+{
+	return glfwGetTime();
+}

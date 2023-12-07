@@ -1,8 +1,10 @@
 #include "SphereCollider.hpp"
 
+
 namespace sne::saintNecPhysics
 
 {
+
     SphereCollider::SphereCollider(glm::vec3 center, double radius) : Collider(center), _radius(radius)
     {
     }

@@ -7,6 +7,7 @@
  *
  */
 
+
 #include <iostream>
 #include <vector>
 #include <glm/glm.hpp>
@@ -14,6 +15,7 @@
 #include <architecture/util.hpp>
 #include "Collider.hpp"
 #include "SAT.hpp"
+
 
 namespace sne::saintNecPhysics
 {
