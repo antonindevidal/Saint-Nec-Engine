@@ -11,7 +11,8 @@
 #include <glm/glm.hpp>
 #include <glm/gtc/type_ptr.hpp>
 #include "Collider.hpp"
-#include "SphereCollider.hpp"
+#include "SAT.hpp"
+
 
 namespace sne::saintNecPhysics
 {
@@ -22,7 +23,6 @@ namespace sne::saintNecPhysics
     class SphereCollider : public Collider
     {
     private:
-        glm::vec3 _center;
         double _radius;
 
     public:

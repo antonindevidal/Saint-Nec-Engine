@@ -7,10 +7,11 @@
  *
  */
 
+
+#include <iostream>
 #include <vector>
 #include <glm/glm.hpp>
 #include <glm/gtc/type_ptr.hpp>
-#include <iostream>
 #include <architecture/util.hpp>
 #include "Collider.hpp"
 #include "SAT.hpp"
@@ -27,7 +28,6 @@ namespace sne::saintNecPhysics
     private:
         glm::vec3 _points[8];         // TO UPDATE
         glm::vec3 _rotation{0, 0, 0}; // Radian
-        glm::vec3 _center;
 
     public:
         /**

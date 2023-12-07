@@ -141,5 +141,4 @@ namespace sne::saintNecPhysics
         o1.setVelocity(-direction * v1);
         o2.setVelocity(direction * v2);
     }
-
 }

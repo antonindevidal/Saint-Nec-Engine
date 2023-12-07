@@ -3,6 +3,7 @@
 namespace sne::saintNecPhysics
 {
     BoxCollider::BoxCollider(const glm::vec3 center, double width, double depth, double height)
+        : Collider(center)
     {
         double offsetX = width / 2,
                offsetY = depth / 2,
@@ -16,8 +17,6 @@ namespace sne::saintNecPhysics
         _points[5] = glm::vec3(center[0] + offsetX, center[1] - offsetY, center[2] + offsetZ);
         _points[6] = glm::vec3(center[0] + offsetX, center[1] + offsetY, center[2] - offsetZ);
         _points[7] = glm::vec3(center[0] + offsetX, center[1] + offsetY, center[2] + offsetZ);
-
-        _center = center;
     }
 
     const glm::vec3 &BoxCollider::operator[](int i) const
