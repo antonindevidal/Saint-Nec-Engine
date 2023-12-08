@@ -2,8 +2,8 @@
 
 
 
-GrassComponent::GrassComponent(const char* vertexShaderPath, const char* fragmentShaderPath)
-	:GraphicComponent(vertexShaderPath,fragmentShaderPath)
+GrassComponent::GrassComponent(const int & width, const int & depth, const int nbInstances, const char* vertexShaderPath, const char* fragmentShaderPath)
+	:GraphicComponent(vertexShaderPath,fragmentShaderPath), nbInstances(nbInstances)
 {
 	/*
 				  8
@@ -63,7 +63,73 @@ GrassComponent::GrassComponent(const char* vertexShaderPath, const char* fragmen
 		8, 7, 6
 	};
 
-	setGeometry(vertices,sne::graphics::VertexDataType::SNE_VERTICES_TEXTURE,indices);
+	std::vector<float> positions;
+	int sqrtInstances = sqrt(nbInstances);
+	for (int i = 0; i < nbInstances; i++)
+	{
+		positions.push_back((i % sqrtInstances) * (width * 1.0 / sqrtInstances) + (std::rand() * 1.0f / RAND_MAX));
+		positions.push_back(0.0f);
+		positions.push_back((i / sqrtInstances) * (width * 1.0 / sqrtInstances) + (std::rand() *1.0f/ RAND_MAX));
+	}
+
+
+
+	glGenVertexArrays(1, &VAO);
+	glGenBuffers(1, &VBO); // Generate VBO
+	glGenBuffers(1, &EBO); // generate EBO
+
+	glBindVertexArray(VAO);
+
+	glBindBuffer(GL_ARRAY_BUFFER, VBO); // Set type of Buffer
+	glBufferData(GL_ARRAY_BUFFER, sizeof(float) * vertices.size(), &vertices[0], GL_STATIC_DRAW);
+
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(int) * indices.size(), &indices[0], GL_STATIC_DRAW);
+
+
+
+	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)0);
+	glEnableVertexAttribArray(0);
+	glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)(3 * sizeof(float)));
+	glEnableVertexAttribArray(1);
+	
+	glGenBuffers(1, &instanceVBO);
+
+	glBindBuffer(GL_ARRAY_BUFFER, instanceVBO);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(float) * positions.size(), &positions[0], GL_STATIC_DRAW);
+	glVertexAttribPointer(2, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
+	glEnableVertexAttribArray(2);
+	glBindBuffer(GL_ARRAY_BUFFER, 0);
+	glVertexAttribDivisor(2, 1);
+	
+
+	renderedElementCount = indices.size();
+	hasGeometry = true;
+}
+
+void GrassComponent::draw() const
+{
+	
+	if (hasTexture)
+	{
+		for (int i = 0; i < textureIDs.size(); i++)
+		{
+			glActiveTexture(GL_TEXTURE0 + i);
+			glBindTexture(GL_TEXTURE_2D, textureIDs[i]);
+		}
+	}
+	if (hasGeometry)
+	{
+		shader.use();
+
+
+		shader.setMat4("view", sne::SceneManager::getInstance()->getCurrentScene().getView());
+		shader.setMat4("model", parent->getModel());
+
+		glBindVertexArray(VAO);
+		glDrawElementsInstanced(GL_TRIANGLES,renderedElementCount, GL_UNSIGNED_INT,0,nbInstances);
+		glBindVertexArray(0);
+	}
 }
 
 
