@@ -22,16 +22,17 @@ void GrassScene::load()
 	sne::GameObject* grassBlade = new sne::GameObject();
 	grassBlade->setName("grass blade");
 	addGameObject(grassBlade);
-	grassBlade->addComponent(new GrassComponent(1,1,90,"resources/shaders/grassShader/grass.vert", "resources/shaders/grassShader/grass.frag"));
+	grassBlade->addComponent(new GrassComponent(5,5,200,"resources/shaders/grassShader/grass.vert", "resources/shaders/grassShader/grass.frag"));
 	grassBlade->translate({ 0.0f,0.0f,0.0f });
 
 
 	sne::GameObject* plane = new sne::GameObject();
 	plane->setName("plane");
 	addGameObject(plane);
-	sne::graphics::Plane* planeComp = new sne::graphics::Plane(10, 10, 1, "resources/shaders/color.vert", "resources/shaders/color.frag");
+	sne::graphics::Plane* planeComp = new sne::graphics::Plane(5, 5, 1, "resources/shaders/color.vert", "resources/shaders/color.frag");
 	planeComp->getShader().setVec3("color",{ 0.9f, 0.9f, 0.9f });
 	plane->addComponent(planeComp);
+	plane->translate({ 2.5f,0.0f,2.5f });
 	
 }
 

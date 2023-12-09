@@ -67,9 +67,9 @@ GrassComponent::GrassComponent(const int & width, const int & depth, const int n
 	int sqrtInstances = sqrt(nbInstances);
 	for (int i = 0; i < nbInstances; i++)
 	{
-		positions.push_back((i % sqrtInstances) * (width * 1.0 / sqrtInstances) + (std::rand() * 1.0f / RAND_MAX));
+		positions.push_back((i % sqrtInstances) * (width * 1.0 / sqrtInstances) + (std::rand() * 1.0f / (RAND_MAX * width)));
 		positions.push_back(0.0f);
-		positions.push_back((i / sqrtInstances) * (width * 1.0 / sqrtInstances) + (std::rand() *1.0f/ RAND_MAX));
+		positions.push_back((i / sqrtInstances) * (width * 1.0 / sqrtInstances) + (std::rand() *1.0f/ (RAND_MAX * depth)));
 	}
 
 
