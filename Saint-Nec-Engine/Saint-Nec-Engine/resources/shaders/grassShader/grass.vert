@@ -14,6 +14,8 @@ uniform vec3 grassColorBottom;
 uniform vec3 camViewDir;
 
 out vec2 uv;
+out vec3 norm;
+
 // Basic hash function  https://stackoverflow.com/questions/23319289/is-there-a-good-glsl-hash-function
 uint lowbias32(uint x)
 {
@@ -27,7 +29,7 @@ uint lowbias32(uint x)
 
 void main()
 {
-	uv = aUV;
+
 	uint h = lowbias32(gl_InstanceID);
 	float angle = (h/10.0) *2.0 *3.14;
 
@@ -44,8 +46,22 @@ void main()
 	vec3 rotPos = vec3(cos(angle) * curvedPos.x + sin(angle)* curvedPos.z,
 						curvedPos.y, 
 						(-sin(angle)* curvedPos.x) + (cos(angle) * curvedPos.z));
-							
-							
-	gl_Position = projection * view * model* vec4(rotPos + aInstancePos, 1.0);
+
+
+	//Rotate a little if camera dir orthogonal to blade normaL
+	vec3 normal = vec3(cos(angle) *0.0f + sin(angle)* 1.0f,
+					0.0f, 
+					(-sin(angle)* 0.0f) + (cos(angle) * 1.0f));
+
+
+	float viewDotNormal = clamp(dot(camViewDir,normal),0.0f,1.0f);		
+	float factor =  pow(1-viewDotNormal,3);
+	vec3 smallRot = vec3(cos(factor) * rotPos.x + sin(factor)* rotPos.z,
+						rotPos.y, 
+						(-sin(factor)* rotPos.x) + (cos(factor) * rotPos.z));
+
+	uv = aUV;
+	norm = vec3(factor,factor,factor);
+	gl_Position = projection * view * model* vec4(smallRot+ aInstancePos, 1.0);
 }
  
