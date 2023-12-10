@@ -125,11 +125,14 @@ void GrassComponent::draw() const
 	}
 	if (hasGeometry)
 	{
-		float test = glm::dot(sne::SceneManager::getInstance()->getCurrentScene().getCamera().getFront(), glm::vec3(0.0f, 0.0f, 1.0f));
-		std::cout << 1.0f  - std::abs(test)<< std::endl;
+		//float test = glm::dot(sne::SceneManager::getInstance()->getCurrentScene().getCamera().getFront(), glm::vec3(0.0f, 0.0f, 1.0f));
+		//std::cout << 1.0f  - std::abs(test)<< std::endl;
 
 
 		shader.use();
+		shader.setVec3("windDir", glm::vec3(0.0f, 0.0f, 1.0f));
+		shader.setFloat("time",Time::getTimeSinceStart());
+		//std::cout << Time::getTimeSinceStart() << std::endl;
 		shader.setVec3("camViewDir", sne::SceneManager::getInstance()->getCurrentScene().getCamera().getFront());
 		shader.setMat4("view", sne::SceneManager::getInstance()->getCurrentScene().getView());
 		shader.setMat4("model", parent->getModel());
