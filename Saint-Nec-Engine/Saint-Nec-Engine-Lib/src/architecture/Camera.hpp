@@ -102,5 +102,7 @@ namespace sne
 		 * getter for the position of the camera.
 		 */
 		const glm::vec3& getPosition() const;
+
+		const glm::vec3& getFront() const;
 	};
 }

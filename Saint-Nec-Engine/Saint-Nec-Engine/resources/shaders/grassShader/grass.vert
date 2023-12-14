@@ -37,6 +37,8 @@ float remap(float value, float low1, float high1, float low2, float high2)
 	return low2 + (value - low1) * (high2 - low2) / (high1 - low1);
 }
 
+
+//Perlin noise from https://gist.github.com/patriciogonzalezvivo/670c22f3966e662d2f83
 float rand(vec2 c){
 	return fract(sin(dot(c.xy ,vec2(12.9898,78.233))) * 43758.5453);
 }
@@ -84,21 +86,22 @@ void main()
 
 	//Wind effect
 	//Wind strength
-	float windStrengthNoise = pNoise( aInstancePos.xz *100.0f + time *100.0f, 3);
-
+	float windStrengthNoise = pNoise( aInstancePos.xz *100.0f * windDir.xz + time *200.0f, 3);
+	float windDirStrength = windStrengthNoise *8.0f;
 
 	// Curve the blade
-	float curvature = ((h%20)/20.0)*aPos.y + windStrengthNoise *2.0f;
+	float curvature = ((h%20)/20.0)*aPos.y + windStrengthNoise * 2.0f;
 	vec3 curvedPos = vec3( aPos.x,
-							aPos.y * cos(curvature) - aPos.z * sin(curvature),
+							(aPos.y * cos(curvature) - aPos.z * sin(curvature))*1.5f,
 							aPos.y * sin(curvature) + aPos.z * cos(curvature) );
 
-
+	curvedPos += windDir * 0.4 * aPos.y;
 
 	// Rotate the blade
 	vec3 rotPos = vec3(cos(angle) * curvedPos.x + sin(angle)* curvedPos.z,
 						curvedPos.y, 
 						(-sin(angle)* curvedPos.x) + (cos(angle) * curvedPos.z));
+	
 
 
 	//Rotate a little if camera dir orthogonal to blade normaL

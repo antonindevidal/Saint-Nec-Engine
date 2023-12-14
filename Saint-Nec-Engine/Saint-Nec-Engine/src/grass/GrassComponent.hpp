@@ -11,5 +11,5 @@ private:
 	unsigned int instanceVBO;
 	int nbInstances;
 
-
+	float testDir;
 };

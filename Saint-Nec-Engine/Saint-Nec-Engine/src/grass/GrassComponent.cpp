@@ -105,11 +105,14 @@ GrassComponent::GrassComponent(const int & width, const int & depth, const int n
 
 	renderedElementCount = indices.size();
 	hasGeometry = true;
+	testDir = 0.0f;
 }
 
 void GrassComponent::update()
 {
 	GraphicComponent::update();
+	//testDir += 0.001f;
+
 }
 
 void GrassComponent::draw() const
@@ -130,7 +133,7 @@ void GrassComponent::draw() const
 
 
 		shader.use();
-		shader.setVec3("windDir", glm::vec3(0.0f, 0.0f, 1.0f));
+		shader.setVec3("windDir", {cos(testDir),0.0f, sin(testDir)});
 		shader.setFloat("time",Time::getTimeSinceStart());
 		//std::cout << Time::getTimeSinceStart() << std::endl;
 		shader.setVec3("camViewDir", sne::SceneManager::getInstance()->getCurrentScene().getCamera().getFront());
