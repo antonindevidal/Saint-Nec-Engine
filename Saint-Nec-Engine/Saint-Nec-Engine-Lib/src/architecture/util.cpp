@@ -69,10 +69,7 @@ namespace sne
 {
     bool areSimilar(const glm::vec3 &v1, const glm::vec3 &v2, float eps)
     {
-        if ((v1 - eps) <= v2 && v2 <= (v1 + eps))
-            return true;
-            
-        return false;
+        return (v1 - eps) <= v2 && v2 <= (v1 + eps);
     }
     
     float norm(const glm::vec3 &v)

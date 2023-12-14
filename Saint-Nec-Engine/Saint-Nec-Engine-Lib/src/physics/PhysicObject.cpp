@@ -103,7 +103,10 @@ namespace sne::saintNecPhysics
         }
         catch (const SATIllegalUseException &e)
         {
-            std::cout << e.what() << " " << parent->getName() << "\n";
+            if(parent == nullptr)
+                std::cout << " ";
+            else
+                std::cout << e.what() << " " << parent->getName() << "\n";
         }
         catch (const std::exception &e)
         {
