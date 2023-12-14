@@ -7,42 +7,37 @@
  *
  */
 
-#include "architecture/Component.hpp"
+
 #include <glm/glm.hpp>
 #include <glm/gtc/type_ptr.hpp>
+#include "Collider.hpp"
+#include "SAT.hpp"
 
-namespace sne
+
+namespace sne::saintNecPhysics
 {
-
-    namespace saintNecPhysics
+    /**
+     * @class SphereCollider
+     * @brief SphereCollider physics component
+     */
+    class SphereCollider : public Collider
     {
+    private:
+        double _radius;
+
+    public:
+        SphereCollider(glm::vec3 center, double radius);
+        ~SphereCollider() = default;
+
         /**
-         * @class SphereCollider
-         * @brief SphereCollider physics component
+         * @brief Get the Radius object
+         *
+         * @return const double
          */
-        class SphereCollider : public Component
-        {
-        private:
-            glm::vec3 _center;
-            double _radius;
+        const double getRadius() const;
 
-        public:
-            SphereCollider(glm::vec3 center, double radius);
-            ~SphereCollider() = default;
-
-            /**
-             * @brief Get the Radius object
-             * 
-             * @return const double 
-             */
-            const double getRadius() const;
-            
-            /**
-             * @brief Get the Center object
-             * 
-             * @return const vec3& 
-             */
-            const glm::vec3 &getCenter() const;
-        };
-    }
+        bool collide(const Collider *) const override;
+        bool collide(const SphereCollider &) const override;
+        bool collide(const BoxCollider &) const override;
+    };
 }

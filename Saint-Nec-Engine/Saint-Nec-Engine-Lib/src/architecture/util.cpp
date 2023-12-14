@@ -67,7 +67,12 @@ namespace glm
 
 namespace sne
 {
-    double norm(const glm::vec3 &v)
+    bool areSimilar(const glm::vec3 &v1, const glm::vec3 &v2, float eps)
+    {
+        return (v1 - eps) <= v2 && v2 <= (v1 + eps);
+    }
+    
+    float norm(const glm::vec3 &v)
     {
         return sqrt(v[0] * v[0] + v[1] * v[1] + v[2] * v[2]);
     }
