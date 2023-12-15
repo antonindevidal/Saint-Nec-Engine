@@ -5,6 +5,7 @@
 #include <physics/SphereCollider.hpp>
 #include <glm/glm.hpp>
 #include <glm/gtc/type_ptr.hpp>
+#include <architecture/PhysicManager.hpp>
 
 // Tests //-----------------------------------------------------------------------------------------
 using namespace sne;
@@ -17,4 +18,6 @@ TEST_CASE("TEST SPHERECOLLIDER CONSTRUCTORS")
 
     CHECK(sphere.getRadius() == 2.7589);
     CHECK(sphere.getCenter() == glm::vec3{2, 2, 1});
+
+    std::unique_ptr<sne::PhysicManager> &i = PhysicManager::getInstance();
 }
