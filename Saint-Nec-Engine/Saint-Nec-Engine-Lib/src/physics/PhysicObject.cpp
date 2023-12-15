@@ -86,7 +86,7 @@ namespace sne::saintNecPhysics
             _collider->setCenter(_position);
     }
 
-    void PhysicObject::update()
+    void PhysicObject::update() // to remove it would be bad use of getdelta?
     {
         compute(1 / FPS);
     }
