@@ -3,10 +3,12 @@
 #include <imgui.h>
 #include <imgui_impl_glfw.h>
 #include <imgui_impl_opengl3.h>
+#include <typeinfo>
 
 #include <architecture/Scene.hpp>
 #include <architecture/SceneManager.hpp>
 #include <architecture/GameObject.hpp>
+
 
 class UiHelper
 {
