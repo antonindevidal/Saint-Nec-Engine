@@ -50,7 +50,7 @@ namespace sne::saintNecPhysics
          *
          */
         PhysicObject(float mass);
-        ~PhysicObject() = default;
+        ~PhysicObject();
 
         /**
          * @brief Construct a new PhysicObject object positionned at

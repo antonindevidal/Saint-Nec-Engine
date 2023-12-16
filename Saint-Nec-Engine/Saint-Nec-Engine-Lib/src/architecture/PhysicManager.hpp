@@ -89,6 +89,8 @@ namespace sne
 		 * 
 		 */
 		void addObject(saintNecPhysics::PhysicObject &);
+
+		const std::vector<saintNecPhysics::PhysicObject>& getObjects() const;
 	};
 
 }
