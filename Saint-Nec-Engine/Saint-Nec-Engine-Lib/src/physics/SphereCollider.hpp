@@ -39,6 +39,13 @@ namespace sne::saintNecPhysics
         bool collide(const SphereCollider &) const override;
         bool collide(const BoxCollider &) const override;
 
+        /**
+         * @brief return true if it has an intersection with other object on axis 
+         * 
+         * @param axis 
+         * @return true 
+         * @return false 
+         */
         bool intersection(const Collider *, const glm::vec3 &axis) const override;
         bool intersection(const SphereCollider &, const glm::vec3 &axis) const override;
         bool intersection(const BoxCollider &, const glm::vec3 &axis) const override;

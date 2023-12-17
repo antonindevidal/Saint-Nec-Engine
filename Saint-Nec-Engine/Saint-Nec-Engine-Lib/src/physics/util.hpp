@@ -39,7 +39,7 @@ namespace sne::saintNecPhysics
     double dot(const glm::vec3 v1, const glm::vec3 v2);
 
     /**
-     * @brief check whether or not 2 box intersect on 1 axis
+     * @brief check whether or not 2 Colliders intersect on 1 axis
      * 
      * @param boxe1 
      * @param boxe2 

@@ -96,6 +96,11 @@ namespace sne
 		 */
 		void addObject(saintNecPhysics::PhysicObject *);
 
+		/**
+		 * @brief Get the PhysicObjects* object
+		 * 
+		 * @return const std::vector<saintNecPhysics::PhysicObject*>& 
+		 */
 		const std::vector<saintNecPhysics::PhysicObject*>& getObjects() const;
 	};
 

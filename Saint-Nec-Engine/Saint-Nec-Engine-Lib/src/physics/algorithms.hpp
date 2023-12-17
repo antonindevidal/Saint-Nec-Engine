@@ -21,5 +21,10 @@
 
 namespace sne::saintNecPhysics
 {
+    /**
+     * @brief detect possible collision using SAP optimization
+     * 
+     * @return std::vector<std::pair<PhysicObject*, PhysicObject*>> 
+     */
     std::vector<std::pair<PhysicObject*, PhysicObject*>> sweepAndPrune(std::vector<PhysicObject*>&);
 }
