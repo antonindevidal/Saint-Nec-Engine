@@ -69,6 +69,7 @@ namespace sne::saintNecPhysics
         const glm::vec3 &getRotation() const;
         float getAmortissement() const;
         float getMass() const;
+        const Collider * getCollider() const;
 
         void setAcceleration(const glm::vec3 &);
         void setVelocity(const glm::vec3 &);

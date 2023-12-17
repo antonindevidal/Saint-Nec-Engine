@@ -49,6 +49,11 @@ namespace sne::saintNecPhysics
         return _mass;
     }
 
+    const Collider * PhysicObject::getCollider() const
+    {
+        return _collider;
+    }
+
     void PhysicObject::setAcceleration(const glm::vec3 &a)
     {
         _acceleration = a;

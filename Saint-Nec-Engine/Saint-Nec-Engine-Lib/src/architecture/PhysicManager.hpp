@@ -14,6 +14,7 @@
 #include <algorithm>
 #include "../physics/PhysicObject.hpp"
 #include "Time.hpp"
+#include "../physics/algorithms.hpp"
 
 
 namespace sne
@@ -30,6 +31,11 @@ namespace sne
 		{
 			return o1.getPosition()[0] < o2.getPosition()[0];
 		}
+
+		bool operator()(const saintNecPhysics::PhysicObject *o1, const saintNecPhysics::PhysicObject *o2) const
+		{
+			return o1->getPosition()[0] < o2->getPosition()[0];
+		}
 	};
 
 	class PhysicManager
@@ -41,7 +47,7 @@ namespace sne
 		// Object will move and position will be updated.
 		// We will still need to sort at each compute however it's fast with std::sort and vector
 		// (sort is for sweep & prune)
-		std::vector<saintNecPhysics::PhysicObject> _objects;
+		std::vector<saintNecPhysics::PhysicObject*> _objects;
 		Time* time = Time::getInstance();
 
 
@@ -88,9 +94,9 @@ namespace sne
 		 * @brief taking PhysicObject 
 		 * 
 		 */
-		void addObject(saintNecPhysics::PhysicObject &);
+		void addObject(saintNecPhysics::PhysicObject *);
 
-		const std::vector<saintNecPhysics::PhysicObject>& getObjects() const;
+		const std::vector<saintNecPhysics::PhysicObject*>& getObjects() const;
 	};
 
 }

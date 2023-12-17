@@ -10,6 +10,7 @@
 #include <glm/glm.hpp>
 #include "../architecture/util.hpp"
 #include "BoxCollider.hpp"
+#include "SphereCollider.hpp"
 
 namespace sne::saintNecPhysics
 {

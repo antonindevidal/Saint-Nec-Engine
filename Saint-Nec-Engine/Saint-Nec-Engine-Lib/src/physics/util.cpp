@@ -21,7 +21,6 @@ namespace sne::saintNecPhysics
 
     bool intersect(const BoxCollider &boxe1, const BoxCollider &boxe2, const glm::vec3 &axis)
     {
-        // We check if a gap exist
         double boxe1_min = dot(axis, boxe1[0]),
                boxe1_max = boxe1_min,
                boxe2_min = dot(axis, boxe2[0]),
@@ -55,8 +54,6 @@ namespace sne::saintNecPhysics
 
     bool intersect(const SphereCollider &sphere, const BoxCollider &boxe, const glm::vec3 &axis)
     {
-
-        // We check a if a gap exist on each axis
         double boxe_min = dot(axis, boxe[0]),
                boxe_max = boxe_min,
                sphere_min = dot(axis, sphere.getCenter()) - sphere.getRadius(),
