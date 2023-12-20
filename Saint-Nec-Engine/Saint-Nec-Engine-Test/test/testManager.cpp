@@ -32,13 +32,13 @@ TEST_CASE("TEST MANAGER - BASE 1")
     }
 
     for(auto &elt : v)
-        p->addObject(elt);
+        p->addObject(&elt);
     
 
     p->update();
 
     // should have no collision and no movement
-    const std::vector<PhysicObject> &objetcs = p->getObjects();
+    const std::vector<PhysicObject*> &objetcs = p->getObjects();
     for(int i=0; i<objetcs.size(); i++)
-        CHECK( objetcs[i].getPosition() == positions[i]);
+        CHECK( objetcs[i]->getPosition() == positions[i]);
 }

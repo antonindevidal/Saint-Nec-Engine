@@ -11,6 +11,7 @@
 #include <glm/glm.hpp>
 #include <glm/gtc/type_ptr.hpp>
 #include <architecture/util.hpp>
+#include "util.hpp"
 #include "BoxCollider.hpp"
 #include "SphereCollider.hpp"
 
@@ -27,26 +28,6 @@ namespace sne::saintNecPhysics
             return "Illegal use of SAT algorithm";
         }
     };
-    /**
-     * @brief tell if: [x1_min ; x1_max] ∩ [x2_min; x2_max] = ∅
-     *
-     * @param x1_min
-     * @param x1_max
-     * @param x2_min
-     * @param x2_max
-     * @return true
-     * @return false
-     */
-    bool areDisjoint(double x1_min, double x1_max, double x2_min, double x2_max);
-
-    /**
-     * @brief scalar product v1 . v2
-     *
-     * @param v1
-     * @param v2
-     * @return double
-     */
-    double dot(const glm::vec3 v1, const glm::vec3 v2);
 
     /**
      * @brief concatenation of v1 and v2 into an other vector
