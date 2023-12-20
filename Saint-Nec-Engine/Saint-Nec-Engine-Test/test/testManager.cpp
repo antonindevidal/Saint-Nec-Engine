@@ -6,6 +6,7 @@
 #include <glm/glm.hpp>
 #include <glm/gtc/type_ptr.hpp>
 #include <architecture/PhysicManager.hpp>
+#include <chrono>
 
 // Tests //-----------------------------------------------------------------------------------------
 using namespace sne;
@@ -38,7 +39,13 @@ TEST_CASE("TEST MANAGER - BASE 1")
     p->update();
 
     // should have no collision and no movement
+    auto start = std::chrono::high_resolution_clock::now();
     const std::vector<PhysicObject*> &objetcs = p->getObjects();
     for(int i=0; i<objetcs.size(); i++)
         CHECK( objetcs[i]->getPosition() == positions[i]);
+    auto end = std::chrono::high_resolution_clock::now();
+    auto duration = std::chrono::duration_cast<std::chrono::microseconds>(end - start);
+
+    std::cout << "Temps d'execution: " << duration.count() << "\n";
 }
+
