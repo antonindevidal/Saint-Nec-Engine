@@ -7,10 +7,14 @@ This 240h project aim to create a physic and graphic engine using C++ and OpenGL
 ## Technologies
 
 - C++ 17
-- OpenGL 3.3
+- OpenGL 4.1
 - CMake (tested on Windows and Linux)
 
 In this project, we are reinventing the wheel because we can’t create better things without understanding the base of what we are working on.
+
+## [Documentation](https://antonindevidal.github.io/Saint-Nec-Engine-Documentation)
+
+You can find Doxygen documentation enhanced with [Doxygen Theme - Flat Design](https://github.com/kcwongjoe/doxygen_theme_flat_design).
 
 ## Objectives
 
