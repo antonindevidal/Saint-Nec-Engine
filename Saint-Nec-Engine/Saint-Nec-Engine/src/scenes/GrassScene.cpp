@@ -19,13 +19,25 @@ void GrassScene::load()
 	cube->addComponent(new sne::graphics::Cube("resources/shaders/basic.vert", "resources/shaders/basic.frag"));
 	*/
 
-	sne::GameObject* grassBlade = new sne::GameObject();
-	grassBlade->setName("grass blade");
-	addGameObject(grassBlade);
-	grassBlade->addComponent(new GrassComponent(100,100, 1000000,"resources/shaders/grassShader/grass.vert", "resources/shaders/grassShader/grass.frag"));
-	grassBlade->translate({ 0.0f,0.0f,0.0f });
 
-
+	//Basic grass terrain
+	/*
+	{
+		sne::GameObject* grassBlade = new sne::GameObject();
+		grassBlade->setName("grass blade");
+		addGameObject(grassBlade);
+		grassBlade->addComponent(new GrassComponent(100, 100, 1000000, "resources/shaders/grassShader/grass.vert", "resources/shaders/grassShader/grass.frag"));
+		grassBlade->translate({ 0.0f,0.0f,0.0f });
+	}*/
+	
+	//Chunk terrain
+	{
+		sne::GameObject* grassBlade = new sne::GameObject();
+		grassBlade->setName("grass blade");
+		addGameObject(grassBlade);
+		grassBlade->addComponent(new GrassChunkComponent(100, 10, 100000, "resources/shaders/grassShader/grass.vert", "resources/shaders/grassShader/grass.frag"));
+		grassBlade->translate({ 0.0f,0.0f,0.0f });
+	}
 
 	sne::GameObject* plane = new sne::GameObject();
 	plane->setName("plane");

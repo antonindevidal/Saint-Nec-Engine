@@ -39,6 +39,7 @@ GrassComponent::GrassComponent(const int & width, const int & depth, const int n
 
 	shader.setVec3("grassColorTop", topColor);
 	shader.setVec3("grassColorBottom", bottomColor);
+	shader.setVec3("offset", { 0.0f,0.0f,0.0f });
 
 
 	std::vector<float> vertices = {

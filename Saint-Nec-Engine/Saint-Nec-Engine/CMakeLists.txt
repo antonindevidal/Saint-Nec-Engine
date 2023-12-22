@@ -10,6 +10,7 @@ set(_SAINT_NEC_ENGINE_SRC
 	"src/terrain/TerrainScene.cpp"
 	"src/scenes/GrassScene.cpp"
 	"src/grass/GrassComponent.cpp"
+	"src/grass/GrassChunkComponent.cpp"
 )
 
 set(_SAINT_NEC_ENGINE_HDR
@@ -20,6 +21,7 @@ set(_SAINT_NEC_ENGINE_HDR
 	"src/terrain/TerrainScene.hpp"
 	"src/scenes/GrassScene.hpp"
 	"src/grass/GrassComponent.hpp"
+	"src/grass/GrassChunkComponent.hpp"
 )
 
 # Make the copy of the resource fil every time
@@ -30,7 +32,7 @@ add_custom_target(copy_resources ALL
 )
 add_dependencies(Saint-Nec-Engine copy_resources)
 
-target_sources(Saint-Nec-Engine PRIVATE ${_SAINT_NEC_ENGINE_SRC})
+target_sources(Saint-Nec-Engine PRIVATE ${_SAINT_NEC_ENGINE_SRC} "src/grass/GrassChunkComponent.cpp")
 target_sources(Saint-Nec-Engine PUBLIC ${_SAINT_NEC_ENGINE_HDR})
 
 

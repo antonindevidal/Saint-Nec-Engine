@@ -15,6 +15,7 @@ uniform vec3 grassColorBottom;
 
 uniform vec3 camViewDir;
 uniform vec3 windDir;
+uniform vec3 offset;
 uniform float time;
 
 out vec2 uv;
@@ -86,7 +87,7 @@ void main()
 
 	//Wind effect
 	//Wind strength
-	float windStrengthNoise = pNoise( aInstancePos.xz *100.0f * windDir.xz + time *200.0f, 3);
+	float windStrengthNoise = pNoise( (aInstancePos.xz+offset.xz) *100.0f * windDir.xz + time *200.0f, 3);
 	float windDirStrength = windStrengthNoise *8.0f;
 
 	// Curve the blade
@@ -122,6 +123,6 @@ void main()
 
 	uv = aUV;
 	norm = vec3(factor,factor,factor);
-	gl_Position = projection * view * model* vec4(smallRot + aInstancePos, 1.0);
+	gl_Position = projection * view * model* vec4(smallRot + aInstancePos + offset, 1.0);
 }
  
