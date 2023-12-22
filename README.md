@@ -1,4 +1,4 @@
-# Github Markdown
+# Saint-Nec Engine
 
 Saint-Nec Engine is 3rd year engineering school project created by Abdeljalil Zoghlami and Antonin Devidal starting on october 8th and ending on march 17th.
 
