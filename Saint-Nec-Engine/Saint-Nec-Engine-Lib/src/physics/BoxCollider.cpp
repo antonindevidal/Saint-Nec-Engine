@@ -103,8 +103,7 @@ namespace sne::saintNecPhysics
     {
         return c->intersection(*this, axis);
     }
-
-    #include "util.hpp"
+    
     bool BoxCollider::intersection(const SphereCollider &s,const glm::vec3 &axis) const 
     {
         return intersect(*this, s, axis);

@@ -37,11 +37,7 @@ namespace sne::saintNecPhysics
             boxe2_max = (boxe2_max > boxe2_projection) ? boxe2_max : boxe2_projection;
         }
 
-        if (areDisjoint(boxe1_min, boxe1_max, boxe2_min, boxe2_max))
-            // We have a gap
-            return false;
-
-        return true;
+        return !areDisjoint(boxe1_min, boxe1_max, boxe2_min, boxe2_max);
     }
 
     bool intersect(const SphereCollider &sphere1, const SphereCollider &sphere2, const glm::vec3 &axis)
@@ -67,10 +63,7 @@ namespace sne::saintNecPhysics
             boxe_max = (boxe_max > boxe_projection) ? boxe_max : boxe_projection;
         }
 
-        if (areDisjoint(boxe_min, boxe_max, sphere_min, sphere_max))
-            return false;
-        
-        return true;
+        return !areDisjoint(boxe_min, boxe_max, sphere_min, sphere_max);
     }
 
     bool intersect(const BoxCollider &boxe, const SphereCollider &sphere, const glm::vec3 &axis)
