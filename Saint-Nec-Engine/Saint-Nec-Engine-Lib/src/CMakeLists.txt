@@ -51,4 +51,4 @@ target_sources(Saint-Nec-Engine-Lib PRIVATE ${_SAINT_NEC_ENGINE_LIB_SRC})
 
 target_include_directories(Saint-Nec-Engine-Lib  PUBLIC .)
 
-target_link_libraries(Saint-Nec-Engine-Lib glfw glad glm stb_image)
+target_link_libraries(Saint-Nec-Engine-Lib glfw glad glm stb_image TracyClient)
