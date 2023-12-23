@@ -41,5 +41,9 @@ namespace sne::saintNecPhysics
         virtual bool collide(const Collider *) const = 0;
         virtual bool collide(const SphereCollider &) const = 0;
         virtual bool collide(const BoxCollider &) const = 0;
+
+        virtual bool intersection(const Collider *, const glm::vec3 &axis) const = 0;
+        virtual bool intersection(const SphereCollider &, const glm::vec3 &axis) const = 0;
+        virtual bool intersection(const BoxCollider &, const glm::vec3 &axis) const = 0;
     };
 }

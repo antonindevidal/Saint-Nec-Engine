@@ -98,4 +98,19 @@ namespace sne::saintNecPhysics
     {
         return hasSATCollision(*this, b);
     }
+
+    bool BoxCollider::intersection(const Collider *c,const glm::vec3 &axis) const 
+    {
+        return c->intersection(*this, axis);
+    }
+    
+    bool BoxCollider::intersection(const SphereCollider &s,const glm::vec3 &axis) const 
+    {
+        return intersect(*this, s, axis);
+    }
+
+    bool BoxCollider::intersection(const BoxCollider &b,const glm::vec3 &axis) const 
+    {
+        return intersect(*this, b, axis);
+    }
 }

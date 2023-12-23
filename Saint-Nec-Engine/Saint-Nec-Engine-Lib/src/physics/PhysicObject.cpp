@@ -12,6 +12,13 @@ namespace sne::saintNecPhysics
             throw IllegalMassException();
     }
 
+    PhysicObject::~PhysicObject()
+    {
+        // to update with std::move before
+        // if(_collider != nullptr)
+        //     delete _collider;
+    }
+
     const glm::vec3 &PhysicObject::getAcceleration() const
     {
         return _acceleration;
@@ -40,6 +47,11 @@ namespace sne::saintNecPhysics
     float PhysicObject::getMass() const
     {
         return _mass;
+    }
+
+    const Collider * PhysicObject::getCollider() const
+    {
+        return _collider;
     }
 
     void PhysicObject::setAcceleration(const glm::vec3 &a)
@@ -86,7 +98,7 @@ namespace sne::saintNecPhysics
             _collider->setCenter(_position);
     }
 
-    void PhysicObject::update()
+    void PhysicObject::update() // to remove it would be bad use of getdelta?
     {
         compute(1 / FPS);
     }

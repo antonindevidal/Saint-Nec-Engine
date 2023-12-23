@@ -1,6 +1,5 @@
 #include "SphereCollider.hpp"
 
-
 namespace sne::saintNecPhysics
 
 {
@@ -27,5 +26,20 @@ namespace sne::saintNecPhysics
     bool SphereCollider::collide(const BoxCollider &b) const
     {
         return hasSATCollision(*this, b);
+    }
+
+    bool SphereCollider::intersection(const Collider *c, const glm::vec3 &axis) const
+    {
+        return c->intersection(*this, axis);
+    }
+
+    bool SphereCollider::intersection(const SphereCollider &s, const glm::vec3 &axis) const
+    {
+        return intersect(*this, s, axis);
+    }
+
+    bool SphereCollider::intersection(const BoxCollider &b, const glm::vec3 &axis) const
+    {
+        return intersect(*this, b, axis);
     }
 }
