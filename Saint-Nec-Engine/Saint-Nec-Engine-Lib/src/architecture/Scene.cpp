@@ -36,7 +36,6 @@ namespace sne
 
 	void Scene::update()
 	{
-		ZoneScopedN("SceneUpdate");
 		camera.update();
 		for (GameObject *g : gameObjects)
 		{

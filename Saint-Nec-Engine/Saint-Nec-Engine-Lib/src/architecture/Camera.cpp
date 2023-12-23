@@ -61,7 +61,6 @@ namespace sne
 
 	void Camera::update()
 	{
-		ZoneScopedN("CameraUpdate");
 		view = glm::lookAt(cameraPos, cameraPos + cameraFront, cameraUp);
 	}
 

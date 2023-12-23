@@ -13,7 +13,6 @@
 #include <GLFW/glfw3.h>
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
-#include <tracy/Tracy.hpp>
 
 #include "Time.hpp"
 #include "GameObject.hpp"

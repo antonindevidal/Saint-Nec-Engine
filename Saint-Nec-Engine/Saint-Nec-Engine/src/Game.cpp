@@ -26,7 +26,6 @@ void Game::processInput(GLFWwindow* window, int mouseX, int mouseY)
 
 void Game::update()
 {
-	ZoneScopedN("GameUpdate");
 	sceneManager->update();
 }
 
