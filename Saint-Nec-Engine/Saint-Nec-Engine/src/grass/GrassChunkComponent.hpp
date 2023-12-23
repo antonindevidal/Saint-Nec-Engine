@@ -2,6 +2,7 @@
 #include <graphics/GraphicComponent.hpp>
 #include <vector>
 #include <glm/glm.hpp>
+#include <architecture/Scene.hpp>
 
 class GrassChunkComponent : public sne::graphics::GraphicComponent
 {
@@ -17,6 +18,7 @@ public:
 private:
 	unsigned int instanceVBO;
 	int nbInstancesPerChunk;
+	int chunkSize;
 	std::vector<glm::vec3> chunkPositions;
 
 	unsigned int VBO2;
@@ -28,4 +30,6 @@ private:
 	static const float LODTreshold;
 
 	float testDir;
+
+	bool isChunkInsideFrustum( const glm::vec3& chunkPosition) const;
 };

@@ -95,5 +95,6 @@ namespace sne
 		 * @param Current scene
 		 */
 		const Scene& getCurrentScene() const;
+		const Scene* getCurrentScene(int i) const;
 	};
 }

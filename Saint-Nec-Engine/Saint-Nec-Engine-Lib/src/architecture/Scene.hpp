@@ -13,6 +13,7 @@
 #include <GLFW/glfw3.h>
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
+#include <glm/gtc/matrix_access.hpp>
 
 #include "Time.hpp"
 #include "GameObject.hpp"
@@ -20,6 +21,9 @@
 
 namespace sne
 {
+
+
+
 	/**
 	* @class Scene.
 	* @brief Scene containing GameObjects.
@@ -42,6 +46,8 @@ namespace sne
 		 * Projection matrix of the scene.
 		 */
 		glm::mat4 projection;
+
+		glm::mat4 viewProjection;
 
 		/**
 		 * Camera object for the scene.
@@ -143,5 +149,23 @@ namespace sne
 		 * @param gameobject Gameobject to add.
 		 */
 		void addGameObject(GameObject* gameObject);
+
+		bool isPointInsideViewFrustum(const glm::vec4& point) const;
+
+	private:
+		struct frustumClipPlanes
+		{
+			glm::vec4 leftClipPlane = {};
+			glm::vec4 rightClipPlane = {};
+			glm::vec4 topClipPlane = {};
+			glm::vec4 bottomClipPlane = {};
+			glm::vec4 nearClipPlane = {};
+			glm::vec4 farClipPlane = {};
+		};
+		
+		frustumClipPlanes frustum;
+
+		void updateFrustumClipPlanes();
+
 	};
 }

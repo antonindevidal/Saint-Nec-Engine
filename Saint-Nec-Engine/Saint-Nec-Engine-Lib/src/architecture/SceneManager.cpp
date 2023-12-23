@@ -84,5 +84,10 @@ namespace sne
 		return *currentScene;
 	}
 
+	const Scene* SceneManager::getCurrentScene(int i=0) const
+	{
+		return currentScene;
+	}
+
 
 }
