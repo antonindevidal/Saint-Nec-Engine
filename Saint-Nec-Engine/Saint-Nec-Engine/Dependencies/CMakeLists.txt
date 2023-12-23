@@ -74,3 +74,14 @@ endif()
 FetchContent_MakeAvailable(
 	glad
 )
+
+
+FetchContent_Declare (
+	tracy
+	GIT_REPOSITORY https://github.com/wolfpld/tracy.git
+	GIT_TAG 37aff70dfa50cf6307b3fee6074d627dc2929143
+	GIT_SHALLOW TRUE
+	GIT_PROGRESS TRUE
+)
+FetchContent_MakeAvailable (tracy)
+

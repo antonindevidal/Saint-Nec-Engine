@@ -3,9 +3,7 @@
 #include <graphics/Cube.hpp>
 #include <graphics/Plane.hpp>
 #include <graphics/TessellatedPlane.hpp>
-
-
-
+#include <tracy/Tracy.hpp>
 
 
 class TerrainScene: public sne::Scene

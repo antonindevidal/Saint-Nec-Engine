@@ -16,7 +16,11 @@ set(_SAINT_NEC_ENGINE_LIB_SRC
 	"graphics/Shader.cpp"
 	"architecture/Time.cpp"
 	"architecture/Camera.cpp"
+	"physics/PhysicObject.cpp"
+	"physics/util.cpp"
 	"graphics/TessellatedPlane.cpp"
+	"architecture/PhysicManager.cpp"
+	"physics/algorithms.cpp"
 )
 
 set(_SAINT_NEC_ENGINE_LIB_HDR
@@ -34,7 +38,12 @@ set(_SAINT_NEC_ENGINE_LIB_HDR
 	"graphics/Shader.hpp"
 	"architecture/Time.hpp"
 	"architecture/Camera.hpp"
+	"physics/PhysicObject.hpp"
+	"physics/util.hpp"
+	"physics/Collider.hpp"
 	"graphics/TessellatedPlane.hpp"
+	"architecture/PhysicManager.hpp"
+	"physics/algorithms.hpp"
 )
 target_sources(Saint-Nec-Engine-Lib INTERFACE ${_SAINT_NEC_ENGINE_LIB_HDR})
 target_sources(Saint-Nec-Engine-Lib PRIVATE ${_SAINT_NEC_ENGINE_LIB_SRC})
@@ -42,4 +51,4 @@ target_sources(Saint-Nec-Engine-Lib PRIVATE ${_SAINT_NEC_ENGINE_LIB_SRC})
 
 target_include_directories(Saint-Nec-Engine-Lib  PUBLIC .)
 
-target_link_libraries(Saint-Nec-Engine-Lib glfw glad glm stb_image)
+target_link_libraries(Saint-Nec-Engine-Lib glfw glad glm stb_image TracyClient)

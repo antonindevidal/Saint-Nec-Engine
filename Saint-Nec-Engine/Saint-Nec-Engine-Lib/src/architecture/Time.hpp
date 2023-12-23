@@ -12,17 +12,18 @@
 /**
  * @class Time.
  * @brief Manage time and calculate delta time for update in the game.
- * 
+ *
  * This class is a singleton.
  */
 class Time
 {
-public:
+private:
 	/**
 	* Copy Contructor does not exist since it is a Singleton.
 	*/
 	Time(const Time& sm) = delete;
 
+public:
 	/**
 	 * Operator= does not exist since it is a Singleton.
 	 */
@@ -49,6 +50,7 @@ public:
 	 * Return OpenGL time.
 	 */
 	static float getTimeSinceStart();
+
 private:
 
 	/**
@@ -75,7 +77,4 @@ private:
 	 * Last delta time calculated.
 	 */
 	static float deltaTime;
-
 };
-
-
