@@ -7,42 +7,47 @@
  *
  */
 
-#include "architecture/Component.hpp"
 #include <glm/glm.hpp>
 #include <glm/gtc/type_ptr.hpp>
+#include "Collider.hpp"
+#include "SAT.hpp"
+#include "util.hpp"
 
-namespace sne
+namespace sne::saintNecPhysics
 {
-
-    namespace saintNecPhysics
+    /**
+     * @class SphereCollider
+     * @brief SphereCollider physics component
+     */
+    class SphereCollider : public Collider
     {
+    private:
+        double _radius;
+
+    public:
+        SphereCollider(glm::vec3 center, double radius);
+        ~SphereCollider() = default;
+
         /**
-         * @class SphereCollider
-         * @brief SphereCollider physics component
+         * @brief Get the Radius object
+         *
+         * @return const double
          */
-        class SphereCollider : public Component
-        {
-        private:
-            glm::vec3 _center;
-            double _radius;
+        const double getRadius() const;
 
-        public:
-            SphereCollider(glm::vec3 center, double radius);
-            ~SphereCollider() = default;
+        bool collide(const Collider *) const override;
+        bool collide(const SphereCollider &) const override;
+        bool collide(const BoxCollider &) const override;
 
-            /**
-             * @brief Get the Radius object
-             * 
-             * @return const double 
-             */
-            const double getRadius() const;
-            
-            /**
-             * @brief Get the Center object
-             * 
-             * @return const Vector3& 
-             */
-            const glm::vec3 &getCenter() const;
-        };
-    }
+        /**
+         * @brief return true if it has an intersection with other object on axis 
+         * 
+         * @param axis 
+         * @return true 
+         * @return false 
+         */
+        bool intersection(const Collider *, const glm::vec3 &axis) const override;
+        bool intersection(const SphereCollider &, const glm::vec3 &axis) const override;
+        bool intersection(const BoxCollider &, const glm::vec3 &axis) const override;
+    };
 }

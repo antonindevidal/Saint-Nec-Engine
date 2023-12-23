@@ -3,8 +3,8 @@
 
 namespace sne
 {
-	Camera::Camera(): view(glm::mat4(1.0f)), cameraPos(0.0f, 0.0f, -3.0f), cameraFront(0.0f, 0.0f, -1.0f), cameraUp(0.0f, 1.0f, 0.0f),
-		cameraSpeed(2.0f), lastMouseX(0), lastMouseY(0), yaw(45.0f), pitch(0.0f), firstMouse(false)
+	Camera::Camera(): view(glm::mat4(1.0f)), cameraPos(0.0f, 25.0f, -3.0f), cameraFront(0.0f, 0.0f, -1.0f), cameraUp(0.0f, 1.0f, 0.0f),
+		cameraSpeed(5.0f), lastMouseX(0), lastMouseY(0), yaw(45.0f), pitch(0.0f), firstMouse(false)
 	{
 		view = glm::lookAt(cameraPos, cameraPos + cameraFront, cameraUp);
 	}
@@ -68,7 +68,7 @@ namespace sne
 	{
 		return view;
 	}
-	const glm::vec3 Camera::getPosition() const
+	const glm::vec3& Camera::getPosition() const
 	{
 		return cameraPos;
 	}

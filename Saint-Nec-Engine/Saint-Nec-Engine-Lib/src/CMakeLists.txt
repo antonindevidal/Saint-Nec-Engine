@@ -1,8 +1,7 @@
 ﻿
 add_library (Saint-Nec-Engine-Lib)
 
-set(_SAINT_NEC_ENGINE_LIB_SRC 
-	"architecture/Vector3.cpp"
+set(_SAINT_NEC_ENGINE_LIB_SRC
 	"architecture/Component.cpp"
 	"architecture/Scene.cpp" 
 	"architecture/GameObject.cpp"
@@ -17,10 +16,14 @@ set(_SAINT_NEC_ENGINE_LIB_SRC
 	"graphics/Shader.cpp"
 	"architecture/Time.cpp"
 	"architecture/Camera.cpp"
+	"physics/PhysicObject.cpp"
+	"physics/util.cpp"
+	"graphics/TessellatedPlane.cpp"
+	"architecture/PhysicManager.cpp"
+	"physics/algorithms.cpp"
 )
 
 set(_SAINT_NEC_ENGINE_LIB_HDR
-	"architecture/Vector3.hpp"
 	"architecture/Component.hpp"
 	"architecture/Scene.hpp" 
 	"architecture/GameObject.hpp"
@@ -35,6 +38,12 @@ set(_SAINT_NEC_ENGINE_LIB_HDR
 	"graphics/Shader.hpp"
 	"architecture/Time.hpp"
 	"architecture/Camera.hpp"
+	"physics/PhysicObject.hpp"
+	"physics/util.hpp"
+	"physics/Collider.hpp"
+	"graphics/TessellatedPlane.hpp"
+	"architecture/PhysicManager.hpp"
+	"physics/algorithms.hpp"
 )
 target_sources(Saint-Nec-Engine-Lib INTERFACE ${_SAINT_NEC_ENGINE_LIB_HDR})
 target_sources(Saint-Nec-Engine-Lib PRIVATE ${_SAINT_NEC_ENGINE_LIB_SRC})

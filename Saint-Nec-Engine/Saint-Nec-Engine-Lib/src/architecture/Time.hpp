@@ -12,17 +12,18 @@
 /**
  * @class Time.
  * @brief Manage time and calculate delta time for update in the game.
- * 
+ *
  * This class is a singleton.
  */
 class Time
 {
-public:
+private:
 	/**
 	 * Instance of the singleton.
 	 */
 	static Time* instance;
 
+public:
 	/**
 	 * Default constructor.
 	 */
@@ -49,6 +50,12 @@ public:
 	 * Return delta time.
 	 */
 	static float getDeltaTime();
+
+	/**
+	 * Return OpenGL time.
+	 */
+	static float getTimeSinceStart();
+
 private:
 	/**
 	 * Last frame time.
@@ -59,7 +66,4 @@ private:
 	 * Last delta time calculated.
 	 */
 	static float deltaTime;
-
 };
-
-
