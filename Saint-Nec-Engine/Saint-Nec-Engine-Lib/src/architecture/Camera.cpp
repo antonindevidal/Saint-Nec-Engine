@@ -68,10 +68,12 @@ namespace sne
 	{
 		return view;
 	}
+
 	const glm::vec3& Camera::getPosition() const
 	{
 		return cameraPos;
 	}
+
 	const glm::vec3& Camera::getFront() const
 	{
 		return cameraFront;

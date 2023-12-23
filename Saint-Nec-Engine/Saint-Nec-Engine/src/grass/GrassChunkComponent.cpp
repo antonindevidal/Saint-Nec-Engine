@@ -261,11 +261,11 @@ void GrassChunkComponent::draw() const
 		shader.setVec3("windDir", { cos(testDir),0.0f, sin(testDir) });
 		shader.setFloat("time", Time::getTimeSinceStart());
 		//std::cout << Time::getTimeSinceStart() << std::endl;
-		shader.setVec3("camViewDir", sne::SceneManager::getInstance()->getCurrentScene().getCamera().getFront());
-		shader.setMat4("view", sne::SceneManager::getInstance()->getCurrentScene().getView());
+		shader.setVec3("camViewDir", sne::SceneManager::getInstance()->getCurrentScene()->getCamera().getFront());
+		shader.setMat4("view", sne::SceneManager::getInstance()->getCurrentScene()->getView());
 		shader.setMat4("model", parent->getModel());
 
-		glm::vec3 camPosition = sne::SceneManager::getInstance()->getCurrentScene().getCamera().getPosition();
+		glm::vec3 camPosition = sne::SceneManager::getInstance()->getCurrentScene()->getCamera().getPosition();
 
 
 		//Creating bounding box
@@ -307,7 +307,7 @@ void GrassChunkComponent::draw() const
 
 bool GrassChunkComponent::isChunkInsideFrustum( const glm::vec3& chunkPosition) const
 {
-	const sne::Scene* currentScene = (sne::SceneManager::getInstance())->getCurrentScene(0);
+	const sne::Scene* currentScene = (sne::SceneManager::getInstance())->getCurrentScene();
 	
 	//Bounding box for grass chunk
 	glm::vec4 p00Bottom{ chunkPosition.x			, 0.0f, chunkPosition.z, 1.0f };

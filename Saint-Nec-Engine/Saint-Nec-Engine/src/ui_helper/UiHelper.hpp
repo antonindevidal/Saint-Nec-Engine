@@ -13,10 +13,10 @@ class UiHelper
 {
 
 public:
-	static void WindowSceneTree(const sne::Scene& scene);
+	static void WindowSceneTree(const sne::Scene* scene);
 
 private:
 	static void SceneManagerHelper(const sne::SceneManager& sceneManager);
-	static void SceneHelper(const sne::Scene& scene);
+	static void SceneHelper(const sne::Scene* scene);
 	static void GameObjectHelper(const sne::GameObject& gameObject);
 };

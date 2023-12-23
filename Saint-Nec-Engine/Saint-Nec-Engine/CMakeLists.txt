@@ -32,7 +32,7 @@ add_custom_target(copy_resources ALL
 )
 add_dependencies(Saint-Nec-Engine copy_resources)
 
-target_sources(Saint-Nec-Engine PRIVATE ${_SAINT_NEC_ENGINE_SRC} "src/grass/GrassChunkComponent.cpp")
+target_sources(Saint-Nec-Engine PRIVATE ${_SAINT_NEC_ENGINE_SRC})
 target_sources(Saint-Nec-Engine PUBLIC ${_SAINT_NEC_ENGINE_HDR})
 
 

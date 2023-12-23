@@ -1,13 +1,13 @@
 #include "UiHelper.hpp"
 
-void UiHelper::WindowSceneTree(const sne::Scene& scene)
+void UiHelper::WindowSceneTree(const sne::Scene* scene)
 {
 	ImGuiIO& io = ImGui::GetIO();
 	ImGui::Begin("Scene tree");
 	ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / io.Framerate, io.Framerate);
 	ImGui::Separator();
 	ImGui::Text("Camera:");
-	ImGui::Text("Position: %f %f %f", scene.getCamera().getPosition().x, scene.getCamera().getPosition().y, scene.getCamera().getPosition().z);
+	ImGui::Text("Position: %f %f %f", scene->getCamera().getPosition().x, scene->getCamera().getPosition().y, scene->getCamera().getPosition().z);
 	ImGui::Separator();
 
 	SceneHelper(scene);
@@ -18,9 +18,9 @@ void UiHelper::SceneManagerHelper(const sne::SceneManager& sceneManager)
 {
 }
 
-void UiHelper::SceneHelper(const sne::Scene& scene)
+void UiHelper::SceneHelper(const sne::Scene* scene)
 {
-	const std::vector<sne::GameObject*> list = scene.getGameObjects();
+	const std::vector<sne::GameObject*> list = scene->getGameObjects();
 	for (sne::GameObject *g : list)
 	{
 		GameObjectHelper(*g);

@@ -7,8 +7,8 @@ namespace sne::graphics
 		GraphicComponent::GraphicComponent(vertexShaderPath, fragmentShaderPath, tessellationControlPath, tessellationEvaluationPath)
 	{
 		shader.use();
-		shader.setMat4("projection", sne::SceneManager::getInstance()->getCurrentScene().getProjection()); //Set projection matrice once because it never changes 
-		shader.setMat4("view", sne::SceneManager::getInstance()->getCurrentScene().getView());
+		shader.setMat4("projection", sne::SceneManager::getInstance()->getCurrentScene()->getProjection()); //Set projection matrice once because it never changes 
+		shader.setMat4("view", sne::SceneManager::getInstance()->getCurrentScene()->getView());
 
 
 		std::vector<float> vertices{};
@@ -63,9 +63,9 @@ namespace sne::graphics
 		{
 			shader.use();
 
-			shader.setMat4("view", sne::SceneManager::getInstance()->getCurrentScene().getView());
+			shader.setMat4("view", sne::SceneManager::getInstance()->getCurrentScene()->getView());
 			shader.setMat4("model", parent->getModel());
-			shader.setVec3("cameraPos", sne::SceneManager::getInstance()->getCurrentScene().getCamera().getPosition());
+			shader.setVec3("cameraPos", sne::SceneManager::getInstance()->getCurrentScene()->getCamera().getPosition());
 
 			glBindVertexArray(VAO);
 			glDrawElements(GL_PATCHES, nbIndices, GL_UNSIGNED_INT, 0);

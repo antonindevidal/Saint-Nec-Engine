@@ -7,16 +7,16 @@ namespace sne::graphics
 		VBO(0), VAO(0), EBO(0), renderedElementCount(0), shader(vertexShaderPath, fragmentShaderPath),textureIDs(), hasTexture(false), hasGeometry(false)
 	{
 		shader.use();
-		shader.setMat4("projection", sne::SceneManager::getInstance()->getCurrentScene().getProjection()); //Set projection matrice once because it never changes 
-		shader.setMat4("view", sne::SceneManager::getInstance()->getCurrentScene().getView());
+		shader.setMat4("projection", sne::SceneManager::getInstance()->getCurrentScene()->getProjection()); //Set projection matrice once because it never changes 
+		shader.setMat4("view", sne::SceneManager::getInstance()->getCurrentScene()->getView());
 	}
 
 	GraphicComponent::GraphicComponent(const char* vertexShaderPath, const char* fragmentShaderPath, const char* tessellationControlPath, const char* tessellationEvaluationPath):
 		VBO(0), VAO(0), EBO(0), renderedElementCount(0), shader(vertexShaderPath, fragmentShaderPath, tessellationControlPath, tessellationEvaluationPath), textureIDs(), hasTexture(false), hasGeometry(false)
 	{
 		shader.use();
-		shader.setMat4("projection", sne::SceneManager::getInstance()->getCurrentScene().getProjection()); //Set projection matrice once because it never changes 
-		shader.setMat4("view", sne::SceneManager::getInstance()->getCurrentScene().getView());
+		shader.setMat4("projection", sne::SceneManager::getInstance()->getCurrentScene()->getProjection()); //Set projection matrice once because it never changes 
+		shader.setMat4("view", sne::SceneManager::getInstance()->getCurrentScene()->getView());
 	}
 
 	void GraphicComponent::setGeometry(const std::vector<float>& vertices, const VertexDataType& vertexDataType, const std::vector<int>& indices)
@@ -130,7 +130,7 @@ namespace sne::graphics
 			shader.use();
 
 
-			shader.setMat4("view", sne::SceneManager::getInstance()->getCurrentScene().getView());
+			shader.setMat4("view", sne::SceneManager::getInstance()->getCurrentScene()->getView());
 			shader.setMat4("model", parent->getModel());
 
 			glBindVertexArray(VAO);

@@ -99,10 +99,13 @@ namespace sne
 		const glm::mat4& getView() const;
 
 		/**
-		 * getter for the position of the camera.
+		 * Getter for the position of the camera.
 		 */
 		const glm::vec3& getPosition() const;
 
+		/**
+		 * .Getter for front vector of the camera.
+		 */
 		const glm::vec3& getFront() const;
 	};
 }

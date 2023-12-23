@@ -53,8 +53,8 @@ namespace sne::graphics
 		glEnableVertexAttribArray(2);
 
 		shader.use(); //Set default value for matrices
-		shader.setMat4("projection", SceneManager::getInstance()->getCurrentScene().getProjection()); //Set projection matrice once because it never changes 
-		shader.setMat4("view", SceneManager::getInstance()->getCurrentScene().getView());
+		shader.setMat4("projection", SceneManager::getInstance()->getCurrentScene()->getProjection()); //Set projection matrice once because it never changes 
+		shader.setMat4("view", SceneManager::getInstance()->getCurrentScene()->getView());
 
 	}
 
@@ -134,8 +134,8 @@ namespace sne::graphics
 		glEnableVertexAttribArray(0);
 
 		shader.use(); //Set default value for matrices
-		shader.setMat4("projection", SceneManager::getInstance()->getCurrentScene().getProjection()); //Set projection matrice once because it never changes 
-		shader.setMat4("view", SceneManager::getInstance()->getCurrentScene().getView());
+		shader.setMat4("projection", SceneManager::getInstance()->getCurrentScene()->getProjection()); //Set projection matrice once because it never changes 
+		shader.setMat4("view", SceneManager::getInstance()->getCurrentScene()->getView());
 		shader.setVec3("color", color);
 	}
 
@@ -153,7 +153,7 @@ namespace sne::graphics
 
 		shader.use();
 
-		shader.setMat4("view", SceneManager::getInstance()->getCurrentScene().getView());
+		shader.setMat4("view", SceneManager::getInstance()->getCurrentScene()->getView());
 		shader.setMat4("model", parent->getModel());
 
 		glBindVertexArray(VAO);

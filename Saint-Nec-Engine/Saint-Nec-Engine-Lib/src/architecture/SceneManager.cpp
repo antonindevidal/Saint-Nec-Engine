@@ -79,12 +79,8 @@ namespace sne
 			currentScene->draw();
 		}
 	}
-	const Scene& SceneManager::getCurrentScene() const
-	{
-		return *currentScene;
-	}
 
-	const Scene* SceneManager::getCurrentScene(int i=0) const
+	const Scene* SceneManager::getCurrentScene() const
 	{
 		return currentScene;
 	}

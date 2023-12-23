@@ -137,8 +137,8 @@ void GrassComponent::draw() const
 		shader.setVec3("windDir", {cos(testDir),0.0f, sin(testDir)});
 		shader.setFloat("time",Time::getTimeSinceStart());
 		//std::cout << Time::getTimeSinceStart() << std::endl;
-		shader.setVec3("camViewDir", sne::SceneManager::getInstance()->getCurrentScene().getCamera().getFront());
-		shader.setMat4("view", sne::SceneManager::getInstance()->getCurrentScene().getView());
+		shader.setVec3("camViewDir", sne::SceneManager::getInstance()->getCurrentScene()->getCamera().getFront());
+		shader.setMat4("view", sne::SceneManager::getInstance()->getCurrentScene()->getView());
 		shader.setMat4("model", parent->getModel());
 
 		glBindVertexArray(VAO);
