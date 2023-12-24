@@ -56,6 +56,8 @@ namespace sne
 		 */
 		Camera camera;
 
+		glm::vec3 directionnalLight;
+
 	public:
 
 		/**
@@ -140,6 +142,8 @@ namespace sne
 		 */
 		const Camera& getCamera() const;
 
+		const glm::vec3& getDirectionnalLight() const;
+
 		/**
 		* Return the vector of GameObject of the scene.
 		*/
@@ -184,5 +188,7 @@ namespace sne
 		 * Updates the frustum values.
 		 */
 		void updateFrustumClipPlanes();
+
+
 	};
 }

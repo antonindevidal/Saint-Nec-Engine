@@ -14,4 +14,12 @@ public:
 
 	void load() override;
 	void unload() override;
+
+
+	void update() override;
+
+
+private:
+
+	glm::vec3 sunPos;
 };

@@ -112,6 +112,11 @@ namespace sne
 		return gameObjects;
 	}
 
+	const glm::vec3& Scene::getDirectionnalLight() const
+	{
+		return directionnalLight;
+	}
+
 	void Scene::addGameObject(GameObject* gameObject)
 	{
 		gameObjects.push_back(gameObject);

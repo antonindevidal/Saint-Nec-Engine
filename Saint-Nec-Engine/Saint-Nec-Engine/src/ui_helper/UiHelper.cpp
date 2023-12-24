@@ -8,6 +8,7 @@ void UiHelper::WindowSceneTree(const sne::Scene* scene)
 	ImGui::Separator();
 	ImGui::Text("Camera:");
 	ImGui::Text("Position: %f %f %f", scene->getCamera().getPosition().x, scene->getCamera().getPosition().y, scene->getCamera().getPosition().z);
+	ImGui::Text("Front: %f %f %f", scene->getCamera().getFront().x, scene->getCamera().getFront().y, scene->getCamera().getFront().z);
 	ImGui::Separator();
 
 	SceneHelper(scene);

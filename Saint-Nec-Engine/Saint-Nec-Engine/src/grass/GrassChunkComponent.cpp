@@ -4,37 +4,8 @@ const float GrassChunkComponent::LODTreshold = 50.0f;
 
 
 GrassChunkComponent::GrassChunkComponent(const int& size, const int& chunkSize, const int nbInstancesPerChunk, const char* vertexShaderPath, const char* fragmentShaderPath)
-	:GraphicComponent(vertexShaderPath, fragmentShaderPath), nbInstancesPerChunk(nbInstancesPerChunk),chunkSize(chunkSize), chunkPositions()
+	:GraphicComponent(vertexShaderPath, fragmentShaderPath), nbInstancesPerChunk(nbInstancesPerChunk),chunkSize(chunkSize), chunkPositions(), testDir(2.0)
 {
-	/*
-				  8
-				XXXX
-			  XXX  XX
-			 XX     XX
-			XXXXXXXXXXX
-		   XX 6       XX  7
-		   X           X
-		  XXXXXXXXXXXXXXX
-		 XX  4          X  5
-		 X              X
-		XX              XX
-		XXXXXXXXXXXXXXXXXX
-		X  2             X  3
-		X                X
-		X                X
-		X                X
-		X                X
-		X                X
-		X                X
-		X  0             X   1
-
-
-
-		We give Grass Color with two colors and mix between bottom and top from UV position
-
-		TODO: Set U position in UV
-	*/
-	
 
 	glm::vec3 bottomColor{ 0.0f, 0.44f, 0.02f, };
 	glm::vec3 topColor{ 0.56f, 0.94f, 0.32f, };
@@ -66,7 +37,7 @@ GrassChunkComponent::GrassChunkComponent(const int& size, const int& chunkSize, 
 	genLOD2(chunkSize, positions);
 
 	hasGeometry = true;
-	testDir = 0.0f;
+	testDir = 2.0f;
 
 	//Level of detail 2
 }
@@ -76,7 +47,7 @@ GrassChunkComponent::GrassChunkComponent(const int& size, const int& chunkSize, 
 void GrassChunkComponent::update()
 {
 	GraphicComponent::update();
-	//testDir += 0.001f;
+	testDir += 0.001f;
 
 }
 
@@ -111,16 +82,16 @@ void GrassChunkComponent::genLOD1(const int& chunkSize, const std::vector<float>
 		TODO: Set U position in UV
 	*/
 	std::vector<float> vertices = {
-		//POSTION				UV
-		0.0f , 0.0f , 0.0f,		0.0f, 0.0f,
-		0.1f , 0.0f , 0.0f,		0.0f, 0.0f,
-		0.0f , 0.25f, 0.0f,		0.0f, 0.47f,
-		0.1f , 0.25f, 0.0f,		0.0f, 0.47f,
-		0.02f, 0.4f , 0.0f,		0.0f, 0.75f,
-		0.08f, 0.4f , 0.0f,		0.0f, 0.75f,
-		0.04f, 0.50f, 0.0f,		0.0f, 0.94f,
-		0.06f, 0.50f, 0.0f,		0.0f, 0.94f,
-		0.05f, 0.53f, 0.0f,		0.0f, 1.0f,
+		//POSTION				UV				NORMAL
+		0.0f , 0.0f , 0.0f,		0.0f, 0.0f,		0.37f, 0.0f, 0.93f,		
+		0.1f , 0.0f , 0.0f,		0.0f, 0.0f,		-0.37f, 0.0f, 0.93f,
+		0.0f , 0.25f, 0.0f,		0.0f, 0.47f,	0.37f, 0.0f, 0.93f,
+		0.1f , 0.25f, 0.0f,		0.0f, 0.47f,	-0.37f, 0.0f, 0.93f,
+		0.02f, 0.4f , 0.0f,		0.0f, 0.75f,	0.37f, 0.0f, 0.93f,
+		0.08f, 0.4f , 0.0f,		0.0f, 0.75f,	-0.37f, 0.0f, 0.93f,
+		0.04f, 0.50f, 0.0f,		0.0f, 0.94f,	0.37f, 0.0f, 0.93f,
+		0.06f, 0.50f, 0.0f,		0.0f, 0.94f,	-0.37f, 0.0f, 0.93f,
+		0.05f, 0.53f, 0.0f,		0.0f, 1.0f,		0.0f, 0.0f, 1.0f,
 	};
 	std::vector<int> indices = {
 		2, 3, 1,
@@ -147,19 +118,21 @@ void GrassChunkComponent::genLOD1(const int& chunkSize, const std::vector<float>
 
 
 
-	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)0);
+	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)0);
 	glEnableVertexAttribArray(0);
-	glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)(3 * sizeof(float)));
+	glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(3 * sizeof(float)));
 	glEnableVertexAttribArray(1);
+	glVertexAttribPointer(2, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(5 * sizeof(float)));
+	glEnableVertexAttribArray(2);
 
 	glGenBuffers(1, &instanceVBO);
 
 	glBindBuffer(GL_ARRAY_BUFFER, instanceVBO);
 	glBufferData(GL_ARRAY_BUFFER, sizeof(float) * positions.size(), &positions[0], GL_STATIC_DRAW);
-	glVertexAttribPointer(2, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
-	glEnableVertexAttribArray(2);
+	glVertexAttribPointer(3, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
+	glEnableVertexAttribArray(3);
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
-	glVertexAttribDivisor(2, 1);
+	glVertexAttribDivisor(3, 1);
 	renderedElementCount = indices.size();
 
 
@@ -197,11 +170,11 @@ void GrassChunkComponent::genLOD2(const int& chunkSize, const std::vector<float>
 	*/
 	std::vector<float> vertices = {
 		//POSTION				UV
-		0.0f , 0.0f ,	0.0f,	0.0f, 0.0f,
-		0.1f , 0.0f ,	0.0f,	0.0f, 0.0f,
-		0.0f, 0.25f,	0.0f,	0.0f, 0.47f,
-		0.1f, 0.25f,	0.0f,	0.0f, 0.47f,
-		0.05f, 0.53f,	0.0f,	0.0f, 1.0f,
+		0.0f , 0.0f ,	0.0f,	0.0f, 0.0f,		0.0f, 0.0f, 1.0f,
+		0.1f , 0.0f ,	0.0f,	0.0f, 0.0f,		0.0f, 0.0f, 1.0f,
+		0.0f, 0.25f,	0.0f,	0.0f, 0.47f,	0.0f, 0.0f, 1.0f,
+		0.1f, 0.25f,	0.0f,	0.0f, 0.47f,	0.0f, 0.0f, 1.0f,
+		0.05f, 0.53f,	0.0f,	0.0f, 1.0f,		0.0f, 0.0f, 1.0f,
 	};
 	std::vector<int> indices = {
 		2, 3, 1,
@@ -224,19 +197,21 @@ void GrassChunkComponent::genLOD2(const int& chunkSize, const std::vector<float>
 
 
 
-	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)0);
+	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)0);
 	glEnableVertexAttribArray(0);
-	glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)(3 * sizeof(float)));
+	glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(3 * sizeof(float)));
 	glEnableVertexAttribArray(1);
+	glVertexAttribPointer(2, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(5 * sizeof(float)));
+	glEnableVertexAttribArray(2);
 
 	glGenBuffers(1, &instanceVBO2);
 
 	glBindBuffer(GL_ARRAY_BUFFER, instanceVBO2);
 	glBufferData(GL_ARRAY_BUFFER, sizeof(float) * positions.size(), &positions[0], GL_STATIC_DRAW);
-	glVertexAttribPointer(2, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
-	glEnableVertexAttribArray(2);
+	glVertexAttribPointer(3, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
+	glEnableVertexAttribArray(3);
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
-	glVertexAttribDivisor(2, 1);
+	glVertexAttribDivisor(3, 1);
 	renderedElementCount2 = indices.size();
 }
 
@@ -255,10 +230,11 @@ void GrassChunkComponent::draw() const
 	{
 		//float test = glm::dot(sne::SceneManager::getInstance()->getCurrentScene().getCamera().getFront(), glm::vec3(0.0f, 0.0f, 1.0f));
 		//std::cout << 1.0f  - std::abs(test)<< std::endl;
-
+		const sne::Scene* currentScene = sne::SceneManager::getInstance()->getCurrentScene();
 
 		shader.use();
 		shader.setVec3("windDir", { cos(testDir),0.0f, sin(testDir) });
+		shader.setVec3("sun", glm::normalize(currentScene->getDirectionnalLight()));
 		shader.setFloat("time", Time::getTimeSinceStart());
 		//std::cout << Time::getTimeSinceStart() << std::endl;
 		shader.setVec3("camViewDir", sne::SceneManager::getInstance()->getCurrentScene()->getCamera().getFront());
@@ -266,7 +242,6 @@ void GrassChunkComponent::draw() const
 		shader.setMat4("model", parent->getModel());
 
 		glm::vec3 camPosition = sne::SceneManager::getInstance()->getCurrentScene()->getCamera().getPosition();
-
 
 		//Creating bounding box
 		glm::vec4 p00Bottom { 0.0f, 0.0f, 0.0f, 1.0f };
@@ -301,7 +276,7 @@ void GrassChunkComponent::draw() const
 				}
 			}
 		}
-		std::cout << "Nbrendered " << nbRendered << std::endl;
+		//std::cout << "Nbrendered " << nbRendered << std::endl;
 	}
 }
 

@@ -4,7 +4,8 @@
 
 layout (location = 0) in vec3 aPos;
 layout (location = 1) in vec2 aUV;
-layout (location = 2) in vec3 aInstancePos;
+layout (location = 2) in vec3 aNormal;
+layout (location = 3) in vec3 aInstancePos;
 
 uniform mat4 projection;
 uniform mat4 view;
@@ -17,9 +18,12 @@ uniform vec3 camViewDir;
 uniform vec3 windDir;
 uniform vec3 offset;
 uniform float time;
+uniform vec3 sun;
 
 out vec2 uv;
 out vec3 norm;
+out vec3 lightDir;
+out vec3 cameraFront;
 
 // Basic hash function  https://stackoverflow.com/questions/23319289/is-there-a-good-glsl-hash-function
 uint lowbias32(uint x)
@@ -78,20 +82,27 @@ float pNoise(vec2 p, int res){
 	return nf*nf*nf*nf;
 }
 
-void main()
+
+float hash( vec2 a )
 {
 
+    return fract( sin( a.x * 3433.8 + a.y * 3843.98 ) * 45933.8 );
+
+}
+
+void main()
+{
+	/*
 	uint h = lowbias32(gl_InstanceID);
-	float angle = (h/10.0) *2.0 *3.14;
+	float angle = (h/100.0) *2.0 *3.14;
 
-
+	
 	//Wind effect
 	//Wind strength
 	float windStrengthNoise = pNoise( (aInstancePos.xz+offset.xz) *100.0f * windDir.xz + time *200.0f, 3);
 	float windDirStrength = windStrengthNoise *8.0f;
 
 	// Curve the blade
-	float curvature = ((h%20)/20.0)*aPos.y + windStrengthNoise * 2.0f;
 	vec3 curvedPos = vec3( aPos.x,
 							(aPos.y * cos(curvature) - aPos.z * sin(curvature))*1.5f,
 							aPos.y * sin(curvature) + aPos.z * cos(curvature) );
@@ -116,13 +127,34 @@ void main()
 	vec3 smallRot = vec3(cos(factor) * rotPos.x + sin(factor)* rotPos.z,
 						rotPos.y, 
 						(-sin(factor)* rotPos.x) + (cos(factor) * rotPos.z));
+	*/
+	uint h = lowbias32(gl_InstanceID);
+	float hRot = hash(vec2(gl_InstanceID,gl_InstanceID));
+	float angle = (hRot) *2.0 *3.14;
 
+	float windStrengthNoise = pNoise( (aInstancePos.xz+offset.xz) *100.0f * windDir.xz + time *200.0f, 3);
+	float windDirStrength = windStrengthNoise *8.0f;
+	float curvature = (((h%20)/20.0) + windStrengthNoise * 2.0f  ) * aPos.y;
 
+	//Matrices are created by columns!!!!
+	mat3 curvMat = mat3(1.0, 0.0, 0.0,
+						0.0, cos(curvature), sin(curvature),
+						0.0, -sin(curvature), cos(curvature));
+	
+	mat3 rotBlade = mat3(cos(angle),0.0, -sin(angle),
+						 0.0, 1.0, 0.0,
+						 sin(angle), 0.0, cos(angle));
 
+	mat3 finalRotMatrix =  rotBlade * curvMat;
 
+	vec3 finalPos = finalRotMatrix * aPos;
+
+	vec3 newNormal = finalRotMatrix * aNormal;
 
 	uv = aUV;
-	norm = vec3(factor,factor,factor);
-	gl_Position = projection * view * model* vec4(smallRot + aInstancePos + offset, 1.0);
+	norm = newNormal;
+	lightDir = sun;
+	cameraFront = camViewDir;
+	gl_Position = projection * view * model* vec4(finalPos + aInstancePos + offset, 1.0);
 }
  
