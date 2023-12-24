@@ -85,13 +85,13 @@ void GrassChunkComponent::genLOD1(const int& chunkSize, const std::vector<float>
 		//POSTION				UV				NORMAL
 		0.0f , 0.0f , 0.0f,		0.0f, 0.0f,		0.37f, 0.0f, 0.93f,		
 		0.1f , 0.0f , 0.0f,		0.0f, 0.0f,		-0.37f, 0.0f, 0.93f,
-		0.0f , 0.25f, 0.0f,		0.0f, 0.47f,	0.37f, 0.0f, 0.93f,
-		0.1f , 0.25f, 0.0f,		0.0f, 0.47f,	-0.37f, 0.0f, 0.93f,
-		0.02f, 0.4f , 0.0f,		0.0f, 0.75f,	0.37f, 0.0f, 0.93f,
-		0.08f, 0.4f , 0.0f,		0.0f, 0.75f,	-0.37f, 0.0f, 0.93f,
-		0.04f, 0.50f, 0.0f,		0.0f, 0.94f,	0.37f, 0.0f, 0.93f,
-		0.06f, 0.50f, 0.0f,		0.0f, 0.94f,	-0.37f, 0.0f, 0.93f,
-		0.05f, 0.53f, 0.0f,		0.0f, 1.0f,		0.0f, 0.0f, 1.0f,
+		0.0f , 0.5f, 0.0f,		0.0f, 0.47f,	0.37f, 0.0f, 0.93f,
+		0.1f , 0.5f, 0.0f,		0.0f, 0.47f,	-0.37f, 0.0f, 0.93f,
+		0.02f, 0.8f , 0.0f,		0.0f, 0.75f,	0.37f, 0.0f, 0.93f,
+		0.08f, 0.8f , 0.0f,		0.0f, 0.75f,	-0.37f, 0.0f, 0.93f,
+		0.04f, 1.0f, 0.0f,		0.0f, 0.94f,	0.37f, 0.0f, 0.93f,
+		0.06f, 1.0f, 0.0f,		0.0f, 0.94f,	-0.37f, 0.0f, 0.93f,
+		0.05f, 1.06f, 0.0f,		0.0f, 1.0f,		0.0f, 0.0f, 1.0f,
 	};
 	std::vector<int> indices = {
 		2, 3, 1,
@@ -233,7 +233,7 @@ void GrassChunkComponent::draw() const
 		const sne::Scene* currentScene = sne::SceneManager::getInstance()->getCurrentScene();
 
 		shader.use();
-		shader.setVec3("windDir", { cos(testDir),0.0f, sin(testDir) });
+		shader.setVec3("windDir", { cos(0.7),0.0f, sin(0.7) });
 		shader.setVec3("sun", glm::normalize(currentScene->getDirectionnalLight()));
 		shader.setFloat("time", Time::getTimeSinceStart());
 		//std::cout << Time::getTimeSinceStart() << std::endl;

@@ -82,59 +82,22 @@ float pNoise(vec2 p, int res){
 	return nf*nf*nf*nf;
 }
 
-
-float hash( vec2 a )
-{
-
-    return fract( sin( a.x * 3433.8 + a.y * 3843.98 ) * 45933.8 );
-
-}
-
 void main()
 {
-	/*
 	uint h = lowbias32(gl_InstanceID);
-	float angle = (h/100.0) *2.0 *3.14;
+	float angle = (h/10.0) *2.0 *3.14 + 0.2;
 
-	
-	//Wind effect
-	//Wind strength
-	float windStrengthNoise = pNoise( (aInstancePos.xz+offset.xz) *100.0f * windDir.xz + time *200.0f, 3);
-	float windDirStrength = windStrengthNoise *8.0f;
+	float windStrengthNoise = pNoise( (aInstancePos.xz+offset.xz) * windDir.xz  * 100.0+ time *200.0f, 3);
+	float windDirStrength = windStrengthNoise *0.8f;
 
-	// Curve the blade
-	vec3 curvedPos = vec3( aPos.x,
-							(aPos.y * cos(curvature) - aPos.z * sin(curvature))*1.5f,
-							aPos.y * sin(curvature) + aPos.z * cos(curvature) );
+	vec3 bladeRotation = vec3(cos(angle) + sin(angle), 0.0f, -sin(angle)+ cos(angle));
 
-	curvedPos += windDir * 0.4 * aPos.y;
+	float naturalCurvature =((((h%20)/20.0)/2.0)+0.2) * aPos.y ;
+	float windCurvature = windDirStrength * dot(bladeRotation,windDir) * aPos.y;
+	float curvature =  -windCurvature + naturalCurvature;
 
-	// Rotate the blade
-	vec3 rotPos = vec3(cos(angle) * curvedPos.x + sin(angle)* curvedPos.z,
-						curvedPos.y, 
-						(-sin(angle)* curvedPos.x) + (cos(angle) * curvedPos.z));
-	
-
-
-	//Rotate a little if camera dir orthogonal to blade normaL
-	vec3 normal = vec3(cos(angle) *0.0f + sin(angle)* 1.0f,
-					0.0f, 
-					(-sin(angle)* 0.0f) + (cos(angle) * 1.0f));
-
-
-	float viewDotNormal = clamp(dot(camViewDir,normal),0.0f,1.0f);		
-	float factor =  pow(1-viewDotNormal,3);
-	vec3 smallRot = vec3(cos(factor) * rotPos.x + sin(factor)* rotPos.z,
-						rotPos.y, 
-						(-sin(factor)* rotPos.x) + (cos(factor) * rotPos.z));
-	*/
-	uint h = lowbias32(gl_InstanceID);
-	float hRot = hash(vec2(gl_InstanceID,gl_InstanceID));
-	float angle = (hRot) *2.0 *3.14;
-
-	float windStrengthNoise = pNoise( (aInstancePos.xz+offset.xz) *100.0f * windDir.xz + time *200.0f, 3);
-	float windDirStrength = windStrengthNoise *8.0f;
-	float curvature = (((h%20)/20.0) + windStrengthNoise * 2.0f  ) * aPos.y;
+	float viewDotNormal = clamp(dot(camViewDir,bladeRotation),0.0f,1.0f);	
+	float viewSpaceCenteringfactor =  pow(1-viewDotNormal,3);
 
 	//Matrices are created by columns!!!!
 	mat3 curvMat = mat3(1.0, 0.0, 0.0,
@@ -145,7 +108,11 @@ void main()
 						 0.0, 1.0, 0.0,
 						 sin(angle), 0.0, cos(angle));
 
-	mat3 finalRotMatrix =  rotBlade * curvMat;
+	mat3 viewSpaceRotation = mat3( cos(viewSpaceCenteringfactor),0.0, -sin(viewSpaceCenteringfactor),
+									0.0, 1.0, 0.0,
+									sin(viewSpaceCenteringfactor), 0.0, cos(viewSpaceCenteringfactor));
+
+	mat3 finalRotMatrix = viewSpaceRotation * rotBlade * curvMat ;
 
 	vec3 finalPos = finalRotMatrix * aPos;
 
