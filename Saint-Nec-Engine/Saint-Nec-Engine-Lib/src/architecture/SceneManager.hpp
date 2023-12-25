@@ -35,8 +35,6 @@ namespace sne
 		 */
 		static SceneManager* instance;
 
-	public:
-
 		/**
 		 * Default constructor for a SceneManager.
 		 */
@@ -46,6 +44,18 @@ namespace sne
 		 * Destructor for the SceneManager instance.
 		 */
 		~SceneManager();
+
+	public:
+
+		/**
+		 * Copy Contructor does not exist since it is a Singleton.
+		 */
+		SceneManager(const SceneManager& sm) = delete;
+
+		/**
+		 * Operator= does not exist since SceneManager is a Singleton.
+		 */
+		void operator=(const SceneManager& sm) = delete;
 
 		/**
 		 * Getter for the instance of the SceneManager.
