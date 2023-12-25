@@ -3,6 +3,7 @@
 #include <vector>
 #include <glm/glm.hpp>
 #include <architecture/Scene.hpp>
+#include <imgui.h>
 
 class GrassChunkComponent : public sne::graphics::GraphicComponent
 {
@@ -13,7 +14,6 @@ public:
 
 	void genLOD1(const int& chunkSize, const std::vector<float>& positions);
 	void genLOD2(const int& chunkSize, const std::vector<float>& positions);
-
 
 private:
 	unsigned int instanceVBO;
@@ -30,6 +30,9 @@ private:
 	static const float LODTreshold;
 
 	float testDir;
+
+	glm::vec3 bottomGrassColor;
+	glm::vec3 topGrassColor;
 
 	bool isChunkInsideFrustum( const glm::vec3& chunkPosition) const;
 };

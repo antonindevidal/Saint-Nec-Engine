@@ -4,19 +4,10 @@ const float GrassChunkComponent::LODTreshold = 50.0f;
 
 
 GrassChunkComponent::GrassChunkComponent(const int& size, const int& chunkSize, const int nbInstancesPerChunk, const char* vertexShaderPath, const char* fragmentShaderPath)
-	:GraphicComponent(vertexShaderPath, fragmentShaderPath), nbInstancesPerChunk(nbInstancesPerChunk),chunkSize(chunkSize), chunkPositions(), testDir(2.0)
+	:GraphicComponent(vertexShaderPath, fragmentShaderPath), nbInstancesPerChunk(nbInstancesPerChunk), chunkSize(chunkSize), chunkPositions(), testDir(2.0)
+	,bottomGrassColor({ 43.0 / 255.0, 147.0 / 255.0, 72.0 / 255.0 }), topGrassColor({ 128.0 / 255.0, 185.0 / 255.0, 24.0 / 255.0 })
 {
 
-	glm::vec3 bottomColor{ 0.0f, 0.44f, 0.02f, };
-	glm::vec3 topColor{ 0.56f, 0.94f, 0.32f, };
-
-	shader.setVec3("grassColorTop", topColor);
-	shader.setVec3("grassColorBottom", bottomColor);
-
-
-
-
-	
 
 	for (int i = 0; i < size / chunkSize; i++)
 	{
@@ -83,7 +74,7 @@ void GrassChunkComponent::genLOD1(const int& chunkSize, const std::vector<float>
 	*/
 	std::vector<float> vertices = {
 		//POSTION				UV				NORMAL
-		0.0f , 0.0f , 0.0f,		0.0f, 0.0f,		0.37f, 0.0f, 0.93f,		
+		0.0f , 0.0f , 0.0f,		0.0f, 0.0f,		0.37f, 0.0f, 0.93f,
 		0.1f , 0.0f , 0.0f,		0.0f, 0.0f,		-0.37f, 0.0f, 0.93f,
 		0.0f , 0.5f, 0.0f,		0.0f, 0.47f,	0.37f, 0.0f, 0.93f,
 		0.1f , 0.5f, 0.0f,		0.0f, 0.47f,	-0.37f, 0.0f, 0.93f,
@@ -146,10 +137,10 @@ void GrassChunkComponent::genLOD2(const int& chunkSize, const std::vector<float>
 			  XXX  XX
 			 XX     XX
 			XX        X
-		   XX         XX  
+		   XX         XX
 		   X           X
 		  X            XX
-		 XX             X  
+		 XX             X
 		 X              X
 		XX              XX
 		XXXXXXXXXXXXXXXXXX
@@ -169,17 +160,17 @@ void GrassChunkComponent::genLOD2(const int& chunkSize, const std::vector<float>
 		TODO: Set U position in UV
 	*/
 	std::vector<float> vertices = {
-		//POSTION				UV
-		0.0f , 0.0f ,	0.0f,	0.0f, 0.0f,		0.0f, 0.0f, 1.0f,
-		0.1f , 0.0f ,	0.0f,	0.0f, 0.0f,		0.0f, 0.0f, 1.0f,
-		0.0f, 0.25f,	0.0f,	0.0f, 0.47f,	0.0f, 0.0f, 1.0f,
-		0.1f, 0.25f,	0.0f,	0.0f, 0.47f,	0.0f, 0.0f, 1.0f,
-		0.05f, 0.53f,	0.0f,	0.0f, 1.0f,		0.0f, 0.0f, 1.0f,
+		//POSTION				UV							
+		0.0f , 0.0f ,	0.0f,	0.0f, 0.0f,		0.37f, 0.0f, 0.93f,
+		0.1f , 0.0f ,	0.0f,	0.0f, 0.0f,		0.37f, 0.0f, 0.93f,
+		//0.0f, 0.5f,	0.0f,	0.0f, 0.47f,	0.37f, 0.0f, 0.93f,
+		//0.1f, 0.5f,	0.0f,	0.0f, 0.47f,	0.37f, 0.0f, 0.93f,
+		0.05f, 1.06f,	0.0f,	0.0f, 1.0f,		0.0f, 0.0f, 1.0f,
 	};
 	std::vector<int> indices = {
 		2, 3, 1,
-		1, 0, 2,
-		4, 3, 2,
+		//1, 0, 2,
+		//4, 3, 2,
 	};
 
 	// Level of detail 1
@@ -215,6 +206,7 @@ void GrassChunkComponent::genLOD2(const int& chunkSize, const std::vector<float>
 	renderedElementCount2 = indices.size();
 }
 
+
 void GrassChunkComponent::draw() const
 {
 
@@ -236,6 +228,8 @@ void GrassChunkComponent::draw() const
 		shader.setVec3("windDir", { cos(0.7),0.0f, sin(0.7) });
 		shader.setVec3("sun", glm::normalize(currentScene->getDirectionnalLight()));
 		shader.setFloat("time", Time::getTimeSinceStart());
+		shader.setVec3("grassColorTop", topGrassColor);
+		shader.setVec3("grassColorBottom", bottomGrassColor);
 		//std::cout << Time::getTimeSinceStart() << std::endl;
 		shader.setVec3("camViewDir", sne::SceneManager::getInstance()->getCurrentScene()->getCamera().getFront());
 		shader.setMat4("view", sne::SceneManager::getInstance()->getCurrentScene()->getView());
@@ -244,21 +238,21 @@ void GrassChunkComponent::draw() const
 		glm::vec3 camPosition = sne::SceneManager::getInstance()->getCurrentScene()->getCamera().getPosition();
 
 		//Creating bounding box
-		glm::vec4 p00Bottom { 0.0f, 0.0f, 0.0f, 1.0f };
-		glm::vec4 p01Bottom { 0.0f, 0.0f, 0.0f, 1.0f };
-		glm::vec4 p10Bottom { 0.0f, 0.0f, 0.0f, 1.0f };
-		glm::vec4 p11Bottom { 0.0f, 0.0f, 0.0f, 1.0f };
+		glm::vec4 p00Bottom{ 0.0f, 0.0f, 0.0f, 1.0f };
+		glm::vec4 p01Bottom{ 0.0f, 0.0f, 0.0f, 1.0f };
+		glm::vec4 p10Bottom{ 0.0f, 0.0f, 0.0f, 1.0f };
+		glm::vec4 p11Bottom{ 0.0f, 0.0f, 0.0f, 1.0f };
 
-		glm::vec4 p00Top { 0.0f, 1.0f, 0.0f, 1.0f };
-		glm::vec4 p01Top { 0.0f, 1.0f, 0.0f, 1.0f };
-		glm::vec4 p10Top { 0.0f, 1.0f, 0.0f, 1.0f };
-		glm::vec4 p11Top { 0.0f, 1.0f, 0.0f, 1.0f };
+		glm::vec4 p00Top{ 0.0f, 1.0f, 0.0f, 1.0f };
+		glm::vec4 p01Top{ 0.0f, 1.0f, 0.0f, 1.0f };
+		glm::vec4 p10Top{ 0.0f, 1.0f, 0.0f, 1.0f };
+		glm::vec4 p11Top{ 0.0f, 1.0f, 0.0f, 1.0f };
 
 		int nbRendered = 0;
-		for (const glm::vec3& chunk: chunkPositions)
+		for (const glm::vec3& chunk : chunkPositions)
 		{
 			shader.setVec3("offset", chunk);
-			float dist = glm::distance(chunk,camPosition);
+			float dist = glm::distance(chunk, camPosition);
 			if (isChunkInsideFrustum(chunk))
 			{
 				nbRendered++;
@@ -280,10 +274,10 @@ void GrassChunkComponent::draw() const
 	}
 }
 
-bool GrassChunkComponent::isChunkInsideFrustum( const glm::vec3& chunkPosition) const
+bool GrassChunkComponent::isChunkInsideFrustum(const glm::vec3& chunkPosition) const
 {
 	const sne::Scene* currentScene = (sne::SceneManager::getInstance())->getCurrentScene();
-	
+
 	//Bounding box for grass chunk
 	glm::vec4 p00Bottom{ chunkPosition.x			, 0.0f, chunkPosition.z, 1.0f };
 	glm::vec4 p01Bottom{ chunkPosition.x + chunkSize, 0.0f, chunkPosition.z, 1.0f };
@@ -297,12 +291,12 @@ bool GrassChunkComponent::isChunkInsideFrustum( const glm::vec3& chunkPosition) 
 
 
 	return  currentScene->isPointInsideViewFrustum(p00Bottom) ||
-			currentScene->isPointInsideViewFrustum(p01Bottom) ||
-			currentScene->isPointInsideViewFrustum(p10Bottom) ||
-			currentScene->isPointInsideViewFrustum(p11Bottom) ||
-			currentScene->isPointInsideViewFrustum(p00Top) ||
-			currentScene->isPointInsideViewFrustum(p01Top) ||
-			currentScene->isPointInsideViewFrustum(p10Top) ||
-			currentScene->isPointInsideViewFrustum(p11Top);
+		currentScene->isPointInsideViewFrustum(p01Bottom) ||
+		currentScene->isPointInsideViewFrustum(p10Bottom) ||
+		currentScene->isPointInsideViewFrustum(p11Bottom) ||
+		currentScene->isPointInsideViewFrustum(p00Top) ||
+		currentScene->isPointInsideViewFrustum(p01Top) ||
+		currentScene->isPointInsideViewFrustum(p10Top) ||
+		currentScene->isPointInsideViewFrustum(p11Top);
 }
 

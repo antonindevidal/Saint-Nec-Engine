@@ -37,12 +37,6 @@ uint lowbias32(uint x)
 }
 
 
-float remap(float value, float low1, float high1, float low2, float high2)
-{
-	return low2 + (value - low1) * (high2 - low2) / (high1 - low1);
-}
-
-
 //Perlin noise from https://gist.github.com/patriciogonzalezvivo/670c22f3966e662d2f83
 float rand(vec2 c){
 	return fract(sin(dot(c.xy ,vec2(12.9898,78.233))) * 43758.5453);
@@ -84,22 +78,35 @@ float pNoise(vec2 p, int res){
 
 void main()
 {
-	uint h = lowbias32(gl_InstanceID);
+	// Generate basic hash
+	uint h = lowbias32(gl_InstanceID + int(offset.x) + int(offset.z)); 
+	
+	//Rotation for grass blade
 	float angle = (h/10.0) *2.0 *3.14 + 0.2;
 
-	float windStrengthNoise = pNoise( (aInstancePos.xz+offset.xz) * windDir.xz  * 100.0+ time *200.0f, 3);
-	float windDirStrength = windStrengthNoise *0.8f;
+	// Generate wind with perlin noise
+	float windStrengthNoise = pNoise( (aInstancePos.xz+offset.xz) * windDir.xz  * 100.0+ time *200.0f, 2);
+	float windDirStrength = windStrengthNoise *1.4f;
 
-	vec3 bladeRotation = vec3(cos(angle) + sin(angle), 0.0f, -sin(angle)+ cos(angle));
+	//Calculate normal for the blade 
+	vec3 normalvector = vec3(cos(angle) + sin(angle), 0.0f, -sin(angle)+ cos(angle));
 
+	// Create a base curvature for the blade
 	float naturalCurvature =((((h%20)/20.0)/2.0)+0.2) * aPos.y ;
-	float windCurvature = windDirStrength * dot(bladeRotation,windDir) * aPos.y;
-	float curvature =  -windCurvature + naturalCurvature;
 
-	float viewDotNormal = clamp(dot(camViewDir,bladeRotation),0.0f,1.0f);	
+	// Create the curvature due to the wind strength and direction
+	float windCurvature = windDirStrength * aPos.y ;
+
+	// Calculate final curvature
+	float curvature =  naturalCurvature - windCurvature;
+
+	// Create a rotation factor for the blade to "always" be visible even if parralel to the camera
+	float viewDotNormal = clamp(dot(camViewDir,normalvector),0.0f,1.0f);	
 	float viewSpaceCenteringfactor =  pow(1-viewDotNormal,3);
 
 	//Matrices are created by columns!!!!
+	//Calculate rotation matrices for the blade
+	//This can be simplified but I keep it that way to be readable
 	mat3 curvMat = mat3(1.0, 0.0, 0.0,
 						0.0, cos(curvature), sin(curvature),
 						0.0, -sin(curvature), cos(curvature));
