@@ -17,17 +17,18 @@
  */
 class Time
 {
-private:
+
+public:
+	
 	/**
 	* Copy Contructor does not exist since it is a Singleton.
 	*/
 	Time(const Time& sm) = delete;
 
-public:
 	/**
 	 * Operator= does not exist since it is a Singleton.
 	 */
-	void operator=(const Time& sm) = delete;
+	auto operator=(const Time& sm) = delete;
 
 	/**
 	 * Return the instance of the singleton.
