@@ -14,7 +14,8 @@ class UiHelper
 {
 
 public:
-	static void WindowSceneTree(const sne::Scene& scene);
+
+	static void WindowSceneManagerTree(sne::SceneManager* manager);
 
 private:
 	static void SceneManagerHelper(const sne::SceneManager& sceneManager);

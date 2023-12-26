@@ -33,5 +33,5 @@ void Game::draw() const
 {
 	sceneManager->draw();
 
-	UiHelper::WindowSceneTree(sne::SceneManager::getInstance()->getCurrentScene());
+	UiHelper::WindowSceneManagerTree(sne::SceneManager::getInstance());
 }
