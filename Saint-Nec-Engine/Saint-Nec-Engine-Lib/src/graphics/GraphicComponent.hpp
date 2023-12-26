@@ -47,6 +47,11 @@ namespace sne::graphics
 		 */
 		GraphicComponent(const char* vertexShaderPath, const char* fragmentShaderPath);
 		GraphicComponent(const char* vertexShaderPath, const char* fragmentShaderPath, const char* tessellationControlPath, const char* tessellationEvaluationPath);
+
+
+		~GraphicComponent();
+
+
 		/**
 		* @brief Set the geometry of the graphic component
 		*
@@ -64,7 +69,7 @@ namespace sne::graphics
 		 */
 		void addTexture(const char* texturePath, const char* name);
 
-		void addCubeMap(const std::vector<std::string> texturesPath);
+		void addCubeMap(const std::vector<std::string>& texturesPath);
 
 		/**
 		* @brief Draw the cube instance.

@@ -19,6 +19,29 @@ namespace sne::graphics
 		shader.setMat4("view", sne::SceneManager::getInstance()->getCurrentScene().getView());
 	}
 
+	GraphicComponent::~GraphicComponent()
+	{
+		Component::~Component();
+		
+		if (hasGeometry)
+		{
+			glDeleteVertexArrays(1, &VAO);
+			glDeleteBuffers(1, &VBO);
+			if (hasEBO)
+			{
+				glDeleteBuffers(1, &EBO);
+			}
+		}
+		if (hasTexture)
+		{
+			glDeleteTextures(textureIDs.size(), &textureIDs[0]);
+		}
+		if (hasCubeMap)
+		{
+			glDeleteTextures(1, &cubeMapID);
+		}
+	}
+
 	void GraphicComponent::setGeometry(const std::vector<float>& vertices, const VertexDataType& vertexDataType, const std::vector<int>& indices)
 	{
 
@@ -122,7 +145,7 @@ namespace sne::graphics
 		hasTexture = true;
 	}
 
-	void GraphicComponent::addCubeMap(const std::vector<std::string> texturesPath)
+	void GraphicComponent::addCubeMap(const std::vector<std::string>& texturesPath)
 	{
 		glGenTextures(1, &cubeMapID);
 		glBindTexture(GL_TEXTURE_CUBE_MAP, cubeMapID);

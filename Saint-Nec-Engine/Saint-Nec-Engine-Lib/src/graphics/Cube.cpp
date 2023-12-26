@@ -3,7 +3,7 @@
 namespace sne::graphics
 {
 
-	Cube::Cube(const char* vertexShaderPath, const char* fragmentShaderPath):GraphicComponent(vertexShaderPath,fragmentShaderPath)
+	Cube::Cube(const char* vertexShaderPath, const char* fragmentShaderPath) :GraphicComponent(vertexShaderPath, fragmentShaderPath)
 	{
 		std::vector<float> vertices = {
 			//Positions         //Colors            //Texture coords
@@ -16,7 +16,7 @@ namespace sne::graphics
 			 0.5, -0.5, -0.5,   0.0f, 0.0f, 1.0f,   1.0f, 0.0f,
 			-0.5, -0.5, -0.5,   1.0f, 1.0f, 1.0f,   0.0f, 0.0f,
 		};
-		std::vector<int> indices= { 
+		std::vector<int> indices = {
 			0, 1, 2,
 			2, 3, 0,
 			4, 0, 3,
@@ -65,19 +65,10 @@ namespace sne::graphics
 		};
 
 		setGeometry(vertices, VertexDataType::SNE_VERTICES, indices);
-		
+
 		shader.use();
 		shader.setVec3("color", color);
-		
-	}
 
-	Cube::~Cube()
-	{
-		Component::~Component();
-		glDeleteVertexArrays(1, &VAO);
-		glDeleteBuffers(1, &VBO);
-		glDeleteBuffers(1, &EBO);
 	}
-
 }
 

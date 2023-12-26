@@ -26,13 +26,13 @@ namespace sne::graphics
 	* @class Cube
 	* @brief Cube graphic component
 	*/
-	class Cube: public GraphicComponent
+	class Cube : public GraphicComponent
 	{
 	public:
 		/**
-		* 
+		*
 		* Create multicolor cube of size 1*1*1.
-		* 
+		*
 		* @param vertexShaderPath Path of the vertex shader.
 		* @param fragmentShaderPath Path of the fragment shader.
 		*/
@@ -47,11 +47,5 @@ namespace sne::graphics
 		* @param color RGB color of cube.
 		*/
 		Cube(const char* vertexShaderPath, const char* fragmentShaderPath, glm::vec3 color);
-
-		/**
-		* @brief Destructor of Cube instance.
-		*/
-		~Cube();		
 	};
-	
 }
