@@ -8,6 +8,7 @@
  */
 
 #include <string>
+#include <iostream>
 #include "Scene.hpp"
 
 
@@ -105,5 +106,12 @@ namespace sne
 		 * @param Current scene
 		 */
 		const Scene& getCurrentScene() const;
+
+		/**
+		 * Return vector of all the scenes.
+		 * 
+		 * @return vector of all the scenes.
+		 */
+		const std::vector<Scene*>& getScenes() const;
 	};
 }
