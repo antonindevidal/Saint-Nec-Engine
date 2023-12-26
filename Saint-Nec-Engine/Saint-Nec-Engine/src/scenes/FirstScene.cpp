@@ -37,7 +37,9 @@ void FirstScene::load()
 	sne::GameObject* cubeTextured = new sne::GameObject();
 	addGameObject(cubeTextured);
 	cubeTextured->setName("Textured Cube");
-	cubeTextured->addComponent(new sne::graphics::Cube("resources/shaders/basic.vert", "resources/shaders/texture.frag", "resources/textures/elie2.jpg"));
+	sne::graphics::Cube* cubeComponent = new sne::graphics::Cube("resources/shaders/basic.vert", "resources/shaders/texture.frag");
+	cubeComponent->addTexture("resources/textures/elie2.jpg", "ourTexture");
+	cubeTextured->addComponent(cubeComponent);
 	cubeTextured->translate(glm::vec3{ 1.0f, 0.0f, 0.0f });
 
 	}

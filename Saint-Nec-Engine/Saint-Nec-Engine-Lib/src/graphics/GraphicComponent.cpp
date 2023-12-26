@@ -4,7 +4,7 @@ namespace sne::graphics
 {
 
 	GraphicComponent::GraphicComponent(const char* vertexShaderPath, const char* fragmentShaderPath) :
-		VBO(0), VAO(0), EBO(0), renderedElementCount(0), shader(vertexShaderPath, fragmentShaderPath),textureIDs(), hasTexture(false), hasGeometry(false)
+		VBO(0), VAO(0), EBO(0), renderedElementCount(0), shader(vertexShaderPath, fragmentShaderPath),textureIDs(),cubeMapID(), hasTexture(false), hasCubeMap(false), hasEBO(false), hasGeometry(false)
 	{
 		shader.use();
 		shader.setMat4("projection", sne::SceneManager::getInstance()->getCurrentScene().getProjection()); //Set projection matrice once because it never changes 
@@ -12,7 +12,7 @@ namespace sne::graphics
 	}
 
 	GraphicComponent::GraphicComponent(const char* vertexShaderPath, const char* fragmentShaderPath, const char* tessellationControlPath, const char* tessellationEvaluationPath):
-		VBO(0), VAO(0), EBO(0), renderedElementCount(0), shader(vertexShaderPath, fragmentShaderPath, tessellationControlPath, tessellationEvaluationPath), textureIDs(), hasTexture(false), hasGeometry(false)
+		VBO(0), VAO(0), EBO(0), renderedElementCount(0), shader(vertexShaderPath, fragmentShaderPath, tessellationControlPath, tessellationEvaluationPath), textureIDs(), cubeMapID(), hasTexture(false),hasCubeMap(false), hasEBO(false), hasGeometry(false)
 	{
 		shader.use();
 		shader.setMat4("projection", sne::SceneManager::getInstance()->getCurrentScene().getProjection()); //Set projection matrice once because it never changes 
@@ -31,9 +31,18 @@ namespace sne::graphics
 		glBindBuffer(GL_ARRAY_BUFFER, VBO); // Set type of Buffer
 		glBufferData(GL_ARRAY_BUFFER, sizeof(float) * vertices.size(), &vertices[0], GL_STATIC_DRAW);
 
-		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
-		glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(int) * indices.size(), &indices[0], GL_STATIC_DRAW);
-
+		if (!indices.empty())
+		{
+			glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
+			glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(int) * indices.size(), &indices[0], GL_STATIC_DRAW);
+			hasEBO = true;
+			renderedElementCount = indices.size();
+		}
+		else
+		{
+			renderedElementCount = vertices.size();
+		}
+		
 		switch (vertexDataType)
 		{
 		case VertexDataType::SNE_VERTICES:
@@ -62,7 +71,6 @@ namespace sne::graphics
 			break;
 		}
 
-		renderedElementCount = indices.size();
 		hasGeometry = true;
 	}
 
@@ -114,16 +122,46 @@ namespace sne::graphics
 		hasTexture = true;
 	}
 
+	void GraphicComponent::addCubeMap(const std::vector<std::string> texturesPath)
+	{
+		glGenTextures(1, &cubeMapID);
+		glBindTexture(GL_TEXTURE_CUBE_MAP, cubeMapID);
+
+
+		int width, height, nrChannels;
+		unsigned char* data;
+		for (unsigned int i = 0; i < texturesPath.size(); i++)
+		{
+			data = stbi_load(texturesPath[i].c_str(), &width, &height, &nrChannels, 0);
+			glTexImage2D(
+				GL_TEXTURE_CUBE_MAP_POSITIVE_X + i,
+				0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, data
+			);
+		}
+		glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+		glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+		glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+		glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+		glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_R, GL_CLAMP_TO_EDGE);
+		hasCubeMap = true;
+
+	}
+
 	void GraphicComponent::draw() const
 	{
-
+		int i = 0;
 		if (hasTexture)
 		{
-			for (int i = 0; i < textureIDs.size(); i ++)
+			for (i = 0; i < textureIDs.size(); i ++)
 			{
 				glActiveTexture(GL_TEXTURE0 + i);
 				glBindTexture(GL_TEXTURE_2D, textureIDs[i]);
 			}
+		}
+		if (hasCubeMap)
+		{
+			glActiveTexture(GL_TEXTURE0+ i );
+			glBindTexture(GL_TEXTURE_CUBE_MAP, cubeMapID);
 		}
 		if (hasGeometry)
 		{
@@ -134,7 +172,15 @@ namespace sne::graphics
 			shader.setMat4("model", parent->getModel());
 
 			glBindVertexArray(VAO);
-			glDrawElements(GL_TRIANGLES, renderedElementCount, GL_UNSIGNED_INT, 0);
+			if (hasEBO)
+			{
+				glDrawElements(GL_TRIANGLES, renderedElementCount, GL_UNSIGNED_INT, 0);
+			}
+			else
+			{
+				glDrawArrays(GL_TRIANGLES, 0, renderedElementCount);
+			}
+			
 			glBindVertexArray(0);
 		}
 	}

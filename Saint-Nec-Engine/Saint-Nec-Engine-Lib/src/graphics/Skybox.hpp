@@ -33,13 +33,5 @@ namespace sne::graphics
 		 */
 		virtual void draw() const;
 
-
-	private:
-
-		/**
-		 * Tetxure ID for cubemap.
-		 */
-		unsigned int cubeMapTextureId;
 	};
-
 }
