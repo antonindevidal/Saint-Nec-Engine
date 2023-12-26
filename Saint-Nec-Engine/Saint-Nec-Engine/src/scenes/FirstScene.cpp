@@ -10,6 +10,13 @@ FirstScene::FirstScene(): Scene::Scene()
 void FirstScene::load()
 {
 	gameObjects = std::vector<sne::GameObject*>();
+
+	sne::GameObject* skybox = new sne::GameObject();
+	addGameObject(skybox);
+	skybox->setName("skybox");
+	skybox->addComponent(new sne::graphics::Skybox({ "resources/textures/skybox/nx.png","resources/textures/skybox/px.png","resources/textures/skybox/py.png","resources/textures/skybox/ny.png","resources/textures/skybox/nz.png","resources/textures/skybox/pz.png" }, "resources/shaders/skybox.vert", "resources/shaders/skybox.frag"));
+
+
 	// Multicolor cube example
 	sne::GameObject* cube = new sne::GameObject();
 	cube->setName("Basic cube");
@@ -32,7 +39,8 @@ void FirstScene::load()
 	cubeTextured->setName("Textured Cube");
 	cubeTextured->addComponent(new sne::graphics::Cube("resources/shaders/basic.vert", "resources/shaders/texture.frag", "resources/textures/elie2.jpg"));
 	cubeTextured->translate(glm::vec3{ 1.0f, 0.0f, 0.0f });
-}
+
+	}
 
 void FirstScene::unload()
 {
