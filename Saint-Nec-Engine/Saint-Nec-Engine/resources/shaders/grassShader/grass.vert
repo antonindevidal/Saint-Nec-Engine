@@ -98,7 +98,7 @@ void main()
 	float windCurvature = windDirStrength * aPos.y ;
 
 	// Calculate final curvature
-	float curvature =  naturalCurvature;// - windCurvature;
+	float curvature =  naturalCurvature - windCurvature;
 
 	// Create a rotation factor for the blade to "always" be visible even if parralel to the camera
 	float viewDotNormal = clamp(dot(camViewDir,normalvector),0.0f,1.0f);	
