@@ -290,13 +290,13 @@ bool GrassChunkComponent::isChunkInsideFrustum(const glm::vec3& chunkPosition) c
 	glm::vec4 p11Top{ chunkPosition.x + chunkSize	, 1.0f, chunkPosition.z + chunkSize, 1.0f };
 
 
-	return  currentScene->isPointInsideViewFrustum(p00Bottom) ||
-		currentScene->isPointInsideViewFrustum(p01Bottom) ||
-		currentScene->isPointInsideViewFrustum(p10Bottom) ||
-		currentScene->isPointInsideViewFrustum(p11Bottom) ||
-		currentScene->isPointInsideViewFrustum(p00Top) ||
-		currentScene->isPointInsideViewFrustum(p01Top) ||
-		currentScene->isPointInsideViewFrustum(p10Top) ||
-		currentScene->isPointInsideViewFrustum(p11Top);
+	return  currentScene->isPointInsideViewFrustum(parent->getModel() * p00Bottom ) ||
+			currentScene->isPointInsideViewFrustum(parent->getModel() * p01Bottom) ||
+			currentScene->isPointInsideViewFrustum(parent->getModel() * p10Bottom) ||
+			currentScene->isPointInsideViewFrustum(parent->getModel() * p11Bottom) ||
+			currentScene->isPointInsideViewFrustum(parent->getModel() * p00Top) ||
+			currentScene->isPointInsideViewFrustum(parent->getModel() * p01Top) ||
+			currentScene->isPointInsideViewFrustum(parent->getModel() * p10Top) ||
+			currentScene->isPointInsideViewFrustum(parent->getModel() * p11Top);
 }
 
