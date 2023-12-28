@@ -98,7 +98,7 @@ void main()
 	float windCurvature = windDirStrength * aPos.y ;
 
 	// Calculate final curvature
-	float curvature =  naturalCurvature - windCurvature;
+	float curvature =  naturalCurvature;// - windCurvature;
 
 	// Create a rotation factor for the blade to "always" be visible even if parralel to the camera
 	float viewDotNormal = clamp(dot(camViewDir,normalvector),0.0f,1.0f);	
@@ -119,11 +119,11 @@ void main()
 									0.0, 1.0, 0.0,
 									sin(viewSpaceCenteringfactor), 0.0, cos(viewSpaceCenteringfactor));
 
-	mat3 finalRotMatrix = viewSpaceRotation * rotBlade * curvMat ;
+	mat3 finalRotMatrix = viewSpaceRotation * curvMat * rotBlade  ;
 
-	vec3 finalPos = finalRotMatrix * aPos;
+	vec3 finalPos = aPos * finalRotMatrix;
 
-	vec3 newNormal = finalRotMatrix * aNormal;
+	vec3 newNormal = aNormal * finalRotMatrix;
 
 	uv = aUV;
 	norm = newNormal;
