@@ -11,6 +11,7 @@
 #include <GLFW/glfw3.h>
 #include <vector>
 #include <stb_image.h>
+
 #include "Shader.hpp"
 #include "../architecture/Component.hpp"
 #include "../architecture/SceneManager.hpp"

@@ -87,6 +87,15 @@ int main(void)
 {
     GLFWwindow* window;
 
+
+    #ifdef NDEBUG
+        std::cout << "RELEASE MODE" << std::endl;
+    #else
+        std::cout << "DEBUG MODE" << std::endl;
+    #endif // DEBUG
+
+
+
     /* Initialize the library */
     if (!glfwInit())
         return -1;
@@ -137,6 +146,7 @@ int main(void)
     ImVec4 clear_color = ImVec4(0.45f, 0.55f, 0.60f, 1.00f);
 
     Game g{};
+    TracyGpuContext
 
     /* Loop until the user closes the window */
     while (!glfwWindowShouldClose(window))
@@ -166,7 +176,7 @@ int main(void)
 
         /* Swap front and back buffers */
         glfwSwapBuffers(window);
-
+        TracyGpuCollect
         /* Poll for and process events */
         glfwPollEvents();
         

@@ -48,6 +48,7 @@ namespace sne
 					currentScene->unload();
 				}
 				currentScene = s;
+				std::cout << "Loading scene: " << name << std::endl;
 				currentScene->load();
 
 				break;
@@ -83,6 +84,11 @@ namespace sne
 	const Scene* SceneManager::getCurrentScene() const
 	{
 		return currentScene;
+	}
+
+	const std::vector<Scene*>& SceneManager::getScenes() const
+	{
+		return scenes;
 	}
 
 
