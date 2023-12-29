@@ -153,7 +153,7 @@ namespace sne::saintNecPhysics
         // Considering line between 2 centers
         // TO UPDATE: considering plan where we touch the other and calcul with normal and angle ?
         
-        glm::vec3 direction = o1.getPosition() - o2.getPosition();
+        glm::vec3 direction = o2.getPosition() - o1.getPosition();
         // std::cout << "ancienne vitesse pour o1" << o1.getVelocity() << "\n";
         // std::cout << "ancienne vitesse pour o2" << o2.getVelocity() << "\n";
         o1.setVelocity(-direction * newv1);
