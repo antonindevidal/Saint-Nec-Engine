@@ -49,7 +49,7 @@ namespace sne::saintNecPhysics
         return _mass;
     }
 
-    const Collider * PhysicObject::getCollider() const
+    const Collider *PhysicObject::getCollider() const
     {
         return _collider;
     }
@@ -91,7 +91,7 @@ namespace sne::saintNecPhysics
 
     void PhysicObject::compute(float dt)
     {
-        _position += _velocity * dt + ((float)0.5) * _acceleration * dt * dt;
+        _position += _velocity * dt + 0.5f * _acceleration * dt * dt;
         _velocity += _acceleration * dt;
 
         if (_collider)
@@ -115,7 +115,7 @@ namespace sne::saintNecPhysics
         }
         catch (const SATIllegalUseException &e)
         {
-            if(parent == nullptr)
+            if (parent == nullptr)
                 std::cout << " ";
             else
                 std::cout << e.what() << " " << parent->getName() << "\n";
@@ -146,14 +146,24 @@ namespace sne::saintNecPhysics
               m1 = o1.getMass(),
               m2 = o2.getMass();
 
-        v1 = (m1 - m2) / (m1 + m2) * v1 + 2 * m2 * v2 / (m1 + m2);
-        v2 = 2 * m1 * v1 / (m1 + m2) - (m1 - m2) / (m1 + m2) * v2;
+        float newv1 = (m1 - m2) / (m1 + m2) * v1 + 2 * m2 * v2 / (m1 + m2),
+              newv2 = 2 * m1 * v1 / (m1 + m2) - (m1 - m2) / (m1 + m2) * v2;
 
         // Vector orientation
         // Considering line between 2 centers
         // TO UPDATE: considering plan where we touch the other and calcul with normal and angle ?
+        
         glm::vec3 direction = o1.getPosition() - o2.getPosition();
-        o1.setVelocity(-direction * v1);
-        o2.setVelocity(direction * v2);
+        // std::cout << "ancienne vitesse pour o1" << o1.getVelocity() << "\n";
+        // std::cout << "ancienne vitesse pour o2" << o2.getVelocity() << "\n";
+        o1.setVelocity(-direction * newv1);
+        o2.setVelocity(direction * newv2);
+        // std::cout << "nouvelle vitesse pour o1" << o1.getVelocity() << "\n";
+        // std::cout << "nouvelle vitesse pour o2" << o2.getVelocity() << "\n";
+        // std::cout << "direction: " << direction << "\n";
+        // std::cout << "v1: " << v1 << "\n";
+        // std::cout << "v2: " << v2 << "\n";
+        // std::cout << "v1: " << newv1 << "\n";
+        // std::cout << "v2: " << newv2 << "\n";
     }
 }

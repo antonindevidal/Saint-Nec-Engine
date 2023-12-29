@@ -3,10 +3,15 @@
 #include <glm/glm.hpp>
 #include <glm/gtc/type_ptr.hpp>
 
+const std::string path = "../../../Saint-Nec-Engine/Saint-Nec-Engine-Test/test/data/";
+
 std::ofstream open(const std::string &filename)
 {
-    std::ofstream myfile;
-    myfile.open(filename);
+    std::ofstream myfile(path +filename);
+    if (!myfile.is_open()) {
+        std::cout << "Unable to open file: " << filename << std::endl;
+    }
+
     return myfile;
 }
 
