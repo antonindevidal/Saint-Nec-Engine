@@ -14,9 +14,7 @@ namespace sne
 
 	void PhysicManager::computeCollision()
 	{
-		// sortObject(); TO USE LATER (sweep & prune)
-
-		// // If effect makes others collision we take
+		// If effect makes others collision we take
 		// for (int i = 0; i < _objects.size(); i++)
 		// {
 		// 	for (int j = i + 1; j < _objects.size(); j++)
@@ -46,5 +44,16 @@ namespace sne
 	const std::vector<saintNecPhysics::PhysicObject*> &PhysicManager::getObjects() const
 	{
 		return _objects;
+	}
+
+	void PhysicManager::clear()
+	{
+		for(saintNecPhysics::PhysicObject* elt: _objects)
+		{
+			if(elt->getCollider() == nullptr)
+				std::cout << "destruction de null\n";
+			delete elt;
+		}
+		_objects.clear();
 	}
 }

@@ -14,9 +14,8 @@ namespace sne::saintNecPhysics
 
     PhysicObject::~PhysicObject()
     {
-        // to update with std::move before
-        // if(_collider != nullptr)
-        //     delete _collider;
+        if(_collider != nullptr)
+            delete _collider;
     }
 
     const glm::vec3 &PhysicObject::getAcceleration() const

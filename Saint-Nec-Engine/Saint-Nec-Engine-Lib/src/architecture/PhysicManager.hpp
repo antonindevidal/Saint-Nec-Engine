@@ -102,6 +102,12 @@ namespace sne
 		 * @return const std::vector<saintNecPhysics::PhysicObject*>& 
 		 */
 		const std::vector<saintNecPhysics::PhysicObject*>& getObjects() const;
+
+		/**
+		 * @brief clear the instance (test purpose)
+		 * 
+		 */
+		void clear();
 	};
 
 }
