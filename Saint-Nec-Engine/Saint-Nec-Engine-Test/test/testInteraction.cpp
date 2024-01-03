@@ -69,22 +69,14 @@ TEST_CASE("TEST Newton Laws 1")
         std::cout << "No collider associed\n";
     }
 
-    // std::cout << "Affichage des pos:\n";
-    // std::cout << o1.getPosition() << "\n";
-    // std::cout << o2.getPosition() << "\n";
 
     glm::vec3 v1 = o1.getVelocity();
     glm::vec3 v2 = o2.getVelocity();
+
     CHECK(v1 == -v2);
-    // std::cout << "Affichage des vitesse:\n";
-    // std::cout << o1.getVelocity() << "\n";
-    // std::cout << o2.getVelocity() << "\n";
     o1.compute(5);
     o2.compute(5);
 
-    // std::cout << "Affichage des pos:\n";
-    // std::cout << o1.getPosition() << "\n";
-    // std::cout << o2.getPosition() << "\n";
     REQUIRE(o1.getPosition() == position2);
     REQUIRE(o2.getPosition() == position1);
 }
