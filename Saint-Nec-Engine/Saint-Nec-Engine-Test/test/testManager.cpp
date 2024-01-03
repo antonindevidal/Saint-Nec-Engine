@@ -55,7 +55,7 @@ TEST_CASE("TEST MANAGER TIME COMPARISON")
     // Full collision measure
     for(int i=0; i<100; i++)
     {
-        glm::vec3 center = {0,0,0};
+        glm::vec3 center{i,0,0};
         po = new PhysicObject{center, 10};
         collider = new BoxCollider{center, 4, 4, 4};
         po->setAcceleration({0,0,0});

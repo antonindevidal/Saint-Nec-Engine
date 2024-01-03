@@ -19,24 +19,26 @@ namespace sne::saintNecPhysics
         glm::vec3 axis{1, 0, 0};
         std::vector<PhysicObject *> curr;
 
-        for (int i = 0; i < v.size(); i++)
+        for (unsigned i = 0; i < v.size(); i++)
         {
-            // For each object
-            for (std::vector<PhysicObject *>::iterator elt = curr.begin(); elt != curr.end(); elt++)
+            if (curr.size() == 0)
             {
+                curr.push_back(v[i]);
+            }
+            else
+            {
+                auto it = curr.begin();
+                while (it != curr.end() && !(*it)->getCollider()->intersection(v[i]->getCollider(), axis)) it++;
+                curr.erase(curr.begin(), it);
 
-                // We compare with previous object with wich one it's possible to collide
-                if ((*elt)->getCollider()->intersection(v[i]->getCollider(), axis))
-                {
-                    // Collision possible so we add this pair
-                    curr.push_back(v[i]);
-                    pairs.push_back(std::make_pair(v[i], *elt));
+                it = curr.begin();
+                while(it != curr.end())
+                { 
+                    pairs.push_back(std::make_pair(v[i], (*it)));
+                    ++it;
                 }
-                else
-                {
-                    // Impossible collision, so we remove this object that can not collide with the others because it's sorted
-                    curr.erase(elt);
-                }
+
+                curr.push_back(v[i]);
             }
         }
 
