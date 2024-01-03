@@ -30,6 +30,11 @@ namespace sne::saintNecPhysics
         _center = v;
         for(auto &point: _points)
             point += diff;
+
+        std::cout << "Mes points: ";
+        for (auto elt : _points)
+            std::cout << elt << " ";
+        std::cout << "\n";
     }
 
     bool BoxCollider::hasPoint(const glm::vec3 &p, float eps) const
