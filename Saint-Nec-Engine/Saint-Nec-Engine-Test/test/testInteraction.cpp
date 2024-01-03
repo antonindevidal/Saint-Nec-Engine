@@ -87,19 +87,19 @@ TEST_CASE("TEST Collider cohesion")
     PhysicObject o1{center, 10};
     PhysicObject o2{center, 10};
 
-    SphereCollider sphere{center, 10};
-    BoxCollider box{center, 10, 10, 10};
+    SphereCollider *sphere = new SphereCollider{center, 10};
+    BoxCollider *box = new BoxCollider{center, 10, 10, 10};
 
-    o1.setCollider(&sphere);
-    o2.setCollider(&box);
+    o1.setCollider(sphere);
+    o2.setCollider(box);
 
     o1.compute(5);
     o2.compute(5);
 
     CHECK(o1.getPosition() != glm::vec3{0, 0, 0});
     CHECK(o2.getPosition() != glm::vec3{0, 0, 0});
-    CHECK(o1.getPosition() == sphere.getCenter());
-    CHECK(o2.getPosition() == box.getCenter());
+    CHECK(o1.getPosition() == sphere->getCenter());
+    CHECK(o2.getPosition() == box->getCenter());
 
     o1.setAcceleration({0, 0, 0});
     o2.setAcceleration({0, 0, 0});
@@ -154,9 +154,9 @@ TEST_CASE("TEST GRAVITY WITH CHART")
 
     glm::vec3 center{0, 0, 0};
     PhysicObject o1{center, 10};
-    SphereCollider sphere{center, 10};
+    SphereCollider *sphere = new SphereCollider{center, 10};
 
-    o1.setCollider(&sphere);
+    o1.setCollider(sphere);
 
     dataFile << "1\n";
     schriben(dataFile, o1.getPosition());
@@ -176,14 +176,14 @@ TEST_CASE("TEST TOTAL CHART INTERACTION")
 
     glm::vec3 center{0, 0, 0};
     PhysicObject o1{center, 10};
-    SphereCollider sphere{center, 10};
+    SphereCollider *sphere = new SphereCollider{center, 10};
 
     glm::vec3 center2{0, 0, 100};
     PhysicObject o2{center2, 10};
-    SphereCollider sphere2{center2, 10};
+    SphereCollider *sphere2 = new SphereCollider{center2, 10};
 
-    o1.setCollider(&sphere);
-    o2.setCollider(&sphere2);
+    o1.setCollider(sphere);
+    o2.setCollider(sphere2);
 
     o1.setAcceleration({0, 0, 0});
     o2.setAcceleration({0, 0, -9.81});
