@@ -1,4 +1,5 @@
 // Entetes //---------------------------------------------------------------------------------------
+#define _USE_MATH_DEFINES // Visual Studio on Windows need it to use cmath and math.h lib   
 #include <iostream>
 #include <catch.hpp>
 #include <cmath>

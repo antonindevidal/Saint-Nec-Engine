@@ -11,6 +11,7 @@
 #include "../architecture/util.hpp"
 #include "BoxCollider.hpp"
 #include "SphereCollider.hpp"
+#include <algorithm>
 
 namespace sne::saintNecPhysics
 {
@@ -51,4 +52,6 @@ namespace sne::saintNecPhysics
     bool intersect(const SphereCollider &sphere1, const SphereCollider &sphere2, const glm::vec3 &axis);
     bool intersect(const SphereCollider &sphere, const BoxCollider &boxe, const glm::vec3 &axis);
     bool intersect(const BoxCollider &boxe, const SphereCollider &sphere, const glm::vec3 &axis);
+
+    void closestPoints(std::vector<glm::vec3> v, const glm::vec3 target);
 }

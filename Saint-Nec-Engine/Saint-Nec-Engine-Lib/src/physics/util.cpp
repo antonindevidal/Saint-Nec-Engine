@@ -70,4 +70,11 @@ namespace sne::saintNecPhysics
     {
         return intersect(sphere, boxe, axis);
     }
+
+    void closestPoints(std::vector<glm::vec3> v, const glm::vec3 target)
+    {
+        std::sort(v.begin(), v.end(), [&target](const glm::vec3 point1, const glm::vec3 point2) {
+                return norm(point1 - target) < norm(point2 - target);
+            });
+    }
 }
