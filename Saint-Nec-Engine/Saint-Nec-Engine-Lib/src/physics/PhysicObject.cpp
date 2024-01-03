@@ -2,6 +2,7 @@
 
 namespace sne::saintNecPhysics
 {
+    Time* PhysicObject::time = Time::getInstance();
     PhysicObject::PhysicObject(float mass) : PhysicObject({0, 0, 0}, mass)
     {
     }
@@ -100,7 +101,7 @@ namespace sne::saintNecPhysics
 
     void PhysicObject::update() // to remove it would be bad use of getdelta?
     {
-        compute(1 / FPS);
+        compute(time->getDeltaTime());
     }
 
     void PhysicObject::computeCollide(PhysicObject &obj)
