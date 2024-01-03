@@ -2,6 +2,7 @@
 
 #include <architecture/Scene.hpp>
 #include <graphics/Cube.hpp>
+#include <graphics/Skybox.hpp>
 
 
 class FirstScene: public sne::Scene
