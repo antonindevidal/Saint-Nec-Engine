@@ -67,6 +67,9 @@ namespace sne::saintNecPhysics
     void PhysicObject::setPosition(const glm::vec3 &p)
     {
         _position = p;
+
+        if (_collider)
+            _collider->setCenter(_position);
     }
 
     void PhysicObject::setRotation(const glm::vec3 &r)
@@ -91,11 +94,17 @@ namespace sne::saintNecPhysics
 
     void PhysicObject::compute(float dt)
     {
-        _position += _velocity * dt + ((float)0.5) * _acceleration * dt * dt;
+        auto tmp = _velocity * dt + ((float)0.5) * _acceleration * dt * dt;
+        if(parent)
+            parent->translate(tmp);
+        _position += tmp;
         _velocity += _acceleration * dt;
 
         if (_collider)
             _collider->setCenter(_position);
+
+        //std::cout << "New position of" << parent->getName() << " " << _position;
+        std::cout <<  parent->getName()<< "\n";
     }
 
     void PhysicObject::update() // to remove it would be bad use of getdelta?
@@ -105,13 +114,15 @@ namespace sne::saintNecPhysics
 
     void PhysicObject::computeCollide(PhysicObject &obj)
     {
+        
         if (!_collider || !obj._collider)
             throw std::exception_ptr();
-
+        
         try
         {
             if (!_collider->collide(obj._collider))
                 return;
+            std::cout << "is called\n";
         }
         catch (const SATIllegalUseException &e)
         {
@@ -125,7 +136,7 @@ namespace sne::saintNecPhysics
             std::cout << e.what() << " " << parent->getName() << "\n";
             throw std::exception();
         }
-
+        std::cout << "ICIIC???\n";
         if (obj.isFix)
         {
             // We don't need to test this.isFix bc we won't use it
@@ -142,18 +153,28 @@ namespace sne::saintNecPhysics
     {
         // Calcul new vitesse
         float v1 = norm(o1.getVelocity()),
-              v2 = norm(o2.getVelocity()),
-              m1 = o1.getMass(),
-              m2 = o2.getMass();
+            v2 = norm(o2.getVelocity()),
+            m1 = o1.getMass(),
+            m2 = o2.getMass();
 
-        v1 = (m1 - m2) / (m1 + m2) * v1 + 2 * m2 * v2 / (m1 + m2);
-        v2 = 2 * m1 * v1 / (m1 + m2) - (m1 - m2) / (m1 + m2) * v2;
+        float newv1 = (m1 - m2) / (m1 + m2) * v1 + 2 * m2 * v2 / (m1 + m2),
+            newv2 = 2 * m1 * v1 / (m1 + m2) - (m1 - m2) / (m1 + m2) * v2;
 
         // Vector orientation
         // Considering line between 2 centers
         // TO UPDATE: considering plan where we touch the other and calcul with normal and angle ?
-        glm::vec3 direction = o1.getPosition() - o2.getPosition();
-        o1.setVelocity(-direction * v1);
-        o2.setVelocity(direction * v2);
+
+        glm::vec3 direction = o2.getPosition() - o1.getPosition();
+         std::cout << "ancienne vitesse pour o1" << o1.getVelocity() << "\n";
+         std::cout << "ancienne vitesse pour o2" << o2.getVelocity() << "\n";
+        o1.setVelocity(-direction * newv1);
+        o2.setVelocity(direction * newv2);
+         std::cout << "nouvelle vitesse pour o1" << o1.getVelocity() << "\n";
+         std::cout << "nouvelle vitesse pour o2" << o2.getVelocity() << "\n";
+         std::cout << "direction: " << direction << "\n";
+         std::cout << "v1: " << v1 << "\n";
+         std::cout << "v2: " << v2 << "\n";
+         std::cout << "v1: " << newv1 << "\n";
+         std::cout << "v2: " << newv2 << "\n";
     }
 }

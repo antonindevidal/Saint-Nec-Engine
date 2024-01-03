@@ -1,4 +1,3 @@
-
 #include <architecture/SceneManager.hpp>
 #include <architecture/GameObject.hpp>
 #include <graphics/Cube.hpp>
@@ -6,6 +5,7 @@
 #include "ui_helper/UiHelper.hpp"
 #include "scenes/FirstScene.hpp"
 #include "terrain/TerrainScene.hpp"
+#include "scenes/PhysicScene.hpp"
 
 class Game
 {

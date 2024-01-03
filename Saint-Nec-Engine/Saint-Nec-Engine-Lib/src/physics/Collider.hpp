@@ -33,7 +33,7 @@ namespace sne::saintNecPhysics
             return _center;
         }
 
-        void setCenter(const glm::vec3 &v)
+        virtual void setCenter(const glm::vec3 &v)
         {
             _center = v;
         }

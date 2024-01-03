@@ -105,6 +105,15 @@ namespace sne::saintNecPhysics
         bool intersection(const Collider *, const glm::vec3 &axis) const override;
         bool intersection(const SphereCollider &, const glm::vec3 &axis) const override;
         bool intersection(const BoxCollider &, const glm::vec3 &axis) const override;
+
+        void setCenter(const glm::vec3& v) override
+        {
+            std::cout << "Mes points: ";
+            for(auto elt: _points)
+                std:: cout << elt << " ";
+            std::cout << "\n";
+            _center = v;
+        }
     };
 
     std::ostream &operator<<(std::ostream &oss, const BoxCollider &b);
