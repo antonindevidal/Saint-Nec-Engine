@@ -13,7 +13,6 @@
 #include <set>
 #include <algorithm>
 #include "../physics/PhysicObject.hpp"
-#include "Time.hpp"
 #include "../physics/algorithms.hpp"
 
 
@@ -48,8 +47,6 @@ namespace sne
 		// We will still need to sort at each compute however it's fast with std::sort and vector
 		// (sort is for sweep & prune)
 		std::vector<saintNecPhysics::PhysicObject*> _objects;
-		Time* time = Time::getInstance();
-
 
 	private:
 		PhysicManager() {}
