@@ -9,7 +9,7 @@ namespace sne
 	{
 		computeCollision();
 		for (auto &elt : _objects)
-			elt->update();
+			elt->compute(time->getDeltaTime());
 	}
 
 	void PhysicManager::computeCollision()

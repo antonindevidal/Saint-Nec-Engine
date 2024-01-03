@@ -14,7 +14,7 @@ using namespace saintNecPhysics;
 //--------------------------------------------------------------------------------------------------
 TEST_CASE("TEST PhysicObject 1")
 {
-    PhysicObject o{{0, 9.81, 0}, 1};
+    PhysicObject o{{0, 0, 9.81}, 1};
 
     o.compute(sqrt(2));
 

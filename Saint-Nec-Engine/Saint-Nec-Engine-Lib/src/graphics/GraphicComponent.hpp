@@ -47,11 +47,6 @@ namespace sne::graphics
 		 */
 		GraphicComponent(const char* vertexShaderPath, const char* fragmentShaderPath);
 		GraphicComponent(const char* vertexShaderPath, const char* fragmentShaderPath, const char* tessellationControlPath, const char* tessellationEvaluationPath);
-
-
-		~GraphicComponent();
-
-
 		/**
 		* @brief Set the geometry of the graphic component
 		*
@@ -68,8 +63,6 @@ namespace sne::graphics
 		 * @param name Name for the uniform inside the shader.
 		 */
 		void addTexture(const char* texturePath, const char* name);
-
-		void addCubeMap(const std::vector<std::string>& texturesPath);
 
 		/**
 		* @brief Draw the cube instance.
@@ -114,19 +107,10 @@ namespace sne::graphics
 		 */
 		std::vector<unsigned int> textureIDs;
 
-		unsigned int cubeMapID;
-
 		/**
 		 * Has the texture been set.
 		 */
 		bool hasTexture;
-
-		/**
-		 * Has CubeMap..
-		 */
-		bool hasCubeMap;
-
-		bool hasEBO;
 
 		/**
 		 * has the geometry been set.
