@@ -101,9 +101,6 @@ namespace sne::saintNecPhysics
 
         if (_collider)
             _collider->setCenter(_position);
-
-        //std::cout << "New position of" << parent->getName() << " " << _position;
-        std::cout <<  parent->getName()<< "\n";
     }
 
     void PhysicObject::update() // to remove it would be bad use of getdelta?
@@ -121,7 +118,6 @@ namespace sne::saintNecPhysics
         {
             if (!_collider->collide(obj._collider))
                 return;
-            std::cout << "is called\n";
         }
         catch (const SATIllegalUseException &e)
         {
@@ -135,7 +131,7 @@ namespace sne::saintNecPhysics
             std::cout << e.what() << " " << parent->getName() << "\n";
             throw std::exception();
         }
-        std::cout << "ICIIC???\n";
+
         if (obj.isFix)
         {
             // We don't need to test this.isFix bc we won't use it
@@ -157,7 +153,7 @@ namespace sne::saintNecPhysics
             m2 = o2.getMass();
 
         float newv1 = (m1 - m2) / (m1 + m2) * v1 + 2 * m2 * v2 / (m1 + m2),
-            newv2 = 2 * m1 * v1 / (m1 + m2) - (m1 - m2) / (m1 + m2) * v2;
+              newv2 = 2 * m1 * v1 / (m1 + m2) - (m1 - m2) / (m1 + m2) * v2;
 
         // Vector orientation
         // Considering line between 2 centers
