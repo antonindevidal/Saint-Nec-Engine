@@ -14,9 +14,8 @@ namespace sne::saintNecPhysics
 
     PhysicObject::~PhysicObject()
     {
-        // to update with std::move before
-        // if(_collider != nullptr)
-        //     delete _collider;
+        if(_collider != nullptr)
+            delete _collider;
     }
 
     const glm::vec3 &PhysicObject::getAcceleration() const
@@ -49,7 +48,7 @@ namespace sne::saintNecPhysics
         return _mass;
     }
 
-    const Collider * PhysicObject::getCollider() const
+    const Collider *PhysicObject::getCollider() const
     {
         return _collider;
     }
@@ -126,7 +125,7 @@ namespace sne::saintNecPhysics
         }
         catch (const SATIllegalUseException &e)
         {
-            if(parent == nullptr)
+            if (parent == nullptr)
                 std::cout << " ";
             else
                 std::cout << e.what() << " " << parent->getName() << "\n";
@@ -163,18 +162,18 @@ namespace sne::saintNecPhysics
         // Vector orientation
         // Considering line between 2 centers
         // TO UPDATE: considering plan where we touch the other and calcul with normal and angle ?
-
+        
         glm::vec3 direction = o2.getPosition() - o1.getPosition();
-         std::cout << "ancienne vitesse pour o1" << o1.getVelocity() << "\n";
-         std::cout << "ancienne vitesse pour o2" << o2.getVelocity() << "\n";
+        // std::cout << "ancienne vitesse pour o1" << o1.getVelocity() << "\n";
+        // std::cout << "ancienne vitesse pour o2" << o2.getVelocity() << "\n";
         o1.setVelocity(-direction * newv1);
         o2.setVelocity(direction * newv2);
-         std::cout << "nouvelle vitesse pour o1" << o1.getVelocity() << "\n";
-         std::cout << "nouvelle vitesse pour o2" << o2.getVelocity() << "\n";
-         std::cout << "direction: " << direction << "\n";
-         std::cout << "v1: " << v1 << "\n";
-         std::cout << "v2: " << v2 << "\n";
-         std::cout << "v1: " << newv1 << "\n";
-         std::cout << "v2: " << newv2 << "\n";
+        // std::cout << "nouvelle vitesse pour o1" << o1.getVelocity() << "\n";
+        // std::cout << "nouvelle vitesse pour o2" << o2.getVelocity() << "\n";
+        // std::cout << "direction: " << direction << "\n";
+        // std::cout << "v1: " << v1 << "\n";
+        // std::cout << "v2: " << v2 << "\n";
+        // std::cout << "v1: " << newv1 << "\n";
+        // std::cout << "v2: " << newv2 << "\n";
     }
 }

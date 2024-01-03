@@ -24,6 +24,14 @@ namespace sne::saintNecPhysics
         return _points[i];
     }
 
+    void BoxCollider::setCenter(const glm::vec3 &v)
+    {
+        glm::vec3 diff = v-_center;
+        _center = v;
+        for(auto &point: _points)
+            point += diff;
+    }
+
     bool BoxCollider::hasPoint(const glm::vec3 &p, float eps) const
     {
         for (glm::vec3 v : _points)
@@ -99,17 +107,17 @@ namespace sne::saintNecPhysics
         return hasSATCollision(*this, b);
     }
 
-    bool BoxCollider::intersection(const Collider *c,const glm::vec3 &axis) const 
+    bool BoxCollider::intersection(const Collider *c, const glm::vec3 &axis) const
     {
         return c->intersection(*this, axis);
     }
-    
-    bool BoxCollider::intersection(const SphereCollider &s,const glm::vec3 &axis) const 
+
+    bool BoxCollider::intersection(const SphereCollider &s, const glm::vec3 &axis) const
     {
         return intersect(*this, s, axis);
     }
 
-    bool BoxCollider::intersection(const BoxCollider &b,const glm::vec3 &axis) const 
+    bool BoxCollider::intersection(const BoxCollider &b, const glm::vec3 &axis) const
     {
         return intersect(*this, b, axis);
     }

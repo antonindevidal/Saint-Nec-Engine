@@ -58,7 +58,7 @@ namespace sne
 
 	/**
 	 * @brief build matrix for rotation
-	 *
+	 * angles must be passed as Radians
 	 * @param rotation
 	 * @return glm::mat3
 	 */

@@ -48,4 +48,15 @@ namespace sne
 	{
 		return _objects;
 	}
+
+	void PhysicManager::clear()
+	{
+		for(saintNecPhysics::PhysicObject* elt: _objects)
+		{
+			if(elt->getCollider() == nullptr)
+				std::cout << "destruction de null\n";
+			delete elt;
+		}
+		_objects.clear();
+	}
 }
