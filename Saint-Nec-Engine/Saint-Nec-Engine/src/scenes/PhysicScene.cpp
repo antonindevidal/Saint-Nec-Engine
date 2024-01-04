@@ -20,7 +20,7 @@ void PhysicScene::load()
 	cube->addComponent(po1);
 	cube->addComponent(collider);
 	cube->setName("Cube viloet");
-	_physicManager->addObject(po1);
+	_physicManager.addObject(po1);
 
 
 	sne::GameObject* cube2 = new sne::GameObject{};
@@ -37,21 +37,18 @@ void PhysicScene::load()
 	cube2->addComponent(po2);
 	cube2->addComponent(collider2);
 	cube2->setName("Cube rouge");
-	_physicManager->addObject(po2);
+	_physicManager.addObject(po2);
 
 
 }
 
 void PhysicScene::unload()
 {
-	for (sne::GameObject* g : gameObjects)
-	{
-		delete g;
-	}
+	_physicManager.clear();
 }
 
 void PhysicScene::update()
 {
 	sne::Scene::update();
-	_physicManager->update();
+	_physicManager.update();
 }
