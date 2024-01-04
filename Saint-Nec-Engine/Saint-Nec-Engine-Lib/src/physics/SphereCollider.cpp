@@ -42,4 +42,9 @@ namespace sne::physics
     {
         return intersect(*this, b, axis);
     }
+
+    float SphereCollider::getMin(const glm::vec3 &axis) const
+    {
+        return dot(axis, _center) - _radius;
+    }
 }

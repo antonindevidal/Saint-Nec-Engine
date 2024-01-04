@@ -45,5 +45,7 @@ namespace sne::physics
         virtual bool intersection(const Collider *, const glm::vec3 &axis) const = 0;
         virtual bool intersection(const SphereCollider &, const glm::vec3 &axis) const = 0;
         virtual bool intersection(const BoxCollider &, const glm::vec3 &axis) const = 0;
+
+        virtual float getMin(const glm::vec3 &axis) const = 0;
     };
 }
