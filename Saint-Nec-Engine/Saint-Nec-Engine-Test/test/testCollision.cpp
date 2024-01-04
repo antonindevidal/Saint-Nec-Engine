@@ -13,7 +13,7 @@
 
 // Tests //-----------------------------------------------------------------------------------------
 using namespace sne;
-using namespace saintNecPhysics;
+using namespace physics;
 
 // Data log file
 const std::string filename = "collision.txt";

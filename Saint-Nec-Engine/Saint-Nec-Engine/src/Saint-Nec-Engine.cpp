@@ -87,6 +87,15 @@ int main(void)
 {
     GLFWwindow* window;
 
+
+    #ifdef NDEBUG
+        std::cout << "RELEASE MODE" << std::endl;
+    #else
+        std::cout << "DEBUG MODE" << std::endl;
+    #endif // DEBUG
+
+
+
     /* Initialize the library */
     if (!glfwInit())
         return -1;

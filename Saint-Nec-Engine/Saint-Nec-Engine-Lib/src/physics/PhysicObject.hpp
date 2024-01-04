@@ -12,15 +12,15 @@
 #include <exception>
 #include <architecture/Component.hpp>
 #include <architecture/util.hpp>
+#include <architecture/GameObject.hpp>
+#include <architecture/Time.hpp>
 #include "Collider.hpp"
 #include "SphereCollider.hpp"
 #include "BoxCollider.hpp"
 #include "SAT.hpp"
-#include <architecture/GameObject.hpp>
 
-const int FPS = 10; // Will be removed later
 
-namespace sne::saintNecPhysics
+namespace sne::physics
 {
     /**
      * @paragraph Metrics
@@ -31,7 +31,7 @@ namespace sne::saintNecPhysics
     using Force = glm::vec3;
     class PhysicObject : public Component
     {
-        glm::vec3 _acceleration{0, 0, -9.81};
+        glm::vec3 _acceleration{0, -9.81, 0};
         glm::vec3 _velocity{0, 0, 0};
         float _mass = 1;          // kg
         float _amortissement = 1; // [0; 1] 1 -> elastic choc
@@ -43,6 +43,8 @@ namespace sne::saintNecPhysics
 
         // To update with inheritence
         bool isFix = false;
+
+        static Time* time; 
 
     public:
         /**
@@ -103,7 +105,7 @@ namespace sne::saintNecPhysics
         void compute(float dt);
 
         /**
-         * @brief update the object considering interaction/choque with an over one.
+         * @brief update the object considering interaction/choc with an over one.
          * When BOTH are mobile !
          *
          * @param obj mobile object with wich one we collide

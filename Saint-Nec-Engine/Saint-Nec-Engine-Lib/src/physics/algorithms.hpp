@@ -17,7 +17,8 @@
 #include <utility>
 #include "PhysicObject.hpp"
 
-namespace sne::saintNecPhysics
+
+namespace sne::physics
 {
     class SortAxisOnCenter
     {

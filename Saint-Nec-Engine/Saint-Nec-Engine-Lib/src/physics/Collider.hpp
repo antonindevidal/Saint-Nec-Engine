@@ -11,7 +11,7 @@
 #include <glm/gtc/type_ptr.hpp>
 #include <architecture/Component.hpp>
 
-namespace sne::saintNecPhysics
+namespace sne::physics
 {
     class SphereCollider;
     class BoxCollider;

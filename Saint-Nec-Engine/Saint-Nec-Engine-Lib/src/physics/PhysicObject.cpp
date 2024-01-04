@@ -1,7 +1,8 @@
 #include "PhysicObject.hpp"
 
-namespace sne::saintNecPhysics
+namespace sne::physics
 {
+    Time* PhysicObject::time = Time::getInstance();
     PhysicObject::PhysicObject(float mass) : PhysicObject({0, 0, 0}, mass)
     {
     }
@@ -66,6 +67,9 @@ namespace sne::saintNecPhysics
     void PhysicObject::setPosition(const glm::vec3 &p)
     {
         _position = p;
+
+        if (_collider)
+            _collider->setCenter(_position);
     }
 
     void PhysicObject::setRotation(const glm::vec3 &r)
@@ -90,7 +94,10 @@ namespace sne::saintNecPhysics
 
     void PhysicObject::compute(float dt)
     {
-        _position += _velocity * dt + 0.5f * _acceleration * dt * dt;
+        auto tmp = _velocity * dt + ((float)0.5) * _acceleration * dt * dt;
+        if(parent)
+            parent->translate(tmp);
+        _position += tmp;
         _velocity += _acceleration * dt;
 
         if (_collider)
@@ -99,14 +106,15 @@ namespace sne::saintNecPhysics
 
     void PhysicObject::update() // to remove it would be bad use of getdelta?
     {
-        compute(1 / FPS);
+        compute(time->getDeltaTime());
     }
 
     void PhysicObject::computeCollide(PhysicObject &obj)
     {
+        
         if (!_collider || !obj._collider)
             throw std::exception_ptr();
-
+        
         try
         {
             if (!_collider->collide(obj._collider))
@@ -141,9 +149,9 @@ namespace sne::saintNecPhysics
     {
         // Calcul new vitesse
         float v1 = norm(o1.getVelocity()),
-              v2 = norm(o2.getVelocity()),
-              m1 = o1.getMass(),
-              m2 = o2.getMass();
+            v2 = norm(o2.getVelocity()),
+            m1 = o1.getMass(),
+            m2 = o2.getMass();
 
         float newv1 = (m1 - m2) / (m1 + m2) * v1 + 2 * m2 * v2 / (m1 + m2),
               newv2 = 2 * m1 * v1 / (m1 + m2) - (m1 - m2) / (m1 + m2) * v2;

@@ -13,7 +13,7 @@
 #include "SAT.hpp"
 #include "util.hpp"
 
-namespace sne::saintNecPhysics
+namespace sne::physics
 {
     /**
      * @class SphereCollider

@@ -1,6 +1,6 @@
 #include "algorithms.hpp"
 
-namespace sne::saintNecPhysics
+namespace sne::physics
 {
     
 }

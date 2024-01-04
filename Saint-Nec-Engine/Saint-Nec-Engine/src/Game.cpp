@@ -9,9 +9,13 @@ Game::Game(): sceneManager(sne::SceneManager::getInstance())
 	TerrainScene* terrainScene = new TerrainScene();
 	terrainScene->setName("TerrainScene");
 	sceneManager->addScene(terrainScene);
-	sceneManager->changeScene(terrainScene->getName());
+	//sceneManager->changeScene(terrainScene->getName());
 
-
+	PhysicScene* physicScene = new PhysicScene{};
+	physicScene->setName("PhysicScene");
+	sceneManager->addScene(physicScene);
+	sceneManager->changeScene(physicScene->getName());
+	
 	
 }
 
@@ -33,5 +37,5 @@ void Game::draw() const
 {
 	sceneManager->draw();
 
-	UiHelper::WindowSceneTree(sne::SceneManager::getInstance()->getCurrentScene());
+	UiHelper::WindowSceneManagerTree(sne::SceneManager::getInstance());
 }

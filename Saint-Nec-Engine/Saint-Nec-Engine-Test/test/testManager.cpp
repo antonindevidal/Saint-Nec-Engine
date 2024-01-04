@@ -10,12 +10,12 @@
 
 // Tests //-----------------------------------------------------------------------------------------
 using namespace sne;
-using namespace saintNecPhysics;
+using namespace physics;
 
 // --------------------------------------------------------------------------------------------------
 TEST_CASE("TEST MANAGER - BASE 1")
 {
-    std::unique_ptr<PhysicManager> &p = PhysicManager::getInstance();
+    PhysicManager p{};
     std::vector<PhysicObject*> v;
     std::vector<glm::vec3> positions;
 
@@ -33,22 +33,22 @@ TEST_CASE("TEST MANAGER - BASE 1")
     }
 
     for(auto elt : v)
-        p->addObject(elt);
+        p.addObject(elt);
     
 
-    p->update();
+    p.update();
 
     // should have no collision and no movement
-    const std::vector<PhysicObject*> &objetcs = p->getObjects();
+    const std::vector<PhysicObject*> &objetcs = p.getObjects();
     for(int i=0; i<objetcs.size(); i++)
         CHECK( objetcs[i]->getPosition() == positions[i]);
 
-    p->clear();
+    p.clear();
 }
 
 TEST_CASE("TEST MANAGER TIME COMPARISON")
 {
-    std::unique_ptr<PhysicManager> &manager = PhysicManager::getInstance();
+    PhysicManager manager{};
     PhysicObject *po = nullptr;
     Collider *collider = nullptr;
     
@@ -60,16 +60,16 @@ TEST_CASE("TEST MANAGER TIME COMPARISON")
         collider = new BoxCollider{center, 4, 4, 4};
         po->setAcceleration({0,0,0});
         po->setCollider(collider);
-        manager->addObject(po);
+        manager.addObject(po);
     }
 
     auto start = std::chrono::high_resolution_clock::now();
-    manager->computeCollision();
+    manager.computeCollision();
     auto end = std::chrono::high_resolution_clock::now();
     auto duration = std::chrono::duration_cast<std::chrono::microseconds>(end - start);
 
     std::cout << "Temps d'execution collision total BoxCollider: " << duration.count() << "µs\n";
-    manager->clear();
+    manager.clear();
 
     // 0 collision measure
     for(int i=0; i<100; i++)
@@ -79,15 +79,15 @@ TEST_CASE("TEST MANAGER TIME COMPARISON")
         collider = new BoxCollider{center, 4, 4, 4};
         po->setAcceleration({0,0,0});
         po->setCollider(collider);
-        manager->addObject(po);
+        manager.addObject(po);
     }
 
     start = std::chrono::high_resolution_clock::now();
-    manager->computeCollision();
+    manager.computeCollision();
     end = std::chrono::high_resolution_clock::now();
     duration = std::chrono::duration_cast<std::chrono::microseconds>(end - start);
 
     std::cout << "Temps d'execution 0 collision BoxCollider: " << duration.count() << "µs.\n";
-    manager->clear();
+    manager.clear();
 }
 

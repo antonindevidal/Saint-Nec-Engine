@@ -1,6 +1,6 @@
 #include "BoxCollider.hpp"
 
-namespace sne::saintNecPhysics
+namespace sne::physics
 {
     BoxCollider::BoxCollider(const glm::vec3 center, double width, double depth, double height)
         : Collider(center)
