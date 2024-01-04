@@ -1,4 +1,5 @@
 // Entetes //---------------------------------------------------------------------------------------
+#define _USE_MATH_DEFINES
 #include <iostream>
 #include <catch.hpp>
 #include <cmath>
@@ -10,7 +11,7 @@
 
 // Tests //-----------------------------------------------------------------------------------------
 using namespace sne;
-using namespace saintNecPhysics;
+using namespace physics;
 
 //--------------------------------------------------------------------------------------------------
 TEST_CASE("TEST BOXCOLLIDER CONSTRUCTORS")
