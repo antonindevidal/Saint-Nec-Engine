@@ -12,8 +12,7 @@
 class PhysicScene : public sne::Scene {
 
 private:
-	std::unique_ptr<sne::PhysicManager> &_physicManager = sne::PhysicManager::getInstance();
-
+	sne::PhysicManager _physicManager{};
 public:
 
 	PhysicScene();

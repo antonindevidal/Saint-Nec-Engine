@@ -2,9 +2,6 @@
 
 namespace sne
 {
-
-	std::unique_ptr<PhysicManager> PhysicManager::_instance = std::make_unique<PhysicManager>();
-
 	void PhysicManager::update()
 	{
 		computeCollision();
