@@ -1,6 +1,6 @@
 #include "PhysicObject.hpp"
 
-namespace sne::saintNecPhysics
+namespace sne::physics
 {
     Time* PhysicObject::time = Time::getInstance();
     PhysicObject::PhysicObject(float mass) : PhysicObject({0, 0, 0}, mass)

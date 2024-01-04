@@ -1,6 +1,6 @@
 #include "algorithms.hpp"
 
-namespace sne::saintNecPhysics
+namespace sne::physics
 {
     std::vector<std::pair<PhysicObject *, PhysicObject *>> sweepAndPrune(std::vector<PhysicObject *> &v)
     {

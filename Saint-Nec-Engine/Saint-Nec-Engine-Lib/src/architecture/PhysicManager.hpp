@@ -25,12 +25,12 @@ namespace sne
 	class ObjectComparator
 	{
 	public:
-		bool operator()(const saintNecPhysics::PhysicObject &o1, const saintNecPhysics::PhysicObject &o2) const
+		bool operator()(const physics::PhysicObject &o1, const physics::PhysicObject &o2) const
 		{
 			return o1.getPosition()[0] < o2.getPosition()[0];
 		}
 
-		bool operator()(const saintNecPhysics::PhysicObject *o1, const saintNecPhysics::PhysicObject *o2) const
+		bool operator()(const physics::PhysicObject *o1, const physics::PhysicObject *o2) const
 		{
 			return o1->getPosition()[0] < o2->getPosition()[0];
 		}
@@ -39,12 +39,12 @@ namespace sne
 	class PhysicManager
 	{
 	private:
-		// std::set<saintNecPhysics::PhysicObject, ObjectComparator> _objects;
+		// std::set<physics::PhysicObject, ObjectComparator> _objects;
 		// Why not set instead of sort each time during compute ?
 		// Object will move and position will be updated.
 		// We will still need to sort at each compute however it's fast with std::sort and vector
 		// (sort is for sweep & prune)
-		std::vector<saintNecPhysics::PhysicObject *> _objects;
+		std::vector<physics::PhysicObject *> _objects;
 
 	private:
 		/**
@@ -75,14 +75,14 @@ namespace sne
 		 * @brief taking PhysicObject
 		 *
 		 */
-		void addObject(saintNecPhysics::PhysicObject *);
+		void addObject(physics::PhysicObject *);
 
 		/**
 		 * @brief Get the PhysicObjects* object
 		 *
-		 * @return const std::vector<saintNecPhysics::PhysicObject*>&
+		 * @return const std::vector<physics::PhysicObject*>&
 		 */
-		const std::vector<saintNecPhysics::PhysicObject *> &getObjects() const;
+		const std::vector<physics::PhysicObject *> &getObjects() const;
 
 		/**
 		 * @brief clear the instance (test purpose)

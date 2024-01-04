@@ -10,7 +10,7 @@
 
 // Tests //-----------------------------------------------------------------------------------------
 using namespace sne;
-using namespace saintNecPhysics;
+using namespace physics;
 
 // --------------------------------------------------------------------------------------------------
 TEST_CASE("TEST MANAGER - BASE 1")

@@ -19,7 +19,7 @@
 #include "PhysicObject.hpp"
 
 
-namespace sne::saintNecPhysics
+namespace sne::physics
 {
     /**
      * @brief detect possible collision using SAP optimization

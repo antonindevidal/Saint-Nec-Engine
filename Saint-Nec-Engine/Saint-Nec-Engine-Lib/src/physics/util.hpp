@@ -12,7 +12,7 @@
 #include "BoxCollider.hpp"
 #include "SphereCollider.hpp"
 
-namespace sne::saintNecPhysics
+namespace sne::physics
 {
     glm::vec3 getNormal(const glm::vec3 &, const glm::vec3 &);
     

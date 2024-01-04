@@ -30,7 +30,7 @@ namespace sne
 		}
 	}
 
-	void PhysicManager::addObject(saintNecPhysics::PhysicObject *o)
+	void PhysicManager::addObject(physics::PhysicObject *o)
 	{
 		_objects.push_back(o);
 	}
@@ -40,14 +40,14 @@ namespace sne
 		std::sort(_objects.begin(), _objects.end(), ObjectComparator());
 	}
 
-	const std::vector<saintNecPhysics::PhysicObject*> &PhysicManager::getObjects() const
+	const std::vector<physics::PhysicObject*> &PhysicManager::getObjects() const
 	{
 		return _objects;
 	}
 
 	void PhysicManager::clear()
 	{
-		for(saintNecPhysics::PhysicObject* elt: _objects)
+		for(physics::PhysicObject* elt: _objects)
 		{
 			if(elt->getCollider() == nullptr)
 				std::cout << "destruction de null\n";

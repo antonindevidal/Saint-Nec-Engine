@@ -20,7 +20,7 @@
 #include "SAT.hpp"
 
 
-namespace sne::saintNecPhysics
+namespace sne::physics
 {
     /**
      * @paragraph Metrics
