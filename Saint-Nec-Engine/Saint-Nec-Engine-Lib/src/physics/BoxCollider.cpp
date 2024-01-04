@@ -121,4 +121,16 @@ namespace sne::saintNecPhysics
     {
         return intersect(*this, b, axis);
     }
+
+    float BoxCollider::getMin(const glm::vec3 &axis) const
+    {
+        float min = dot(axis, _points[0]);
+        for(unsigned i=1; i<8; i++)
+        {
+            float v = dot(axis, _points[i]);
+            min = (v<min)? v : min;
+        }
+
+        return min;
+    }
 }
