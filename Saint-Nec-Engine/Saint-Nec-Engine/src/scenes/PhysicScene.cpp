@@ -44,10 +44,7 @@ void PhysicScene::load()
 
 void PhysicScene::unload()
 {
-	for (sne::GameObject* g : gameObjects)
-	{
-		delete g;
-	}
+	_physicManager->clear();
 }
 
 void PhysicScene::update()
