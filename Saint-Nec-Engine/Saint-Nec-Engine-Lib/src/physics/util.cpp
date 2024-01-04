@@ -1,6 +1,6 @@
 #include "util.hpp"
 
-namespace sne::saintNecPhysics
+namespace sne::physics
 {
     glm::vec3 getNormal(const glm::vec3 &v1, const glm::vec3 &v2)
     {

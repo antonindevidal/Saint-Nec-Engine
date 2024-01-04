@@ -11,7 +11,7 @@
 #include <glm/gtc/type_ptr.hpp>
 #include <architecture/Component.hpp>
 
-namespace sne::saintNecPhysics
+namespace sne::physics
 {
     class SphereCollider;
     class BoxCollider;
@@ -33,7 +33,7 @@ namespace sne::saintNecPhysics
             return _center;
         }
 
-        void setCenter(const glm::vec3 &v)
+        virtual void setCenter(const glm::vec3 &v)
         {
             _center = v;
         }
@@ -45,5 +45,7 @@ namespace sne::saintNecPhysics
         virtual bool intersection(const Collider *, const glm::vec3 &axis) const = 0;
         virtual bool intersection(const SphereCollider &, const glm::vec3 &axis) const = 0;
         virtual bool intersection(const BoxCollider &, const glm::vec3 &axis) const = 0;
+
+        virtual float getMin(const glm::vec3 &axis) const = 0;
     };
 }

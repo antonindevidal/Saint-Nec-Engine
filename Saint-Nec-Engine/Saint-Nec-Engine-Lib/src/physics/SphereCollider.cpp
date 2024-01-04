@@ -1,6 +1,6 @@
 #include "SphereCollider.hpp"
 
-namespace sne::saintNecPhysics
+namespace sne::physics
 
 {
 
@@ -41,5 +41,10 @@ namespace sne::saintNecPhysics
     bool SphereCollider::intersection(const BoxCollider &b, const glm::vec3 &axis) const
     {
         return intersect(*this, b, axis);
+    }
+
+    float SphereCollider::getMin(const glm::vec3 &axis) const
+    {
+        return dot(axis, _center) - _radius;
     }
 }
