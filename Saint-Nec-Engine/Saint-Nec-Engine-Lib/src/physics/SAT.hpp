@@ -16,7 +16,7 @@
 #include "SphereCollider.hpp"
 
 
-namespace sne::saintNecPhysics
+namespace sne::physics
 {
 
     class SATIllegalUseException : public std::exception
