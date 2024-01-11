@@ -2,7 +2,7 @@
 
 namespace sne::physics
 {
-    Time* PhysicObject::time = Time::getInstance();
+    Time *PhysicObject::time = Time::getInstance();
     PhysicObject::PhysicObject(float mass) : PhysicObject({0, 0, 0}, mass)
     {
     }
@@ -15,7 +15,7 @@ namespace sne::physics
 
     PhysicObject::~PhysicObject()
     {
-        if(_collider != nullptr)
+        if (_collider != nullptr)
             delete _collider;
     }
 
@@ -56,12 +56,14 @@ namespace sne::physics
 
     void PhysicObject::setAcceleration(const glm::vec3 &a)
     {
-        _acceleration = a;
+        if (!isFix)
+            _acceleration = a;
     }
 
     void PhysicObject::setVelocity(const glm::vec3 &v)
     {
-        _velocity = v;
+        if (!isFix)
+            _velocity = v;
     }
 
     void PhysicObject::setPosition(const glm::vec3 &p)
@@ -95,7 +97,7 @@ namespace sne::physics
     void PhysicObject::compute(float dt)
     {
         auto tmp = _velocity * dt + ((float)0.5) * _acceleration * dt * dt;
-        if(parent)
+        if (parent)
             parent->translate(tmp);
         _position += tmp;
         _velocity += _acceleration * dt;
@@ -104,20 +106,19 @@ namespace sne::physics
             _collider->setCenter(_position);
     }
 
-    void PhysicObject::update() // to remove it would be bad use of getdelta?
+    void PhysicObject::update()
     {
         compute(time->getDeltaTime());
     }
 
     void PhysicObject::computeCollide(PhysicObject &obj)
     {
-        
         if (!_collider || !obj._collider)
             throw std::exception_ptr();
-        
+
         try
         {
-            if (!_collider->collide(obj._collider))
+            if ((isFix && obj.isFix) || !_collider->collide(obj._collider) || (!isFix && hasBeenUpdated) || (!obj.isFix && obj.hasBeenUpdated))
                 return;
         }
         catch (const SATIllegalUseException &e)
@@ -135,23 +136,29 @@ namespace sne::physics
 
         if (obj.isFix)
         {
-            // We don't need to test this.isFix bc we won't use it
+            glm::vec3 axis = _position - obj._position; // To update with impact point
+            setVelocity(norm(_velocity) * _amortissement * axis);
+        }
+        else if (isFix)
+        {
             glm::vec3 axis = obj._position - _position; // To update with impact point
-            _velocity = norm(_velocity) * _amortissement * axis;
+            obj.setVelocity(norm(obj._velocity) * obj._amortissement * axis);
         }
         else
         {
             addImpulsion(*this, obj);
         }
+        obj.hasBeenUpdated = true;
+        hasBeenUpdated = true;
     }
 
     void addImpulsion(PhysicObject &o1, PhysicObject &o2)
     {
         // Calcul new vitesse
         float v1 = norm(o1.getVelocity()),
-            v2 = norm(o2.getVelocity()),
-            m1 = o1.getMass(),
-            m2 = o2.getMass();
+              v2 = norm(o2.getVelocity()),
+              m1 = o1.getMass(),
+              m2 = o2.getMass();
 
         float newv1 = (m1 - m2) / (m1 + m2) * v1 + 2 * m2 * v2 / (m1 + m2),
               newv2 = 2 * m1 * v1 / (m1 + m2) - (m1 - m2) / (m1 + m2) * v2;
@@ -159,7 +166,7 @@ namespace sne::physics
         // Vector orientation
         // Considering line between 2 centers
         // TO UPDATE: considering plan where we touch the other and calcul with normal and angle ?
-        
+
         glm::vec3 direction = o2.getPosition() - o1.getPosition();
         // std::cout << "ancienne vitesse pour o1" << o1.getVelocity() << "\n";
         // std::cout << "ancienne vitesse pour o2" << o2.getVelocity() << "\n";
