@@ -1,35 +1,45 @@
-#include "PhysicScene.hpp"
+#include "PhysicScene2.hpp"
 
-PhysicScene::PhysicScene()
+PhysicScene2::PhysicScene2()
 {
 }
 
-void PhysicScene::load()
+void PhysicScene2::load()
 {
 	gameObjects = std::vector<sne::GameObject *>();
+	glm::vec3 purple{0.5, 0.2, 0.6},
+		bleu{0.2, 0.2, 0.8};
 
-	glm::vec3 center{0, 0, 0};
-	sne::GameObject *cube = new sne::GameObject{};
-	cube->setName("Cube violet");
-
-	cube->addComponent(new sne::graphics::Cube("resources/shaders/color.vert", "resources/shaders/color.frag", glm::vec3{0.5, 0.2, 0.6}));
-
-	sne::physics::PhysicObject *po1 = new sne::physics::PhysicObject{center, 10};
-	po1->setCollider(new sne::physics::BoxCollider{center, 1, 1, 1});
-
-	cube->addComponent(po1);
-	
-	_physicManager.addObject(po1);
-
+	glm::vec3 center{0, 10, 0};
+	sne::GameObject *cube = createCube(_physicManager, center, purple);
+	cube->setName("Cube purple");
+	_physicManager.getLast()->setAcceleration({0, -1, 0});
 	addGameObject(cube);
+
+	glm::vec3 center2{0, 0, 0};
+
+	for (int i = -10; i < 11; i++)
+	{
+		// above
+		cube = createCube(_physicManager, center2 + glm::vec3{i, 0, 1}, bleu, true);
+		addGameObject(cube);
+
+		// middle
+		cube = createCube(_physicManager, center2 + glm::vec3{i, 0, 0}, bleu, true);
+		addGameObject(cube);
+
+		// behind
+		cube = createCube(_physicManager, center2 + glm::vec3{i, 0, -1}, bleu, true);
+		addGameObject(cube);
+	}
 }
 
-void PhysicScene::unload()
+void PhysicScene2::unload()
 {
 	_physicManager.clear();
 }
 
-void PhysicScene::update()
+void PhysicScene2::update()
 {
 	sne::Scene::update();
 	_physicManager.update();

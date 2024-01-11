@@ -6,6 +6,7 @@
 #include "scenes/FirstScene.hpp"
 #include "terrain/TerrainScene.hpp"
 #include "scenes/PhysicScene.hpp"
+#include "scenes/PhysicScene2.hpp"
 
 class Game
 {

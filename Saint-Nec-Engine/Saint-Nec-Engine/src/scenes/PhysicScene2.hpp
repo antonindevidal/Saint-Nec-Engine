@@ -7,15 +7,16 @@
 #include <graphics/Cube.hpp>
 #include <physics/BoxCollider.hpp>
 #include <physics/PhysicObject.hpp>
+#include "../ui_builder/UIBuilder.hpp"
 
 
-class PhysicScene : public sne::Scene {
+class PhysicScene2 : public sne::Scene {
 
 private:
 	sne::PhysicManager _physicManager{};
 public:
 
-	PhysicScene();
+	PhysicScene2();
 
 	void load() override;
 	void unload() override;
