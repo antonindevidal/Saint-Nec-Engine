@@ -54,6 +54,7 @@ namespace sne::physics
 
         for (unsigned i = 0; i < v.size(); i++)
         {
+            v[i]->hasBeenUpdated = false;
             if (curr.size() == 0)
             {
                 curr.push_back(v[i]);

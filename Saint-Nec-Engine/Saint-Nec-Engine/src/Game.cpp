@@ -15,6 +15,11 @@ Game::Game(): sceneManager(sne::SceneManager::getInstance())
 	physicScene->setName("PhysicScene");
 	sceneManager->addScene(physicScene);
 	sceneManager->changeScene(physicScene->getName());
+
+	PhysicScene2* physicScene2 = new PhysicScene2{};
+	physicScene2->setName("physicScene2");
+	sceneManager->addScene(physicScene2);
+	sceneManager->changeScene(physicScene2->getName());
 	
 	
 }

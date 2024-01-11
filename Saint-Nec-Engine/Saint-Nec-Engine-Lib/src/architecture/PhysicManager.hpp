@@ -89,6 +89,14 @@ namespace sne
 		 *
 		 */
 		void clear();
+
+		physics::PhysicObject *getLast()
+		{
+			if (_objects.size() == 0)
+				return nullptr;
+
+			return _objects[_objects.size() - 1];
+		}
 	};
 
 }

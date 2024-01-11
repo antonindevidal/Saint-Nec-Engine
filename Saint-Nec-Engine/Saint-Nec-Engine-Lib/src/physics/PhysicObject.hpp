@@ -47,6 +47,8 @@ namespace sne::physics
         static Time* time; 
 
     public:
+        bool hasBeenUpdated = false;
+        
         /**
          * @brief Construct a new PhysicObject object positionned on origin
          *
@@ -79,6 +81,12 @@ namespace sne::physics
         void setRotation(const glm::vec3 &);
         void setMass(float);
         void setCollider(Collider *collider);
+        void fix()
+        {
+            isFix = true;
+            setAcceleration({0,0,0});
+            setVelocity({0,0,0});
+        }
         /************************************************************************/
 
         /**

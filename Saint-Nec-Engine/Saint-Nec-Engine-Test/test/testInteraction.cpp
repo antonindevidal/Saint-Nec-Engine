@@ -66,7 +66,6 @@ TEST_CASE("TEST Newton Laws 1")
     catch (const std::exception_ptr &e)
     {
         CHECK("No collider associed, checked" != "");
-        std::cout << "No collider associed\n";
     }
 
 
@@ -195,10 +194,7 @@ TEST_CASE("TEST TOTAL CHART INTERACTION")
     {
         o1.compute(dt);
         o2.compute(dt);
-        std::cout << o1.getPosition() <<"\n";
-        std::cout << o2.getPosition() <<"\n";
         o1.computeCollide(o2);
-        // std::cout << o2.getPosition() <<"\n";
         schriben(dataFile, o2.getPosition());
     }
 
