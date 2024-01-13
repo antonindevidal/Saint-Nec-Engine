@@ -7,6 +7,7 @@
 #include "terrain/TerrainScene.hpp"
 #include "scenes/PhysicScene.hpp"
 #include "scenes/PhysicScene2.hpp"
+#include "scenes/MouvementCoordination.hpp"
 
 class Game
 {

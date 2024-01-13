@@ -7,17 +7,17 @@
 #include <graphics/Cube.hpp>
 #include <physics/BoxCollider.hpp>
 #include <physics/PhysicObject.hpp>
-#include "../Colors.hpp"
 #include "../ui_builder/UIBuilder.hpp"
+#include "../Colors.hpp"
 
 
-class PhysicScene : public sne::Scene {
+class MouvementCoordination : public sne::Scene {
 
 private:
 	sne::PhysicManager _physicManager{};
 public:
 
-	PhysicScene();
+	MouvementCoordination();
 
 	void load() override;
 	void unload() override;
