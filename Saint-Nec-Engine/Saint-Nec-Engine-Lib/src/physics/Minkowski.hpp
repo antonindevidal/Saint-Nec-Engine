@@ -26,6 +26,15 @@ namespace sne::physics
 			return _distance;
 		}
 
+		glm::vec3 getPointA() const
+		{
+			return _pointA;
+		}
+
+		glm::vec3 getPointB() const
+		{
+			return _pointB;
+		}
 	};
 
 }

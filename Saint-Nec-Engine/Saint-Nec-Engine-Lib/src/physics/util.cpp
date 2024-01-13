@@ -70,4 +70,53 @@ namespace sne::physics
     {
         return intersect(sphere, boxe, axis);
     }
+
+    std::vector<Minkowski> minkowskiDifference(const BoxCollider& boxe1, const BoxCollider& boxe2)
+    {
+        std::vector<Minkowski> v;
+
+        for (int i = 0; i < boxe1.getNbPoints(); i++)
+        {
+            for (int j = 0; j < boxe2.getNbPoints(); j++)
+            {
+                v.push_back(Minkowski{boxe1[i], boxe2[j]});
+            }
+        }
+
+        std::sort(v.begin(), v.end(), [](const Minkowski& p1, const Minkowski& p2)
+            {
+                return p1.getDistance() < p2.getDistance();
+            });
+        
+        return v;
+    }
+
+
+    glm::vec3 getNormal(const BoxCollider& boxeA, const BoxCollider& boxeB)
+    {
+        std::vector<Minkowski> v = minkowskiDifference(boxeA, boxeB);
+        glm::vec3 pointA1 = v[0].getPointA(),
+            pointA2 = v[1].getPointA(),
+            pointA3 = v[2].getPointA(),
+            pointA4 = v[3].getPointA();
+
+        // Get directions
+        glm::vec3 axis1 = pointA2 - pointA1,
+            axis2 = pointA3 - pointA1,
+            axis3 = pointA4 - pointA1;
+
+        // Normalize
+        axis1 /= norm(axis1);
+        axis2 /= norm(axis2);
+        axis3 /= norm(axis3);
+
+        // Get opposite direction
+        return axis1 + axis2 + axis3;
+        
+        // TO UPDATE, 2 axis for each ?
+        /*glm::vec3 pointB1 = v[0].getPointB(),
+            pointB2 = v[1].getPointB(),
+            pointB3 = v[2].getPointB(),
+            pointB4 = v[3].getPointB();*/
+    }
 }
