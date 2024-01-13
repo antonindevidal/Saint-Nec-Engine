@@ -7,8 +7,6 @@ PhysicScene2::PhysicScene2()
 void PhysicScene2::load()
 {
 	gameObjects = std::vector<sne::GameObject *>();
-	glm::vec3 purple{0.5, 0.2, 0.6},
-		bleu{0.2, 0.2, 0.8};
 
 	glm::vec3 center{0, 10, 0};
 	sne::GameObject *cube = createCube(_physicManager, center, purple);

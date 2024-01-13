@@ -8,6 +8,7 @@
 #include <physics/BoxCollider.hpp>
 #include <physics/PhysicObject.hpp>
 #include "../ui_builder/UIBuilder.hpp"
+#include "../Colors.hpp"
 
 
 class PhysicScene2 : public sne::Scene {
