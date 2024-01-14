@@ -41,15 +41,21 @@ void GrassScene::load()
 		grassBlade->translate({ -50.0f,0.0f,-50.0f });
 	}
 	
-	/*
+	{
+		sne::GameObject* sb = new sne::GameObject();
+		sb->setName("Skybox");
+		sb->addComponent(new sne::graphics::Skybox({ "resources/textures/skybox/nx.png","resources/textures/skybox/px.png","resources/textures/skybox/py.png","resources/textures/skybox/ny.png","resources/textures/skybox/nz.png","resources/textures/skybox/pz.png" }
+													, "resources/shaders/skybox.vert", "resources/shaders/skybox.frag"));
+		addGameObject(sb);
+	}
+	
 	sne::GameObject* plane = new sne::GameObject();
 	plane->setName("plane");
 	addGameObject(plane);
-	sne::graphics::Plane* planeComp = new sne::graphics::Plane(400, 400, 1, "resources/shaders/color.vert", "resources/shaders/color.frag");
+	sne::graphics::Plane* planeComp = new sne::graphics::Plane(100, 100, 1, "resources/shaders/color.vert", "resources/shaders/color.frag");
 	planeComp->getShader().setVec3("color", { 0.0f, 0.30f, 0.02f });
 	plane->addComponent(planeComp);
-	plane->translate({ 0.0f,0.0f,0.0f });
-	*/
+	
 
 	directionnalLight = glm::vec3(0.0f, 1.0f, 0.0f);
 

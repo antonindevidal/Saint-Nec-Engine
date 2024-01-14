@@ -3,6 +3,7 @@
 #include <architecture/Scene.hpp>
 #include <graphics/Cube.hpp>
 #include <graphics/Plane.hpp>
+#include <graphics/Skybox.hpp>
 
 #include "../grass/GrassComponent.hpp"
 #include "../grass/GrassChunkComponent.hpp"
