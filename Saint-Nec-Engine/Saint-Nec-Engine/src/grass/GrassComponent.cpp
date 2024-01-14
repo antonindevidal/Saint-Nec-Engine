@@ -27,11 +27,6 @@ GrassComponent::GrassComponent(const int & width, const int & depth, const int n
 		X                X
 		X  0             X   1
 
-
-	
-		We give Grass Color with two colors and mix between bottom and top from UV position
-
-		TODO: Set U position in UV
 	*/
 
 	glm::vec3 bottomColor { 0.0f, 0.44f, 0.02f, };
@@ -108,14 +103,11 @@ GrassComponent::GrassComponent(const int & width, const int & depth, const int n
 
 	renderedElementCount = indices.size();
 	hasGeometry = true;
-	testDir = 0.0f;
 }
 
 void GrassComponent::update()
 {
 	GraphicComponent::update();
-	//testDir += 0.001f;
-
 }
 
 void GrassComponent::draw() const
@@ -131,20 +123,18 @@ void GrassComponent::draw() const
 	}
 	if (hasGeometry)
 	{
-		//float test = glm::dot(sne::SceneManager::getInstance()->getCurrentScene().getCamera().getFront(), glm::vec3(0.0f, 0.0f, 1.0f));
-		//std::cout << 1.0f  - std::abs(test)<< std::endl;
 
 		const sne::Scene* currentScene = sne::SceneManager::getInstance()->getCurrentScene();
 
+		// Set uniforms
 		shader.use();
 		shader.setVec3("windDir", { cos(0.7),0.0f, sin(0.7) });
 		shader.setVec3("sun", glm::normalize(currentScene->getDirectionnalLight()));
 		shader.setFloat("time", Time::getTimeSinceStart());
 		shader.setVec3("grassColorTop", topGrassColor);
 		shader.setVec3("grassColorBottom", bottomGrassColor);
-		//std::cout << Time::getTimeSinceStart() << std::endl;
-		shader.setVec3("camViewDir", sne::SceneManager::getInstance()->getCurrentScene()->getCamera().getFront());
-		shader.setMat4("view", sne::SceneManager::getInstance()->getCurrentScene()->getView());
+		shader.setVec3("camViewDir", currentScene->getCamera().getFront());
+		shader.setMat4("view", currentScene->getView());
 		shader.setMat4("model", parent->getModel());
 
 
