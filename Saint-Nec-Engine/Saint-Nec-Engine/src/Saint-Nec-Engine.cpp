@@ -105,7 +105,7 @@ int main(void)
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 1);
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
     /* Create a windowed mode window and its OpenGL context */
-    window = glfwCreateWindow(1280, 720, "Hello World", NULL, NULL);
+    window = glfwCreateWindow(1280, 720, "Saint-Nec Engine", NULL, NULL);
     if (!window)
     {
         glfwTerminate();
@@ -133,7 +133,7 @@ int main(void)
     }
 
     glEnable(GL_DEPTH_TEST);
-    glfwSwapInterval(0);
+    glfwSwapInterval(1);
     
 
     //Init ImGUI

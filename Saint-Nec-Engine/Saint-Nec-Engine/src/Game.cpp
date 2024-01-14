@@ -30,7 +30,7 @@ Game::Game(): sceneManager(sne::SceneManager::getInstance())
 	MouvementCoordination* mouvementCoordination = new MouvementCoordination{};
 	mouvementCoordination->setName("mouvementCoordination");
 	sceneManager->addScene(mouvementCoordination);
-	sceneManager->changeScene(mouvementCoordination->getName());
+	sceneManager->changeScene(grassScene->getName());
 }
 
 Game::~Game()
