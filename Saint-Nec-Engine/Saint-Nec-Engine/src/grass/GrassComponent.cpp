@@ -3,7 +3,7 @@
 
 
 GrassComponent::GrassComponent(const int & width, const int & depth, const int nbInstances, const char* vertexShaderPath, const char* fragmentShaderPath)
-	:GraphicComponent(vertexShaderPath,fragmentShaderPath), nbInstances(nbInstances)
+	:GraphicComponent(vertexShaderPath,fragmentShaderPath), nbInstances(nbInstances), bottomGrassColor({ 43.0 / 255.0, 147.0 / 255.0, 72.0 / 255.0 }), topGrassColor({ 128.0 / 255.0, 185.0 / 255.0, 24.0 / 255.0 })
 {
 	/*
 				  8
@@ -43,16 +43,16 @@ GrassComponent::GrassComponent(const int & width, const int & depth, const int n
 
 
 	std::vector<float> vertices = {
-		//POSTION				UV
-		0.0f , 0.0f , 0.0f,		0.0f, 0.0f,
-		0.1f , 0.0f , 0.0f,		0.0f, 0.0f,
-		0.0f , 0.25f, 0.0f,		0.0f, 0.47f,
-		0.1f , 0.25f, 0.0f,		0.0f, 0.47f,
-		0.02f, 0.4f , 0.0f,		0.0f, 0.75f,
-		0.08f, 0.4f , 0.0f,		0.0f, 0.75f,
-		0.04f, 0.50f, 0.0f,		0.0f, 0.94f,
-		0.06f, 0.50f, 0.0f,		0.0f, 0.94f,
-		0.05f, 0.53f, 0.0f,		0.0f, 1.0f,
+		//POSTION				UV				NORMAL
+		0.0f , 0.0f , 0.0f,		0.0f, 0.0f,		0.37f, 0.0f, 0.93f,
+		0.1f , 0.0f , 0.0f,		0.0f, 0.0f,		-0.37f, 0.0f, 0.93f,
+		0.0f , 0.5f, 0.0f,		0.0f, 0.47f,	0.37f, 0.0f, 0.93f,
+		0.1f , 0.5f, 0.0f,		0.0f, 0.47f,	-0.37f, 0.0f, 0.93f,
+		0.02f, 0.8f , 0.0f,		0.0f, 0.75f,	0.37f, 0.0f, 0.93f,
+		0.08f, 0.8f , 0.0f,		0.0f, 0.75f,	-0.37f, 0.0f, 0.93f,
+		0.04f, 1.0f, 0.0f,		0.0f, 0.94f,	0.37f, 0.0f, 0.93f,
+		0.06f, 1.0f, 0.0f,		0.0f, 0.94f,	-0.37f, 0.0f, 0.93f,
+		0.05f, 1.06f, 0.0f,		0.0f, 1.0f,		0.0f, 0.0f, 1.0f,
 	};
 	std::vector<int> indices = {
 		2, 3, 1,
@@ -89,19 +89,21 @@ GrassComponent::GrassComponent(const int & width, const int & depth, const int n
 
 
 
-	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)0);
+	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)0);
 	glEnableVertexAttribArray(0);
-	glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)(3 * sizeof(float)));
+	glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(3 * sizeof(float)));
 	glEnableVertexAttribArray(1);
-	
+	glVertexAttribPointer(2, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(5 * sizeof(float)));
+	glEnableVertexAttribArray(2);
+
 	glGenBuffers(1, &instanceVBO);
 
 	glBindBuffer(GL_ARRAY_BUFFER, instanceVBO);
 	glBufferData(GL_ARRAY_BUFFER, sizeof(float) * positions.size(), &positions[0], GL_STATIC_DRAW);
-	glVertexAttribPointer(2, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
-	glEnableVertexAttribArray(2);
+	glVertexAttribPointer(3, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
+	glEnableVertexAttribArray(3);
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
-	glVertexAttribDivisor(2, 1);
+	glVertexAttribDivisor(3, 1);
 	
 
 	renderedElementCount = indices.size();
@@ -132,14 +134,19 @@ void GrassComponent::draw() const
 		//float test = glm::dot(sne::SceneManager::getInstance()->getCurrentScene().getCamera().getFront(), glm::vec3(0.0f, 0.0f, 1.0f));
 		//std::cout << 1.0f  - std::abs(test)<< std::endl;
 
+		const sne::Scene* currentScene = sne::SceneManager::getInstance()->getCurrentScene();
 
 		shader.use();
-		shader.setVec3("windDir", {cos(testDir),0.0f, sin(testDir)});
-		shader.setFloat("time",Time::getTimeSinceStart());
+		shader.setVec3("windDir", { cos(0.7),0.0f, sin(0.7) });
+		shader.setVec3("sun", glm::normalize(currentScene->getDirectionnalLight()));
+		shader.setFloat("time", Time::getTimeSinceStart());
+		shader.setVec3("grassColorTop", topGrassColor);
+		shader.setVec3("grassColorBottom", bottomGrassColor);
 		//std::cout << Time::getTimeSinceStart() << std::endl;
 		shader.setVec3("camViewDir", sne::SceneManager::getInstance()->getCurrentScene()->getCamera().getFront());
 		shader.setMat4("view", sne::SceneManager::getInstance()->getCurrentScene()->getView());
 		shader.setMat4("model", parent->getModel());
+
 
 		glBindVertexArray(VAO);
 		glDrawElementsInstanced(GL_TRIANGLES,renderedElementCount, GL_UNSIGNED_INT,0,nbInstances);

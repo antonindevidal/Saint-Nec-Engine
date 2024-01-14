@@ -12,4 +12,6 @@ private:
 	int nbInstances;
 
 	float testDir;
+	glm::vec3 topGrassColor;
+	glm::vec3 bottomGrassColor;
 };

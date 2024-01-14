@@ -26,27 +26,30 @@ void GrassScene::load()
 		sne::GameObject* grassBlade = new sne::GameObject();
 		grassBlade->setName("grass blade");
 		addGameObject(grassBlade);
-		grassBlade->addComponent(new GrassComponent(100, 100, 1000000, "resources/shaders/grassShader/grass.vert", "resources/shaders/grassShader/grass.frag"));
+		grassBlade->addComponent(new GrassComponent(400, 400, 30000000, "resources/shaders/grassShader/grass.vert", "resources/shaders/grassShader/grass.frag"));
 		grassBlade->translate({ 0.0f,0.0f,0.0f });
+		grassBlade->translate({ -200.0f,0.0f,-200.0f });
 	}*/
 
 	//Chunk terrain
+	
 	{
 		sne::GameObject* grassBlade = new sne::GameObject();
 		grassBlade->setName("grass blade");
 		addGameObject(grassBlade);
-		grassBlade->addComponent(new GrassChunkComponent(100, 10, 3000, "resources/shaders/grassShader/grass.vert", "resources/shaders/grassShader/grass.frag"));
-		grassBlade->translate({ 0.0f,0.0f,0.0f });
+		grassBlade->addComponent(new GrassChunkComponent(400, 10, 18750, "resources/shaders/grassShader/grass.vert", "resources/shaders/grassShader/grass.frag"));
+		grassBlade->translate({ -200.0f,0.0f,-200.0f });
 	}
-
+	
+	/*
 	sne::GameObject* plane = new sne::GameObject();
 	plane->setName("plane");
 	addGameObject(plane);
-	sne::graphics::Plane* planeComp = new sne::graphics::Plane(100, 100, 1, "resources/shaders/color.vert", "resources/shaders/color.frag");
+	sne::graphics::Plane* planeComp = new sne::graphics::Plane(400, 400, 1, "resources/shaders/color.vert", "resources/shaders/color.frag");
 	planeComp->getShader().setVec3("color", { 0.0f, 0.30f, 0.02f });
 	plane->addComponent(planeComp);
-	plane->translate({ 50.0f,0.0f,50.0f });
-
+	plane->translate({ 0.0f,0.0f,0.0f });
+	*/
 
 	directionnalLight = glm::vec3(0.0f, 1.0f, 0.0f);
 
