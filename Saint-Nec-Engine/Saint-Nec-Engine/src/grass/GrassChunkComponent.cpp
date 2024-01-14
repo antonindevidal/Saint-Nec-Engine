@@ -1,14 +1,15 @@
 #include "GrassChunkComponent.hpp"
 
-const float GrassChunkComponent::LODTreshold = 50.0f;
+const float GrassChunkComponent::LODTreshold = 100.0f;
 
 
 GrassChunkComponent::GrassChunkComponent(const int& size, const int& chunkSize, const int nbInstancesPerChunk, const char* vertexShaderPath, const char* fragmentShaderPath)
-	:GraphicComponent(vertexShaderPath, fragmentShaderPath), nbInstancesPerChunk(nbInstancesPerChunk), chunkSize(chunkSize), chunkPositions(), testDir(2.0)
+	:GraphicComponent(vertexShaderPath, fragmentShaderPath), nbInstancesPerChunk(nbInstancesPerChunk), chunkSize(chunkSize), chunkPositions()
 	,bottomGrassColor({ 43.0 / 255.0, 147.0 / 255.0, 72.0 / 255.0 }), topGrassColor({ 128.0 / 255.0, 185.0 / 255.0, 24.0 / 255.0 })
 {
 
-
+	//Create chunks positions.
+	//Ideally this can be pregenerated and read from a file
 	for (int i = 0; i < size / chunkSize; i++)
 	{
 		for (int j = 0; j < size / chunkSize; j++)
@@ -16,6 +17,9 @@ GrassChunkComponent::GrassChunkComponent(const int& size, const int& chunkSize, 
 			chunkPositions.push_back({ i * chunkSize,0.0f, j * chunkSize });
 		}
 	}
+
+	//Create grass blades position for a chunk
+	//Ideally this can be pregenerated and read from a file
 	std::vector<float> positions;
 	int sqrtInstances = sqrt(nbInstancesPerChunk);
 	for (int i = 0; i < nbInstancesPerChunk; i++)
@@ -24,13 +28,15 @@ GrassChunkComponent::GrassChunkComponent(const int& size, const int& chunkSize, 
 		positions.push_back(0.0f);
 		positions.push_back((i / sqrtInstances) * (chunkSize * 1.0 / sqrtInstances) + (std::rand() * 1.0f / (RAND_MAX * chunkSize)));
 	}
-	genLOD1(chunkSize, positions);
-	genLOD2(chunkSize, positions);
+	//Generate geometry for two levels of LOD
+	genLOD1(positions);
+	genLOD2(positions);
 
 	hasGeometry = true;
-	testDir = 2.0f;
 
-	//Level of detail 2
+	shader.use();
+	shader.setVec3("grassColorTop", topGrassColor);
+	shader.setVec3("grassColorBottom", bottomGrassColor);
 }
 
 
@@ -38,11 +44,9 @@ GrassChunkComponent::GrassChunkComponent(const int& size, const int& chunkSize, 
 void GrassChunkComponent::update()
 {
 	GraphicComponent::update();
-	testDir += 0.001f;
-
 }
 
-void GrassChunkComponent::genLOD1(const int& chunkSize, const std::vector<float>& positions)
+void GrassChunkComponent::genLOD1(const std::vector<float>& positions)
 {
 	/*
 				  8
@@ -65,12 +69,6 @@ void GrassChunkComponent::genLOD1(const int& chunkSize, const std::vector<float>
 		X                X
 		X                X
 		X  0             X   1
-
-
-
-		We give Grass Color with two colors and mix between bottom and top from UV position
-
-		TODO: Set U position in UV
 	*/
 	std::vector<float> vertices = {
 		//POSTION				UV				NORMAL
@@ -129,10 +127,10 @@ void GrassChunkComponent::genLOD1(const int& chunkSize, const std::vector<float>
 
 }
 
-void GrassChunkComponent::genLOD2(const int& chunkSize, const std::vector<float>& positions)
+void GrassChunkComponent::genLOD2(const std::vector<float>& positions)
 {
 	/*
-				  4
+				  2
 				XXXX
 			  XXX  XX
 			 XX     XX
@@ -143,8 +141,8 @@ void GrassChunkComponent::genLOD2(const int& chunkSize, const std::vector<float>
 		 XX             X
 		 X              X
 		XX              XX
-		XXXXXXXXXXXXXXXXXX
-		X  2             X  3
+		XX              XX
+		X                X  
 		X                X
 		X                X
 		X                X
@@ -152,25 +150,15 @@ void GrassChunkComponent::genLOD2(const int& chunkSize, const std::vector<float>
 		X                X
 		X                X
 		X  0             X   1
-
-
-
-		We give Grass Color with two colors and mix between bottom and top from UV position
-
-		TODO: Set U position in UV
 	*/
 	std::vector<float> vertices = {
 		//POSTION				UV							
 		0.0f , 0.0f ,	0.0f,	0.0f, 0.0f,		0.37f, 0.0f, 0.93f,
 		0.1f , 0.0f ,	0.0f,	0.0f, 0.0f,		0.37f, 0.0f, 0.93f,
-		//0.0f, 0.5f,	0.0f,	0.0f, 0.47f,	0.37f, 0.0f, 0.93f,
-		//0.1f, 0.5f,	0.0f,	0.0f, 0.47f,	0.37f, 0.0f, 0.93f,
 		0.05f, 1.06f,	0.0f,	0.0f, 1.0f,		0.0f, 0.0f, 1.0f,
 	};
 	std::vector<int> indices = {
 		2, 3, 1,
-		//1, 0, 2,
-		//4, 3, 2,
 	};
 
 	// Level of detail 1
@@ -220,22 +208,18 @@ void GrassChunkComponent::draw() const
 	}
 	if (hasGeometry)
 	{
-		//float test = glm::dot(sne::SceneManager::getInstance()->getCurrentScene().getCamera().getFront(), glm::vec3(0.0f, 0.0f, 1.0f));
-		//std::cout << 1.0f  - std::abs(test)<< std::endl;
 		const sne::Scene* currentScene = sne::SceneManager::getInstance()->getCurrentScene();
 
+		//Set Uniforms 
 		shader.use();
 		shader.setVec3("windDir", { cos(0.7),0.0f, sin(0.7) });
 		shader.setVec3("sun", glm::normalize(currentScene->getDirectionnalLight()));
 		shader.setFloat("time", Time::getTimeSinceStart());
-		shader.setVec3("grassColorTop", topGrassColor);
-		shader.setVec3("grassColorBottom", bottomGrassColor);
-		//std::cout << Time::getTimeSinceStart() << std::endl;
-		shader.setVec3("camViewDir", sne::SceneManager::getInstance()->getCurrentScene()->getCamera().getFront());
-		shader.setMat4("view", sne::SceneManager::getInstance()->getCurrentScene()->getView());
+		shader.setVec3("camViewDir", currentScene->getCamera().getFront());
+		shader.setMat4("view", currentScene->getView());
 		shader.setMat4("model", parent->getModel());
 
-		glm::vec3 camPosition = sne::SceneManager::getInstance()->getCurrentScene()->getCamera().getPosition();
+		glm::vec3 camPosition = currentScene->getCamera().getPosition();
 
 		//Creating bounding box
 		glm::vec4 p00Bottom{ 0.0f, 0.0f, 0.0f, 1.0f };
@@ -253,9 +237,12 @@ void GrassChunkComponent::draw() const
 		{
 			shader.setVec3("offset", chunk);
 			float dist = glm::distance(chunk, camPosition);
+
 			if (isChunkInsideFrustum(chunk))
 			{
+
 				nbRendered++;
+				// Select LOD 1 if distance of chunk inferior to the set Treshold
 				if (dist < LODTreshold)
 				{
 					glBindVertexArray(VAO);
@@ -270,7 +257,6 @@ void GrassChunkComponent::draw() const
 				}
 			}
 		}
-		//std::cout << "Nbrendered " << nbRendered << std::endl;
 	}
 }
 

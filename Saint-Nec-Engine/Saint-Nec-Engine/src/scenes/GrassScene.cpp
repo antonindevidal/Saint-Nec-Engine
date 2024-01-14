@@ -37,8 +37,8 @@ void GrassScene::load()
 		sne::GameObject* grassBlade = new sne::GameObject();
 		grassBlade->setName("grass blade");
 		addGameObject(grassBlade);
-		grassBlade->addComponent(new GrassChunkComponent(400, 10, 18750, "resources/shaders/grassShader/grass.vert", "resources/shaders/grassShader/grass.frag"));
-		grassBlade->translate({ -200.0f,0.0f,-200.0f });
+		grassBlade->addComponent(new GrassChunkComponent(100, 10, 1000, "resources/shaders/grassShader/grass.vert", "resources/shaders/grassShader/grass.frag"));
+		grassBlade->translate({ -50.0f,0.0f,-50.0f });
 	}
 	
 	/*
