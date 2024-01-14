@@ -11,6 +11,12 @@ Game::Game(): sceneManager(sne::SceneManager::getInstance())
 	sceneManager->addScene(terrainScene);
 	//sceneManager->changeScene(terrainScene->getName());
 
+	GrassScene* grassScene = new GrassScene();
+	grassScene->setName("GrassScene");
+	sceneManager->addScene(grassScene);
+
+	sceneManager->changeScene(grassScene->getName());
+
 	PhysicScene* physicScene = new PhysicScene{};
 	physicScene->setName("PhysicScene");
 	sceneManager->addScene(physicScene);
@@ -24,7 +30,7 @@ Game::Game(): sceneManager(sne::SceneManager::getInstance())
 	MouvementCoordination* mouvementCoordination = new MouvementCoordination{};
 	mouvementCoordination->setName("mouvementCoordination");
 	sceneManager->addScene(mouvementCoordination);
-	sceneManager->changeScene(mouvementCoordination->getName());
+	sceneManager->changeScene(grassScene->getName());
 }
 
 Game::~Game()
@@ -45,5 +51,5 @@ void Game::draw() const
 {
 	sceneManager->draw();
 
-	UiHelper::WindowSceneManagerTree(sne::SceneManager::getInstance());
+	UiHelper::WindowSceneTree(sne::SceneManager::getInstance());
 }
