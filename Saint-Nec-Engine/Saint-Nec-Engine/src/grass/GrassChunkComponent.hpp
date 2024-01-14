@@ -1,7 +1,7 @@
 #pragma once
 /**
  * @file GrassChunkComponent.hpp
- * @brief Manage grass field with chunk frustum cullin and LOD.
+ * @brief Manage grass field with instancing, chunk, frustum cullin and LOD.
  * @author Abdeljalil ZOGHLAMI, Antonin DEVIDAL.
  * @date january 14th 2024.
  *
