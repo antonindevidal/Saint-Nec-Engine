@@ -16,7 +16,7 @@
 #include "SAT.hpp"
 #include "util.hpp"
 
-namespace sne::saintNecPhysics
+namespace sne::physics
 {
     /**
      * @class BoxCollider
@@ -54,6 +54,13 @@ namespace sne::saintNecPhysics
         const glm::vec3 &operator[](int i) const;
 
         /**
+         * @brief Set the Center object and update _points
+         * 
+         * @param v 
+         */
+        void setCenter(const glm::vec3 &v) override;
+
+        /**
          * @brief tell if this object contains a point approximatively close to p
          *
          * @param p point to search
@@ -72,7 +79,7 @@ namespace sne::saintNecPhysics
 
         /**
          * @brief Set the Rotation object and update points
-         *
+         * angles must be passed as Radians
          * @param rotation
          */
         void setRotation(const glm::vec3 rotation);
@@ -105,6 +112,8 @@ namespace sne::saintNecPhysics
         bool intersection(const Collider *, const glm::vec3 &axis) const override;
         bool intersection(const SphereCollider &, const glm::vec3 &axis) const override;
         bool intersection(const BoxCollider &, const glm::vec3 &axis) const override;
+
+        float getMin(const glm::vec3 &axis) const override;
     };
 
     std::ostream &operator<<(std::ostream &oss, const BoxCollider &b);

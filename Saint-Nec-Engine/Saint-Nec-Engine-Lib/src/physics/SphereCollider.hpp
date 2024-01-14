@@ -13,7 +13,7 @@
 #include "SAT.hpp"
 #include "util.hpp"
 
-namespace sne::saintNecPhysics
+namespace sne::physics
 {
     /**
      * @class SphereCollider
@@ -49,5 +49,6 @@ namespace sne::saintNecPhysics
         bool intersection(const Collider *, const glm::vec3 &axis) const override;
         bool intersection(const SphereCollider &, const glm::vec3 &axis) const override;
         bool intersection(const BoxCollider &, const glm::vec3 &axis) const override;
+        float getMin(const glm::vec3 &axis) const override;
     };
 }

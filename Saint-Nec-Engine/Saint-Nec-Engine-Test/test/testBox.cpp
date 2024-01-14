@@ -1,4 +1,5 @@
 // Entetes //---------------------------------------------------------------------------------------
+#define _USE_MATH_DEFINES
 #include <iostream>
 #include <catch.hpp>
 #include <cmath>
@@ -10,7 +11,7 @@
 
 // Tests //-----------------------------------------------------------------------------------------
 using namespace sne;
-using namespace saintNecPhysics;
+using namespace physics;
 
 //--------------------------------------------------------------------------------------------------
 TEST_CASE("TEST BOXCOLLIDER CONSTRUCTORS")
@@ -96,8 +97,7 @@ TEST_CASE("TEST ROTATION 1 - center origin")
     CHECK(cube.hasPoint(cube_points_after_rotation[7], 1E-3) == true);
 
     cube.setRotation({0, M_PI / 4, 0});
-
-    std::cout << cube << "\n";
+    
     cube_points_after_rotation = {
         glm::vec3{-1.41421, -1, 0},
         glm::vec3{1.41421, -1, 0},

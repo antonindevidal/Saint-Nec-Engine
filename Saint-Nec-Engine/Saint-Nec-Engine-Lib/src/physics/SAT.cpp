@@ -1,6 +1,6 @@
 #include "SAT.hpp"
 
-namespace sne::saintNecPhysics
+namespace sne::physics
 {
 
     std::vector<glm::vec3> operator+(const std::vector<glm::vec3> v1, const std::vector<glm::vec3> v2)

@@ -1,4 +1,3 @@
-
 #include <architecture/SceneManager.hpp>
 #include <architecture/GameObject.hpp>
 #include <graphics/Cube.hpp>
@@ -7,6 +6,9 @@
 #include "scenes/FirstScene.hpp"
 #include "scenes/GrassScene.hpp"
 #include "terrain/TerrainScene.hpp"
+#include "scenes/PhysicScene.hpp"
+#include "scenes/PhysicScene2.hpp"
+#include "scenes/MouvementCoordination.hpp"
 
 
 class Game

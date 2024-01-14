@@ -1,7 +1,8 @@
 #include "PhysicObject.hpp"
 
-namespace sne::saintNecPhysics
+namespace sne::physics
 {
+    Time *PhysicObject::time = Time::getInstance();
     PhysicObject::PhysicObject(float mass) : PhysicObject({0, 0, 0}, mass)
     {
     }
@@ -14,9 +15,8 @@ namespace sne::saintNecPhysics
 
     PhysicObject::~PhysicObject()
     {
-        // to update with std::move before
-        // if(_collider != nullptr)
-        //     delete _collider;
+        if (_collider != nullptr)
+            delete _collider;
     }
 
     const glm::vec3 &PhysicObject::getAcceleration() const
@@ -49,24 +49,29 @@ namespace sne::saintNecPhysics
         return _mass;
     }
 
-    const Collider * PhysicObject::getCollider() const
+    const Collider *PhysicObject::getCollider() const
     {
         return _collider;
     }
 
     void PhysicObject::setAcceleration(const glm::vec3 &a)
     {
-        _acceleration = a;
+        if (!isFix)
+            _acceleration = a;
     }
 
     void PhysicObject::setVelocity(const glm::vec3 &v)
     {
-        _velocity = v;
+        if (!isFix)
+            _velocity = v;
     }
 
     void PhysicObject::setPosition(const glm::vec3 &p)
     {
         _position = p;
+
+        if (_collider)
+            _collider->setCenter(_position);
     }
 
     void PhysicObject::setRotation(const glm::vec3 &r)
@@ -91,16 +96,19 @@ namespace sne::saintNecPhysics
 
     void PhysicObject::compute(float dt)
     {
-        _position += _velocity * dt + ((float)0.5) * _acceleration * dt * dt;
+        auto tmp = _velocity * dt + ((float)0.5) * _acceleration * dt * dt;
+        if (parent)
+            parent->translate(tmp);
+        _position += tmp;
         _velocity += _acceleration * dt;
 
         if (_collider)
             _collider->setCenter(_position);
     }
 
-    void PhysicObject::update() // to remove it would be bad use of getdelta?
+    void PhysicObject::update()
     {
-        compute(1 / FPS);
+        compute(time->getDeltaTime());
     }
 
     void PhysicObject::computeCollide(PhysicObject &obj)
@@ -110,12 +118,12 @@ namespace sne::saintNecPhysics
 
         try
         {
-            if (!_collider->collide(obj._collider))
+            if ((isFix && obj.isFix) || !_collider->collide(obj._collider) || (!isFix && hasBeenUpdated) || (!obj.isFix && obj.hasBeenUpdated))
                 return;
         }
         catch (const SATIllegalUseException &e)
         {
-            if(parent == nullptr)
+            if (parent == nullptr)
                 std::cout << " ";
             else
                 std::cout << e.what() << " " << parent->getName() << "\n";
@@ -128,14 +136,20 @@ namespace sne::saintNecPhysics
 
         if (obj.isFix)
         {
-            // We don't need to test this.isFix bc we won't use it
+            glm::vec3 axis = _position - obj._position; // To update with impact point
+            setVelocity(norm(_velocity) * _amortissement * axis);
+        }
+        else if (isFix)
+        {
             glm::vec3 axis = obj._position - _position; // To update with impact point
-            _velocity = norm(_velocity) * _amortissement * axis;
+            obj.setVelocity(norm(obj._velocity) * obj._amortissement * axis);
         }
         else
         {
             addImpulsion(*this, obj);
         }
+        obj.hasBeenUpdated = true;
+        hasBeenUpdated = true;
     }
 
     void addImpulsion(PhysicObject &o1, PhysicObject &o2)
@@ -146,14 +160,24 @@ namespace sne::saintNecPhysics
               m1 = o1.getMass(),
               m2 = o2.getMass();
 
-        v1 = (m1 - m2) / (m1 + m2) * v1 + 2 * m2 * v2 / (m1 + m2);
-        v2 = 2 * m1 * v1 / (m1 + m2) - (m1 - m2) / (m1 + m2) * v2;
+        float newv1 = (m1 - m2) / (m1 + m2) * v1 + 2 * m2 * v2 / (m1 + m2),
+              newv2 = 2 * m1 * v1 / (m1 + m2) - (m1 - m2) / (m1 + m2) * v2;
 
         // Vector orientation
         // Considering line between 2 centers
         // TO UPDATE: considering plan where we touch the other and calcul with normal and angle ?
-        glm::vec3 direction = o1.getPosition() - o2.getPosition();
-        o1.setVelocity(-direction * v1);
-        o2.setVelocity(direction * v2);
+
+        glm::vec3 direction = o2.getPosition() - o1.getPosition();
+        // std::cout << "ancienne vitesse pour o1" << o1.getVelocity() << "\n";
+        // std::cout << "ancienne vitesse pour o2" << o2.getVelocity() << "\n";
+        o1.setVelocity(-direction * newv1);
+        o2.setVelocity(direction * newv2);
+        // std::cout << "nouvelle vitesse pour o1" << o1.getVelocity() << "\n";
+        // std::cout << "nouvelle vitesse pour o2" << o2.getVelocity() << "\n";
+        // std::cout << "direction: " << direction << "\n";
+        // std::cout << "v1: " << v1 << "\n";
+        // std::cout << "v2: " << v2 << "\n";
+        // std::cout << "v1: " << newv1 << "\n";
+        // std::cout << "v2: " << newv2 << "\n";
     }
 }
