@@ -133,4 +133,19 @@ namespace sne::physics
 
         return min;
     }
+
+    glm::vec3 BoxCollider::getNormal(const Collider *c) const
+    {
+        return c->getNormal(*this);
+    }
+    
+    glm::vec3 BoxCollider::getNormal(const SphereCollider &c) const
+    {
+        return collisionNormal(*this, c);
+    }
+    
+    glm::vec3 BoxCollider::getNormal(const BoxCollider &c) const
+    {
+        return collisionNormal(*this, c);
+    }
 }

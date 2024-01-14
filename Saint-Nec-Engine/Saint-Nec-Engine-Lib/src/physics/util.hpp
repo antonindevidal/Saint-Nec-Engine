@@ -72,6 +72,9 @@ namespace sne::physics
      *
      * @return glm::vec3 representing the axis (normal)
      */
-    glm::vec3 getNormal(const BoxCollider& boxe1, const BoxCollider& boxe2);
+    glm::vec3 collisionNormal(const BoxCollider& boxe1, const BoxCollider& boxe2);
+    glm::vec3 collisionNormal(const BoxCollider& boxe, const SphereCollider& sphere);
+    glm::vec3 collisionNormal(const SphereCollider& sphere, const BoxCollider& boxe);
+    glm::vec3 collisionNormal(const SphereCollider& sphere1, const SphereCollider& sphere2);
 
 }

@@ -21,10 +21,10 @@ Game::Game(): sceneManager(sne::SceneManager::getInstance())
 	sceneManager->addScene(physicScene2);
 	sceneManager->changeScene(physicScene2->getName());
 	
-	MouvementCoordination* mouvementCoordination = new MouvementCoordination{};
-	mouvementCoordination->setName("mouvementCoordination");
-	sceneManager->addScene(mouvementCoordination);
-	sceneManager->changeScene(mouvementCoordination->getName());
+	// MouvementCoordination* mouvementCoordination = new MouvementCoordination{};
+	// mouvementCoordination->setName("mouvementCoordination");
+	// sceneManager->addScene(mouvementCoordination);
+	// sceneManager->changeScene(mouvementCoordination->getName());
 }
 
 Game::~Game()

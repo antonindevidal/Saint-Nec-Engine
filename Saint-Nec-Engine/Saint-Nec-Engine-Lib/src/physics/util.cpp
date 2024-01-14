@@ -71,7 +71,7 @@ namespace sne::physics
         return intersect(sphere, boxe, axis);
     }
 
-    std::vector<Minkowski> minkowskiDifference(const BoxCollider& boxe1, const BoxCollider& boxe2)
+    std::vector<Minkowski> minkowskiDifference(const BoxCollider &boxe1, const BoxCollider &boxe2)
     {
         std::vector<Minkowski> v;
 
@@ -83,28 +83,76 @@ namespace sne::physics
             }
         }
 
-        std::sort(v.begin(), v.end(), [](const Minkowski& p1, const Minkowski& p2)
-            {
-                return p1.getDistance() < p2.getDistance();
-            });
-        
+        std::sort(v.begin(), v.end(), [](const Minkowski &p1, const Minkowski &p2)
+                  { return p1.getDistance() < p2.getDistance(); });
+
         return v;
     }
 
+    std::vector<Minkowski> minkowskiDifference(const BoxCollider &boxe, const SphereCollider &sphere)
+    {
+        std::vector<Minkowski> v;
 
-    glm::vec3 getNormal(const BoxCollider& boxeA, const BoxCollider& boxeB)
+        for (int i = 0; i < boxe.getNbPoints(); i++)
+        {
+            v.push_back(Minkowski{boxe[i], sphere.getCenter()});
+        }
+
+        std::sort(v.begin(), v.end(), [](const Minkowski &p1, const Minkowski &p2)
+                  { return p1.getDistance() < p2.getDistance(); });
+
+        return v;
+    }
+
+    glm::vec3 collisionNormal(const BoxCollider &boxeA, const BoxCollider &boxeB)
     {
         std::vector<Minkowski> v = minkowskiDifference(boxeA, boxeB);
         glm::vec3 pointA1 = v[0].getPointA(),
-            pointA2 = v[1].getPointA(),
-            pointA3 = v[2].getPointA(),
-            pointA4 = v[3].getPointA();
+                  pointA2 = v[1].getPointA(),
+                  pointA3 = v[2].getPointA(),
+                  pointA4 = v[3].getPointA();
 
         // Get directions
         glm::vec3 axis1 = pointA2 - pointA1,
-            axis2 = pointA3 - pointA1,
-            axis3 = pointA4 - pointA1;
+                  axis2 = pointA3 - pointA1,
+                  axis3 = pointA4 - pointA1;
 
+        // Normalize
+        axis1 = (norm(axis1) == 0) ? axis1 : axis1/norm(axis1);
+        axis2 = (norm(axis2) == 0) ? axis2 : axis2/norm(axis2);
+        axis3 = (norm(axis3) == 0) ? axis3 : axis3/norm(axis3);
+
+        std::cout<< "LAaaaaaaaaaaa\n";
+        std::cout << " axis 1:" << axis1 << "\n";
+        std::cout << " axis 1:" << axis2 << "\n";
+        std::cout << " axis 1:" << axis3 << "\n";
+        std::cout << " point3 1:" << pointA1 << "\n";
+        std::cout << " point3 1:" << pointA2 << "\n";
+        std::cout << " point3 1:" << pointA3 << "\n";
+        std::cout << " point3 1:" << pointA4 << "\n";
+        // Get opposite direction
+        return axis1 + axis2 + axis3;
+
+        // TO UPDATE, 2 axis for each ?
+        /*glm::vec3 pointB1 = v[0].getPointB(),
+            pointB2 = v[1].getPointB(),
+            pointB3 = v[2].getPointB(),
+            pointB4 = v[3].getPointB();*/
+    }
+
+    glm::vec3 collisionNormal(const BoxCollider &boxe, const SphereCollider &sphere)
+    {
+        std::vector<Minkowski> v = minkowskiDifference(boxe, sphere);
+        glm::vec3 pointA1 = v[0].getPointA(),
+                  pointA2 = v[1].getPointA(),
+                  pointA3 = v[2].getPointA(),
+                  pointA4 = v[3].getPointA();
+        
+        // Get directions
+        glm::vec3 axis1 = pointA2 - pointA1,
+                  axis2 = pointA3 - pointA1,
+                  axis3 = pointA4 - pointA1;
+                  
         // Normalize
         axis1 /= norm(axis1);
         axis2 /= norm(axis2);
@@ -112,11 +160,15 @@ namespace sne::physics
 
         // Get opposite direction
         return axis1 + axis2 + axis3;
-        
-        // TO UPDATE, 2 axis for each ?
-        /*glm::vec3 pointB1 = v[0].getPointB(),
-            pointB2 = v[1].getPointB(),
-            pointB3 = v[2].getPointB(),
-            pointB4 = v[3].getPointB();*/
+    }
+
+    glm::vec3 collisionNormal(const SphereCollider &sphere, const BoxCollider &boxe)
+    {
+        return collisionNormal(boxe, sphere);
+    }
+
+    glm::vec3 collisionNormal(const SphereCollider &sphere1, const SphereCollider &sphere2)
+    {
+        return sphere2.getCenter() - sphere1.getCenter();
     }
 }
