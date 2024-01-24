@@ -15,6 +15,7 @@
 #include "Collider.hpp"
 #include "SAT.hpp"
 #include "util.hpp"
+#include <array>
 
 namespace sne::physics
 {
@@ -25,7 +26,7 @@ namespace sne::physics
     class BoxCollider : public Collider
     {
     private:
-        glm::vec3 _points[8];         // TO UPDATE
+        std::array<glm::vec3, 8> _points;
         glm::vec3 _rotation{0, 0, 0}; // Radian
 
     public:
