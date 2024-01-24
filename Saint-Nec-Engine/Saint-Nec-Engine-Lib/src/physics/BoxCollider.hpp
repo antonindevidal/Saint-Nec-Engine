@@ -44,7 +44,7 @@ namespace sne::physics
          * @brief Destroy the Box Collider object
          *
          */
-        ~BoxCollider() = default;
+        ~BoxCollider() override = default;
 
         /**
          * @brief access to point number i

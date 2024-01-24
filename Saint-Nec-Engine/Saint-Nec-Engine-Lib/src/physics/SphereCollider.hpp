@@ -26,7 +26,7 @@ namespace sne::physics
 
     public:
         SphereCollider(glm::vec3 center, double radius);
-        ~SphereCollider() = default;
+        ~SphereCollider() override = default;
 
         /**
          * @brief Get the Radius object
