@@ -43,7 +43,7 @@ namespace sne::physics
 
     int BoxCollider::getNbPoints() const
     {
-        return 8;
+        return _points.size();
     }
 
     void BoxCollider::setRotation(const glm::vec3 rotation)
@@ -54,7 +54,7 @@ namespace sne::physics
 
         // Rotate
         const glm::mat3 R = buildRotationMatrix(delta_rot[0], delta_rot[1], delta_rot[2]);
-        for (int i = 0; i < 8; i++)
+        for (int i = 0; i < _points.size(); i++)
             rotate(R, _points[i], _center);
 
         // Update new rotation
@@ -125,7 +125,7 @@ namespace sne::physics
     float BoxCollider::getMin(const glm::vec3 &axis) const
     {
         float min = dot(axis, _points[0]);
-        for(unsigned i=1; i<8; i++)
+        for(unsigned i=1; i<_points.size(); i++)
         {
             float v = dot(axis, _points[i]);
             min = (v<min)? v : min;
