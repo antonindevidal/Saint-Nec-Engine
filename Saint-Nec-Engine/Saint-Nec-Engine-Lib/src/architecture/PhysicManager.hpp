@@ -92,7 +92,7 @@ namespace sne
 
 		physics::PhysicObject *getLast()
 		{
-			if (_objects.size() == 0)
+			if (_objects.empty())
 				return nullptr;
 
 			return _objects[_objects.size() - 1];

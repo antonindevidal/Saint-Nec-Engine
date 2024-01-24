@@ -44,7 +44,7 @@ namespace sne::physics
     {
         std::vector<std::pair<PhysicObject *, PhysicObject *>> pairs;
 
-        if (v.size() == 0)
+        if (v.empty())
             return pairs;
 
         std::sort(v.begin(), v.end(), SortFoncteur());
