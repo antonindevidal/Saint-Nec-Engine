@@ -13,7 +13,6 @@
 #include <set>
 #include <algorithm>
 #include "../physics/PhysicObject.hpp"
-#include "../physics/algorithms.hpp"
 
 namespace sne
 {

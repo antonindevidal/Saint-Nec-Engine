@@ -1,4 +1,11 @@
 #include "Game.hpp"
+#include "ui_helper/UiHelper.hpp"
+#include "scenes/FirstScene.hpp"
+#include "scenes/GrassScene.hpp"
+#include "terrain/TerrainScene.hpp"
+#include "scenes/PhysicScene.hpp"
+#include "scenes/PhysicScene2.hpp"
+#include "scenes/MouvementCoordination.hpp"
 
 Game::Game(): sceneManager(sne::SceneManager::getInstance())
 {

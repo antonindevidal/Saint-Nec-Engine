@@ -15,9 +15,6 @@
 #include <architecture/GameObject.hpp>
 #include <architecture/Time.hpp>
 #include "Collider.hpp"
-#include "SphereCollider.hpp"
-#include "BoxCollider.hpp"
-#include "SAT.hpp"
 
 
 namespace sne::physics

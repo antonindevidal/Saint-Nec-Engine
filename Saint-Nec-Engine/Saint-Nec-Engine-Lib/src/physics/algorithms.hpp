@@ -11,9 +11,6 @@
 #include <glm/gtc/type_ptr.hpp>
 #include <architecture/util.hpp>
 #include <algorithm>
-#include "util.hpp"
-#include "BoxCollider.hpp"
-#include "SphereCollider.hpp"
 #include <utility>
 #include "PhysicObject.hpp"
 

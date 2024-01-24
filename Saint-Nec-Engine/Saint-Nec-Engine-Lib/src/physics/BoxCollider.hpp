@@ -13,8 +13,6 @@
 #include <glm/gtc/type_ptr.hpp>
 #include <architecture/util.hpp>
 #include "Collider.hpp"
-#include "SAT.hpp"
-#include "util.hpp"
 #include <array>
 
 namespace sne::physics

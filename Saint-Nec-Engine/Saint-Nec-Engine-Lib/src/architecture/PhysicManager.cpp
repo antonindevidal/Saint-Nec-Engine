@@ -1,4 +1,5 @@
 #include "PhysicManager.hpp"
+#include "../physics/algorithms.hpp"
 
 namespace sne
 {

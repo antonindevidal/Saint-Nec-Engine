@@ -6,6 +6,8 @@
 #include <glm/glm.hpp>
 #include <glm/gtc/type_ptr.hpp>
 #include <physics/PhysicObject.hpp>
+#include <physics/SphereCollider.hpp>
+#include <physics/BoxCollider.hpp>
 #include <architecture/util.hpp>
 #include "logFile.hpp"
 
