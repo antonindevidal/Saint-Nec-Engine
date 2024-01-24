@@ -47,7 +47,7 @@ namespace sne::physics
         if (v.empty())
             return pairs;
 
-        std::sort(v.begin(), v.end(), SortFoncteur());
+        std::sort(std::begin(v), std::end(v), SortFoncteur());
 
         glm::vec3 axis{1, 0, 0};
         std::vector<PhysicObject *> curr;
@@ -61,9 +61,9 @@ namespace sne::physics
             }
             else
             {
-                auto it = curr.begin();
-                while (it != curr.end() && !(*it)->getCollider()->intersection(v[i]->getCollider(), axis)) it++;
-                curr.erase(curr.begin(), it);
+                auto it = std::begin(curr);
+                while (it != std::end(curr) && !(*it)->getCollider()->intersection(v[i]->getCollider(), axis)) it++;
+                curr.erase(std::begin(curr), it);
 
                 for(PhysicObject *it : curr)
                     pairs.emplace_back(v[i], it);
