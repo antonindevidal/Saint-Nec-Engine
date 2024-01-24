@@ -65,12 +65,8 @@ namespace sne::physics
                 while (it != curr.end() && !(*it)->getCollider()->intersection(v[i]->getCollider(), axis)) it++;
                 curr.erase(curr.begin(), it);
 
-                it = curr.begin();
-                while(it != curr.end())
-                { 
-                    pairs.push_back(std::make_pair(v[i], (*it)));
-                    ++it;
-                }
+                for(PhysicObject *it : curr)
+                    pairs.emplace_back(v[i], it);
 
                 curr.push_back(v[i]);
             }
