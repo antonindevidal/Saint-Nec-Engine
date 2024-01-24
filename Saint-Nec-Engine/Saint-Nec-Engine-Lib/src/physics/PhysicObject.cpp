@@ -15,8 +15,7 @@ namespace sne::physics
 
     PhysicObject::~PhysicObject()
     {
-        if (_collider != nullptr)
-            delete _collider;
+        delete _collider;
     }
 
     const glm::vec3 &PhysicObject::getAcceleration() const
