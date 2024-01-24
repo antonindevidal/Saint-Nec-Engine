@@ -41,8 +41,6 @@ namespace sne::physics
         // To update with inheritence
         bool isFix = false;
 
-        static Time* time; 
-
     public:
         bool hasBeenUpdated = false;
         

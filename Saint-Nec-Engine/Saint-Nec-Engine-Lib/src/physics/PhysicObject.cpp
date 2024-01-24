@@ -3,7 +3,6 @@
 
 namespace sne::physics
 {
-    Time *PhysicObject::time = Time::getInstance();
     PhysicObject::PhysicObject(float mass) : PhysicObject({0, 0, 0}, mass)
     {
     }
@@ -108,7 +107,7 @@ namespace sne::physics
 
     void PhysicObject::update()
     {
-        compute(time->getDeltaTime());
+        compute(Time::getDeltaTime());
     }
 
     void PhysicObject::computeCollide(PhysicObject &obj)
