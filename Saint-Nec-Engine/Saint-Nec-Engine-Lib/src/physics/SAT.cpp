@@ -3,15 +3,12 @@
 namespace sne::physics
 {
 
-    std::vector<glm::vec3> operator+(const std::vector<glm::vec3> v1, const std::vector<glm::vec3> v2)
+    std::vector<glm::vec3> operator+(std::vector<glm::vec3> v1, const std::vector<glm::vec3> &v2)
     {
-        std::vector<glm::vec3> v = v1;
         for (auto elt : v2)
-        {
-            v.push_back(elt);
-        }
-
-        return v;
+            v1.push_back(elt);
+        
+        return v1;
     }
 
     bool hasSATCollision(const BoxCollider &boxe1, const BoxCollider &boxe2)

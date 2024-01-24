@@ -36,7 +36,7 @@ namespace sne::physics
      * @param v2
      * @return std::vector<glm::vec3>
      */
-    std::vector<glm::vec3> operator+(const std::vector<glm::vec3> v1, const std::vector<glm::vec3> v2);
+    std::vector<glm::vec3> operator+(std::vector<glm::vec3> v1, const std::vector<glm::vec3> &v2);
 
     /**
      * @brief detect collision relating to Separate Axis Theorem algorithm
