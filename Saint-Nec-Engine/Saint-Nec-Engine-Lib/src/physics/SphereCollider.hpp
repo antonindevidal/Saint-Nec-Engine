@@ -26,6 +26,10 @@ namespace sne::physics
 
     public:
         SphereCollider(glm::vec3 center, double radius);
+        /**
+         * @brief Destroy the Sphere Collider object
+         * 
+         */
         ~SphereCollider() override = default;
 
         /**
