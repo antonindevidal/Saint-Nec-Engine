@@ -51,7 +51,7 @@ namespace sne::physics
     template <typename ColliderType1, typename ColliderType2>
     bool hasSATCollision(const ColliderType1 &, const ColliderType2 &)
     {
-        throw new SATIllegalUseException();
+        throw SATIllegalUseException();
     }
 
     bool hasSATCollision(const BoxCollider &boxe1, const BoxCollider &boxe2);
