@@ -36,10 +36,6 @@ namespace sne::physics
      * @return std::vector<std::pair<PhysicObject*, PhysicObject*>>
      */
     template <typename SortFoncteur = SortAxisOnCenter>
-    std::vector<std::pair<PhysicObject *, PhysicObject *>> sweepAndPrune(std::vector<PhysicObject *> &);
-
-
-    template <typename SortFoncteur>
     std::vector<std::pair<PhysicObject *, PhysicObject *>> sweepAndPrune(std::vector<PhysicObject *> &v)
     {
         std::vector<std::pair<PhysicObject *, PhysicObject *>> pairs;
@@ -65,8 +61,8 @@ namespace sne::physics
                 while (it != std::end(curr) && !(*it)->getCollider()->intersection(v[i]->getCollider(), axis)) it++;
                 curr.erase(std::begin(curr), it);
 
-                for(PhysicObject *it : curr)
-                    pairs.emplace_back(v[i], it);
+                for(PhysicObject *elt : curr)
+                    pairs.emplace_back(v[i], elt);
 
                 curr.push_back(v[i]);
             }
