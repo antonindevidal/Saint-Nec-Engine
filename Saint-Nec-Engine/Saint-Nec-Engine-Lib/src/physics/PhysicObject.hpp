@@ -42,7 +42,6 @@ namespace sne::physics
         unsigned int _collideCounter = 0;
 
     public:
-
         /**
          * @brief Construct a new PhysicObject object positionned on origin
          *

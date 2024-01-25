@@ -113,6 +113,7 @@ namespace sne::physics
         bool intersection(const BoxCollider &, const glm::vec3 &axis) const override;
 
         float getMin(const glm::vec3 &axis) const override;
+        float getMax(const glm::vec3 &axis) const override;
     };
 
     std::ostream &operator<<(std::ostream &oss, const BoxCollider &b);

@@ -49,4 +49,9 @@ namespace sne::physics
     {
         return dot(axis, _center) - _radius;
     }
+
+    float SphereCollider::getMax(const glm::vec3 &axis) const
+    {
+        return dot(axis, _center) + _radius;
+    }
 }

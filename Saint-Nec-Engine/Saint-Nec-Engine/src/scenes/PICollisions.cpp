@@ -20,8 +20,8 @@ void PICollisions::load()
 	wall->setName("Wall");
 	addGameObject(wall);
 
-	sne::GameObject *cube = createCube(_physicManager, center2, blue);
-	cube->setName("cube");
+	sne::GameObject *cube = createCube(_physicManager, center2, red);
+	cube->setName("cube1");
 	auto *cubePO = _physicManager.getLast();
 	cubePO->setAcceleration({0, 0, 0});
 	addGameObject(cube);
@@ -34,33 +34,33 @@ void PICollisions::load()
 
 	cubePO->setMass(1.f);
 	bigCubePO->setMass(1.f);
-	bigCubePO->setVelocity({-1, 0, 0});
+	bigCubePO->setVelocity({-10, 0, 0});
 
 
 	// Mass * 100
-	glm::vec3 center100{-10, 0, 10};
-	glm::vec3 center100_2{0, 0, 10};
-	glm::vec3 center100_3{10, 0, 10};
+	glm::vec3 center2_1{-10, 0, 10};
+	glm::vec3 center2_2{0, 0, 10};
+	glm::vec3 center2_3{10, 0, 10};
 
-	sne::GameObject *wall100 = createCube(_physicManager, center100, purple, true);
-	wall100->setName("Wall100");
-	addGameObject(wall100);
+	sne::GameObject *wall2 = createCube(_physicManager, center2_1, purple, true);
+	wall2->setName("Wall2");
+	addGameObject(wall2);
 
-	sne::GameObject *cube100 = createCube(_physicManager, center100_2, purple);
-	cube100->setName("cube100");
-	auto *cubePO100 = _physicManager.getLast();
-	cubePO100->setAcceleration({0, 0, 0});
-	addGameObject(cube100);
+	sne::GameObject *cube2 = createCube(_physicManager, center2_2, red);
+	cube2->setName("cube2");
+	auto *cubePO2 = _physicManager.getLast();
+	cubePO2->setAcceleration({0, 0, 0});
+	addGameObject(cube2);
 
-	sne::GameObject *bigCube100 = createCube(_physicManager, center100_3, purple);
-	bigCube100->setName("bigCube100");
-	auto *bigCubePO100 = _physicManager.getLast();
-	bigCubePO100->setAcceleration({0, 0, 0});
-	addGameObject(bigCube100);
+	sne::GameObject *bigCube2 = createCube(_physicManager, center2_3, purple);
+	bigCube2->setName("bigCube2");
+	auto *bigCubePO2 = _physicManager.getLast();
+	bigCubePO2->setAcceleration({0, 0, 0});
+	addGameObject(bigCube2);
 
-	cubePO100->setMass(1.f);
-	bigCubePO100->setMass(100.f);
-	bigCubePO100->setVelocity({-1, 0, 0});
+	cubePO2->setMass(1.f);
+	bigCubePO2->setMass(1000.f);
+	bigCubePO2->setVelocity({-1., 0, 0});
 }
 
 void PICollisions::unload()

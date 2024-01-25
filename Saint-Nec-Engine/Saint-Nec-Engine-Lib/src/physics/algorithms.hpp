@@ -47,7 +47,7 @@ namespace sne::physics
 
         for (unsigned i = 0; i < v.size(); i++)
         {
-            if (curr.size() == 0)
+            if (curr.empty())
             {
                 curr.push_back(v[i]);
             }
