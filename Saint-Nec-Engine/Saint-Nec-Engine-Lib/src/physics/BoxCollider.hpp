@@ -13,8 +13,7 @@
 #include <glm/gtc/type_ptr.hpp>
 #include <architecture/util.hpp>
 #include "Collider.hpp"
-#include "SAT.hpp"
-#include "util.hpp"
+#include <array>
 
 namespace sne::physics
 {
@@ -25,7 +24,7 @@ namespace sne::physics
     class BoxCollider : public Collider
     {
     private:
-        glm::vec3 _points[8];         // TO UPDATE
+        std::array<glm::vec3, 8> _points;
         glm::vec3 _rotation{0, 0, 0}; // Radian
 
     public:
@@ -43,7 +42,7 @@ namespace sne::physics
          * @brief Destroy the Box Collider object
          *
          */
-        ~BoxCollider() = default;
+        ~BoxCollider() override = default;
 
         /**
          * @brief access to point number i

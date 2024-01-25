@@ -1,4 +1,7 @@
 #include "GrassChunkComponent.hpp"
+#include <architecture/Time.hpp>
+#include <architecture/SceneManager.hpp>
+#include <architecture/GameObject.hpp>
 
 const float GrassChunkComponent::LODTreshold = 100.0f;
 

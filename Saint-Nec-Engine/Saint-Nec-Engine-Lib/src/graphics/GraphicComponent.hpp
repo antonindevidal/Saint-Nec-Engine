@@ -14,8 +14,6 @@
 
 #include "Shader.hpp"
 #include "../architecture/Component.hpp"
-#include "../architecture/SceneManager.hpp"
-#include "../architecture/GameObject.hpp"
 
 namespace sne::graphics
 {

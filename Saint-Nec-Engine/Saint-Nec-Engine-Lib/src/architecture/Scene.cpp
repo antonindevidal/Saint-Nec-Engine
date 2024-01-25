@@ -1,4 +1,5 @@
 #include "Scene.hpp"
+#include "Time.hpp"
 
 namespace sne
 {

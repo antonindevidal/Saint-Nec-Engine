@@ -12,10 +12,10 @@ void TerrainScene::load()
 
 	//LOD TERRAIN
 	{
-		sne::GameObject* terrainLOD = new sne::GameObject();
+		auto* terrainLOD = new sne::GameObject();
 		terrainLOD->setName("TerrainLOD");
 		addGameObject(terrainLOD);
-		sne::graphics::TessellatedPlane* planeLOD = new sne::graphics::TessellatedPlane(300, 300, 1, "resources/shaders/terrain/tessellation/tessellation.vert", "resources/shaders/terrain/tessellation/tessellation.frag", "resources/shaders/terrain/tessellation/tessellation.tesc", "resources/shaders/terrain/tessellation/tessellation.tese");
+		auto* planeLOD = new sne::graphics::TessellatedPlane(300, 300, 1, "resources/shaders/terrain/tessellation/tessellation.vert", "resources/shaders/terrain/tessellation/tessellation.frag", "resources/shaders/terrain/tessellation/tessellation.tesc", "resources/shaders/terrain/tessellation/tessellation.tese");
 		glm::vec3 lightDir = glm::vec3(0.0f, 0.8f, 0.3f);
 
 		planeLOD->addTexture("resources/textures/noise.jpg", "heightmap");

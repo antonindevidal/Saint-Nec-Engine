@@ -1,4 +1,7 @@
 #include "MouvementCoordination.hpp"
+#include "../ui_builder/UIBuilder.hpp"
+#include "../Colors.hpp"
+
 
 MouvementCoordination::MouvementCoordination()
 {

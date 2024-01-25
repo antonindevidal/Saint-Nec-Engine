@@ -1,5 +1,5 @@
 #include "Camera.hpp"
-
+#include "Time.hpp"
 
 namespace sne
 {

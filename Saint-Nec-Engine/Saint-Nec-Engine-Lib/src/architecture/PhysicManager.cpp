@@ -1,4 +1,5 @@
 #include "PhysicManager.hpp"
+#include "../physics/algorithms.hpp"
 
 namespace sne
 {
@@ -37,7 +38,7 @@ namespace sne
 
 	void PhysicManager::sortObject()
 	{
-		std::sort(_objects.begin(), _objects.end(), ObjectComparator());
+		std::sort(std::begin(_objects), std::end(_objects), ObjectComparator());
 	}
 
 	const std::vector<physics::PhysicObject*> &PhysicManager::getObjects() const

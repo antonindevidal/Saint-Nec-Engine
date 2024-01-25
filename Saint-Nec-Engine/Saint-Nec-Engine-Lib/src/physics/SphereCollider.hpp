@@ -10,8 +10,6 @@
 #include <glm/glm.hpp>
 #include <glm/gtc/type_ptr.hpp>
 #include "Collider.hpp"
-#include "SAT.hpp"
-#include "util.hpp"
 
 namespace sne::physics
 {
@@ -26,7 +24,11 @@ namespace sne::physics
 
     public:
         SphereCollider(glm::vec3 center, double radius);
-        ~SphereCollider() = default;
+        /**
+         * @brief Destroy the Sphere Collider object
+         * 
+         */
+        ~SphereCollider() override = default;
 
         /**
          * @brief Get the Radius object

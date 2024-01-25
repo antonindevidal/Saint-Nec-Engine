@@ -7,8 +7,6 @@
 #include <graphics/Cube.hpp>
 #include <physics/BoxCollider.hpp>
 #include <physics/PhysicObject.hpp>
-#include "../Colors.hpp"
-#include "../ui_builder/UIBuilder.hpp"
 
 
 class PhysicScene : public sne::Scene {

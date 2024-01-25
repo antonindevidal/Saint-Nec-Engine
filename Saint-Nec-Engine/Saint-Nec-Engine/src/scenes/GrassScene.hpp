@@ -5,8 +5,6 @@
 #include <graphics/Plane.hpp>
 #include <graphics/Skybox.hpp>
 
-#include "../grass/GrassComponent.hpp"
-#include "../grass/GrassChunkComponent.hpp"
 
 class GrassScene : public sne::Scene
 {

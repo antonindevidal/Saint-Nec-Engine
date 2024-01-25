@@ -1,5 +1,7 @@
 #include "GrassComponent.hpp"
-
+#include <architecture/Time.hpp>
+#include <architecture/SceneManager.hpp>
+#include <architecture/GameObject.hpp>
 
 
 GrassComponent::GrassComponent(const int & width, const int & depth, const int nbInstances, const char* vertexShaderPath, const char* fragmentShaderPath)

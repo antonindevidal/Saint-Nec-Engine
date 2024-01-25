@@ -1,4 +1,6 @@
 #include "GrassScene.hpp"
+#include "../grass/GrassComponent.hpp"
+#include "../grass/GrassChunkComponent.hpp"
 
 
 

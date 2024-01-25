@@ -38,3 +38,25 @@ This tasks will use various implementation techniques such as particles, complex
 - [Sprint 3](Doc/SprintReviews/Sprint_3.md)
 - [Sprint 4](Doc/SprintReviews/Sprint_4.md)
 - [Sprint 5](Doc/SprintReviews/Sprint_5.md)
+
+
+## Utilization
+
+### On Linux
+
+- create the folder build: <span style="color:orange">Saint-Nec-Engine/Saint-Nec-Engine/build</span>
+- move in the build folder
+- type cmake ..
+- The game executable is in <span style="color:orange">build/Saint-Nec-Engine</span>
+
+### Commandes
+
+You can move the camera with the touch:
+- Z : above
+- S : behind
+- Q : left
+- D : right
+- Shift : up
+- Space : down
+- F1 : unlock mouse selector
+- F2 : visual effect

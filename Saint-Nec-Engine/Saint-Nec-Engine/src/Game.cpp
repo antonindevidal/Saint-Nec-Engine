@@ -1,8 +1,15 @@
 #include "Game.hpp"
+#include "ui_helper/UiHelper.hpp"
+#include "scenes/FirstScene.hpp"
+#include "scenes/GrassScene.hpp"
+#include "terrain/TerrainScene.hpp"
+#include "scenes/PhysicScene.hpp"
+#include "scenes/PhysicScene2.hpp"
+#include "scenes/MouvementCoordination.hpp"
 
 Game::Game(): sceneManager(sne::SceneManager::getInstance())
 {
-	FirstScene* scene = new FirstScene();
+	auto* scene = new FirstScene();
 	sceneManager->addScene(scene);
 	//sceneManager->changeScene(scene->getName());
 
@@ -11,23 +18,23 @@ Game::Game(): sceneManager(sne::SceneManager::getInstance())
 	sceneManager->addScene(terrainScene);
 	//sceneManager->changeScene(terrainScene->getName());
 
-	GrassScene* grassScene = new GrassScene();
+	auto* grassScene = new GrassScene();
 	grassScene->setName("GrassScene");
 	sceneManager->addScene(grassScene);
 
 	sceneManager->changeScene(grassScene->getName());
 
-	PhysicScene* physicScene = new PhysicScene{};
+	auto* physicScene = new PhysicScene{};
 	physicScene->setName("PhysicScene");
 	sceneManager->addScene(physicScene);
 	sceneManager->changeScene(physicScene->getName());
 
-	PhysicScene2* physicScene2 = new PhysicScene2{};
+	auto* physicScene2 = new PhysicScene2{};
 	physicScene2->setName("physicScene2");
 	sceneManager->addScene(physicScene2);
 	sceneManager->changeScene(physicScene2->getName());
 	
-	MouvementCoordination* mouvementCoordination = new MouvementCoordination{};
+	auto* mouvementCoordination = new MouvementCoordination{};
 	mouvementCoordination->setName("mouvementCoordination");
 	sceneManager->addScene(mouvementCoordination);
 	sceneManager->changeScene(grassScene->getName());
