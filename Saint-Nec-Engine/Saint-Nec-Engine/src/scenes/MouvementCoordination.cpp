@@ -23,17 +23,17 @@ void MouvementCoordination::load()
 	{
 		// x axis
 		center = { i, 0, 0 };
-		cube = createCube(_physicManager, center, bleu, true);
+		cube = createCube(_physicManager, center, blue, true);
 		addGameObject(cube);
 
 		// y axis
 		center = { 0, i, 0 };
-		cube = createCube(_physicManager, center, bleu, true);
+		cube = createCube(_physicManager, center, blue, true);
 		addGameObject(cube);
 
 		// z axis
 		center = { 0, 0, i };
-		cube = createCube(_physicManager, center, bleu, true);
+		cube = createCube(_physicManager, center, blue, true);
 		addGameObject(cube);
 	}
 
