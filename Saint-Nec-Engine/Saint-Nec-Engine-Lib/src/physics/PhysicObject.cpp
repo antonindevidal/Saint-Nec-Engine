@@ -147,7 +147,7 @@ namespace sne::physics
                   max = _collider->getMax(axis),
                   tmp = obj._collider->getMin(axis);
             float dist = 0;
-            if(tmp < min)
+            if (tmp < min)
             {
                 tmp = obj._collider->getMax(axis);
                 dist = min - tmp;
@@ -158,7 +158,6 @@ namespace sne::physics
             }
 
             _position -= dist * (axis / norm(axis));
-
         }
         else if (isFix)
         {
@@ -169,7 +168,7 @@ namespace sne::physics
                   max = obj._collider->getMax(axis),
                   tmp = _collider->getMin(axis);
             float dist = 0;
-            if(tmp < min)
+            if (tmp < min)
             {
                 tmp = _collider->getMax(axis);
                 dist = min - tmp;
@@ -187,11 +186,10 @@ namespace sne::physics
         }
 
         std::cout << "Collision " << parent->getName() << " - " << obj.parent->getName() << "\n";
-        if(parent->getName() == "cube1" || parent->getName() == "cube2")
+        if (parent->getName() == "cube1" || parent->getName() == "cube2")
             std::cout << "Nombre de collision " << parent->getName() << ": " << numberOfCollisions() << "\n";
-        if(obj.parent->getName() == "cube1" || obj.parent->getName() == "cube2")
-            std::cout << "Nombre de collision " << obj.parent->getName() << ": " <<  obj.numberOfCollisions() << "\n";
-
+        if (obj.parent->getName() == "cube1" || obj.parent->getName() == "cube2")
+            std::cout << "Nombre de collision " << obj.parent->getName() << ": " << obj.numberOfCollisions() << "\n";
     }
 
     void addImpulsion(PhysicObject &o1, PhysicObject &o2)
@@ -206,7 +204,6 @@ namespace sne::physics
               m1 = o1.getMass(),
               m2 = o2.getMass();
 
-              
         float newv1x = (m1 - m2) / (m1 + m2) * v1x + 2 * m2 * v2x / (m1 + m2),
               newv1y = (m1 - m2) / (m1 + m2) * v1y + 2 * m2 * v2y / (m1 + m2),
               newv1z = (m1 - m2) / (m1 + m2) * v1z + 2 * m2 * v2z / (m1 + m2),
@@ -244,5 +241,23 @@ namespace sne::physics
         // std::cout << "v2: " << v2 << "\n";
         // std::cout << "v1: " << newv1 << "\n";
         // std::cout << "v2: " << newv2 << "\n";
+
+        glm::vec3 axis = o2.getPosition() - o1.getPosition(); // To update with impact point
+
+        float min = o2.getCollider()->getMin(axis),
+              max = o2.getCollider()->getMax(axis),
+              tmp = o1.getCollider()->getMin(axis);
+        float dist = 0;
+        if (tmp < min)
+        {
+            tmp = o1.getCollider()->getMax(axis);
+            dist = min - tmp;
+        }
+        else
+        {
+            dist = tmp - max;
+        }
+
+        o2.setPosition(o2.getPosition() - dist * (axis / norm(axis)));
     }
 }
