@@ -6,6 +6,7 @@
 #include "scenes/PhysicScene.hpp"
 #include "scenes/PhysicScene2.hpp"
 #include "scenes/MouvementCoordination.hpp"
+#include "scenes/PICollisions.hpp"
 
 Game::Game(): sceneManager(sne::SceneManager::getInstance())
 {
@@ -37,7 +38,12 @@ Game::Game(): sceneManager(sne::SceneManager::getInstance())
 	auto* mouvementCoordination = new MouvementCoordination{};
 	mouvementCoordination->setName("mouvementCoordination");
 	sceneManager->addScene(mouvementCoordination);
-	sceneManager->changeScene(grassScene->getName());
+	sceneManager->changeScene(mouvementCoordination->getName());
+
+	auto* piCollisions = new PICollisions{};
+	piCollisions->setName("PI Collisions counter");
+	sceneManager->addScene(piCollisions);
+	sceneManager->changeScene(piCollisions->getName());
 }
 
 Game::~Game()
