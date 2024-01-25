@@ -1,5 +1,7 @@
 #include "PhysicObject.hpp"
 #include "SAT.hpp"
+#include <cmath>
+#include "util.hpp"
 
 namespace sne::physics
 {
@@ -117,7 +119,7 @@ namespace sne::physics
 
         try
         {
-            if ((isFix && obj.isFix) || !_collider->collide(obj._collider) || (!isFix && hasBeenUpdated) || (!obj.isFix && obj.hasBeenUpdated))
+            if ((isFix && obj.isFix) || !_collider->collide(obj._collider))
                 return;
         }
         catch (const SATIllegalUseException &e)
@@ -133,6 +135,8 @@ namespace sne::physics
             throw std::exception();
         }
 
+        _collideCounter++;
+
         if (obj.isFix)
         {
             glm::vec3 axis = _position - obj._position; // To update with impact point
@@ -147,8 +151,6 @@ namespace sne::physics
         {
             addImpulsion(*this, obj);
         }
-        obj.hasBeenUpdated = true;
-        hasBeenUpdated = true;
     }
 
     void addImpulsion(PhysicObject &o1, PhysicObject &o2)
@@ -166,11 +168,25 @@ namespace sne::physics
         // Considering line between 2 centers
         // TO UPDATE: considering plan where we touch the other and calcul with normal and angle ?
 
-        glm::vec3 direction = o2.getPosition() - o1.getPosition();
+        // Get the normal and old velocity direction
+        glm::vec3 normal = o2.getPosition() - o1.getPosition(),
+                direction1 = o1.getVelocity() / v1,
+                direction2 = o2.getVelocity() / v2;
+        normal /= norm(normal);
+
+        // Determine the angle between normal and velocity direction
+        float angle1 = acos(dot(normal, direction1)),
+            angle2 = acos(dot(normal, direction2));
+
+        // Make rotation considering w
+        glm::vec3 rotationAxis = getNormal(normal, direction1);
+        glm::mat3 R = buildRotationMatrix()
+        direction1 = 
+
         // std::cout << "ancienne vitesse pour o1" << o1.getVelocity() << "\n";
         // std::cout << "ancienne vitesse pour o2" << o2.getVelocity() << "\n";
-        o1.setVelocity(-direction * newv1);
-        o2.setVelocity(direction * newv2);
+        o1.setVelocity( * newv1);
+        o2.setVelocity( * newv2);
         // std::cout << "nouvelle vitesse pour o1" << o1.getVelocity() << "\n";
         // std::cout << "nouvelle vitesse pour o2" << o2.getVelocity() << "\n";
         // std::cout << "direction: " << direction << "\n";

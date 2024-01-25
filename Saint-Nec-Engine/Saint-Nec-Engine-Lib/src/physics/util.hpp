@@ -13,7 +13,13 @@
 
 namespace sne::physics
 {
-    glm::vec3 getNormal(const glm::vec3 &, const glm::vec3 &);
+    // A renommer => confusion ?
+    /**
+     * @brief Get the Normal of the 2 axis
+     * 
+     * @return glm::vec3 
+     */
+    glm::vec3 getNormal(const glm::vec3 &, const glm::vec3 &); 
     
 
     /**
@@ -35,7 +41,7 @@ namespace sne::physics
      * @param v2
      * @return double
      */
-    double dot(const glm::vec3 v1, const glm::vec3 v2);
+    double dot(const glm::vec3 &v1, const glm::vec3 &v2);
 
     /**
      * @brief check whether or not 2 Colliders intersect on 1 axis
