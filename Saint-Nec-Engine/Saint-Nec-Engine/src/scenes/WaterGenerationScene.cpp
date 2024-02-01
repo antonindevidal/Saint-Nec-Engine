@@ -12,12 +12,12 @@ void WaterGenerationScene::load()
 	sne::graphics::Plane* p = new sne::graphics::Plane(50, 50, 3, "resources/shaders/water/water.vert", "resources/shaders/water/water.frag");
 	
 	std::vector<Wave> waves = {
-		{0.5f, 5.0f, 1.0f},
-		{1.0f, 8.5f, 1.5f},
-		{2.0f, 4.0f, 1.2f},
+		{0.5f, 5.0f, 1.0f, {std::cos(0), std::sin(0)}},
+		//{1.0f, 8.5f, 1.5f, {std::cos(0), std::sin(0)}},
+		//{2.0f, 4.0f, 1.2f, {std::cos(0), std::sin(0)}},
 	};
 	setWavesValues(p->getShader(), waves);
-
+	p->getShader().setVec3("waterColor", { 0.21,0.26,0.63 });
 	water->addComponent(p);
 	
 	
@@ -30,6 +30,8 @@ void WaterGenerationScene::load()
 	addGameObject(cube);
 	cube->addComponent(new sne::graphics::Cube("resources/shaders/basic.vert", "resources/shaders/basic.frag"));
 	gameObjects.push_back(cube);
+	directionnalLight = { std::cos(0), 0.0, std::sin( 0) };
+
 }
 
 void WaterGenerationScene::unload()
@@ -39,6 +41,7 @@ void WaterGenerationScene::unload()
 void WaterGenerationScene::update()
 {
 	sne::Scene::update();
+	//directionnalLight = { std::cos(Time::getTimeSinceStart() * 0.8f), -1.0, std::sin(Time::getTimeSinceStart() * 0.8f) };
 }
 
 void WaterGenerationScene::setWavesValues(const sne::graphics::Shader& shader, const std::vector<Wave>& waves)
@@ -51,6 +54,7 @@ void WaterGenerationScene::setWavesValues(const sne::graphics::Shader& shader, c
 		shader.setFloat(uniformName + ".amplitude", wave.amplitude);
 		shader.setFloat(uniformName + ".wavelenght", wave.wavelenght);
 		shader.setFloat(uniformName + ".speed", wave.speed);
+		shader.setVec2(uniformName + ".direction", wave.direction);
 		i++;
 	}
 	shader.setInt("nWaves", i);

@@ -26,6 +26,7 @@ private:
 		float amplitude;
 		float wavelenght;
 		float speed;
+		glm::vec2 direction;
 	};
 	void setWavesValues(const sne::graphics::Shader& shader, const std::vector<Wave>& waves);
 

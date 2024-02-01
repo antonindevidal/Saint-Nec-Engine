@@ -190,10 +190,13 @@ namespace sne::graphics
 		}
 		if (hasGeometry)
 		{
+
+			const sne::Scene* currentScene = sne::SceneManager::getInstance()->getCurrentScene();
 			shader.use();
 
 			shader.setFloat("time", Time::getTimeSinceStart());
-			shader.setMat4("view", sne::SceneManager::getInstance()->getCurrentScene()->getView());
+			shader.setVec3("sunDir", currentScene->getDirectionnalLight());
+			shader.setMat4("view", currentScene->getView());
 			shader.setMat4("model", parent->getModel());
 
 			glBindVertexArray(VAO);
