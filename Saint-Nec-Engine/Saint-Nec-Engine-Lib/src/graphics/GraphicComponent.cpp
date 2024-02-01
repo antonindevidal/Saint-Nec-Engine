@@ -192,7 +192,7 @@ namespace sne::graphics
 		{
 			shader.use();
 
-
+			shader.setFloat("time", Time::getTimeSinceStart());
 			shader.setMat4("view", sne::SceneManager::getInstance()->getCurrentScene()->getView());
 			shader.setMat4("model", parent->getModel());
 
