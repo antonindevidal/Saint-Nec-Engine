@@ -32,8 +32,11 @@ private:
 		float amplitude;
 		float wavelenght;
 		float speed;
-		glm::vec2 direction;
+		float steepness; //between 0 and 1
+		float direction; //in radians
 	};
-	void setWavesValues(const sne::graphics::Shader& shader, const std::vector<Wave>& waves);
+
+	std::vector<Wave> waves;
+	void setWavesValues() const;
 
 };

@@ -5,6 +5,7 @@ struct Wave
 	float amplitude;
 	float wavelenght;
 	float speed;
+	float steepness; 
 	vec2 direction;
 };
 
@@ -27,12 +28,47 @@ float getWaveCoord(Wave w, vec3 pos)
 	return w.direction.x * pos.x +  w.direction.y * pos.z;
 }
 
-void main()
+
+vec3 sumOfSineWave(Wave w,vec3 originalPos)
 {
 
-	float yPos = aPos.y;
-	vec3 n = vec3(0.0f,0.0f,0.0f);
+	float frequency = 2.0/w.wavelenght;
+	float phase = w.speed * frequency;
+	float waveCoord = getWaveCoord(w,aPos);
 
+	return vec3(0.0f, w.amplitude * sin(frequency * waveCoord + time * phase ),0.0f);
+}
+
+vec3 normalSumOfSineWave(Wave w,vec3 originalPos)
+{
+	float frequency = 2.0/w.wavelenght;
+	float phase = w.speed * frequency;
+	float waveCoord = getWaveCoord(w,aPos);
+	vec2 normal = frequency * w.amplitude * w.direction * cos(waveCoord * frequency + time * phase );
+	return vec3(normal.x,normal.y,0);
+}
+
+vec3 gerstnerWave(Wave w,vec3 originalPos)
+{
+
+	float frequency = 2.0/w.wavelenght;
+	float phase = w.speed * frequency;
+	float waveCoord = getWaveCoord(w,aPos);
+	float Q = w.steepness/(frequency * w.amplitude * nWaves); //Keep it between 0 and 1/(f*a) to avoid loops
+
+	vec3 res = vec3(0.0f,0.0f,0.0f);
+
+	res.x = w.steepness *w.amplitude* w.direction.x * cos(frequency * waveCoord + time* phase);
+	res.z = w.steepness *w.amplitude* w.direction.y * cos(frequency * waveCoord + time* phase);
+	res.y = w.amplitude * sin(frequency * waveCoord + time * phase );
+	return res;
+}
+
+
+void main()
+{
+	vec3 n = vec3(0.0f,0.0f,0.0f);
+	vec3 p = aPos;
 
 	float frequency;
 	float phase;
@@ -40,20 +76,11 @@ void main()
 	
 	for(int i = 0; i < nWaves; i ++)
 	{
-		frequency = 2.0/waves[i].wavelenght;
-		phase = waves[i].speed * frequency;
-		waveCoord = getWaveCoord(waves[i],aPos);
-
-		yPos += waves[i].amplitude * sin(frequency * waveCoord + time * phase );
-
-		//vec3 T = vec3(1,0, waves[i].direction.x * cos(dot(waves[i].direction,aPos.xz)));
-		//vec3 B = vec3(0,1, waves[i].direction.y * cos(dot(waves[i].direction,aPos.xz)));
-		//vec3 normal = cross(B,T);
-		vec2 normal = frequency * waves[i].amplitude * waves[i].direction * cos(waveCoord * frequency + time * phase );
-		n += vec3(normal.x,normal.y,0);
+		p += gerstnerWave(waves[i],aPos);
+		n += normalSumOfSineWave(waves[i],aPos);
 	}
 	
 
 	normal = n;
-	gl_Position = projection * view * model * vec4(aPos.x, yPos, aPos.z,1.0f);
+	gl_Position = projection * view * model * vec4(p, 1.0f);
 }

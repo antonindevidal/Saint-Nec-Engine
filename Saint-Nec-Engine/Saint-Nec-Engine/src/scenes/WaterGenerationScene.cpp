@@ -1,6 +1,6 @@
 #include "WaterGenerationScene.hpp"
 #include <imgui.h>
-WaterGenerationScene::WaterGenerationScene() : sne::Scene(), sunAngle(0.0f),waterShader(nullptr)
+WaterGenerationScene::WaterGenerationScene() : sne::Scene(), sunAngle(0.0f),waterShader(nullptr), waves()
 {
 }
 
@@ -11,18 +11,18 @@ void WaterGenerationScene::load()
 	sne::GameObject* water = new sne::GameObject();
 	sne::graphics::Plane* p = new sne::graphics::Plane(400, 400, 3, "resources/shaders/water/water.vert", "resources/shaders/water/water.frag");
 	
-	std::vector<Wave> waves = {
-		{0.2f, 5.0f, 8.0f, {std::cos(glm::radians(45.0f)), std::sin(glm::radians(45.0f))}},
-		{0.4f, 8.5f, 6.0f, {std::cos(glm::radians(-20.0f)), std::sin(glm::radians(-20.0f))}},
-		{0.8f, 4.0f, 3.0f, {std::cos(glm::radians(0.0f)), std::sin(glm::radians(0.0f))}},
-		{0.6f, 7.0f, 5.0f, {std::cos(glm::radians(150.0f)), std::sin(glm::radians(150.0f))}},
-		{0.1f, 3.0f, 9.0f, {std::cos(glm::radians(-105.0f)), std::sin(glm::radians(-105.0f))}},
+	waves = {
+		{0.2f, 5.0f, 8.0f, 0.0f, glm::radians(45.0f)},
+		{0.4f, 8.5f, 6.0f, 0.0f, glm::radians(-20.0f)},
+		{0.8f, 4.0f, 3.0f, 0.0f, glm::radians(0.0f)},
+		{0.6f, 7.0f, 5.0f, 0.0f, glm::radians(150.0f)},
+		{0.1f, 3.0f, 9.0f, 0.0f, glm::radians(-105.0f)},
 	};
-	setWavesValues(p->getShader(), waves);
+	
 	p->getShader().setVec3("waterColor", { 0.21,0.26,0.63 });
 	water->addComponent(p);
 	waterShader = &(p->getShader());
-	
+	setWavesValues();
 	gameObjects.push_back(water);
 
 
@@ -59,28 +59,46 @@ void WaterGenerationScene::drawUI()
 
 	ImGui::Begin("water");
 
-	ImGui::SliderAngle("test", &sunAngle);
+	ImGui::SliderAngle("Sun direction", &sunAngle);
+	int i = 0;
+	for (Wave& w : waves)
+	{
+		if (ImGui::CollapsingHeader(("Wave " + i)))
+		{
+			ImGui::SliderFloat("Amplitude " + i, &(w.amplitude), 0.0f, 4.0f);
+			ImGui::SliderFloat("Wavelength " + i, &(w.wavelenght), 0.0f, 20.0f);
+			ImGui::SliderFloat("Speed " + i, &(w.speed), 0.0f, 20.0f);
+			ImGui::SliderFloat("Steepness " + i, &(w.steepness), 0.0f, 1.0f);
+			ImGui::SliderAngle("Direction " + i, &(w.direction));
+			ImGui::Separator();
+		}
+		
+		i++;
+	}
 
 	ImGui::End();
 }
 void WaterGenerationScene::draw() const
 {
+	Scene::draw();
+	waterShader->use();
+	setWavesValues();
 	waterShader->setVec3("sunDir", directionnalLight);
 }
 
 
-void WaterGenerationScene::setWavesValues(const sne::graphics::Shader& shader, const std::vector<Wave>& waves)
+void WaterGenerationScene::setWavesValues() const
 {
 	int i = 0;
 	std::string uniformName;
 	for (const auto& wave : waves)
 	{
 		uniformName = "waves[" + std::to_string(i) + "]";
-		shader.setFloat(uniformName + ".amplitude", wave.amplitude);
-		shader.setFloat(uniformName + ".wavelenght", wave.wavelenght);
-		shader.setFloat(uniformName + ".speed", wave.speed);
-		shader.setVec2(uniformName + ".direction", wave.direction);
+		waterShader->setFloat(uniformName + ".amplitude", wave.amplitude);
+		waterShader->setFloat(uniformName + ".wavelenght", wave.wavelenght);
+		waterShader->setFloat(uniformName + ".speed", wave.speed);
+		waterShader->setVec2(uniformName + ".direction", { std::cos(wave.direction), std::sin(wave.direction) });
 		i++;
 	}
-	shader.setInt("nWaves", i);
+	waterShader->setInt("nWaves", i);
 }
