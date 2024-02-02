@@ -54,7 +54,7 @@ vec3 gerstnerWave(Wave w,vec3 originalPos)
 	float frequency = 2.0/w.wavelenght;
 	float phase = w.speed * frequency;
 	float waveCoord = getWaveCoord(w,aPos);
-	float Q = w.steepness/(frequency * w.amplitude * nWaves); //Keep it between 0 and 1/(f*a) to avoid loops
+	float Q = w.steepness/(frequency * w.amplitude * nWaves ); //Keep it between 0 and 1/(f*a) to avoid loops
 
 	vec3 res = vec3(0.0f,0.0f,0.0f);
 
@@ -63,7 +63,24 @@ vec3 gerstnerWave(Wave w,vec3 originalPos)
 	res.y = w.amplitude * sin(frequency * waveCoord + time * phase );
 	return res;
 }
+vec3 normalGerstnerWave(Wave w,vec3 pos)
+{
+	float frequency = 2.0/w.wavelenght;
+	float phase = w.speed * frequency;
+	float waveCoord = getWaveCoord(w,pos);
+	float Q = w.steepness/(frequency * w.amplitude); //Keep it between 0 and 1/(f*a) to avoid loops
 
+	vec3 res = vec3(0.0f,0.0f,0.0f);
+	float wa = frequency * w.amplitude;
+	float s = sin(frequency * waveCoord + time* phase);
+	float c = cos(frequency * waveCoord + time* phase);
+
+
+	res.x = w.direction.x * wa * c;
+	res.z = w.direction.y * wa * c;
+	res.y = Q * wa * s;
+	return res;
+}
 
 void main()
 {
@@ -74,11 +91,22 @@ void main()
 	float phase;
 	float waveCoord;
 	
+	//For sum of sine
+	/*
 	for(int i = 0; i < nWaves; i ++)
 	{
-		p += gerstnerWave(waves[i],aPos);
+		p += sumOfSineWave(waves[i],aPos);
 		n += normalSumOfSineWave(waves[i],aPos);
-	}
+	}*/
+
+	// For gerstner wave
+	for(int i = 0; i < nWaves; i ++)
+	{
+		vec3 np = gerstnerWave(waves[i],aPos);
+		p += np;
+		n += normalGerstnerWave(waves[i],aPos);
+	} 
+	//n = vec3(-n.x,1-n.y, -n.z);
 	
 
 	normal = n;

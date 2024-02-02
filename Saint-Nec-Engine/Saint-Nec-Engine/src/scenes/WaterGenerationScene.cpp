@@ -1,6 +1,6 @@
 #include "WaterGenerationScene.hpp"
 #include <imgui.h>
-WaterGenerationScene::WaterGenerationScene() : sne::Scene(), sunAngle(0.0f),waterShader(nullptr), waves()
+WaterGenerationScene::WaterGenerationScene() : sne::Scene(), sunAngle(0.0f), ambientLight(0.9f), specularExp(1), waterShader(nullptr), waves()
 {
 }
 
@@ -10,7 +10,8 @@ void WaterGenerationScene::load()
 
 	sne::GameObject* water = new sne::GameObject();
 	sne::graphics::Plane* p = new sne::graphics::Plane(400, 400, 3, "resources/shaders/water/water.vert", "resources/shaders/water/water.frag");
-	
+	generateWaves(10, 6, 0.4, 0);
+	/*
 	waves = {
 		{0.2f, 5.0f, 8.0f, 0.0f, glm::radians(45.0f)},
 		{0.4f, 8.5f, 6.0f, 0.0f, glm::radians(-20.0f)},
@@ -18,7 +19,7 @@ void WaterGenerationScene::load()
 		{0.6f, 7.0f, 5.0f, 0.0f, glm::radians(150.0f)},
 		{0.1f, 3.0f, 9.0f, 0.0f, glm::radians(-105.0f)},
 	};
-	
+	*/
 	p->getShader().setVec3("waterColor", { 0.21,0.26,0.63 });
 	water->addComponent(p);
 	waterShader = &(p->getShader());
@@ -43,8 +44,11 @@ void WaterGenerationScene::load()
 
 }
 
+
+
 void WaterGenerationScene::unload()
 {
+	Scene::unload();
 }
 
 void WaterGenerationScene::update()
@@ -60,16 +64,21 @@ void WaterGenerationScene::drawUI()
 	ImGui::Begin("water");
 
 	ImGui::SliderAngle("Sun direction", &sunAngle);
+	ImGui::SliderInt("Specular exp", &specularExp,1,10);
+	ImGui::SliderFloat("Ambient Light", &ambientLight,0.0f,1.0f);
+	ImGui::Separator();
 	int i = 0;
 	for (Wave& w : waves)
 	{
-		if (ImGui::CollapsingHeader(("Wave " + i)))
+		std::string id = "##" + i;
+		if (ImGui::CollapsingHeader(("Wave " +id).c_str()))
 		{
-			ImGui::SliderFloat("Amplitude " + i, &(w.amplitude), 0.0f, 4.0f);
-			ImGui::SliderFloat("Wavelength " + i, &(w.wavelenght), 0.0f, 20.0f);
-			ImGui::SliderFloat("Speed " + i, &(w.speed), 0.0f, 20.0f);
-			ImGui::SliderFloat("Steepness " + i, &(w.steepness), 0.0f, 1.0f);
-			ImGui::SliderAngle("Direction " + i, &(w.direction));
+			
+			ImGui::SliderFloat(("Amplitude"+id).c_str(), &(w.amplitude), 0.01f, 4.0f);
+			ImGui::SliderFloat(("Wavelength"+id).c_str(), &(w.wavelenght), 0.0f, 20.0f);
+			ImGui::SliderFloat(("Speed" + id).c_str(), &(w.speed), 0.0f, 20.0f);
+			ImGui::SliderFloat(("Steepness" + id).c_str(), &(w.steepness), 0.0f, 1.0f);
+			ImGui::SliderAngle(("Direction" + id).c_str(), &(w.direction));
 			ImGui::Separator();
 		}
 		
@@ -84,8 +93,31 @@ void WaterGenerationScene::draw() const
 	waterShader->use();
 	setWavesValues();
 	waterShader->setVec3("sunDir", directionnalLight);
+	waterShader->setInt("specularExp", specularExp);
+	waterShader->setFloat("ambient", ambientLight);
+	waterShader->setVec3("cameraDir", sne::SceneManager::getInstance()->getCurrentScene()->getCamera().getFront());
 }
 
+
+void WaterGenerationScene::generateWaves(int nWaves, float medianWavelength, float medianAmplitude, float medianSteepness)
+{
+	//Wavelength and amplitude range from 0.5 to 2 times the median value
+	float wlStep = medianWavelength / nWaves;
+	float ampStep = medianAmplitude / nWaves;
+
+	for (int i = 0; i < nWaves; i++)
+	{
+		waves.push_back(
+			{
+				medianAmplitude + (ampStep * (i - (nWaves / 2))),
+				medianWavelength + (wlStep * (i - (nWaves / 2))),
+				medianWavelength + (wlStep * (i - (nWaves / 2))),
+				0.2f,
+				(std::rand() % 628)/100.0f
+			}
+		);
+	}
+}
 
 void WaterGenerationScene::setWavesValues() const
 {
@@ -97,6 +129,7 @@ void WaterGenerationScene::setWavesValues() const
 		waterShader->setFloat(uniformName + ".amplitude", wave.amplitude);
 		waterShader->setFloat(uniformName + ".wavelenght", wave.wavelenght);
 		waterShader->setFloat(uniformName + ".speed", wave.speed);
+		waterShader->setFloat(uniformName + ".steepness", wave.steepness);
 		waterShader->setVec2(uniformName + ".direction", { std::cos(wave.direction), std::sin(wave.direction) });
 		i++;
 	}
