@@ -100,6 +100,11 @@ namespace sne
 		 */
 		void draw() const;
 
+		void drawUI()
+		{
+			currentScene->drawUI();
+		}
+
 		/**
 		 * Getter for the current Scene.
 		 * 

@@ -44,11 +44,13 @@ void main()
 		phase = waves[i].speed * frequency;
 		waveCoord = getWaveCoord(waves[i],aPos);
 
-		yPos += waves[i].amplitude * sin(frequency * waveCoord + time * phase);
+		yPos += waves[i].amplitude * sin(frequency * waveCoord );
 
-		vec3 T = vec3(1,0, waves[i].direction.x * cos(dot(waves[i].direction,aPos.xz)));
-		vec3 B = vec3(1,0, waves[i].direction.y * cos(dot(waves[i].direction,aPos.xz)));
-		n += cross(B,T);
+		//vec3 T = vec3(1,0, waves[i].direction.x * cos(dot(waves[i].direction,aPos.xz)));
+		//vec3 B = vec3(0,1, waves[i].direction.y * cos(dot(waves[i].direction,aPos.xz)));
+		//vec3 normal = cross(B,T);
+		vec2 normal = frequency * waves[i].amplitude * waves[i].direction * cos(waveCoord * frequency );
+		n += vec3(normal.x,normal.y,0);
 	}
 	
 

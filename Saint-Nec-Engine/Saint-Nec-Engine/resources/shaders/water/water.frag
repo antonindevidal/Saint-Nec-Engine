@@ -11,5 +11,5 @@ void main()
 {
 	float diffuse = max(dot(normal, sunDir), 0.0f) + 0.8;
 
-	FragColor = vec4(normal, 1.0f);
+	FragColor = vec4(waterColor * diffuse, 1.0f);
 }

@@ -18,9 +18,15 @@ public:
 
 
 	void update() override;
+	void drawUI() override;
+	void draw() const override;
 
 
 private:
+
+	float sunAngle;
+	const sne::graphics::Shader* waterShader;
+
 	struct Wave
 	{
 		float amplitude;
