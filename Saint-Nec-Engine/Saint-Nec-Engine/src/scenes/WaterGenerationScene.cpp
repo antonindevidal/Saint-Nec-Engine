@@ -1,6 +1,6 @@
 #include "WaterGenerationScene.hpp"
 #include <imgui.h>
-WaterGenerationScene::WaterGenerationScene() : sne::Scene(), sunAngle(0.0f), ambientLight(0.8f), specularExp(4), waterShader(nullptr), waves()
+WaterGenerationScene::WaterGenerationScene() : sne::Scene(), sunAngle(0.0f),sunOrbit(-1.0f), ambientLight(0.8f), specularExp(4), waterColor(69.0f / 255.0f, 152 / 255.0f, 217 / 255.0f), waterShader(nullptr), waves()
 {
 }
 
@@ -11,7 +11,7 @@ void WaterGenerationScene::load()
 	sne::GameObject* water = new sne::GameObject();
 	sne::graphics::Plane* p = new sne::graphics::Plane(400, 400, 5, "resources/shaders/water/water.vert", "resources/shaders/water/water.frag");
 	//generateWaves(15, 3.5, 0.1, 0);
-	generateWaves(20, 8, 0.8f, 1.18f, 0.81f);
+	generateWaves(20, 8, 0.2f, 1.18f, 0.81f);
 	/*
 	waves = {
 		{0.2f, 5.0f, 8.0f, 0.0f, glm::radians(45.0f)},
@@ -21,7 +21,7 @@ void WaterGenerationScene::load()
 		{0.1f, 3.0f, 9.0f, 0.0f, glm::radians(-105.0f)},
 	};
 	*/
-	p->getShader().setVec3("waterColor", { 0.21,0.26,0.63 });
+	p->getShader().setVec3("waterColor", waterColor);
 	water->addComponent(p);
 	waterShader = &(p->getShader());
 	setWavesValues();
@@ -55,7 +55,7 @@ void WaterGenerationScene::unload()
 void WaterGenerationScene::update()
 {
 	sne::Scene::update();
-	directionnalLight = glm::normalize(glm::vec3(std::cos(sunAngle), -0.5, std::sin(sunAngle)));
+	directionnalLight = glm::normalize(glm::vec3(std::cos(sunAngle), sunOrbit, std::sin(sunAngle)));
 }
 
 void WaterGenerationScene::drawUI()
@@ -65,8 +65,10 @@ void WaterGenerationScene::drawUI()
 	ImGui::Begin("water");
 
 	ImGui::SliderAngle("Sun direction", &sunAngle);
+	ImGui::SliderFloat("Sun orbit", &sunOrbit,-1.0f,1.0f);
 	ImGui::SliderInt("Specular exp", &specularExp,1,10);
 	ImGui::SliderFloat("Ambient Light", &ambientLight,0.0f,1.0f);
+	ImGui::ColorPicker3("Water Color", &waterColor[0]);
 	ImGui::Separator();
 	int i = 0;
 	for (Wave& w : waves)
@@ -97,6 +99,7 @@ void WaterGenerationScene::draw() const
 	waterShader->setInt("specularExp", specularExp);
 	waterShader->setFloat("ambient", ambientLight);
 	waterShader->setVec3("cameraDir", sne::SceneManager::getInstance()->getCurrentScene()->getCamera().getFront());
+	waterShader->setVec3("waterColor", waterColor);
 }
 
 

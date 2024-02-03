@@ -27,8 +27,10 @@ public:
 private:
 
 	float sunAngle;
+	float sunOrbit;
 	float ambientLight;
 	int specularExp;
+	glm::vec3 waterColor;
 	const sne::graphics::Shader* waterShader;
 
 	struct Wave
