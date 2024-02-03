@@ -1,6 +1,6 @@
 #include "WaterGenerationScene.hpp"
 #include <imgui.h>
-WaterGenerationScene::WaterGenerationScene() : sne::Scene(), sunAngle(0.0f), ambientLight(0.9f), specularExp(1), waterShader(nullptr), waves()
+WaterGenerationScene::WaterGenerationScene() : sne::Scene(), sunAngle(0.0f), ambientLight(0.8f), specularExp(4), waterShader(nullptr), waves()
 {
 }
 
@@ -9,8 +9,8 @@ void WaterGenerationScene::load()
 	gameObjects = std::vector<sne::GameObject*>();
 
 	sne::GameObject* water = new sne::GameObject();
-	sne::graphics::Plane* p = new sne::graphics::Plane(400, 400, 3, "resources/shaders/water/water.vert", "resources/shaders/water/water.frag");
-	generateWaves(10, 6, 0.4, 0);
+	sne::graphics::Plane* p = new sne::graphics::Plane(400, 400, 5, "resources/shaders/water/water.vert", "resources/shaders/water/water.frag");
+	generateWaves(15, 3.5, 0.1, 0);
 	/*
 	waves = {
 		{0.2f, 5.0f, 8.0f, 0.0f, glm::radians(45.0f)},
@@ -40,7 +40,7 @@ void WaterGenerationScene::load()
 	skybox->addComponent(new sne::graphics::Skybox({ "resources/textures/skybox/nx.png","resources/textures/skybox/px.png","resources/textures/skybox/py.png","resources/textures/skybox/ny.png","resources/textures/skybox/nz.png","resources/textures/skybox/pz.png" }, "resources/shaders/skybox.vert", "resources/shaders/skybox.frag"));
 
 
-	directionnalLight = glm::normalize(glm::vec3(1,-1,1));
+	directionnalLight = glm::normalize(glm::vec3(0,-1,0));
 
 }
 
@@ -54,7 +54,7 @@ void WaterGenerationScene::unload()
 void WaterGenerationScene::update()
 {
 	sne::Scene::update();
-	directionnalLight = glm::normalize(glm::vec3(std::cos(sunAngle), -1, std::sin(sunAngle)));
+	directionnalLight = glm::normalize(glm::vec3(std::cos(sunAngle), -0.5, std::sin(sunAngle)));
 }
 
 void WaterGenerationScene::drawUI()
@@ -71,7 +71,7 @@ void WaterGenerationScene::drawUI()
 	for (Wave& w : waves)
 	{
 		std::string id = "##" + i;
-		if (ImGui::CollapsingHeader(("Wave " +id).c_str()))
+		if (ImGui::CollapsingHeader(("Wave " +std::to_string(i)).c_str()))
 		{
 			
 			ImGui::SliderFloat(("Amplitude"+id).c_str(), &(w.amplitude), 0.01f, 4.0f);
@@ -102,8 +102,8 @@ void WaterGenerationScene::draw() const
 void WaterGenerationScene::generateWaves(int nWaves, float medianWavelength, float medianAmplitude, float medianSteepness)
 {
 	//Wavelength and amplitude range from 0.5 to 2 times the median value
-	float wlStep = medianWavelength / nWaves;
-	float ampStep = medianAmplitude / nWaves;
+	float wlStep = ((medianWavelength * 2) - (medianWavelength / 2)) / nWaves;
+	float ampStep = ((medianAmplitude * 2) - (medianAmplitude / 2)) / nWaves;
 
 	for (int i = 0; i < nWaves; i++)
 	{
@@ -111,9 +111,9 @@ void WaterGenerationScene::generateWaves(int nWaves, float medianWavelength, flo
 			{
 				medianAmplitude + (ampStep * (i - (nWaves / 2))),
 				medianWavelength + (wlStep * (i - (nWaves / 2))),
-				medianWavelength + (wlStep * (i - (nWaves / 2))),
-				0.2f,
-				(std::rand() % 628)/100.0f
+				0.8f * (medianWavelength + (wlStep * (i - (nWaves / 2)))),
+				0.9f,
+				(std::rand() % 314)/100.0f
 			}
 		);
 	}

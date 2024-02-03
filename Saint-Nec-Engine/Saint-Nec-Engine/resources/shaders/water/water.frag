@@ -14,12 +14,12 @@ out vec4 FragColor;
 void main()
 {
 
-	float diffuse = max(dot(normal, sunDir), 0.0f);
+	float diffuse = max(dot(normalize(normal), -sunDir), 0.0f);
 
 	//Blinn phong (specular reflection)
-	vec3 halfwayVector = normalize(sunDir - cameraDir);
-	float specular = pow(max(dot(halfwayVector,normal),0.0f),specularExp) *3;
+	vec3 halfwayVector = normalize(-sunDir - cameraDir);
+	float specular = pow(max(dot(halfwayVector,normal),0.0f),specularExp);
 
-	//FragColor= vec4(specular,specular,specular,1.0f);
-	FragColor = vec4(waterColor *(specular+ ambient + diffuse),1.0f);
+	//FragColor= vec4(0.0f,diffuse,0.0f,1.0f);
+	FragColor = vec4(waterColor *( ambient + specular + diffuse),1.0f);
 }

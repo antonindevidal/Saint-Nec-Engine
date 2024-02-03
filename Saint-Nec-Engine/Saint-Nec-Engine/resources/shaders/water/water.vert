@@ -16,7 +16,7 @@ uniform mat4 projection;
 uniform mat4 view;
 uniform mat4 model;
 
-uniform Wave[10] waves; //Maximum of 10 waves
+uniform Wave[20] waves; //Maximum of waves
 uniform int nWaves;
 uniform float time;
 
@@ -58,9 +58,9 @@ vec3 gerstnerWave(Wave w,vec3 originalPos)
 
 	vec3 res = vec3(0.0f,0.0f,0.0f);
 
-	res.x = w.steepness *w.amplitude* w.direction.x * cos(frequency * waveCoord + time* phase);
-	res.z = w.steepness *w.amplitude* w.direction.y * cos(frequency * waveCoord + time* phase);
-	res.y = w.amplitude * sin(frequency * waveCoord + time * phase );
+	res.x = Q *w.amplitude* w.direction.x * cos(frequency * waveCoord + time * phase);
+	res.z = Q *w.amplitude* w.direction.y * cos(frequency * waveCoord + time * phase);
+	res.y = w.amplitude * sin(frequency * waveCoord  + time * phase);
 	return res;
 }
 vec3 normalGerstnerWave(Wave w,vec3 pos)
@@ -68,12 +68,12 @@ vec3 normalGerstnerWave(Wave w,vec3 pos)
 	float frequency = 2.0/w.wavelenght;
 	float phase = w.speed * frequency;
 	float waveCoord = getWaveCoord(w,pos);
-	float Q = w.steepness/(frequency * w.amplitude); //Keep it between 0 and 1/(f*a) to avoid loops
+	float Q = w.steepness; //Keep it between 0 and 1/(f*a) to avoid loops
 
 	vec3 res = vec3(0.0f,0.0f,0.0f);
 	float wa = frequency * w.amplitude;
-	float s = sin(frequency * waveCoord + time* phase);
-	float c = cos(frequency * waveCoord + time* phase);
+	float s = sin(frequency * waveCoord + time * phase);
+	float c = cos(frequency * waveCoord  + time * phase);
 
 
 	res.x = w.direction.x * wa * c;
@@ -106,7 +106,7 @@ void main()
 		p += np;
 		n += normalGerstnerWave(waves[i],aPos);
 	} 
-	//n = vec3(-n.x,1-n.y, -n.z);
+	n = vec3(-n.x,1-n.y, -n.z);
 	
 
 	normal = n;
