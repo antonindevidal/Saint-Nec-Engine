@@ -42,6 +42,19 @@ private:
 
 	std::vector<Wave> waves;
 	void generateWaves(int nWaves, float medianWavelength, float medianAmplitude, float medianSteepness);
+
+	/**
+	 * @brief Generate n waves with Fractional Brownian motion.
+	 * 
+	 * @param nWaves Number of waves
+	 * @param initialWavelegth
+	 * @param initialAmplitude
+	 * @param wavelengthFactor Must be > 1.0
+	 * @param amplitudeFactor Must be < 1.0
+	 */
+	void generateWaves(int nWaves, float initialWavelegth, float initialAmplitude, float wavelengthFactor, float amplitudeFactor);
+
+	
 	void setWavesValues() const;
 
 };

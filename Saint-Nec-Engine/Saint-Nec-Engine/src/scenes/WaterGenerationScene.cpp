@@ -10,7 +10,8 @@ void WaterGenerationScene::load()
 
 	sne::GameObject* water = new sne::GameObject();
 	sne::graphics::Plane* p = new sne::graphics::Plane(400, 400, 5, "resources/shaders/water/water.vert", "resources/shaders/water/water.frag");
-	generateWaves(15, 3.5, 0.1, 0);
+	//generateWaves(15, 3.5, 0.1, 0);
+	generateWaves(20, 8, 0.8f, 1.18f, 0.81f);
 	/*
 	waves = {
 		{0.2f, 5.0f, 8.0f, 0.0f, glm::radians(45.0f)},
@@ -116,6 +117,24 @@ void WaterGenerationScene::generateWaves(int nWaves, float medianWavelength, flo
 				(std::rand() % 314)/100.0f
 			}
 		);
+	}
+}
+void WaterGenerationScene::generateWaves(int nWaves, float initialWavelegth, float initialAmplitude, float wavelengthFactor, float amplitudeFactor)
+{
+	float lastWL = initialWavelegth, lastAmp = initialAmplitude;
+	for (int i = 0; i < nWaves; i++)
+	{
+		waves.push_back(
+			{
+				lastAmp,
+				lastWL,
+				lastWL * .9f + (std::rand() % 10) / 10.0f,//lastWL * initialAmplitude/ initialWavelegth,
+				1.2f,
+				(std::rand() % 618) / 100.0f
+			}
+		);
+		lastWL = lastWL * wavelengthFactor;
+		lastAmp = lastAmp * amplitudeFactor;
 	}
 }
 
