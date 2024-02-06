@@ -105,7 +105,7 @@ namespace sne
 		 * 
 		 * @param Current scene
 		 */
-		const Scene& getCurrentScene() const;
+		const Scene* getCurrentScene() const;
 
 		/**
 		 * Return vector of all the scenes.

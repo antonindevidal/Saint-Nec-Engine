@@ -9,7 +9,6 @@
 
 #include <algorithm>
 #include <glm/glm.hpp>
-#include "../architecture/util.hpp"
 #include "BoxCollider.hpp"
 #include "SphereCollider.hpp"
 #include "Minkowski.hpp"

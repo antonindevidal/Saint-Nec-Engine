@@ -25,3 +25,6 @@ bld/
 out/
 build/
 doxygen_conf
+
+# Test
+Saint-Nec-Engine/Saint-Nec-Engine-Test/test/data/collision.txt

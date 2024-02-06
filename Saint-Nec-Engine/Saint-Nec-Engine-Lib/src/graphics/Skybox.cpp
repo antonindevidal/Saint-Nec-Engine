@@ -1,4 +1,6 @@
 #include "Skybox.hpp"
+#include "../architecture/SceneManager.hpp"
+#include "../architecture/GameObject.hpp"
 
 namespace sne::graphics
 {
@@ -59,9 +61,10 @@ namespace sne::graphics
 
 	void Skybox::draw() const
 	{
+
         glDepthFunc(GL_LEQUAL);
         shader.use();
-        shader.setMat4("view", glm::mat4(glm::mat3(sne::SceneManager::getInstance()->getCurrentScene().getView())));
+        shader.setMat4("view", glm::mat4(glm::mat3(sne::SceneManager::getInstance()->getCurrentScene()->getView())));
         shader.setMat4("model", parent->getModel());
 
         glBindVertexArray(VAO);

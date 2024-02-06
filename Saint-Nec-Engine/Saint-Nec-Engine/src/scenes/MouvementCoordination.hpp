@@ -7,9 +7,6 @@
 #include <graphics/Cube.hpp>
 #include <physics/BoxCollider.hpp>
 #include <physics/PhysicObject.hpp>
-#include "../ui_builder/UIBuilder.hpp"
-#include "../Colors.hpp"
-
 
 class MouvementCoordination : public sne::Scene {
 

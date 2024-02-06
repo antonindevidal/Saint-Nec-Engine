@@ -11,9 +11,6 @@
 #include <glm/gtc/type_ptr.hpp>
 #include <architecture/util.hpp>
 #include <algorithm>
-#include "util.hpp"
-#include "BoxCollider.hpp"
-#include "SphereCollider.hpp"
 #include <utility>
 #include "PhysicObject.hpp"
 
@@ -36,18 +33,14 @@ namespace sne::physics
      * @return std::vector<std::pair<PhysicObject*, PhysicObject*>>
      */
     template <typename SortFoncteur = SortAxisOnCenter>
-    std::vector<std::pair<PhysicObject *, PhysicObject *>> sweepAndPrune(std::vector<PhysicObject *> &);
-
-
-    template <typename SortFoncteur>
     std::vector<std::pair<PhysicObject *, PhysicObject *>> sweepAndPrune(std::vector<PhysicObject *> &v)
     {
         std::vector<std::pair<PhysicObject *, PhysicObject *>> pairs;
 
-        if (v.size() == 0)
+        if (v.empty())
             return pairs;
 
-        std::sort(v.begin(), v.end(), SortFoncteur());
+        std::sort(std::begin(v), std::end(v), SortFoncteur());
 
         glm::vec3 axis{1, 0, 0};
         std::vector<PhysicObject *> curr;
@@ -61,16 +54,12 @@ namespace sne::physics
             }
             else
             {
-                auto it = curr.begin();
-                while (it != curr.end() && !(*it)->getCollider()->intersection(v[i]->getCollider(), axis)) it++;
-                curr.erase(curr.begin(), it);
+                auto it = std::begin(curr);
+                while (it != std::end(curr) && !(*it)->getCollider()->intersection(v[i]->getCollider(), axis)) it++;
+                curr.erase(std::begin(curr), it);
 
-                it = curr.begin();
-                while(it != curr.end())
-                { 
-                    pairs.push_back(std::make_pair(v[i], (*it)));
-                    ++it;
-                }
+                for(PhysicObject *elt : curr)
+                    pairs.emplace_back(v[i], elt);
 
                 curr.push_back(v[i]);
             }

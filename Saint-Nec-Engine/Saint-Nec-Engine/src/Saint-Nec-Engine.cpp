@@ -105,7 +105,7 @@ int main(void)
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 1);
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
     /* Create a windowed mode window and its OpenGL context */
-    window = glfwCreateWindow(1280, 720, "Hello World", NULL, NULL);
+    window = glfwCreateWindow(1280, 720, "Saint-Nec Engine", NULL, NULL);
     if (!window)
     {
         glfwTerminate();
@@ -123,10 +123,17 @@ int main(void)
     //glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
     glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
     glfwSetCursorPosCallback(window, mouse_callback);
-    glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+    if (mouseMode)
+    {
+        glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+    }
+    else
+    {
+        glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
+    }
 
     glEnable(GL_DEPTH_TEST);
-    glfwSwapInterval(0);
+    glfwSwapInterval(1);
     
 
     //Init ImGUI
@@ -146,7 +153,7 @@ int main(void)
     ImVec4 clear_color = ImVec4(0.45f, 0.55f, 0.60f, 1.00f);
 
     Game g{};
-    TracyGpuContext
+    //TracyGpuContext
 
     /* Loop until the user closes the window */
     while (!glfwWindowShouldClose(window))
@@ -176,7 +183,7 @@ int main(void)
 
         /* Swap front and back buffers */
         glfwSwapBuffers(window);
-        TracyGpuCollect
+        //TracyGpuCollect
         /* Poll for and process events */
         glfwPollEvents();
         
