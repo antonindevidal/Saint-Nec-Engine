@@ -54,8 +54,8 @@ namespace sne::physics
 
         /**
          * @brief Set the Center object and update _points
-         * 
-         * @param v 
+         *
+         * @param v
          */
         void setCenter(const glm::vec3 &v) override;
 
@@ -102,11 +102,11 @@ namespace sne::physics
         bool collide(const BoxCollider &) const override;
 
         /**
-         * @brief return true if it has an intersection with other object on axis 
-         * 
-         * @param axis 
-         * @return true 
-         * @return false 
+         * @brief return true if it has an intersection with other object on axis
+         *
+         * @param axis
+         * @return true
+         * @return false
          */
         bool intersection(const Collider *, const glm::vec3 &axis) const override;
         bool intersection(const SphereCollider &, const glm::vec3 &axis) const override;
@@ -114,6 +114,11 @@ namespace sne::physics
 
         float getMin(const glm::vec3 &axis) const override;
         float getMax(const glm::vec3 &axis) const override;
+
+        glm::vec3 getNormal(const Collider *) const override;
+        glm::vec3 getNormal(const SphereCollider &) const override;
+        glm::vec3 getNormal(const BoxCollider &) const override;
+
     };
 
     std::ostream &operator<<(std::ostream &oss, const BoxCollider &b);

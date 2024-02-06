@@ -53,5 +53,9 @@ namespace sne::physics
         bool intersection(const BoxCollider &, const glm::vec3 &axis) const override;
         float getMin(const glm::vec3 &axis) const override;
         float getMax(const glm::vec3 &axis) const override;
+        glm::vec3 getNormal(const Collider *) const override;
+        glm::vec3 getNormal(const SphereCollider &) const override;
+        glm::vec3 getNormal(const BoxCollider &) const override;
+
     };
 }

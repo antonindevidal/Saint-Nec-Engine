@@ -35,6 +35,7 @@ Game::Game(): sceneManager(sne::SceneManager::getInstance())
 	sceneManager->addScene(physicScene2);
 	sceneManager->changeScene(physicScene2->getName());
 	
+
 	auto* mouvementCoordination = new MouvementCoordination{};
 	mouvementCoordination->setName("mouvementCoordination");
 	sceneManager->addScene(mouvementCoordination);
