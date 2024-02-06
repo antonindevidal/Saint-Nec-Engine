@@ -15,6 +15,9 @@
 #include <architecture/GameObject.hpp>
 #include <architecture/Time.hpp>
 #include "Collider.hpp"
+#include "SphereCollider.hpp"
+#include "BoxCollider.hpp"
+#include "SAT.hpp"
 
 
 namespace sne::physics
@@ -40,6 +43,8 @@ namespace sne::physics
 
         // To update with inheritence
         bool isFix = false;
+
+        static Time* time; 
 
     public:
         bool hasBeenUpdated = false;

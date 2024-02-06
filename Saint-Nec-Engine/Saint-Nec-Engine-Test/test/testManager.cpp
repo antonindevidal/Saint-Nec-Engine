@@ -3,12 +3,10 @@
 #include <catch.hpp>
 #include <cmath>
 #include <physics/SphereCollider.hpp>
-#include <physics/BoxCollider.hpp>
 #include <glm/glm.hpp>
 #include <glm/gtc/type_ptr.hpp>
 #include <architecture/PhysicManager.hpp>
 #include <chrono>
-
 
 // Tests //-----------------------------------------------------------------------------------------
 using namespace sne;

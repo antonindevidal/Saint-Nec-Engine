@@ -1,30 +1,38 @@
 #include "SAT.hpp"
-#include <algorithm>
-#include "util.hpp"
+
 namespace sne::physics
 {
 
-    std::vector<glm::vec3> operator+(std::vector<glm::vec3> v1, const std::vector<glm::vec3> &v2)
+    std::vector<glm::vec3> operator+(const std::vector<glm::vec3> v1, const std::vector<glm::vec3> v2)
     {
+        std::vector<glm::vec3> v = v1;
         for (auto elt : v2)
-            v1.push_back(elt);
-        
-        return v1;
+        {
+            v.push_back(elt);
+        }
+
+        return v;
     }
 
     bool hasSATCollision(const BoxCollider &boxe1, const BoxCollider &boxe2)
     {
         // Each BoxCollider has 3 normal axis
-        std::vector<glm::vec3> v = boxe1.getAxis() + boxe2.getAxis();
+        std::vector<glm::vec3> v1 = boxe1.getAxis();
+        std::vector<glm::vec3> v2 = boxe2.getAxis();
+        std::vector<glm::vec3> v = v1 + v2;
 
         // SAT
-        // Theoreme:
-        // If there is any gap (one disjoint) then there is no collision
-        // Otherwise, if we didn't find any gap then it collides
-        return !std::any_of(std::begin(v), std::end(v), [&](glm::vec3& axis)
+        for (glm::vec3 &axis : v)
         {
-            return !intersect(boxe1, boxe2, axis); // if true => we find a gap
-        });
+            // Theoreme:
+            // If there is any gap (one disjoint) then there is no collision
+            if (!intersect(boxe1, boxe2, axis))
+                // We have a gap, there is no collision
+                return false;
+        }
+
+        // We didn't find any gap
+        return true;
     }
 
     bool hasSATCollision(const SphereCollider &sphere1, const SphereCollider &sphere2)

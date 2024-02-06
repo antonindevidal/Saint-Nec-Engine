@@ -23,13 +23,6 @@ namespace sne::physics
         Collider(glm::vec3 center) : _center(center) {}
 
     public:
-
-        /**
-         * @brief Destroy the Collider object
-         * 
-         */
-        virtual ~Collider() = default;
-
         /**
          * @brief Get the Center object
          *

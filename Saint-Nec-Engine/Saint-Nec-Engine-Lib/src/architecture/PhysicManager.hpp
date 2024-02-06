@@ -13,6 +13,7 @@
 #include <set>
 #include <algorithm>
 #include "../physics/PhysicObject.hpp"
+#include "../physics/algorithms.hpp"
 
 namespace sne
 {
@@ -91,7 +92,7 @@ namespace sne
 
 		physics::PhysicObject *getLast()
 		{
-			if (_objects.empty())
+			if (_objects.size() == 0)
 				return nullptr;
 
 			return _objects[_objects.size() - 1];

@@ -1,6 +1,4 @@
 #include "PhysicScene.hpp"
-#include "../Colors.hpp"
-#include "../ui_builder/UIBuilder.hpp"
 
 PhysicScene::PhysicScene()
 {

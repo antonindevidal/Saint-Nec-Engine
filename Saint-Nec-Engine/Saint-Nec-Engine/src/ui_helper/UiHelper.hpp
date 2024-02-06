@@ -1,5 +1,4 @@
 #pragma once
-#include <typeinfo>
 
 #include <imgui.h>
 #include <imgui_impl_glfw.h>
@@ -15,10 +14,11 @@ class UiHelper
 {
 
 public:
-	static void WindowSceneTree(sne::SceneManager* manager);
+
+	static void WindowSceneManagerTree(sne::SceneManager* manager);
 
 private:
 	static void SceneManagerHelper(const sne::SceneManager& sceneManager);
-	static void SceneHelper(const sne::Scene* scene);
+	static void SceneHelper(const sne::Scene& scene);
 	static void GameObjectHelper(const sne::GameObject& gameObject);
 };

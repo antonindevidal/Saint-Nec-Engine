@@ -1,7 +1,4 @@
 #include "PhysicScene2.hpp"
-#include "../ui_builder/UIBuilder.hpp"
-#include "../Colors.hpp"
-
 
 PhysicScene2::PhysicScene2()
 {

@@ -80,10 +80,9 @@ namespace sne
 			currentScene->draw();
 		}
 	}
-
-	const Scene* SceneManager::getCurrentScene() const
+	const Scene& SceneManager::getCurrentScene() const
 	{
-		return currentScene;
+		return *currentScene;
 	}
 
 	const std::vector<Scene*>& SceneManager::getScenes() const

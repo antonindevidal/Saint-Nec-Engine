@@ -1,6 +1,4 @@
 #include "BoxCollider.hpp"
-#include "SAT.hpp"
-#include "util.hpp"
 
 namespace sne::physics
 {
@@ -36,7 +34,7 @@ namespace sne::physics
 
     bool BoxCollider::hasPoint(const glm::vec3 &p, float eps) const
     {
-        for (const glm::vec3 &v : _points)
+        for (glm::vec3 v : _points)
             if (areSimilar(v, p, eps))
                 return true;
 
@@ -45,7 +43,7 @@ namespace sne::physics
 
     int BoxCollider::getNbPoints() const
     {
-        return _points.size();
+        return 8;
     }
 
     void BoxCollider::setRotation(const glm::vec3 rotation)
@@ -56,7 +54,7 @@ namespace sne::physics
 
         // Rotate
         const glm::mat3 R = buildRotationMatrix(delta_rot[0], delta_rot[1], delta_rot[2]);
-        for (int i = 0; i < _points.size(); i++)
+        for (int i = 0; i < 8; i++)
             rotate(R, _points[i], _center);
 
         // Update new rotation
@@ -127,7 +125,7 @@ namespace sne::physics
     float BoxCollider::getMin(const glm::vec3 &axis) const
     {
         float min = dot(axis, _points[0]);
-        for(unsigned i=1; i<_points.size(); i++)
+        for(unsigned i=1; i<8; i++)
         {
             float v = dot(axis, _points[i]);
             min = (v<min)? v : min;

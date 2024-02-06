@@ -1,6 +1,4 @@
 #include "SphereCollider.hpp"
-#include "SAT.hpp"
-#include "util.hpp"
 
 namespace sne::physics
 

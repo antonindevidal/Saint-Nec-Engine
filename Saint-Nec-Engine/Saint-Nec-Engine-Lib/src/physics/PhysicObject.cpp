@@ -1,8 +1,8 @@
 #include "PhysicObject.hpp"
-#include "SAT.hpp"
 
 namespace sne::physics
 {
+    Time *PhysicObject::time = Time::getInstance();
     PhysicObject::PhysicObject(float mass) : PhysicObject({0, 0, 0}, mass)
     {
     }
@@ -15,7 +15,8 @@ namespace sne::physics
 
     PhysicObject::~PhysicObject()
     {
-        delete _collider;
+        if (_collider != nullptr)
+            delete _collider;
     }
 
     const glm::vec3 &PhysicObject::getAcceleration() const
@@ -107,7 +108,7 @@ namespace sne::physics
 
     void PhysicObject::update()
     {
-        compute(Time::getDeltaTime());
+        compute(time->getDeltaTime());
     }
 
     void PhysicObject::computeCollide(PhysicObject &obj)

@@ -11,6 +11,7 @@
 #include <glm/glm.hpp>
 #include <glm/gtc/type_ptr.hpp>
 #include <architecture/util.hpp>
+#include "util.hpp"
 #include "BoxCollider.hpp"
 #include "SphereCollider.hpp"
 
@@ -35,7 +36,7 @@ namespace sne::physics
      * @param v2
      * @return std::vector<glm::vec3>
      */
-    std::vector<glm::vec3> operator+(std::vector<glm::vec3> v1, const std::vector<glm::vec3> &v2);
+    std::vector<glm::vec3> operator+(const std::vector<glm::vec3> v1, const std::vector<glm::vec3> v2);
 
     /**
      * @brief detect collision relating to Separate Axis Theorem algorithm
@@ -50,7 +51,7 @@ namespace sne::physics
     template <typename ColliderType1, typename ColliderType2>
     bool hasSATCollision(const ColliderType1 &, const ColliderType2 &)
     {
-        throw SATIllegalUseException();
+        throw new SATIllegalUseException();
     }
 
     bool hasSATCollision(const BoxCollider &boxe1, const BoxCollider &boxe2);
