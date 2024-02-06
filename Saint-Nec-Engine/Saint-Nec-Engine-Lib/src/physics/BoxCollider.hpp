@@ -77,6 +77,13 @@ namespace sne::physics
         int getNbPoints() const;
 
         /**
+         * @brief Get Points 
+         *
+         * @return const std::array<glm::vec3, 8>
+         */
+        const std::array<glm::vec3, 8> getPoints() const;
+
+        /**
          * @brief Set the Rotation object and update points
          * angles must be passed as Radians
          * @param rotation

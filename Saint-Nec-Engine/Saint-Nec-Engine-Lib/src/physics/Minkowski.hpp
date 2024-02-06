@@ -13,11 +13,16 @@ namespace sne::physics
 		float _distance; 
 
 	public:
-		Minkowski(const glm::vec3& pointA, const glm::vec3& pointB)
+		Minkowski(const glm::vec3& pointA, const glm::vec3& pointB, bool isDiff=true)
 		{
 			_pointA = pointA;
 			_pointB = pointB;
-			_coordinate = _pointA - _pointB;
+			
+			if(isDiff)
+				_coordinate = _pointA - _pointB;
+			else
+				_coordinate = _pointA + _pointB;
+
 			_distance = norm(_coordinate);
 		}
 
