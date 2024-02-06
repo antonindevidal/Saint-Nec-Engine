@@ -22,6 +22,7 @@ set(_SAINT_NEC_ENGINE_LIB_SRC
 	"architecture/PhysicManager.cpp"
 	"physics/algorithms.cpp"
 	"graphics/Skybox.cpp"
+	"physics/GJK.cpp"
 )
 
 set(_SAINT_NEC_ENGINE_LIB_HDR
@@ -47,7 +48,7 @@ set(_SAINT_NEC_ENGINE_LIB_HDR
 	"physics/algorithms.hpp"
 	"graphics/Skybox.hpp"
 	"physics/Minkowski.hpp"
-	
+	"physics/GJK.hpp"
 )
 target_sources(Saint-Nec-Engine-Lib INTERFACE ${_SAINT_NEC_ENGINE_LIB_HDR})
 target_sources(Saint-Nec-Engine-Lib PRIVATE ${_SAINT_NEC_ENGINE_LIB_SRC})

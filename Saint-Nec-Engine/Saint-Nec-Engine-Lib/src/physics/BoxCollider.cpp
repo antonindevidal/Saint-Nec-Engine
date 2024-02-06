@@ -48,6 +48,11 @@ namespace sne::physics
         return _points.size();
     }
 
+    const std::array<glm::vec3, 8> BoxCollider::getPoints() const
+    {
+        return _points;
+    }
+
     void BoxCollider::setRotation(const glm::vec3 rotation)
     {
         // Evalute the angle of rotation
