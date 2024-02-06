@@ -117,6 +117,8 @@ namespace sne::physics
         if (!_collider || !obj._collider)
             throw std::exception_ptr();
 
+        
+
         try
         {
             if ((isFix && obj.isFix) || !_collider->collide(obj._collider))
@@ -138,10 +140,10 @@ namespace sne::physics
 
         _collideCounter++;
         obj._collideCounter++;
-
+        
         if (obj.isFix)
         {
-            glm::vec3 axis = obj._collider->getNormal(_collider); // To update with impact point
+            glm::vec3 axis = _position - obj._position; // To update with impact point
             setVelocity(norm(_velocity) * _amortissement * axis);
 
             float min = _collider->getMin(axis),
@@ -163,7 +165,7 @@ namespace sne::physics
         }
         else if (isFix)
         {
-            glm::vec3 axis = _collider->getNormal(obj._collider);
+            glm::vec3 axis = obj._position - _position;
             obj.setVelocity(norm(obj._velocity) * obj._amortissement * axis);
 
             float min = obj._collider->getMin(axis),
@@ -187,11 +189,11 @@ namespace sne::physics
             addImpulsion(*this, obj);
         }
 
-        std::cout << "Collision " << parent->getName() << " - " << obj.parent->getName() << "\n";
-        if (parent->getName() == "cube1" || parent->getName() == "cube2")
-            std::cout << "Nombre de collision " << parent->getName() << ": " << numberOfCollisions() << "\n";
-        if (obj.parent->getName() == "cube1" || obj.parent->getName() == "cube2")
-            std::cout << "Nombre de collision " << obj.parent->getName() << ": " << obj.numberOfCollisions() << "\n";
+        std::cout << "Collision " << getName() << " - " << obj.getName() << "\n";
+        if (getName() == "cube1" || getName() == "cube2")
+            std::cout << "Nombre de collision " << getName() << ": " << numberOfCollisions() << "\n";
+        if (obj.getName() == "cube1" || obj.getName() == "cube2")
+            std::cout << "Nombre de collision " << obj.getName() << ": " << obj.numberOfCollisions() << "\n";
     }
 
     void addImpulsion(PhysicObject &o1, PhysicObject &o2)

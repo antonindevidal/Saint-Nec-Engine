@@ -126,6 +126,13 @@ namespace sne::physics
         {
             return _collideCounter;
         }
+
+        std::string getName() const
+        {
+            if(parent)
+                return parent->getName();
+            return "No name renseigned";
+        }
     };
 
     void addImpulsion(PhysicObject &o1, PhysicObject &o2);

@@ -121,11 +121,6 @@ namespace sne::physics
 
         float getMin(const glm::vec3 &axis) const override;
         float getMax(const glm::vec3 &axis) const override;
-
-        glm::vec3 getNormal(const Collider *) const override;
-        glm::vec3 getNormal(const SphereCollider &) const override;
-        glm::vec3 getNormal(const BoxCollider &) const override;
-
     };
 
     std::ostream &operator<<(std::ostream &oss, const BoxCollider &b);
