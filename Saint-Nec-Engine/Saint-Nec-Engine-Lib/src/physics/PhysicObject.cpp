@@ -132,16 +132,17 @@ namespace sne::physics
             std::cout << e.what() << " " << parent->getName() << "\n";
             throw std::exception();
         }
-
         if (obj.isFix)
         {
-            glm::vec3 axis = _position - obj._position; // To update with impact point
+            glm::vec3 axis = obj._collider->getNormal(_collider); // To update with impact point
             setVelocity(norm(_velocity) * _amortissement * axis);
+            std::cout << "direction: " << axis << "\n";
         }
         else if (isFix)
         {
-            glm::vec3 axis = obj._position - _position; // To update with impact point
+            glm::vec3 axis = _collider->getNormal(obj._collider);
             obj.setVelocity(norm(obj._velocity) * obj._amortissement * axis);
+             std::cout << "direction: " << axis << "\n";
         }
         else
         {
@@ -166,14 +167,14 @@ namespace sne::physics
         // Considering line between 2 centers
         // TO UPDATE: considering plan where we touch the other and calcul with normal and angle ?
 
-        glm::vec3 direction = o2.getPosition() - o1.getPosition();
+        glm::vec3 direction = o2.getCollider()->getNormal(o1.getCollider());
         // std::cout << "ancienne vitesse pour o1" << o1.getVelocity() << "\n";
         // std::cout << "ancienne vitesse pour o2" << o2.getVelocity() << "\n";
         o1.setVelocity(-direction * newv1);
         o2.setVelocity(direction * newv2);
         // std::cout << "nouvelle vitesse pour o1" << o1.getVelocity() << "\n";
         // std::cout << "nouvelle vitesse pour o2" << o2.getVelocity() << "\n";
-        // std::cout << "direction: " << direction << "\n";
+        std::cout << "direction: " << direction << "\n";
         // std::cout << "v1: " << v1 << "\n";
         // std::cout << "v2: " << v2 << "\n";
         // std::cout << "v1: " << newv1 << "\n";

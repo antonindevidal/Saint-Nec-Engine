@@ -7,9 +7,11 @@
  * @date november 17th 2023.
  */
 
+#include <algorithm>
 #include <glm/glm.hpp>
 #include "BoxCollider.hpp"
 #include "SphereCollider.hpp"
+#include "Minkowski.hpp"
 
 namespace sne::physics
 {
@@ -50,4 +52,28 @@ namespace sne::physics
     bool intersect(const SphereCollider &sphere1, const SphereCollider &sphere2, const glm::vec3 &axis);
     bool intersect(const SphereCollider &sphere, const BoxCollider &boxe, const glm::vec3 &axis);
     bool intersect(const BoxCollider &boxe, const SphereCollider &sphere, const glm::vec3 &axis);
+
+    /**
+     * @brief evalute point obtained with Minkowski difference => C = A - B // { c | c = a-b, a € A et b € B}
+     *
+     * @param boxe1
+     * @param boxe2
+     * 
+     * @return  std::vector<Minkowski>
+     */
+    std::vector<Minkowski> minkowskiDifference(const BoxCollider& boxe1, const BoxCollider& boxe2);
+
+    /**
+     * @brief evaluate the normal of collision reaction
+     *
+     * @param boxe1
+     * @param boxe2
+     *
+     * @return glm::vec3 representing the axis (normal)
+     */
+    glm::vec3 collisionNormal(const BoxCollider& boxe1, const BoxCollider& boxe2);
+    glm::vec3 collisionNormal(const BoxCollider& boxe, const SphereCollider& sphere);
+    glm::vec3 collisionNormal(const SphereCollider& sphere, const BoxCollider& boxe);
+    glm::vec3 collisionNormal(const SphereCollider& sphere1, const SphereCollider& sphere2);
+
 }
