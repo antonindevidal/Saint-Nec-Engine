@@ -121,6 +121,7 @@ namespace sne::physics
 
         float getMin(const glm::vec3 &axis) const override;
         float getMax(const glm::vec3 &axis) const override;
+        glm::vec3 farthestPoint(const glm::vec3 &axis) const override;
     };
 
     std::ostream &operator<<(std::ostream &oss, const BoxCollider &b);

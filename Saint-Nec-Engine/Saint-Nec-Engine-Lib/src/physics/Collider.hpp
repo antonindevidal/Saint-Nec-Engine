@@ -55,5 +55,7 @@ namespace sne::physics
 
         virtual float getMin(const glm::vec3 &axis) const = 0;
         virtual float getMax(const glm::vec3 &axis) const = 0;
+
+        virtual glm::vec3 farthestPoint(const glm::vec3 &axis) const =0;
     };
 }

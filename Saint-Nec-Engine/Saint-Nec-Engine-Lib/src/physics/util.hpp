@@ -15,14 +15,16 @@
 
 namespace sne::physics
 {
+
+    const glm::vec3 ORIGIN{0, 0, 0};
+
     // A renommer => confusion ?
     /**
      * @brief Get the Normal of the 2 axis
-     * 
-     * @return glm::vec3 
+     *
+     * @return glm::vec3
      */
-    glm::vec3 getNormal(const glm::vec3 &, const glm::vec3 &); 
-    
+    glm::vec3 getNormal(const glm::vec3 &, const glm::vec3 &);
 
     /**
      * @brief tell if: [x1_min ; x1_max] ∩ [x2_min; x2_max] = ∅
@@ -47,12 +49,12 @@ namespace sne::physics
 
     /**
      * @brief check whether or not 2 Colliders intersect on 1 axis
-     * 
-     * @param boxe1 
-     * @param boxe2 
-     * @param axis 
-     * @return true 
-     * @return false 
+     *
+     * @param boxe1
+     * @param boxe2
+     * @param axis
+     * @return true
+     * @return false
      */
     bool intersect(const BoxCollider &boxe1, const BoxCollider &boxe2, const glm::vec3 &axis);
     bool intersect(const SphereCollider &sphere1, const SphereCollider &sphere2, const glm::vec3 &axis);
@@ -64,10 +66,10 @@ namespace sne::physics
      *
      * @param boxe1
      * @param boxe2
-     * 
+     *
      * @return  std::vector<Minkowski>
      */
-    std::vector<Minkowski> minkowskiDifference(const BoxCollider& boxe1, const BoxCollider& boxe2);
+    std::vector<Minkowski> minkowskiDifference(const BoxCollider &boxe1, const BoxCollider &boxe2);
 
     /**
      * @brief evaluate the normal of collision reaction
@@ -77,9 +79,38 @@ namespace sne::physics
      *
      * @return glm::vec3 representing the axis (normal)
      */
-    glm::vec3 collisionNormal(const BoxCollider& boxe1, const BoxCollider& boxe2);
-    glm::vec3 collisionNormal(const BoxCollider& boxe, const SphereCollider& sphere);
-    glm::vec3 collisionNormal(const SphereCollider& sphere, const BoxCollider& boxe);
-    glm::vec3 collisionNormal(const SphereCollider& sphere1, const SphereCollider& sphere2);
+    glm::vec3 collisionNormal(const BoxCollider &boxe1, const BoxCollider &boxe2);
+    glm::vec3 collisionNormal(const BoxCollider &boxe, const SphereCollider &sphere);
+    glm::vec3 collisionNormal(const SphereCollider &sphere, const BoxCollider &boxe);
+    glm::vec3 collisionNormal(const SphereCollider &sphere1, const SphereCollider &sphere2);
 
+    
+
+    struct Simplex
+    {
+        std::vector<glm::vec3> points;
+
+        void addPoint(const glm::vec3 &point)
+        {
+            points.push_back(point);
+        }
+
+        void removePoint()
+        {
+            points.pop_back();
+        }
+
+        glm::vec3 getClosestPointToOrigin()
+        {
+            std::sort(std::begin(points), std::end(points), [](const glm::vec3 &point, const glm::vec3 &point2)
+            {
+                return norm(point) < norm(point2);
+            });
+
+            return points[0];
+        }
+    };
+    
+    glm::vec3 support(const BoxCollider &shape1, const BoxCollider &shape2, const glm::vec3 &axis);
+    bool gjk(const BoxCollider &A, const BoxCollider &B, const glm::vec3 &initialDirection);
 }

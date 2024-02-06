@@ -28,9 +28,9 @@ namespace sne::physics
 
     void BoxCollider::setCenter(const glm::vec3 &v)
     {
-        glm::vec3 diff = v-_center;
+        glm::vec3 diff = v - _center;
         _center = v;
-        for(auto &point: _points)
+        for (auto &point : _points)
             point += diff;
     }
 
@@ -132,10 +132,10 @@ namespace sne::physics
     float BoxCollider::getMin(const glm::vec3 &axis) const
     {
         float min = dot(axis, _points[0]);
-        for(unsigned i=1; i<_points.size(); i++)
+        for (unsigned i = 1; i < _points.size(); i++)
         {
             float v = dot(axis, _points[i]);
-            min = (v<min)? v : min;
+            min = (v < min) ? v : min;
         }
 
         return min;
@@ -144,12 +144,31 @@ namespace sne::physics
     float BoxCollider::getMax(const glm::vec3 &axis) const
     {
         float max = dot(axis, _points[0]);
-        for(unsigned i=1; i<_points.size(); i++)
+        for (unsigned i = 1; i < _points.size(); i++)
         {
             float v = dot(axis, _points[i]);
-            max = (v>max)? v : max;
+            max = (v > max) ? v : max;
         }
 
         return max;
     }
+
+    glm::vec3 BoxCollider::farthestPoint(const glm::vec3 &axis) const
+    {
+        float max = dot(axis, _points[0]);
+        glm::vec3 res = _points[0];
+        for (unsigned i = 1; i < _points.size(); i++)
+        {
+            float v = dot(axis, _points[i]);
+            if(v > max)
+            {
+                max = v;
+                res = _points[i];
+            }
+            
+        }
+
+        return res;
+    }
+
 }
