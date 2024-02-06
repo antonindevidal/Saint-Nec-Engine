@@ -7,7 +7,6 @@
  * @date november 17th 2023.
  */
 
-
 #include <glm/glm.hpp>
 #include <exception>
 #include <architecture/Component.hpp>
@@ -15,7 +14,6 @@
 #include <architecture/GameObject.hpp>
 #include <architecture/Time.hpp>
 #include "Collider.hpp"
-
 
 namespace sne::physics
 {
@@ -41,9 +39,9 @@ namespace sne::physics
         // To update with inheritence
         bool isFix = false;
 
+        unsigned int _collideCounter = 0;
+
     public:
-        bool hasBeenUpdated = false;
-        
         /**
          * @brief Construct a new PhysicObject object positionned on origin
          *
@@ -68,7 +66,7 @@ namespace sne::physics
         const glm::vec3 &getRotation() const;
         float getAmortissement() const;
         float getMass() const;
-        const Collider * getCollider() const;
+        const Collider *getCollider() const;
 
         void setAcceleration(const glm::vec3 &);
         void setVelocity(const glm::vec3 &);
@@ -79,8 +77,8 @@ namespace sne::physics
         void fix()
         {
             isFix = true;
-            setAcceleration({0,0,0});
-            setVelocity({0,0,0});
+            setAcceleration({0, 0, 0});
+            setVelocity({0, 0, 0});
         }
         /************************************************************************/
 
@@ -123,6 +121,11 @@ namespace sne::physics
                 return "Object must have a valide mass!";
             }
         };
+
+        unsigned int numberOfCollisions() const
+        {
+            return _collideCounter;
+        }
     };
 
     void addImpulsion(PhysicObject &o1, PhysicObject &o2);

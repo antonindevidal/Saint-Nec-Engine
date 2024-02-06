@@ -14,7 +14,7 @@ namespace sne::physics
         return x1_max < x2_min || x2_max < x1_min;
     }
 
-    double dot(const glm::vec3 v1, const glm::vec3 v2)
+    double dot(const glm::vec3 &v1, const glm::vec3 &v2)
     {
         // If one of the vector norm is 1 then it's a simple projection
         return v1[0] * v2[0] + v1[1] * v2[1] + v1[2] * v2[2];

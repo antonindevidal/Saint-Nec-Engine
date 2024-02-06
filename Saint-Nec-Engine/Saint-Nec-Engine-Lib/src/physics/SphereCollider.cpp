@@ -50,6 +50,10 @@ namespace sne::physics
         return dot(axis, _center) - _radius;
     }
 
+    float SphereCollider::getMax(const glm::vec3 &axis) const
+    {
+        return dot(axis, _center) + _radius;
+
     glm::vec3 SphereCollider::getNormal(const Collider *c) const
     {
         return c->getNormal(*this);
@@ -63,5 +67,6 @@ namespace sne::physics
     glm::vec3 SphereCollider::getNormal(const BoxCollider &c) const
     {
         return collisionNormal(*this, c);
+
     }
 }

@@ -28,6 +28,9 @@ namespace sne
 		for(auto &elt : pairs)
 		{
 			elt.first->computeCollide(*(elt.second));
+
+        	// std::cout << "Nombre de collision " << elt.first->parent->getName() << ": " << elt.first->numberOfCollisions() << "\n";
+        	// std::cout << "Nombre de collision " << elt.second->parent->getName() << ": " << elt.second->numberOfCollisions() << "\n";
 		}
 	}
 

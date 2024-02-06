@@ -136,6 +136,17 @@ namespace sne::physics
         return min;
     }
 
+    float BoxCollider::getMax(const glm::vec3 &axis) const
+    {
+        float max = dot(axis, _points[0]);
+        for(unsigned i=1; i<_points.size(); i++)
+        {
+            float v = dot(axis, _points[i]);
+            max = (v>max)? v : max;
+        }
+
+        return max;
+
     glm::vec3 BoxCollider::getNormal(const Collider *c) const
     {
         return c->getNormal(*this);
@@ -149,5 +160,6 @@ namespace sne::physics
     glm::vec3 BoxCollider::getNormal(const BoxCollider &c) const
     {
         return collisionNormal(*this, c);
+
     }
 }

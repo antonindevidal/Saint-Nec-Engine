@@ -1,5 +1,7 @@
 #include "PhysicObject.hpp"
 #include "SAT.hpp"
+#include <cmath>
+#include "util.hpp"
 
 namespace sne::physics
 {
@@ -117,7 +119,7 @@ namespace sne::physics
 
         try
         {
-            if ((isFix && obj.isFix) || !_collider->collide(obj._collider) || (!isFix && hasBeenUpdated) || (!obj.isFix && obj.hasBeenUpdated))
+            if ((isFix && obj.isFix) || !_collider->collide(obj._collider))
                 return;
         }
         catch (const SATIllegalUseException &e)
@@ -132,52 +134,134 @@ namespace sne::physics
             std::cout << e.what() << " " << parent->getName() << "\n";
             throw std::exception();
         }
+
+
+        _collideCounter++;
+        obj._collideCounter++;
+
         if (obj.isFix)
         {
             glm::vec3 axis = obj._collider->getNormal(_collider); // To update with impact point
             setVelocity(norm(_velocity) * _amortissement * axis);
-            std::cout << "direction: " << axis << "\n";
+
+            float min = _collider->getMin(axis),
+                  max = _collider->getMax(axis),
+                  tmp = obj._collider->getMin(axis);
+            float dist = 0;
+            if (tmp < min)
+            {
+                tmp = obj._collider->getMax(axis);
+                dist = min - tmp;
+            }
+            else
+            {
+                dist = tmp - max;
+            }
+
+            _position -= dist * (axis / norm(axis));
+
         }
         else if (isFix)
         {
             glm::vec3 axis = _collider->getNormal(obj._collider);
             obj.setVelocity(norm(obj._velocity) * obj._amortissement * axis);
-             std::cout << "direction: " << axis << "\n";
+
+            float min = obj._collider->getMin(axis),
+                  max = obj._collider->getMax(axis),
+                  tmp = _collider->getMin(axis);
+            float dist = 0;
+            if (tmp < min)
+            {
+                tmp = _collider->getMax(axis);
+                dist = min - tmp;
+            }
+            else
+            {
+                dist = tmp - max;
+            }
+
+            obj._position -= dist * (axis / norm(axis));
         }
         else
         {
             addImpulsion(*this, obj);
         }
-        obj.hasBeenUpdated = true;
-        hasBeenUpdated = true;
+
+        std::cout << "Collision " << parent->getName() << " - " << obj.parent->getName() << "\n";
+        if (parent->getName() == "cube1" || parent->getName() == "cube2")
+            std::cout << "Nombre de collision " << parent->getName() << ": " << numberOfCollisions() << "\n";
+        if (obj.parent->getName() == "cube1" || obj.parent->getName() == "cube2")
+            std::cout << "Nombre de collision " << obj.parent->getName() << ": " << obj.numberOfCollisions() << "\n";
     }
 
     void addImpulsion(PhysicObject &o1, PhysicObject &o2)
     {
         // Calcul new vitesse
-        float v1 = norm(o1.getVelocity()),
-              v2 = norm(o2.getVelocity()),
+        float v1x = dot(o1.getVelocity(), {1, 0, 0}),
+              v1y = dot(o1.getVelocity(), {0, 1, 0}),
+              v1z = dot(o1.getVelocity(), {0, 0, 1}),
+              v2x = dot(o2.getVelocity(), {1, 0, 0}),
+              v2y = dot(o2.getVelocity(), {0, 1, 0}),
+              v2z = dot(o2.getVelocity(), {0, 0, 1}),
               m1 = o1.getMass(),
               m2 = o2.getMass();
 
-        float newv1 = (m1 - m2) / (m1 + m2) * v1 + 2 * m2 * v2 / (m1 + m2),
-              newv2 = 2 * m1 * v1 / (m1 + m2) - (m1 - m2) / (m1 + m2) * v2;
+        float newv1x = (m1 - m2) / (m1 + m2) * v1x + 2 * m2 * v2x / (m1 + m2),
+              newv1y = (m1 - m2) / (m1 + m2) * v1y + 2 * m2 * v2y / (m1 + m2),
+              newv1z = (m1 - m2) / (m1 + m2) * v1z + 2 * m2 * v2z / (m1 + m2),
+              newv2x = 2 * m1 * v1x / (m1 + m2) - (m1 - m2) / (m1 + m2) * v2x,
+              newv2y = 2 * m1 * v1y / (m1 + m2) - (m1 - m2) / (m1 + m2) * v2y,
+              newv2z = 2 * m1 * v1z / (m1 + m2) - (m1 - m2) / (m1 + m2) * v2z;
 
         // Vector orientation
         // Considering line between 2 centers
         // TO UPDATE: considering plan where we touch the other and calcul with normal and angle ?
 
-        glm::vec3 direction = o2.getCollider()->getNormal(o1.getCollider());
-        // std::cout << "ancienne vitesse pour o1" << o1.getVelocity() << "\n";
-        // std::cout << "ancienne vitesse pour o2" << o2.getVelocity() << "\n";
-        o1.setVelocity(-direction * newv1);
-        o2.setVelocity(direction * newv2);
-        // std::cout << "nouvelle vitesse pour o1" << o1.getVelocity() << "\n";
-        // std::cout << "nouvelle vitesse pour o2" << o2.getVelocity() << "\n";
-        std::cout << "direction: " << direction << "\n";
+
+        // Get the normal and old velocity direction
+        // glm::vec3 normal = o2.getPosition() - o1.getPosition(),
+        //           direction1 = o1.getVelocity() / v1,
+        //           direction2 = o2.getVelocity() / v2;
+        // normal /= norm(normal);
+
+        // Determine the angle between normal and velocity direction
+        // float angle1 = acos(dot(normal, direction1)),
+        //       angle2 = acos(dot(normal, direction2));
+
+        // Make rotation considering w
+        // glm::vec3 rotationAxis = getNormal(normal, direction1);
+        // glm::mat3 R = buildRotationMatrix()
+        //     direction1 =
+
+        // std::cout << "ancienne vitesse pour o1" << o1.getVelocity() << o1.parent->getName() << "\n";
+        // std::cout << "ancienne vitesse pour o2" << o2.getVelocity() << o2.parent->getName() << "\n";
+        o1.setVelocity(glm::vec3{newv1x, newv1y, newv1z});
+        o2.setVelocity(glm::vec3{newv2x, newv2y, newv2z});
+        // std::cout << "nouvelle vitesse pour o1" << o1.getVelocity() << o1.parent->getName() << "\n";
+        // std::cout << "nouvelle vitesse pour o2" << o2.getVelocity() << o2.parent->getName() << "\n";
+        // std::cout << "direction: " << direction << "\n";
+
         // std::cout << "v1: " << v1 << "\n";
         // std::cout << "v2: " << v2 << "\n";
         // std::cout << "v1: " << newv1 << "\n";
         // std::cout << "v2: " << newv2 << "\n";
+
+        glm::vec3 axis = o2.getPosition() - o1.getPosition(); // To update with impact point
+
+        float min = o2.getCollider()->getMin(axis),
+              max = o2.getCollider()->getMax(axis),
+              tmp = o1.getCollider()->getMin(axis);
+        float dist = 0;
+        if (tmp < min)
+        {
+            tmp = o1.getCollider()->getMax(axis);
+            dist = min - tmp;
+        }
+        else
+        {
+            dist = tmp - max;
+        }
+
+        o2.setPosition(o2.getPosition() - dist * (axis / norm(axis)));
     }
 }
