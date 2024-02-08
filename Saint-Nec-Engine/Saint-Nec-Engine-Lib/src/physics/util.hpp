@@ -9,6 +9,7 @@
 
 #include <algorithm>
 #include <glm/glm.hpp>
+#include <list>
 #include "BoxCollider.hpp"
 #include "SphereCollider.hpp"
 #include "Minkowski.hpp"
@@ -86,31 +87,53 @@ namespace sne::physics
 
     
 
+    template <int N= 4>
     struct Simplex
     {
-        std::vector<glm::vec3> points;
+        std::list<glm::vec3> points;
+        int n = 0;
 
         void addPoint(const glm::vec3 &point)
         {
-            points.push_back(point);
+            points.push_front(point);
+            n++;
+
+            if(n == N)
+                removePoint();
         }
 
         void removePoint()
         {
+            n--;
             points.pop_back();
         }
 
         glm::vec3 getClosestPointToOrigin()
         {
-            std::sort(std::begin(points), std::end(points), [](const glm::vec3 &point, const glm::vec3 &point2)
-            {
-                return norm(point) < norm(point2);
-            });
+            auto v = points.begin();
+            float min = norm(*v),
+                curr;
 
-            return points[0];
+            for (auto it=++points.begin(); it!=points.end(); ++it)
+            {
+                curr = norm(*it);
+                if(curr < min)
+                {
+                    min = curr;
+                    v = it;
+                }
+            }
+
+            return *v;
         }
     };
     
     glm::vec3 support(const BoxCollider &shape1, const BoxCollider &shape2, const glm::vec3 &axis);
-    bool gjk(const BoxCollider &A, const BoxCollider &B, const glm::vec3 &initialDirection);
+    bool gjk(const BoxCollider &A, const BoxCollider &B, const glm::vec3 &initialDirection={1, 0, 0});
+    bool gjk(const SphereCollider &A, const SphereCollider &B);
+    bool gjk(const BoxCollider &A, const SphereCollider &B);
+    bool gjk(const SphereCollider &A, const BoxCollider &B);
+    
+    
+
 }

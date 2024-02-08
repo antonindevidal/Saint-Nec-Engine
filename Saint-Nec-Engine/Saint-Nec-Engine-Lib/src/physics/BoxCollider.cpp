@@ -111,7 +111,7 @@ namespace sne::physics
     }
     bool BoxCollider::collide(const BoxCollider &b) const
     {
-        return hasSATCollision(*this, b);
+        return gjk(*this, b);
     }
 
     bool BoxCollider::intersection(const Collider *c, const glm::vec3 &axis) const

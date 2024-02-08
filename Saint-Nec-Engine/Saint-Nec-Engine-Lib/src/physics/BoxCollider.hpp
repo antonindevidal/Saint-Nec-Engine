@@ -103,7 +103,7 @@ namespace sne::physics
          * @return std::vector<glm::vec3>
          */
         std::vector<glm::vec3> getAxis() const;
-
+        
         bool collide(const Collider *) const override;
         bool collide(const SphereCollider &) const override;
         bool collide(const BoxCollider &) const override;

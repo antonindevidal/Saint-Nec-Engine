@@ -208,4 +208,20 @@ namespace sne::physics
             }
         }
     }
+
+    bool gjk(const SphereCollider &A, const SphereCollider &B)
+    {
+        float AB = glm::distance(A.getCenter(), B.getCenter());
+        
+        return AB > (A.getRadius() + B.getRadius());
+    }
+    bool gjk(const BoxCollider &A, const SphereCollider &B)
+    {
+        return true;
+    }
+
+    bool gjk(const SphereCollider &A, const BoxCollider &B)
+    {
+        return true;
+    }
 }
