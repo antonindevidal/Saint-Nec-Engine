@@ -159,10 +159,10 @@ namespace sne::physics
         glm::vec3 res = _points[0];
         for (unsigned i = 1; i < _points.size(); i++)
         {
-            float v = dot(axis, _points[i]);
-            if(v > max)
+            float projection = dot(_points[i], axis);
+            if(projection > max)
             {
-                max = v;
+                max = projection;
                 res = _points[i];
             }
             

@@ -128,12 +128,8 @@ namespace sne::physics
         }
     };
     
-    glm::vec3 support(const BoxCollider &shape1, const BoxCollider &shape2, const glm::vec3 &axis);
-    bool gjk(const BoxCollider &A, const BoxCollider &B, const glm::vec3 &initialDirection={1, 0, 0});
+    glm::vec3 support(const Collider &shape1, const Collider &shape2, const glm::vec3 &axis);
+    bool gjk(const Collider &A, const Collider &B, const glm::vec3 &initialDirection={1, 0, 0});
     bool gjk(const SphereCollider &A, const SphereCollider &B);
-    bool gjk(const BoxCollider &A, const SphereCollider &B);
-    bool gjk(const SphereCollider &A, const BoxCollider &B);
-    
-    
 
 }

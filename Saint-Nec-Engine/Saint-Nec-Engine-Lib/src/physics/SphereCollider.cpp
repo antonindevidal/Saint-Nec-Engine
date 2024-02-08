@@ -61,11 +61,9 @@ namespace sne::physics
         glm::vec3 axisNormalized = axis / norm(axis);
 
         // Project center on the axis
-        float valueOnAxis = dot(_center, axisNormalized);
+        float valueOnAxis = dot(_center, axis);
 
         // Incrementing with _radius
-        valueOnAxis += _radius;
-
-        return axisNormalized * valueOnAxis;
+        return (float) _radius * axisNormalized + valueOnAxis * axis;
     }
 }

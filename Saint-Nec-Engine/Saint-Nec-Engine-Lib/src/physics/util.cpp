@@ -173,24 +173,25 @@ namespace sne::physics
         return sphere2.getCenter() - sphere1.getCenter();
     }
 
-    glm::vec3 support(const BoxCollider &shape1, const BoxCollider &shape2, const glm::vec3 &axis)
+    glm::vec3 support(const Collider &shape1, const Collider &shape2, const glm::vec3 &axis)
     {
-        // d is a vector direction (doesn't have to be normalized)
         // get points on the edge of the shapes in opposite directions
         glm::vec3 p1 = shape1.farthestPoint(axis);
         glm::vec3 p2 = shape2.farthestPoint(-axis);
-        // perform the Minkowski Difference
+        // Minkowski Difference
         glm::vec3 p3 = p1 - p2;
-        // p3 is now a point in Minkowski space on the edge of the Minkowski Difference
+
         return p3;
     }
 
-    bool gjk(const BoxCollider &A, const BoxCollider &B, const glm::vec3 &initialDirection)
+    bool gjk(const Collider &A, const Collider &B, const glm::vec3 &initialDirection)
     {
         Simplex simplex;
+        glm::vec3 direction = initialDirection / norm(initialDirection);
+
         simplex.addPoint(support(A, B, initialDirection));
 
-        glm::vec3 direction = -initialDirection;
+        direction = -direction;
 
         while (true)
         {
@@ -206,6 +207,8 @@ namespace sne::physics
             {
                 return true; // Collision detected
             }
+
+            direction = -closestPointToOrigin;
         }
     }
 
@@ -215,13 +218,5 @@ namespace sne::physics
         
         return AB > (A.getRadius() + B.getRadius());
     }
-    bool gjk(const BoxCollider &A, const SphereCollider &B)
-    {
-        return true;
-    }
 
-    bool gjk(const SphereCollider &A, const BoxCollider &B)
-    {
-        return true;
-    }
 }
