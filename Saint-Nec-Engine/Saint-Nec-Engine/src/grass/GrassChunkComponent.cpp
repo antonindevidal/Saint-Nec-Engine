@@ -27,9 +27,9 @@ GrassChunkComponent::GrassChunkComponent(const int& size, const int& chunkSize, 
 	int sqrtInstances = sqrt(nbInstancesPerChunk);
 	for (int i = 0; i < nbInstancesPerChunk; i++)
 	{
-		positions.push_back((i % sqrtInstances) * (chunkSize * 1.0 / sqrtInstances) + (std::rand() * 1.0f / (RAND_MAX * chunkSize)));
+		positions.push_back((i % sqrtInstances) * (chunkSize * 1.0 / sqrtInstances)+ ((std::rand() %50) /100.0f));
 		positions.push_back(0.0f);
-		positions.push_back((i / sqrtInstances) * (chunkSize * 1.0 / sqrtInstances) + (std::rand() * 1.0f / (RAND_MAX * chunkSize)));
+		positions.push_back((i / sqrtInstances) * (chunkSize * 1.0 / sqrtInstances) + ((std::rand() %50) /100.0f));
 	}
 	//Generate geometry for two levels of LOD
 	genLOD1(positions);
@@ -241,6 +241,7 @@ void GrassChunkComponent::draw() const
 			shader.setVec3("offset", chunk);
 			float dist = glm::distance(chunk, camPosition);
 
+			
 			if (isChunkInsideFrustum(chunk))
 			{
 
