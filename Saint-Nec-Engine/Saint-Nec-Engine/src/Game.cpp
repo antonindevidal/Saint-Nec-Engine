@@ -37,7 +37,13 @@ Game::Game(): sceneManager(sne::SceneManager::getInstance())
 	auto* mouvementCoordination = new MouvementCoordination{};
 	mouvementCoordination->setName("mouvementCoordination");
 	sceneManager->addScene(mouvementCoordination);
-	sceneManager->changeScene(grassScene->getName());
+
+	auto* waterScene = new WaterGenerationScene();
+	waterScene->setName("Water scene");
+	sceneManager->addScene(waterScene);
+
+
+	sceneManager->changeScene(waterScene->getName());
 }
 
 Game::~Game()
@@ -59,4 +65,5 @@ void Game::draw() const
 	sceneManager->draw();
 
 	UiHelper::WindowSceneTree(sne::SceneManager::getInstance());
+	sceneManager->drawUI();
 }

@@ -15,6 +15,7 @@ set(_SAINT_NEC_ENGINE_SRC
 	"src/scenes/PhysicScene2.cpp"
 	"src/ui_builder/UIBuilder.cpp"
 	"src/scenes/MouvementCoordination.cpp"
+	"src/scenes/WaterGenerationScene.cpp"
 	
 )
 
@@ -32,6 +33,7 @@ set(_SAINT_NEC_ENGINE_HDR
 	"src/ui_builder/UIBuilder.hpp"
 	"src/scenes/MouvementCoordination.hpp"
 	"src/Colors.hpp"
+	"src/scenes/WaterGenerationScene.hpp"
 )
 
 # Make the copy of the resource fil every time

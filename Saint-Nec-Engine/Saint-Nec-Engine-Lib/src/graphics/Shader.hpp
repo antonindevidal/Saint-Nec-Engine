@@ -71,6 +71,14 @@ namespace sne::graphics
 		void setVec3(const std::string& name, const glm::vec3& value) const;
 
 		/**
+		 * @brief Set Vector 2 uniform to th shader program.
+		 *
+		 * @param name Name of the uniform.
+		 * @param value Vector 2 to set.
+		 */
+		void setVec2(const std::string& name, const glm::vec2& value) const;
+
+		/**
 		 * @brief Set Int uniform to th shader program.
 		 *
 		 * @param name Name of the uniform.
