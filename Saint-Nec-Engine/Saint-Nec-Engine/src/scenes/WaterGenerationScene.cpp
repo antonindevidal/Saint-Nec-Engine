@@ -1,6 +1,6 @@
 #include "WaterGenerationScene.hpp"
 #include <imgui.h>
-WaterGenerationScene::WaterGenerationScene() : sne::Scene(), sunAngle(0.0f),sunOrbit(-1.0f), ambientLight(0.8f), specularExp(4), waterColor(69.0f / 255.0f, 152 / 255.0f, 217 / 255.0f), waterShader(nullptr), waves()
+WaterGenerationScene::WaterGenerationScene() : sne::Scene(), sunAngle(0.0f),sunOrbit(-1.0f), ambientLight(0.8f), specularExp(2),useSpecular(true), waterColor(50 / 255.0f, 82 / 255.0f, 107 / 255.0f), waterShader(nullptr), waves()
 {
 }
 
@@ -10,17 +10,9 @@ void WaterGenerationScene::load()
 
 	sne::GameObject* water = new sne::GameObject();
 	sne::graphics::Plane* p = new sne::graphics::Plane(400, 400, 5, "resources/shaders/water/water.vert", "resources/shaders/water/water.frag");
-	//generateWaves(15, 3.5, 0.1, 0);
-	generateWaves(20, 8, 0.2f, 1.18f, 0.81f);
-	/*
-	waves = {
-		{0.2f, 5.0f, 8.0f, 0.0f, glm::radians(45.0f)},
-		{0.4f, 8.5f, 6.0f, 0.0f, glm::radians(-20.0f)},
-		{0.8f, 4.0f, 3.0f, 0.0f, glm::radians(0.0f)},
-		{0.6f, 7.0f, 5.0f, 0.0f, glm::radians(150.0f)},
-		{0.1f, 3.0f, 9.0f, 0.0f, glm::radians(-105.0f)},
-	};
-	*/
+
+	generateWaves(10, 8, 0.4f, 1.3f, 0.92f);
+	
 	p->getShader().setVec3("waterColor", waterColor);
 	water->addComponent(p);
 	waterShader = &(p->getShader());
@@ -66,22 +58,24 @@ void WaterGenerationScene::drawUI()
 
 	ImGui::SliderAngle("Sun direction", &sunAngle);
 	ImGui::SliderFloat("Sun orbit", &sunOrbit,-1.0f,1.0f);
-	ImGui::SliderInt("Specular exp", &specularExp,1,10);
+	ImGui::SliderInt("Specular exp", &specularExp,1,50);
 	ImGui::SliderFloat("Ambient Light", &ambientLight,0.0f,1.0f);
+	ImGui::Checkbox("Use Specular", &useSpecular);
 	ImGui::ColorPicker3("Water Color", &waterColor[0]);
 	ImGui::Separator();
 	int i = 0;
+	
 	for (Wave& w : waves)
 	{
 		std::string id = "##" + i;
 		if (ImGui::CollapsingHeader(("Wave " +std::to_string(i)).c_str()))
 		{
 			
-			ImGui::SliderFloat(("Amplitude"+id).c_str(), &(w.amplitude), 0.01f, 4.0f);
-			ImGui::SliderFloat(("Wavelength"+id).c_str(), &(w.wavelenght), 0.0f, 20.0f);
-			ImGui::SliderFloat(("Speed" + id).c_str(), &(w.speed), 0.0f, 20.0f);
-			ImGui::SliderFloat(("Steepness" + id).c_str(), &(w.steepness), 0.0f, 1.0f);
-			ImGui::SliderAngle(("Direction" + id).c_str(), &(w.direction));
+			ImGui::SliderFloat(("Amplitude"+i+id).c_str(), &(w.amplitude), 0.01f, 4.0f);
+			ImGui::SliderFloat(("Wavelength" + i +id).c_str(), &(w.wavelenght), 0.0f, 20.0f);
+			ImGui::SliderFloat(("Speed" + i + id).c_str(), &(w.speed), 0.0f, 20.0f);
+			ImGui::SliderFloat(("Steepness" + i + id).c_str(), &(w.steepness), 0.0f, 1.0f);
+			ImGui::SliderAngle(("Direction" + i + id).c_str(), &(w.direction));
 			ImGui::Separator();
 		}
 		
@@ -100,28 +94,9 @@ void WaterGenerationScene::draw() const
 	waterShader->setFloat("ambient", ambientLight);
 	waterShader->setVec3("cameraDir", sne::SceneManager::getInstance()->getCurrentScene()->getCamera().getFront());
 	waterShader->setVec3("waterColor", waterColor);
+	waterShader->setInt("useSpecular", useSpecular);
 }
 
-
-void WaterGenerationScene::generateWaves(int nWaves, float medianWavelength, float medianAmplitude, float medianSteepness)
-{
-	//Wavelength and amplitude range from 0.5 to 2 times the median value
-	float wlStep = ((medianWavelength * 2) - (medianWavelength / 2)) / nWaves;
-	float ampStep = ((medianAmplitude * 2) - (medianAmplitude / 2)) / nWaves;
-
-	for (int i = 0; i < nWaves; i++)
-	{
-		waves.push_back(
-			{
-				medianAmplitude + (ampStep * (i - (nWaves / 2))),
-				medianWavelength + (wlStep * (i - (nWaves / 2))),
-				0.8f * (medianWavelength + (wlStep * (i - (nWaves / 2)))),
-				0.9f,
-				(std::rand() % 314)/100.0f
-			}
-		);
-	}
-}
 void WaterGenerationScene::generateWaves(int nWaves, float initialWavelegth, float initialAmplitude, float wavelengthFactor, float amplitudeFactor)
 {
 	float lastWL = initialWavelegth, lastAmp = initialAmplitude;
@@ -131,8 +106,8 @@ void WaterGenerationScene::generateWaves(int nWaves, float initialWavelegth, flo
 			{
 				lastAmp,
 				lastWL,
-				lastWL * .9f + (std::rand() % 10) / 10.0f,//lastWL * initialAmplitude/ initialWavelegth,
-				1.2f,
+				lastWL * .2f + (std::rand() % 10) / 10.0f,//lastWL * initialAmplitude/ initialWavelegth,
+				1.0f,
 				(std::rand() % 618) / 100.0f
 			}
 		);

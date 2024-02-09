@@ -30,6 +30,7 @@ private:
 	float sunOrbit;
 	float ambientLight;
 	int specularExp;
+	bool useSpecular;
 	glm::vec3 waterColor;
 	const sne::graphics::Shader* waterShader;
 
@@ -43,7 +44,6 @@ private:
 	};
 
 	std::vector<Wave> waves;
-	void generateWaves(int nWaves, float medianWavelength, float medianAmplitude, float medianSteepness);
 
 	/**
 	 * @brief Generate n waves with Fractional Brownian motion.

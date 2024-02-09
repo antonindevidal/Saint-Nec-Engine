@@ -68,7 +68,7 @@ vec3 normalGerstnerWave(Wave w,vec3 pos)
 	float frequency = 2.0/w.wavelenght;
 	float phase = w.speed * frequency;
 	float waveCoord = getWaveCoord(w,pos);
-	float Q = w.steepness; //Keep it between 0 and 1/(f*a) to avoid loops
+	float Q = w.steepness/(frequency * w.amplitude * nWaves );  //Keep it between 0 and 1/(f*a) to avoid loops
 
 	vec3 res = vec3(0.0f,0.0f,0.0f);
 	float wa = frequency * w.amplitude;
