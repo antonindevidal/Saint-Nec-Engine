@@ -1,6 +1,6 @@
 #include "WaterGenerationScene.hpp"
 #include <imgui.h>
-WaterGenerationScene::WaterGenerationScene() : sne::Scene(), sunAngle(0.0f),sunOrbit(-1.0f), ambientLight(0.8f), specularExp(2),useSpecular(true), waterColor(50 / 255.0f, 82 / 255.0f, 107 / 255.0f), waterShader(nullptr), waves()
+WaterGenerationScene::WaterGenerationScene() : sne::Scene(), sunAngle(0.0f),sunOrbit(-1.0f), ambientLight(0.8f), specularExp(2), waterColor(50 / 255.0f, 82 / 255.0f, 107 / 255.0f), waterShader(nullptr), waves()
 {
 }
 
@@ -60,7 +60,6 @@ void WaterGenerationScene::drawUI()
 	ImGui::SliderFloat("Sun orbit", &sunOrbit,-1.0f,1.0f);
 	ImGui::SliderInt("Specular exp", &specularExp,1,50);
 	ImGui::SliderFloat("Ambient Light", &ambientLight,0.0f,1.0f);
-	ImGui::Checkbox("Use Specular", &useSpecular);
 	ImGui::ColorPicker3("Water Color", &waterColor[0]);
 	ImGui::Separator();
 	int i = 0;
@@ -94,7 +93,6 @@ void WaterGenerationScene::draw() const
 	waterShader->setFloat("ambient", ambientLight);
 	waterShader->setVec3("cameraDir", sne::SceneManager::getInstance()->getCurrentScene()->getCamera().getFront());
 	waterShader->setVec3("waterColor", waterColor);
-	waterShader->setInt("useSpecular", useSpecular);
 }
 
 void WaterGenerationScene::generateWaves(int nWaves, float initialWavelegth, float initialAmplitude, float wavelengthFactor, float amplitudeFactor)

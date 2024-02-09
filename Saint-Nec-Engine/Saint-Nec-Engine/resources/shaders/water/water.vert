@@ -1,5 +1,5 @@
 #version 410 core
-
+// Implemented from https://developer.nvidia.com/gpugems/gpugems/part-i-natural-effects/chapter-1-effective-water-simulation-physical-models
 struct Wave
 {
 	float amplitude;
@@ -16,7 +16,7 @@ uniform mat4 projection;
 uniform mat4 view;
 uniform mat4 model;
 
-uniform Wave[20] waves; //Maximum of waves
+uniform Wave[20] waves; //Maximum of 20 waves
 uniform int nWaves;
 uniform float time;
 
@@ -31,7 +31,6 @@ float getWaveCoord(Wave w, vec3 pos)
 
 vec3 sumOfSineWave(Wave w,vec3 originalPos)
 {
-
 	float frequency = 2.0/w.wavelenght;
 	float phase = w.speed * frequency;
 	float waveCoord = getWaveCoord(w,aPos);

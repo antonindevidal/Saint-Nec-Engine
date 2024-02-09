@@ -54,6 +54,10 @@ namespace sne
 		}
 	}
 
+	void Scene::drawUI()
+	{
+	}
+
 	void Scene::updateFrustumClipPlanes()
 	{
 		//Planes are calculated using Gribb/Hartmann method

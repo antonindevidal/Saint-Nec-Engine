@@ -100,10 +100,10 @@ namespace sne
 		 */
 		void draw() const;
 
-		void drawUI()
-		{
-			currentScene->drawUI();
-		}
+		/**
+		 * Draw ImGUI.
+		 */
+		void drawUI();
 
 		/**
 		 * Getter for the current Scene.
