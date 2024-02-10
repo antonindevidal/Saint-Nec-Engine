@@ -4,7 +4,7 @@
 
 
 
-GrassScene::GrassScene() : Scene::Scene(), sunPos({ 1.0,0.0,0.0 })
+GrassScene::GrassScene() : Scene::Scene(), sunAngle(0),sunOrbit( -1)
 {
 
 }
@@ -75,6 +75,15 @@ void GrassScene::update()
 {
 	Scene::update();
 
-	//directionnalLight = glm::vec3(cos(Time::getTimeSinceStart() *0.8f),0.0f , sin(Time::getTimeSinceStart() * 0.8f));
+	directionnalLight = glm::normalize(glm::vec3(std::cos(sunAngle), sunOrbit, std::sin(sunAngle)));
+}
+
+void GrassScene::drawUI()
+{
+	ImGui::Begin("Grass");
+	
+	ImGui::SliderAngle("Sun direction", &sunAngle);
+	ImGui::SliderFloat("Sun orbit", &sunOrbit, -1.0f, 1.0f);
+	ImGui::End();
 }
 

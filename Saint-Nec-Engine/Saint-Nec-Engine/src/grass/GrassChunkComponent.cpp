@@ -52,6 +52,8 @@ GrassChunkComponent::GrassChunkComponent(const int& size, const int& chunkSize, 
 void GrassChunkComponent::update()
 {
 	GraphicComponent::update();
+	shader.use();
+	shader.setVec3("sunDir", sne::SceneManager::getInstance()->getCurrentScene()->getDirectionnalLight());
 }
 
 void GrassChunkComponent::genLOD1(const std::vector<float>& positions)
