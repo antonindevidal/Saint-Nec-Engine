@@ -57,7 +57,7 @@ void draw_imgui(bool& show_demo_window, bool& show_another_window, ImVec4& clear
 {
     //Demo window (can be commented if needed)
     //if (show_demo_window)
-        //ImGui::ShowDemoWindow(&show_demo_window);
+        ImGui::ShowDemoWindow(&show_demo_window);
 
     {
         static float f = 0.0f;

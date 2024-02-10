@@ -13,6 +13,7 @@
 #include <stb_image.h>
 
 #include "Shader.hpp"
+#include "../architecture/Time.hpp"
 #include "../architecture/Component.hpp"
 
 namespace sne::graphics

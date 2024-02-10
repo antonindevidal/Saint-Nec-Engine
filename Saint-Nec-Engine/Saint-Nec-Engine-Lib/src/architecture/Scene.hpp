@@ -106,6 +106,11 @@ namespace sne
 		virtual void draw() const;
 
 		/**
+		 * Draw ImGUI.
+		 */
+		virtual void drawUI();
+
+		/**
 		 * Getter for the scene's name.
 		 *
 		 * @return Name of the scene.
