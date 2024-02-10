@@ -13,6 +13,7 @@
 #include <architecture/Time.hpp>
 #include <tracy/TracyOpenGL.hpp>
 #include "Game.hpp"
+#include <architecture/Window.hpp>
 
 #define GLM_ENABLE_EXPERIMENTAL
 
