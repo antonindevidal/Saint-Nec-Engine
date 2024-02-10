@@ -95,7 +95,11 @@ int main(void)
 
 
 
-	sne::Window::createWindow("Saint-Nec-Engine", 1280, 720);
+	if (sne::Window::createWindow("Saint-Nec-Engine", 1280, 720) == -1)
+	{
+		std::cout << "Error creating window, terminating program" <<std::endl;
+		return -1;
+	}
 
 	if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
 	{

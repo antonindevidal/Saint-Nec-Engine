@@ -1,7 +1,11 @@
+#pragma once 
+
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
 #include <iostream>
 #include <string>
+
+#include "Input.hpp"
 
 namespace sne
 {
@@ -58,5 +62,6 @@ namespace sne
 		static const std::string glslVersion;
 		static const int glfwMajorVersion;
 		static const int glfwMinorVersion;
+
 	};
 }

@@ -30,6 +30,8 @@ namespace sne
         /* Make the window's context current */
         glfwMakeContextCurrent(window);
 
+        glfwSetKeyCallback(window, Input::keyCallback);
+
 	}
 
 	GLFWwindow* Window::getWindow()

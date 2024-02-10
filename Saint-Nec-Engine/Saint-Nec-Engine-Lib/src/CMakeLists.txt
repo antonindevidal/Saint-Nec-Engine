@@ -32,6 +32,7 @@ set(_SAINT_NEC_ENGINE_LIB_HDR
 	"architecture/SceneManager.hpp"
 	"architecture/util.hpp"
 	"architecture/Window.hpp"
+	"architecture/Input.hpp"
 	"physics/BoxCollider.hpp"
 	"physics/SphereCollider.hpp"
 	"physics/SAT.hpp"
