@@ -14,6 +14,7 @@
 #include <tracy/TracyOpenGL.hpp>
 #include "Game.hpp"
 #include <architecture/Window.hpp>
+#include <architecture/Input.hpp>
 
 #define GLM_ENABLE_EXPERIMENTAL
 

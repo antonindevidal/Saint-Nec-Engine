@@ -3,32 +3,22 @@
 #include <GLFW/glfw3.h>
 #include <map>
 #include "Window.hpp"
+
 namespace sne
 {
+
 	class Input
 	{
 	public:
-		static bool isKeyPressed(const unsigned int& keycode)
-		{
-			auto state = glfwGetKey(Window::getWindow(), keycode);
-			return state == GLFW_REPEAT || state == GLFW_PRESS;
-		}
+		static bool isKeyPressed(const unsigned int& keycode);
 
-		static bool isKeyJustPressed(const unsigned int& keycode)
-		{
-			auto state = glfwGetKey(Window::getWindow(), keycode);
-			return (state == GLFW_PRESS || state == GLFW_REPEAT) && keyStates[keycode] == GLFW_RELEASE;
-		}
+		static bool isKeyJustPressed(const unsigned int& keycode);
+
+		static void bindInputCallbacks();
 
 	private:
-		std::map<int, int> keyStates;
+		static std::map<int, bool> keyJustPressed;
 		
-
-		static void keyCallback(GLFWwindow* window, int key, int scancode, int action, int mods)
-		{
-			keyStates[key] = action;
-		}
-
-		friend class Window;
+		static void keyCallback(GLFWwindow* window, int key, int scancode, int action, int mods);
 	};
 }

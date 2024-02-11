@@ -17,26 +17,26 @@ void mouse_callback(GLFWwindow* window, double xpos, double ypos)
 	mouseY = ypos;
 }
 
-void processInput(GLFWwindow* window, Game& g)
+void processInput(Game& g)
 {
-	g.processInput(window, mouseX, mouseY);
-	if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
-		glfwSetWindowShouldClose(window, true);
+	g.processInput(sne::Window::getWindow(), mouseX, mouseY);
+	if (sne::Input::isKeyPressed(GLFW_KEY_ESCAPE))
+		glfwSetWindowShouldClose(sne::Window::getWindow(), true);
 
 	// Press F1 to change from mouse used for camera to mouse used for UI
-	if (glfwGetKey(window, GLFW_KEY_F1) == GLFW_REPEAT)
+	if (sne::Input::isKeyJustPressed(GLFW_KEY_F1))
 	{
 		if (mouseMode)
 		{
-			glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+			glfwSetInputMode(sne::Window::getWindow(), GLFW_CURSOR, GLFW_CURSOR_DISABLED);
 		}
 		else
 		{
-			glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
+			glfwSetInputMode(sne::Window::getWindow(), GLFW_CURSOR, GLFW_CURSOR_NORMAL);
 		}
 		mouseMode = !mouseMode;
 	}
-	if (glfwGetKey(window, GLFW_KEY_F2) == GLFW_REPEAT || glfwGetKey(window, GLFW_KEY_F2) == GLFW_PRESS)
+	if (sne::Input::isKeyPressed(GLFW_KEY_F2))
 	{
 		if (polygonMode)
 		{
@@ -107,7 +107,7 @@ int main(void)
 		return -1;
 	}
 	sne::Window::setBufferCallBack(framebuffer_size_callback);
-
+	sne::Input::bindInputCallbacks();
 	//glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
 	//glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
 	//glfwSetCursorPosCallback(window, mouse_callback);
@@ -148,7 +148,7 @@ int main(void)
 	{
 		Time::getInstance()->calculateDeltaTime(); // TODO: Move this call to the scene manager for it to be abstract for the user
 		//std::cout << Time::getDeltaTime() << std::endl;
-		//processInput(window, g);
+		processInput(g);
 		g.update();
 		/* Render here */
 		glClearColor(clear_color.x, clear_color.y, clear_color.z, clear_color.w);
