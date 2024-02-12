@@ -11,7 +11,6 @@ public:
 	Game();
 	~Game();
 
-	void processInput(GLFWwindow* window, int mouseX, int mouseY);
 	void update();
 	void draw() const;
 

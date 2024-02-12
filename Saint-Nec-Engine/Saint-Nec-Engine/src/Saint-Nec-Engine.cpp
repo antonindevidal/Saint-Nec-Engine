@@ -19,7 +19,6 @@ void mouse_callback(GLFWwindow* window, double xpos, double ypos)
 
 void processInput(Game& g)
 {
-	g.processInput(sne::Window::getWindow(), sne::Input::getMouseX(), sne::Input::getMouseY());
 	if (sne::Input::isKeyPressed(GLFW_KEY_ESCAPE))
 		glfwSetWindowShouldClose(sne::Window::getWindow(), true);
 
@@ -109,17 +108,6 @@ int main(void)
 	sne::Window::setBufferCallBack(framebuffer_size_callback);
 	sne::Input::bindInputCallbacks();
 	sne::Input::bindMouseCallbacks();
-	//glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
-	//glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
-	//glfwSetCursorPosCallback(window, mouse_callback);
-	/*if (mouseMode)
-	{
-		glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
-	}
-	else
-	{
-		glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
-	}*/
 
 	glEnable(GL_DEPTH_TEST);
 	sne::Window::swapIntervals(1);

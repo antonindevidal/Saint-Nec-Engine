@@ -50,11 +50,6 @@ Game::~Game()
 {
 }
 
-void Game::processInput(GLFWwindow* window, int mouseX, int mouseY)
-{
-	sceneManager->processInput(window, mouseX, mouseY);
-}
-
 void Game::update()
 {
 	sceneManager->update();

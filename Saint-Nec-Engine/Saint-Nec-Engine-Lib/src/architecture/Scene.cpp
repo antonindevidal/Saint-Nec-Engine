@@ -29,12 +29,6 @@ namespace sne
 	{
 	}
 
-	void Scene::processInput(GLFWwindow* window, int mouseX, int mouseY)
-	{
-
-		camera.processInput(window, mouseX, mouseY);
-	}
-
 	void Scene::update()
 	{
 		camera.update();
