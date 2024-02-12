@@ -19,7 +19,7 @@ void mouse_callback(GLFWwindow* window, double xpos, double ypos)
 
 void processInput(Game& g)
 {
-	g.processInput(sne::Window::getWindow(), mouseX, mouseY);
+	g.processInput(sne::Window::getWindow(), sne::Input::getMouseX(), sne::Input::getMouseY());
 	if (sne::Input::isKeyPressed(GLFW_KEY_ESCAPE))
 		glfwSetWindowShouldClose(sne::Window::getWindow(), true);
 
@@ -36,7 +36,7 @@ void processInput(Game& g)
 		}
 		mouseMode = !mouseMode;
 	}
-	if (sne::Input::isKeyPressed(GLFW_KEY_F2))
+	if (sne::Input::isKeyJustPressed(GLFW_KEY_F2))
 	{
 		if (polygonMode)
 		{
@@ -108,6 +108,7 @@ int main(void)
 	}
 	sne::Window::setBufferCallBack(framebuffer_size_callback);
 	sne::Input::bindInputCallbacks();
+	sne::Input::bindMouseCallbacks();
 	//glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
 	//glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
 	//glfwSetCursorPosCallback(window, mouse_callback);
@@ -146,6 +147,7 @@ int main(void)
 	/* Loop until the user closes the window */
 	while (!sne::Window::windowShouldClose())
 	{
+		sne::Window::pollEvents();
 		Time::getInstance()->calculateDeltaTime(); // TODO: Move this call to the scene manager for it to be abstract for the user
 		//std::cout << Time::getDeltaTime() << std::endl;
 		processInput(g);
@@ -171,7 +173,8 @@ int main(void)
 
 		/* Swap front and back buffers */
 		sne::Window::swapBuffers();
-		sne::Window::pollEvents();
+		
+		sne::Input::endFrame();
 	}
 
 	// Cleanup ImGUI

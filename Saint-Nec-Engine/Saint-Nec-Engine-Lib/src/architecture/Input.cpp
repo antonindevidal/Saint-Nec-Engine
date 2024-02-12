@@ -4,6 +4,9 @@ namespace sne
 {
 	std::map<int, bool> Input::keyJustPressed{};
 
+	int Input::mouseX = 0;
+	int Input::mouseY = 0;
+
 	bool Input::isKeyPressed(const unsigned int& keycode)
 	{
 		auto state = glfwGetKey(Window::getWindow(), keycode);
@@ -12,10 +15,7 @@ namespace sne
 
 	bool Input::isKeyJustPressed(const unsigned int& keycode)
 	{
-		std::cout << "justPressed " << keyJustPressed[keycode] << std::endl;
-		bool res = keyJustPressed[keycode];
-		
-		return res;
+		return keyJustPressed[keycode];
 	}
 
 	void Input::bindInputCallbacks()
@@ -23,9 +23,37 @@ namespace sne
 		glfwSetKeyCallback(Window::getWindow(), keyCallback);
 	}
 
+	void Input::bindMouseCallbacks()
+	{
+		glfwSetCursorPosCallback(Window::getWindow(), mouseCallback);
+	}
+
+	void Input::endFrame()
+	{
+		for (auto & [key, val] : keyJustPressed)
+		{
+			val = false;
+		}
+	}
+
+	const int& Input::getMouseX()
+	{
+		return mouseX;
+	}
+
+	const int& Input::getMouseY()
+	{
+		return mouseY;
+	}
+
 	void Input::keyCallback(GLFWwindow* window, int key, int scancode, int action, int mods)
 	{
-		std::cout << "callback " << (key == GLFW_KEY_F1) << std::endl;
 		keyJustPressed[key] = keyJustPressed[key] == false && action == GLFW_PRESS;
+	}
+
+	void Input::mouseCallback(GLFWwindow* window, double xpos, double ypos)
+	{
+		mouseX = static_cast<int>(xpos);
+		mouseY = static_cast<int>(ypos);
 	}
 }
