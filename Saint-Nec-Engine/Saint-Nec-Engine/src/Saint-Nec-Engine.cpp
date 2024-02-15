@@ -87,7 +87,7 @@ int main(void)
 {
     #ifdef __APPLE__
         std::cerr << "Ecosysteme is closed for Apple users." << std::endl;
-        return 1; // Quitter le programme avec un code d'erreur.
+        return 1;
     #endif
 
     GLFWwindow* window;

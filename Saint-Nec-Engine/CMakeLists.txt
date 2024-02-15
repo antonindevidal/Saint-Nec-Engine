@@ -14,14 +14,12 @@ set(CMAKE_CXX_EXTENSIONS OFF)
 
 project ("Saint-Nec-Engine")
 
-# Incluez les sous-projets.
+# Include subprojects
 add_subdirectory ("Saint-Nec-Engine")
 add_subdirectory ("Saint-Nec-Engine-Lib/src")
 add_subdirectory ("Saint-Nec-Engine-Test")
 
-# Vérifiez le système d'exploitation
+# Check OS
 if(APPLE)
-    message(FATAL_ERROR "Le programme ne peut pas être exécuté sur macOS.")
+    message(FATAL_ERROR "Program can't be run on macOS.")
 endif()
-
-# # Reste de votre configuration CMake ici
