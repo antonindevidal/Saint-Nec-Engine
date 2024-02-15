@@ -19,3 +19,9 @@ add_subdirectory ("Saint-Nec-Engine")
 add_subdirectory ("Saint-Nec-Engine-Lib/src")
 add_subdirectory ("Saint-Nec-Engine-Test")
 
+# Vérifiez le système d'exploitation
+if(APPLE)
+    message(FATAL_ERROR "Le programme ne peut pas être exécuté sur macOS.")
+endif()
+
+# # Reste de votre configuration CMake ici
