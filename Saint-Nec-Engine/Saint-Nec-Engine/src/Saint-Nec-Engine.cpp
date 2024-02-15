@@ -85,6 +85,11 @@ void draw_imgui(bool& show_demo_window, bool& show_another_window, ImVec4& clear
 
 int main(void)
 {
+    #ifdef __APPLE__
+        std::cerr << "Ecosystem is closed for Apple users." << std::endl;
+        return 1;
+    #endif
+
     GLFWwindow* window;
 
 
