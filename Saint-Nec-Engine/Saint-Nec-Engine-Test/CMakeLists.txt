@@ -7,6 +7,7 @@ add_executable(testCollision "test/testCollision.cpp" )
 add_executable(testInteraction "test/testInteraction.cpp" )
 add_executable(testManager "test/testManager.cpp" )
 add_executable(testCollisionGJK "test/testCollisionGJK.cpp" )
+add_executable(testEPA "test/testEPA.cpp" )
 
 enable_testing()
 
@@ -28,6 +29,10 @@ target_link_libraries(testManager Saint-Nec-Engine-Lib)
 
 target_link_directories(testCollisionGJK PUBLIC ../Saint-nec-Engine-lib)
 target_link_libraries(testCollisionGJK Saint-Nec-Engine-Lib)
+
+target_link_directories(testEPA PUBLIC ../Saint-nec-Engine-lib)
+target_link_libraries(testEPA Saint-Nec-Engine-Lib)
+
 # CATCH ------------------------------------------------------------------------------------------------
 add_subdirectory ("Dependencies")
 target_link_libraries(testBoxCollider CATCH-Lib)
@@ -36,3 +41,4 @@ target_link_libraries(testCollision CATCH-Lib)
 target_link_libraries(testInteraction CATCH-Lib)
 target_link_libraries(testManager CATCH-Lib)
 target_link_libraries(testCollisionGJK CATCH-Lib)
+target_link_libraries(testEPA CATCH-Lib)
