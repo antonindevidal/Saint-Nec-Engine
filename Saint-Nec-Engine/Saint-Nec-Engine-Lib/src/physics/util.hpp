@@ -85,51 +85,91 @@ namespace sne::physics
     glm::vec3 collisionNormal(const SphereCollider &sphere, const BoxCollider &boxe);
     glm::vec3 collisionNormal(const SphereCollider &sphere1, const SphereCollider &sphere2);
 
-    
-
-    template <int N= 4>
-    struct Simplex
+    enum MANAGECOLLISION
     {
-        std::list<glm::vec3> points;
-        int n = 0;
+        NOTHING,
+        COLLIDE,
+        DONTCOLLIDE,
+        OVERLOOP,
+        CHECKNEXTPOINT
+    };
 
-        void addPoint(const glm::vec3 &point)
+
+    class Simplex
+    {
+        std::array<glm::vec3, 4> points;
+        unsigned int n;
+        
+    public:
+        MANAGECOLLISION INFO = MANAGECOLLISION::NOTHING;
+        Simplex() : n(0)
         {
-            points.push_front(point);
-            n++;
-
-            if(n == N)
-                removePoint();
+            for (int i = 0; i < points.size(); i++)
+            {
+                points[i] = {0, 0, 0};
+            }
         }
 
-        void removePoint()
+        void push_front(glm::vec3 point)
         {
-            n--;
-            points.pop_back();
+            points = {point, points[0], points[1], points[2]};
+            n++;
+        }
+
+        glm::vec3 &operator[](unsigned int i)
+        {
+            return points[i];
+        }
+
+        auto size() const
+        {
+            return n;
         }
 
         glm::vec3 getClosestPointToOrigin()
         {
-            auto v = points.begin();
-            float min = norm(*v),
-                curr;
+            glm::vec3 res = points[0];
+            float min = norm(res),
+                  curr;
 
-            for (auto it=++points.begin(); it!=points.end(); ++it)
+            for (int i = 1; i < points.size(); i++)
             {
-                curr = norm(*it);
-                if(curr < min)
+                curr = norm(points[i]);
+                if (curr < min)
                 {
                     min = curr;
-                    v = it;
+                    res = points[i];
                 }
             }
 
-            return *v;
+            return res;
+        }
+
+        void remove(unsigned i)
+        {
+            for (int j = i - 1; j < 3; j++)
+            {
+                if (j >= 0)
+                    points[j] = points[j + 1];
+            }
+
+            n--;
         }
     };
-    
+
     glm::vec3 support(const Collider &shape1, const Collider &shape2, const glm::vec3 &axis);
-    bool gjk(const Collider &A, const Collider &B, const glm::vec3 &initialDirection={1, 0, 0});
+    bool gjk(const Collider &A, const Collider &B);
     bool gjk(const SphereCollider &A, const SphereCollider &B);
+
+    using glm::vec3;
+
+    bool sameDirection(const vec3 &v1, const vec3 &v2);
+    bool line(Simplex &simplex, vec3 &direction);
+
+    bool triangle(Simplex &simplex, vec3 &direction);
+
+    bool tetrahedron(Simplex &simplex, vec3 &direction);
+
+    bool NextSimplex(Simplex &simplex, glm::vec3 &direction);
 
 }

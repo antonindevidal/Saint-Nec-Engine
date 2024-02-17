@@ -119,11 +119,11 @@ namespace sne::physics
                   axis3 = pointA4 - pointA1;
 
         // Normalize
-        axis1 = (norm(axis1) == 0) ? axis1 : axis1/norm(axis1);
-        axis2 = (norm(axis2) == 0) ? axis2 : axis2/norm(axis2);
-        axis3 = (norm(axis3) == 0) ? axis3 : axis3/norm(axis3);
+        axis1 = (norm(axis1) == 0) ? axis1 : axis1 / norm(axis1);
+        axis2 = (norm(axis2) == 0) ? axis2 : axis2 / norm(axis2);
+        axis3 = (norm(axis3) == 0) ? axis3 : axis3 / norm(axis3);
 
-        std::cout<< "LAaaaaaaaaaaa\n";
+        std::cout << "LAaaaaaaaaaaa\n";
         std::cout << " axis 1:" << axis1 << "\n";
         std::cout << " axis 1:" << axis2 << "\n";
         std::cout << " axis 1:" << axis3 << "\n";
@@ -148,12 +148,12 @@ namespace sne::physics
                   pointA2 = v[1].getPointA(),
                   pointA3 = v[2].getPointA(),
                   pointA4 = v[3].getPointA();
-        
+
         // Get directions
         glm::vec3 axis1 = pointA2 - pointA1,
                   axis2 = pointA3 - pointA1,
                   axis3 = pointA4 - pointA1;
-                  
+
         // Normalize
         axis1 /= norm(axis1);
         axis2 /= norm(axis2);
@@ -178,45 +178,215 @@ namespace sne::physics
         // get points on the edge of the shapes in opposite directions
         glm::vec3 p1 = shape1.farthestPoint(axis);
         glm::vec3 p2 = shape2.farthestPoint(-axis);
+
+        std::cout << "\nPoint récupérer:" << p1 << " - " << p2 << "\n";
         // Minkowski Difference
         glm::vec3 p3 = p1 - p2;
 
         return p3;
     }
 
-    bool gjk(const Collider &A, const Collider &B, const glm::vec3 &initialDirection)
+    bool gjk(const Collider &A, const Collider &B)
     {
         Simplex simplex;
-        glm::vec3 direction = initialDirection / norm(initialDirection);
+        glm::vec3 direction = B.getCenter() - A.getCenter();
 
-        simplex.addPoint(support(A, B, initialDirection));
+        std::cout << "ma direction:" << direction << "\n";
+        std::cout << "jinsere: " << support(A, B, direction) << "\n";
+        simplex.push_front(support(A, B, direction));
 
         direction = -direction;
 
-        while (true)
+        // int MAX = 100;
+        int i = 0;
+        while (i < 10)
         {
-            simplex.addPoint(support(A, B,direction));
-            glm::vec3 closestPointToOrigin = simplex.getClosestPointToOrigin();
+            i++;
+            std::cout << "ma direction:" << direction << "\n";
+            glm::vec3 newPoint = support(A, B, direction);
 
-            if (dot(closestPointToOrigin, direction) >= 0.0f)
+            if (dot(newPoint, direction) < 0.0f)
             {
+                std::cout << "!!!!\n";
                 return false; // No collision
             }
 
-            if (dot(closestPointToOrigin, direction) < 0.0f)
+            std::cout << "jinsere: " << newPoint << "\n";
+            simplex.push_front(newPoint);
+
+            if (NextSimplex(simplex, direction))
             {
+                std::cout << "???????????????\n";
                 return true; // Collision detected
             }
 
-            direction = -closestPointToOrigin;
+            switch (simplex.INFO)
+            {
+            case MANAGECOLLISION::COLLIDE:
+                return true;
+            case MANAGECOLLISION::DONTCOLLIDE:
+                return false;
+            case MANAGECOLLISION::OVERLOOP:
+                return false;
+            case MANAGECOLLISION::CHECKNEXTPOINT:
+            {
+                newPoint = support(A, B, direction);
+                std::cout << "FATIGUEEEE:" << norm(-simplex[0]) << " - " << norm(newPoint - simplex[0]) << "\n\n\n";
+                if (norm(-simplex[0]) < norm(newPoint - simplex[0]))
+                {
+                    return true;
+                }
+            }
+            default:
+                break;
+            }
+
+            simplex.INFO = MANAGECOLLISION::NOTHING;
         }
+
+        return true;
     }
 
     bool gjk(const SphereCollider &A, const SphereCollider &B)
     {
         float AB = glm::distance(A.getCenter(), B.getCenter());
-        
+
         return AB > (A.getRadius() + B.getRadius());
+    }
+
+    bool sameDirection(const vec3 &v1, const vec3 &v2)
+    {
+        return dot(v1, v2) > 0;
+    }
+
+    bool line(Simplex &simplex, vec3 &direction)
+    {
+        vec3 a = simplex[0];
+        vec3 b = simplex[1];
+
+        vec3 ab = b - a,
+             ao = -a;
+
+        vec3 newDirection = glm::cross(ab, ao);
+
+        if (norm(newDirection) == 0)
+        {
+            // Colineaire
+            newDirection = {ab[1], ab[0], 0};
+            if (sameDirection(ab, ao))
+            {
+                simplex.INFO = MANAGECOLLISION::CHECKNEXTPOINT;
+                std::cout << "tulululut:" << norm(ab) << " - " << norm(ao) << "\n\n\n";
+                if (norm(ab) >= norm(ao))
+                {
+                    std::cout << "pinpompimpom\n";
+                    simplex.INFO = MANAGECOLLISION::COLLIDE;
+                }
+                direction = newDirection;
+                return false;
+            }
+        }
+
+        std::cout << "same direction ?" << newDirection << "\n";
+        newDirection = glm::cross(newDirection, ao);
+        std::cout << "new: " << newDirection << "-" << direction << "\n";
+
+        // // case direction are the same as before: we pass through origin
+        if (sameDirection(direction, newDirection))
+        {
+            std::cout << "same direction !\n";
+        }
+
+        direction = newDirection;
+        std::cout << "new: " << newDirection << "-" << direction << "\n\n\n";
+
+        return false;
+    }
+
+    bool triangle(Simplex &simplex, vec3 &direction)
+    {
+        vec3 a = simplex[0],
+             b = simplex[1],
+             c = simplex[2];
+
+        vec3 ab = b - a,
+             ac = c - a,
+             ao = -a;
+
+        vec3 abNormal = glm::cross(glm::cross(ab, ao), ab),
+             acNormal = glm::cross(glm::cross(ac, ao), ac);
+
+        if (dot(abNormal, ao) > 0)
+        {
+            if (sameDirection(direction, abNormal))
+            {
+                std::cout << "same direction !\n";
+            }
+            direction = abNormal;
+            return false;
+        }
+        else if (dot(acNormal, ao) > 0)
+        {
+            if (sameDirection(direction, acNormal))
+            {
+                std::cout << "same direction !\n";
+            }
+            direction = acNormal;
+            return false;
+        }
+
+        return true;
+    }
+
+    bool tetrahedron(Simplex &simplex, vec3 &direction)
+    {
+
+        // We check the 4 faces of the tetrahedron
+        // We are looking for a possible new point
+        // closer to origin
+        float maxDot = 0;
+        for (int i = 0; i < 4; i++)
+        {
+            vec3 a = simplex[i],
+                 b = simplex[(i + 1) % 4],
+                 c = simplex[(i + 2) % 4],
+                 ao = -a,
+                 ab = b - a;
+
+            vec3 n = cross(ab, c - a);
+            std::cout << "JERENTRE!!! - " << dot(ao, n) << " - " << norm(n) << "\n";
+            maxDot = (maxDot < norm(n)) ? norm(b) : maxDot;
+            if (norm(n) == 0)
+            {
+                // AB and AC colineaire
+                n = {ab[1], ab[0], 0};
+            }
+
+            if (dot(ao, n) > 0)
+            {
+                // We remove the point wich is not contains by the closest face
+                simplex.remove((i + 3) % 4);
+                direction = n;
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    bool NextSimplex(Simplex &simplex, glm::vec3 &direction)
+    {
+        switch (simplex.size())
+        {
+        case 2:
+            return line(simplex, direction);
+        case 3:
+            return triangle(simplex, direction);
+        case 4:
+            return tetrahedron(simplex, direction);
+        }
+
+        return false;
     }
 
 }

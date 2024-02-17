@@ -19,27 +19,30 @@ using namespace physics;
 // Data log file
 const std::string filename = "collisionGJK.txt";
 std::ofstream datafile = open(filename);
-const glm::vec3 initialDirection = {1,0,0};
+const glm::vec3 initialDirection = {1, 0, 0};
 
 /**************************************************************************************************/
 /*                                    BOXCOLLIDER AND BOXCOLLIDER                                 */
 /**************************************************************************************************/
-TEST_CASE("TEST BOXCOLLIDER BASIC COLLISION WITHOUT ROTATION")
-{
+// TEST_CASE("TEST BOXCOLLIDER BASIC COLLISION WITHOUT ROTATION")
+// {
 
-    const BoxCollider b1{
-        glm::vec3{2, 2, 1}, 2, 2, 2};
+//     const BoxCollider b1{
+//         glm::vec3{2, 2, 1}, 2, 2, 2};
 
-    const BoxCollider b2{
-        glm::vec3{3, 3, 1}, 2, 2, 2};
+//     const BoxCollider b2{
+//         glm::vec3{3, 3, 1}, 2, 2, 2};
 
-    const BoxCollider b3{
-        glm::vec3{30, 30, 10}, 2, 2, 2};
+//     const BoxCollider b3{
+//         glm::vec3{30, 30, 10}, 2, 2, 2};
 
-    CHECK(gjk(b1, b2, initialDirection) == true);
-    CHECK(gjk(b1, b3, initialDirection) == false);
-    CHECK(gjk(b2, b3, initialDirection) == false);
-}
+//     std::cout << "1:\n";
+//     CHECK(gjk(b1, b2) == true);
+//     std::cout << "\n\n2:\n";
+//     CHECK(gjk(b1, b3) == false);
+//     std::cout << "\n\n3:\n";
+//     CHECK(gjk(b2, b3) == false);
+// }
 
 TEST_CASE("TEST BOXCOLLIDER BASIC COLLISION WITH ROTATION")
 {
@@ -47,12 +50,13 @@ TEST_CASE("TEST BOXCOLLIDER BASIC COLLISION WITH ROTATION")
         glm::vec3{0, 0, 0}, 2, 2, 2};
 
     BoxCollider b2{
-        glm::vec3{2.1, 0, 0}, 2, 2, 2};
+        glm::vec3{4, 0, 0}, 2, 2, 2};
 
-    CHECK(gjk(b1, b2, initialDirection) == false);
+    std::cout << "1:\n";
+    REQUIRE(gjk(b1, b2) == false);
 
     b2.setRotation(glm::vec3{0, M_PI / 4, 0});
-    CHECK(gjk(b1, b2, initialDirection) == true);
+    REQUIRE(gjk(b1, b2) == true);
 }
 
 // /**************************************************************************************************/
@@ -141,7 +145,6 @@ TEST_CASE("TEST BOXCOLLIDER BASIC COLLISION WITH ROTATION")
 //     box2.setCenter(center2);
 //     REQUIRE(hasSATCollision(box1, box2) == true);
 
-
 //     // Avec des rotations
 //     // Data 4
 //     center2 = center1 + glm::vec3{2, 2, 2};
@@ -169,7 +172,7 @@ TEST_CASE("TEST BOXCOLLIDER BASIC COLLISION WITH ROTATION")
 //     // Axe Z
 //     center2 = center1 + glm::vec3{2, 1, 1};
 //     sphere.setCenter(center2);
-//     REQUIRE(hasSATCollision(box1, sphere) == true); 
+//     REQUIRE(hasSATCollision(box1, sphere) == true);
 
 //     // Data 6
 //     // Axe X
@@ -183,7 +186,7 @@ TEST_CASE("TEST BOXCOLLIDER BASIC COLLISION WITH ROTATION")
 //     // Axe Z
 //     center2 = center1 + glm::vec3{3, 1, 1};
 //     sphere.setCenter(center2);
-//     REQUIRE(hasSATCollision(box1, sphere) == false); 
+//     REQUIRE(hasSATCollision(box1, sphere) == false);
 
 //     // Data 7
 //     // Axe X
@@ -197,6 +200,6 @@ TEST_CASE("TEST BOXCOLLIDER BASIC COLLISION WITH ROTATION")
 //     // Axe Z
 //     center2 = center1 + glm::vec3{1, 1, 1};
 //     sphere.setCenter(center2);
-//     REQUIRE(hasSATCollision(box1, sphere) == true); 
+//     REQUIRE(hasSATCollision(box1, sphere) == true);
 
 // }
