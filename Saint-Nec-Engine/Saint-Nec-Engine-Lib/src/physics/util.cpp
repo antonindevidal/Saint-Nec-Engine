@@ -395,8 +395,8 @@ namespace sne::physics
 
     bool gjk(const Collider &coll1, const Collider &coll2)
     {
-        vec3 a, b, c, d;                           // Simplex, easier this way without class
-        vec3 search_dir = coll1.getCenter() - coll2.getCenter();
+        glm::vec3 a, b, c, d;                           // Simplex, easier this way without class
+        glm::vec3 search_dir = coll1.getCenter() - coll2.getCenter();
 
         c = support(coll1, coll2, search_dir);
         search_dir = -c; // search in direction of origin
@@ -411,12 +411,12 @@ namespace sne::physics
 
         search_dir = cross(cross(c - b, -b), c - b); //get normal to line (sens of origin)
         
-        if (search_dir == vec3(0, 0, 0))
+        if (search_dir == ORIGIN)
         { 
             // origin is on this line segment
-            search_dir = cross(c - b, vec3(1, 0, 0)); // normal with x-axis
-            if (search_dir == vec3(0, 0, 0))
-                search_dir = cross(c - b, vec3(0, 0, -1)); // normal with z-axis
+            search_dir = cross(c - b, glm::vec3(1, 0, 0)); // normal with x-axis
+            if (search_dir == glm::vec3(0, 0, 0))
+                search_dir = cross(c - b, glm::vec3(0, 0, -1)); // normal with z-axis
         }
 
         int simp_dim = 2;
@@ -444,7 +444,7 @@ namespace sne::physics
     }
 
     // Triangle case
-    void update_simplex3(vec3 &a, vec3 &b, vec3 &c, vec3 &d, int &simp_dim, vec3 &search_dir)
+    void update_simplex3(glm::vec3 &a, glm::vec3 &b, glm::vec3 &c, glm::vec3 &d, int &simp_dim, glm::vec3 &search_dir)
     {
         /* Required winding order:
         //  b
@@ -455,8 +455,8 @@ namespace sne::physics
         //  | /
         //  c
         */
-        vec3 n = cross(b - a, c - a); // triangle's normal
-        vec3 AO = -a;                 // direction to origin
+        glm::vec3 n = cross(b - a, c - a); // triangle's normal
+        glm::vec3 AO = -a;                 // direction to origin
 
         // Determine which feature is closest to origin, make that the new simplex
 
@@ -495,17 +495,17 @@ namespace sne::physics
     }
 
     // Tetrahedral case
-    bool update_simplex4(vec3 &a, vec3 &b, vec3 &c, vec3 &d, int &simp_dim, vec3 &search_dir)
+    bool update_simplex4(glm::vec3 &a, glm::vec3 &b, glm::vec3 &c, glm::vec3 &d, int &simp_dim, glm::vec3 &search_dir)
     {
         // a is the summit of the pyramid and BCD is the base
         // We know a priori that origin is above BCD and below a
 
         // Get normals of three new faces
-        vec3 ABC = cross(b - a, c - a);
-        vec3 ACD = cross(c - a, d - a);
-        vec3 ADB = cross(d - a, b - a);
+        glm::vec3 ABC = cross(b - a, c - a);
+        glm::vec3 ACD = cross(c - a, d - a);
+        glm::vec3 ADB = cross(d - a, b - a);
 
-        vec3 AO = -a; // dir to origin
+        glm::vec3 AO = -a; // dir to origin
         simp_dim = 3; // hoisting this just cause
 
         if (dot(ABC, AO) > 0)

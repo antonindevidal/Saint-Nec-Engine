@@ -16,7 +16,7 @@
 
 namespace sne::physics
 {
-
+    const int GJK_MAX_NUM_ITERATIONS = 100;
     const glm::vec3 ORIGIN{0, 0, 0};
 
     // A renommer => confusion ?
@@ -85,93 +85,10 @@ namespace sne::physics
     glm::vec3 collisionNormal(const SphereCollider &sphere, const BoxCollider &boxe);
     glm::vec3 collisionNormal(const SphereCollider &sphere1, const SphereCollider &sphere2);
 
-    enum MANAGECOLLISION
-    {
-        NOTHING,
-        COLLIDE,
-        DONTCOLLIDE,
-        OVERLOOP,
-        CHECKNEXTPOINT
-    };
-
-    using glm::vec3;
-
-    class Simplex
-    {
-        std::array<glm::vec3, 4> points;
-        unsigned int n;
-
-    public:
-        MANAGECOLLISION INFO = MANAGECOLLISION::NOTHING;
-        Simplex() : n(0)
-        {
-            for (int i = 0; i < points.size(); i++)
-            {
-                points[i] = {0, 0, 0};
-            }
-        }
-
-        void push_front(glm::vec3 point)
-        {
-            points = {point, points[0], points[1], points[2]};
-            n++;
-        }
-
-        bool isPresent(const glm::vec3 &newPoint)
-        {
-            for (auto p : points)
-                if (newPoint[0] == p[0] && newPoint[1] == p[1] && newPoint[2] == p[2])
-                    return true;
-
-            return false;
-        }
-
-        glm::vec3 &operator[](unsigned int i)
-        {
-            return points[i];
-        }
-
-        auto size() const
-        {
-            return n;
-        }
-
-        glm::vec3 getClosestPointToOrigin()
-        {
-            glm::vec3 res = points[0];
-            float min = norm(res),
-                  curr;
-
-            for (int i = 1; i < points.size(); i++)
-            {
-                curr = norm(points[i]);
-                if (curr < min)
-                {
-                    min = curr;
-                    res = points[i];
-                }
-            }
-
-            return res;
-        }
-
-        void remove(unsigned i)
-        {
-            for (int j = i - 1; j < 3; j++)
-            {
-                if (j >= 0)
-                    points[j] = points[j + 1];
-            }
-
-            n--;
-        }
-    };
-
-    const int GJK_MAX_NUM_ITERATIONS = 100;
     glm::vec3 support(const Collider &shape1, const Collider &shape2, const glm::vec3 &axis);
     bool gjk(const Collider &coll1, const Collider &coll2);
-    void update_simplex3(vec3 &a, vec3 &b, vec3 &c, vec3 &d, int &simp_dim, vec3 &search_dir);
-    bool update_simplex4(vec3 &a, vec3 &b, vec3 &c, vec3 &d, int &simp_dim, vec3 &search_dir);
+    void update_simplex3(glm::vec3 &a, glm::vec3 &b, glm::vec3 &c, glm::vec3 &d, int &simp_dim, glm::vec3 &search_dir);
+    bool update_simplex4(glm::vec3 &a, glm::vec3 &b, glm::vec3 &c, glm::vec3 &d, int &simp_dim, glm::vec3 &search_dir);
     // bool gjk(const Collider &A, const Collider &B);
     // bool gjk(const SphereCollider &A, const SphereCollider &B);
     // bool sameDirection(const vec3 &v1, const vec3 &v2);
@@ -180,6 +97,85 @@ namespace sne::physics
     // bool tetrahedron(Simplex &simplex, vec3 &direction);
     // bool NextSimplex(Simplex &simplex, glm::vec3 &direction);
 
-    
+    //  enum MANAGECOLLISION
+    // {
+    //     NOTHING,
+    //     COLLIDE,
+    //     DONTCOLLIDE,
+    //     OVERLOOP,
+    //     CHECKNEXTPOINT
+    // };
 
+    // class Simplex
+    // {
+    //     std::array<glm::vec3, 4> points;
+    //     unsigned int n;
+
+    // public:
+    //     MANAGECOLLISION INFO = MANAGECOLLISION::NOTHING;
+    //     Simplex() : n(0)
+    //     {
+    //         for (int i = 0; i < points.size(); i++)
+    //         {
+    //             points[i] = {0, 0, 0};
+    //         }
+    //     }
+
+    //     void push_front(glm::vec3 point)
+    //     {
+    //         points = {point, points[0], points[1], points[2]};
+    //         n++;
+    //     }
+
+    //     bool isPresent(const glm::vec3 &newPoint)
+    //     {
+    //         for (auto p : points)
+    //             if (newPoint[0] == p[0] && newPoint[1] == p[1] && newPoint[2] == p[2])
+    //                 return true;
+
+    //         return false;
+    //     }
+
+    //     glm::vec3 &operator[](unsigned int i)
+    //     {
+    //         return points[i];
+    //     }
+
+    //     auto size() const
+    //     {
+    //         return n;
+    //     }
+
+    //     glm::vec3 getClosestPointToOrigin()
+    //     {
+    //         glm::vec3 res = points[0];
+    //         float min = norm(res),
+    //               curr;
+
+    //         for (int i = 1; i < points.size(); i++)
+    //         {
+    //             curr = norm(points[i]);
+    //             if (curr < min)
+    //             {
+    //                 min = curr;
+    //                 res = points[i];
+    //             }
+    //         }
+
+    //         return res;
+    //     }
+
+    //     void remove(unsigned i)
+    //     {
+    //         for (int j = i - 1; j < 3; j++)
+    //         {
+    //             if (j >= 0)
+    //                 points[j] = points[j + 1];
+    //         }
+
+    //         n--;
+    //     }
+    // };
+
+    
 }
