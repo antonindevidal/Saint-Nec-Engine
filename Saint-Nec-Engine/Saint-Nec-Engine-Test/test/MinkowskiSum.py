@@ -4,7 +4,7 @@ import numpy as np
 import matplotlib.pyplot as plt 
 from mpl_toolkits.mplot3d import Axes3D
 
-_2D = True
+_2D = False
 TAILLE = 2
 
 # 2D parameters
@@ -13,7 +13,7 @@ FIGURE_2 = (4,0)
 
 # 3D parameters
 CENTER1 = (0, 0, 0)
-CENTER2 = (4, 0, 0)
+CENTER2 = (1.5, 0, 0)
 
 if _2D:    
     POINTS = set()

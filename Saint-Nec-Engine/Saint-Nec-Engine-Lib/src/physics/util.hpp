@@ -86,7 +86,7 @@ namespace sne::physics
     glm::vec3 collisionNormal(const SphereCollider &sphere1, const SphereCollider &sphere2);
 
     glm::vec3 support(const Collider &shape1, const Collider &shape2, const glm::vec3 &axis);
-    bool gjk(const Collider &coll1, const Collider &coll2);
+    bool gjk(const Collider &coll1, const Collider &coll2, glm::vec3 &normal);
     void update_simplex3(glm::vec3 &a, glm::vec3 &b, glm::vec3 &c, glm::vec3 &d, int &simp_dim, glm::vec3 &search_dir);
     bool update_simplex4(glm::vec3 &a, glm::vec3 &b, glm::vec3 &c, glm::vec3 &d, int &simp_dim, glm::vec3 &search_dir);
     // bool gjk(const Collider &A, const Collider &B);
@@ -177,5 +177,11 @@ namespace sne::physics
     //     }
     // };
 
-    
+    // Expanding Polytope Algorithm
+    // Find minimum translation vector to resolve collision
+    #define EPA_TOLERANCE 1E-1
+    #define EPA_MAX_NUM_FACES 6
+    #define EPA_MAX_NUM_LOOSE_EDGES 32
+    #define EPA_MAX_NUM_ITERATIONS 64
+    glm::vec3 EPA(glm::vec3 a, glm::vec3 b, glm::vec3 c, glm::vec3 d, const Collider &coll1, const Collider &coll2);
 }

@@ -24,6 +24,7 @@ namespace sne::physics
      * s
      */
     using Force = glm::vec3;
+
     class PhysicObject : public Component
     {
         glm::vec3 _acceleration{0, -9.81, 0};
@@ -82,6 +83,10 @@ namespace sne::physics
         }
         /************************************************************************/
 
+        void translate(const glm::vec3 &v)
+        {
+            _position += v;
+        }
         /**
          * @brief applies a Force on the object
          * This one must be a constante force such as gravity

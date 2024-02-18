@@ -100,18 +100,18 @@ namespace sne::physics
         return v;
     }
 
-    bool BoxCollider::collide(const Collider *c) const
+    bool BoxCollider::collide(const Collider *c, glm::vec3& normal) const
     {
-        return c->collide(*this);
+        return c->collide(*this, normal);
     }
 
-    bool BoxCollider::collide(const SphereCollider &s) const
+    bool BoxCollider::collide(const SphereCollider &s, glm::vec3& normal) const
     {
-        return hasSATCollision(*this, s);
+        return gjk(*this, s, normal);
     }
-    bool BoxCollider::collide(const BoxCollider &b) const
+    bool BoxCollider::collide(const BoxCollider &b, glm::vec3& normal) const
     {
-        return gjk(*this, b);
+        return gjk(*this, b, normal);
     }
 
     bool BoxCollider::intersection(const Collider *c, const glm::vec3 &axis) const

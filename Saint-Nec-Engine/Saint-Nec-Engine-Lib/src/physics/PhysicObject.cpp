@@ -117,83 +117,88 @@ namespace sne::physics
         if (!_collider || !obj._collider)
             throw std::exception_ptr();
 
-        
-
+        glm::vec3 normal;
         try
         {
-            if ((isFix && obj.isFix) || !_collider->collide(obj._collider))
+            if ((isFix && obj.isFix) || !_collider->collide(obj._collider, normal))
                 return;
         }
-        catch (const SATIllegalUseException &e)
-        {
-            if (parent == nullptr)
-                std::cout << " ";
-            else
-                std::cout << e.what() << " " << parent->getName() << "\n";
-        }
+        // catch (const SATIllegalUseException &e)
+        // {
+        //     if (parent == nullptr)
+        //         std::cout << " ";
+        //     else
+        //         std::cout << e.what() << " " << parent->getName() << "\n";
+        // }
         catch (const std::exception &e)
         {
             std::cout << e.what() << " " << parent->getName() << "\n";
             throw std::exception();
         }
+        
+        
 
 
         _collideCounter++;
         obj._collideCounter++;
-        
+
         if (obj.isFix)
         {
-            glm::vec3 axis = _position - obj._position; // To update with impact point
-            setVelocity(norm(_velocity) * _amortissement * axis);
+            std::cout << "fix: " << "p1" << "\n";
+            translate(normal);
+            // glm::vec3 axis = _position - obj._position; // To update with impact point
+            // setVelocity(norm(_velocity) * _amortissement * axis);
 
-            float min = _collider->getMin(axis),
-                  max = _collider->getMax(axis),
-                  tmp = obj._collider->getMin(axis);
-            float dist = 0;
-            if (tmp < min)
-            {
-                tmp = obj._collider->getMax(axis);
-                dist = min - tmp;
-            }
-            else
-            {
-                dist = tmp - max;
-            }
+            // float min = _collider->getMin(axis),
+            //       max = _collider->getMax(axis),
+            //       tmp = obj._collider->getMin(axis);
+            // float dist = 0;
+            // if (tmp < min)
+            // {
+            //     tmp = obj._collider->getMax(axis);
+            //     dist = min - tmp;
+            // }
+            // else
+            // {
+            //     dist = tmp - max;
+            // }
 
-            _position -= dist * (axis / norm(axis));
-
+            // _position -= dist * (axis / norm(axis));
         }
         else if (isFix)
         {
-            glm::vec3 axis = obj._position - _position;
-            obj.setVelocity(norm(obj._velocity) * obj._amortissement * axis);
+            std::cout << "fix: " << "p0" << "\n";
+            std::cout << "normal found:" << normal << "\n";
+            obj.translate(-normal);
+            // glm::vec3 axis = obj._position - _position;
+            // obj.setVelocity(norm(obj._velocity) * obj._amortissement * axis);
 
-            float min = obj._collider->getMin(axis),
-                  max = obj._collider->getMax(axis),
-                  tmp = _collider->getMin(axis);
-            float dist = 0;
-            if (tmp < min)
-            {
-                tmp = _collider->getMax(axis);
-                dist = min - tmp;
-            }
-            else
-            {
-                dist = tmp - max;
-            }
+            // float min = obj._collider->getMin(axis),
+            //       max = obj._collider->getMax(axis),
+            //       tmp = _collider->getMin(axis);
+            // float dist = 0;
+            // if (tmp < min)
+            // {
+            //     tmp = _collider->getMax(axis);
+            //     dist = min - tmp;
+            // }
+            // else
+            // {
+            //     dist = tmp - max;
+            // }
 
-            obj._position -= dist * (axis / norm(axis));
+            // obj._position -= dist * (axis / norm(axis));
         }
         else
         {
             addImpulsion(*this, obj);
         }
 
-        std::cout << "Collision " << getName() << " - " << obj.getName() << "\n";
-        if (getName() == "cube1" || getName() == "cube2")
-            std::cout << "Nombre de collision " << getName() << ": " << numberOfCollisions() << "\n";
-        if (obj.getName() == "cube1" || obj.getName() == "cube2")
-            std::cout << "Nombre de collision " << obj.getName() << ": " << obj.numberOfCollisions() << "\n";
+        // std::cout << "Collision " << getName() << " - " << obj.getName() << "\n";
+        // if (getName() == "cube1" || getName() == "cube2")
+        //     std::cout << "Nombre de collision " << getName() << ": " << numberOfCollisions() << "\n";
+        // if (obj.getName() == "cube1" || obj.getName() == "cube2")
+        //     std::cout << "Nombre de collision " << obj.getName() << ": " << obj.numberOfCollisions() << "\n";
     }
 
     void addImpulsion(PhysicObject &o1, PhysicObject &o2)
@@ -218,7 +223,6 @@ namespace sne::physics
         // Vector orientation
         // Considering line between 2 centers
         // TO UPDATE: considering plan where we touch the other and calcul with normal and angle ?
-
 
         // Get the normal and old velocity direction
         // glm::vec3 normal = o2.getPosition() - o1.getPosition(),

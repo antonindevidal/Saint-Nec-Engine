@@ -37,9 +37,9 @@ namespace sne::physics
          */
         const double getRadius() const;
 
-        bool collide(const Collider *) const override;
-        bool collide(const SphereCollider &) const override;
-        bool collide(const BoxCollider &) const override;
+        bool collide(const Collider *, glm::vec3& normal) const override;
+        bool collide(const SphereCollider &, glm::vec3& normal) const override;
+        bool collide(const BoxCollider &, glm::vec3& normal) const override;
 
         /**
          * @brief return true if it has an intersection with other object on axis 
