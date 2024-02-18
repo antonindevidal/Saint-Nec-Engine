@@ -140,5 +140,5 @@ namespace sne::physics
         }
     };
 
-    void addImpulsion(PhysicObject &o1, PhysicObject &o2);
+    void addImpulsion(PhysicObject &o1, PhysicObject &o2, glm::vec3 &normal);
 }
