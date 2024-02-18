@@ -57,13 +57,13 @@ namespace sne::physics
 
     glm::vec3 SphereCollider::farthestPoint(const glm::vec3 &axis) const
     {
-        // Normalize axis
-        glm::vec3 axisNormalized = axis / norm(axis);
 
-        // Project center on the axis
-        float valueOnAxis = dot(_center, axis);
+        // Normalize axis
+        glm::vec3 directionNormalized = glm::normalize(axis);
 
         // Incrementing with _radius
-        return (float) _radius * axisNormalized + valueOnAxis * axis;
+        glm::vec3 surfacePoint = _center + (float)_radius * directionNormalized;
+
+        return surfacePoint;
     }
 }

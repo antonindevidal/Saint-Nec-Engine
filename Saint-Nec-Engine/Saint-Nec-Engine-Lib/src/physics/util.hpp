@@ -94,12 +94,13 @@ namespace sne::physics
         CHECKNEXTPOINT
     };
 
+    using glm::vec3;
 
     class Simplex
     {
         std::array<glm::vec3, 4> points;
         unsigned int n;
-        
+
     public:
         MANAGECOLLISION INFO = MANAGECOLLISION::NOTHING;
         Simplex() : n(0)
@@ -114,6 +115,15 @@ namespace sne::physics
         {
             points = {point, points[0], points[1], points[2]};
             n++;
+        }
+
+        bool isPresent(const glm::vec3 &newPoint)
+        {
+            for (auto p : points)
+                if (newPoint[0] == p[0] && newPoint[1] == p[1] && newPoint[2] == p[2])
+                    return true;
+
+            return false;
         }
 
         glm::vec3 &operator[](unsigned int i)
@@ -157,19 +167,19 @@ namespace sne::physics
         }
     };
 
+    const int GJK_MAX_NUM_ITERATIONS = 100;
     glm::vec3 support(const Collider &shape1, const Collider &shape2, const glm::vec3 &axis);
-    bool gjk(const Collider &A, const Collider &B);
-    bool gjk(const SphereCollider &A, const SphereCollider &B);
+    bool gjk(const Collider &coll1, const Collider &coll2);
+    void update_simplex3(vec3 &a, vec3 &b, vec3 &c, vec3 &d, int &simp_dim, vec3 &search_dir);
+    bool update_simplex4(vec3 &a, vec3 &b, vec3 &c, vec3 &d, int &simp_dim, vec3 &search_dir);
+    // bool gjk(const Collider &A, const Collider &B);
+    // bool gjk(const SphereCollider &A, const SphereCollider &B);
+    // bool sameDirection(const vec3 &v1, const vec3 &v2);
+    // bool line(Simplex &simplex, vec3 &direction);
+    // bool triangle(Simplex &simplex, vec3 &direction);
+    // bool tetrahedron(Simplex &simplex, vec3 &direction);
+    // bool NextSimplex(Simplex &simplex, glm::vec3 &direction);
 
-    using glm::vec3;
-
-    bool sameDirection(const vec3 &v1, const vec3 &v2);
-    bool line(Simplex &simplex, vec3 &direction);
-
-    bool triangle(Simplex &simplex, vec3 &direction);
-
-    bool tetrahedron(Simplex &simplex, vec3 &direction);
-
-    bool NextSimplex(Simplex &simplex, glm::vec3 &direction);
+    
 
 }

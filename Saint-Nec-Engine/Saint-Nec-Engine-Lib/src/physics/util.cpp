@@ -179,214 +179,360 @@ namespace sne::physics
         glm::vec3 p1 = shape1.farthestPoint(axis);
         glm::vec3 p2 = shape2.farthestPoint(-axis);
 
-        std::cout << "\nPoint récupérer:" << p1 << " - " << p2 << "\n";
         // Minkowski Difference
         glm::vec3 p3 = p1 - p2;
 
         return p3;
     }
 
-    bool gjk(const Collider &A, const Collider &B)
+    // bool gjk(const Collider &A, const Collider &B)
+    // {
+    //     Simplex simplex;
+    //     glm::vec3 direction = B.getCenter() - A.getCenter();
+
+    //     std::cout << "ma direction:" << direction << "\n";
+    //     std::cout << "jinsere: " << support(A, B, direction) << "\n";
+    //     simplex.push_front(support(A, B, direction));
+
+    //     direction = -direction;
+
+    //     // int MAX = 100;
+    //     int i = 0;
+    //     while (i < 100)
+    //     {
+    //         i++;
+    //         std::cout << "ma direction:" << direction << "\n";
+    //         glm::vec3 newPoint = support(A, B, direction);
+
+    //         if (dot(newPoint, direction) < 0.0f)
+    //         {
+    //             std::cout << "!!!!\n";
+    //             return false; // No collision
+    //         }
+
+    //         std::cout << "jinsere: " << newPoint << "\n";
+    //         if(simplex.isPresent(newPoint))
+    //             return false; // loop
+            
+    //         simplex.push_front(newPoint);
+
+    //         if (NextSimplex(simplex, direction))
+    //         {
+    //             std::cout << "???????????????\n";
+    //             return true; // Collision detected
+    //         }
+
+    //         switch (simplex.INFO)
+    //         {
+    //         case MANAGECOLLISION::COLLIDE:
+    //             return true;
+    //         case MANAGECOLLISION::DONTCOLLIDE:
+    //             return false;
+    //         case MANAGECOLLISION::OVERLOOP:
+    //             return false;
+    //         case MANAGECOLLISION::CHECKNEXTPOINT:
+    //         {
+    //             newPoint = support(A, B, direction);
+    //             std::cout << "FATIGUEEEE:" << norm(-simplex[0]) << " - " << norm(newPoint - simplex[0]) << "\n\n\n";
+    //             if (norm(-simplex[0]) < norm(newPoint - simplex[0]))
+    //             {
+    //                 return true;
+    //             }
+    //         }
+    //         default:
+    //             break;
+    //         }
+
+    //         simplex.INFO = MANAGECOLLISION::NOTHING;
+    //     }
+
+    //     return true;
+    // }
+
+    // bool gjk(const SphereCollider &A, const SphereCollider &B)
+    // {
+
+    //     float AB = glm::distance(A.getCenter(), B.getCenter());
+
+    //     return AB < (A.getRadius() + B.getRadius());
+    // }
+
+    // bool sameDirection(const vec3 &v1, const vec3 &v2)
+    // {
+    //     return dot(v1, v2) > 0;
+    // }
+
+    // bool line(Simplex &simplex, vec3 &direction)
+    // {
+    //     vec3 a = simplex[0];
+    //     vec3 b = simplex[1];
+
+    //     vec3 ab = b - a,
+    //          ao = -a;
+
+    //     vec3 newDirection = glm::cross(ab, ao);
+
+    //     if (norm(newDirection) == 0)
+    //     {
+    //         // Colineaire
+    //         newDirection = {ab[1], ab[0], 0};
+    //         if (sameDirection(ab, ao))
+    //         {
+    //             simplex.INFO = MANAGECOLLISION::CHECKNEXTPOINT;
+    //             std::cout << "tulululut:" << norm(ab) << " - " << norm(ao) << "\n\n\n";
+    //             if (norm(ab) >= norm(ao))
+    //             {
+    //                 std::cout << "pinpompimpom\n";
+    //                 simplex.INFO = MANAGECOLLISION::COLLIDE;
+    //             }
+    //             direction = newDirection;
+    //             return false;
+    //         }
+    //     }
+
+    //     std::cout << "same direction ?" << newDirection << "\n";
+    //     newDirection = glm::cross(newDirection, ao);
+    //     std::cout << "new: " << newDirection << "-" << direction << "\n";
+
+    //     // // case direction are the same as before: we pass through origin
+    //     if (sameDirection(direction, newDirection))
+    //     {
+    //         std::cout << "same direction !\n";
+    //     }
+
+    //     direction = newDirection;
+    //     std::cout << "new: " << newDirection << "-" << direction << "\n\n\n";
+
+    //     return false;
+    // }
+
+    // bool triangle(Simplex &simplex, vec3 &direction)
+    // {
+    //     vec3 a = simplex[0],
+    //          b = simplex[1],
+    //          c = simplex[2];
+
+    //     vec3 ab = b - a,
+    //          ac = c - a,
+    //          ao = -a;
+
+    //     vec3 abNormal = glm::cross(glm::cross(ab, ao), ab),
+    //          acNormal = glm::cross(glm::cross(ac, ao), ac);
+
+    //     if (dot(abNormal, ao) > 0)
+    //     {
+    //         if (sameDirection(direction, abNormal))
+    //         {
+    //             std::cout << "same direction !\n";
+    //         }
+    //         direction = abNormal;
+    //         return false;
+    //     }
+    //     else if (dot(acNormal, ao) > 0)
+    //     {
+    //         if (sameDirection(direction, acNormal))
+    //         {
+    //             std::cout << "same direction !\n";
+    //         }
+    //         direction = acNormal;
+    //         return false;
+    //     }
+
+    //     return true;
+    // }
+
+    // bool tetrahedron(Simplex &simplex, vec3 &direction)
+    // {
+
+    //     // We check the 4 faces of the tetrahedron
+    //     // We are looking for a possible new point
+    //     // closer to origin
+    //     float maxDot = 0;
+    //     for (int i = 0; i < 4; i++)
+    //     {
+    //         vec3 a = simplex[i],
+    //              b = simplex[(i + 1) % 4],
+    //              c = simplex[(i + 2) % 4],
+    //              ao = -a,
+    //              ab = b - a;
+
+    //         vec3 n = cross(ab, c - a);
+    //         std::cout << "JERENTRE!!! - " << dot(ao, n) << " - " << norm(n) << "\n";
+    //         maxDot = (maxDot < norm(n)) ? norm(b) : maxDot;
+    //         if (norm(n) == 0)
+    //         {
+    //             // AB and AC colineaire
+    //             n = {ab[1], ab[0], 0};
+    //         }
+
+    //         if (dot(ao, n) > 0)
+    //         {
+    //             // We remove the point wich is not contains by the closest face
+    //             simplex.remove((i + 3) % 4);
+    //             direction = n;
+    //             return false;
+    //         }
+    //     }
+
+    //     return true;
+    // }
+
+    // bool NextSimplex(Simplex &simplex, glm::vec3 &direction)
+    // {
+    //     switch (simplex.size())
+    //     {
+    //     case 2:
+    //         return line(simplex, direction);
+    //     case 3:
+    //         return triangle(simplex, direction);
+    //     case 4:
+    //         return tetrahedron(simplex, direction);
+    //     }
+
+    //     return false;
+    // }
+
+
+    bool gjk(const Collider &coll1, const Collider &coll2)
     {
-        Simplex simplex;
-        glm::vec3 direction = B.getCenter() - A.getCenter();
+        vec3 a, b, c, d;                           // Simplex, easier this way without class
+        vec3 search_dir = coll1.getCenter() - coll2.getCenter();
 
-        std::cout << "ma direction:" << direction << "\n";
-        std::cout << "jinsere: " << support(A, B, direction) << "\n";
-        simplex.push_front(support(A, B, direction));
+        c = support(coll1, coll2, search_dir);
+        search_dir = -c; // search in direction of origin
 
-        direction = -direction;
-
-        // int MAX = 100;
-        int i = 0;
-        while (i < 10)
+        b = support(coll1, coll2, search_dir);
+        
+        if (dot(b, search_dir) < 0)
         {
-            i++;
-            std::cout << "ma direction:" << direction << "\n";
-            glm::vec3 newPoint = support(A, B, direction);
+            // Origin is not contianed
+            return false;
+        } 
 
-            if (dot(newPoint, direction) < 0.0f)
+        search_dir = cross(cross(c - b, -b), c - b); //get normal to line (sens of origin)
+        
+        if (search_dir == vec3(0, 0, 0))
+        { 
+            // origin is on this line segment
+            search_dir = cross(c - b, vec3(1, 0, 0)); // normal with x-axis
+            if (search_dir == vec3(0, 0, 0))
+                search_dir = cross(c - b, vec3(0, 0, -1)); // normal with z-axis
+        }
+
+        int simp_dim = 2;
+
+        for (int iterations = 0; iterations < GJK_MAX_NUM_ITERATIONS; iterations++)
+        {
+            a = support(coll1, coll2, search_dir);
+            if (dot(a, search_dir) < 0)
             {
-                std::cout << "!!!!\n";
-                return false; // No collision
+                // origin not contained
+                return false;
             }
 
-            std::cout << "jinsere: " << newPoint << "\n";
-            simplex.push_front(newPoint);
-
-            if (NextSimplex(simplex, direction))
+            simp_dim++;
+            if (simp_dim == 3)
             {
-                std::cout << "???????????????\n";
-                return true; // Collision detected
+                update_simplex3(a, b, c, d, simp_dim, search_dir);
             }
-
-            switch (simplex.INFO)
+            else if (update_simplex4(a, b, c, d, simp_dim, search_dir))
             {
-            case MANAGECOLLISION::COLLIDE:
                 return true;
-            case MANAGECOLLISION::DONTCOLLIDE:
-                return false;
-            case MANAGECOLLISION::OVERLOOP:
-                return false;
-            case MANAGECOLLISION::CHECKNEXTPOINT:
-            {
-                newPoint = support(A, B, direction);
-                std::cout << "FATIGUEEEE:" << norm(-simplex[0]) << " - " << norm(newPoint - simplex[0]) << "\n\n\n";
-                if (norm(-simplex[0]) < norm(newPoint - simplex[0]))
-                {
-                    return true;
-                }
             }
-            default:
-                break;
-            }
-
-            simplex.INFO = MANAGECOLLISION::NOTHING;
-        }
-
-        return true;
-    }
-
-    bool gjk(const SphereCollider &A, const SphereCollider &B)
-    {
-        float AB = glm::distance(A.getCenter(), B.getCenter());
-
-        return AB > (A.getRadius() + B.getRadius());
-    }
-
-    bool sameDirection(const vec3 &v1, const vec3 &v2)
-    {
-        return dot(v1, v2) > 0;
-    }
-
-    bool line(Simplex &simplex, vec3 &direction)
-    {
-        vec3 a = simplex[0];
-        vec3 b = simplex[1];
-
-        vec3 ab = b - a,
-             ao = -a;
-
-        vec3 newDirection = glm::cross(ab, ao);
-
-        if (norm(newDirection) == 0)
-        {
-            // Colineaire
-            newDirection = {ab[1], ab[0], 0};
-            if (sameDirection(ab, ao))
-            {
-                simplex.INFO = MANAGECOLLISION::CHECKNEXTPOINT;
-                std::cout << "tulululut:" << norm(ab) << " - " << norm(ao) << "\n\n\n";
-                if (norm(ab) >= norm(ao))
-                {
-                    std::cout << "pinpompimpom\n";
-                    simplex.INFO = MANAGECOLLISION::COLLIDE;
-                }
-                direction = newDirection;
-                return false;
-            }
-        }
-
-        std::cout << "same direction ?" << newDirection << "\n";
-        newDirection = glm::cross(newDirection, ao);
-        std::cout << "new: " << newDirection << "-" << direction << "\n";
-
-        // // case direction are the same as before: we pass through origin
-        if (sameDirection(direction, newDirection))
-        {
-            std::cout << "same direction !\n";
-        }
-
-        direction = newDirection;
-        std::cout << "new: " << newDirection << "-" << direction << "\n\n\n";
-
+        } 
         return false;
     }
 
-    bool triangle(Simplex &simplex, vec3 &direction)
+    // Triangle case
+    void update_simplex3(vec3 &a, vec3 &b, vec3 &c, vec3 &d, int &simp_dim, vec3 &search_dir)
     {
-        vec3 a = simplex[0],
-             b = simplex[1],
-             c = simplex[2];
+        /* Required winding order:
+        //  b
+        //  | \
+        //  |   \
+        //  |    a
+        //  |   /
+        //  | /
+        //  c
+        */
+        vec3 n = cross(b - a, c - a); // triangle's normal
+        vec3 AO = -a;                 // direction to origin
 
-        vec3 ab = b - a,
-             ac = c - a,
-             ao = -a;
+        // Determine which feature is closest to origin, make that the new simplex
 
-        vec3 abNormal = glm::cross(glm::cross(ab, ao), ab),
-             acNormal = glm::cross(glm::cross(ac, ao), ac);
-
-        if (dot(abNormal, ao) > 0)
-        {
-            if (sameDirection(direction, abNormal))
-            {
-                std::cout << "same direction !\n";
-            }
-            direction = abNormal;
-            return false;
+        simp_dim = 2;
+        if (dot(cross(b - a, n), AO) > 0)
+        { // Closest to edge AB
+            c = a;
+            // simp_dim = 2;
+            search_dir = cross(cross(b - a, AO), b - a);
+            return;
         }
-        else if (dot(acNormal, ao) > 0)
-        {
-            if (sameDirection(direction, acNormal))
-            {
-                std::cout << "same direction !\n";
-            }
-            direction = acNormal;
-            return false;
+        if (dot(cross(n, c - a), AO) > 0)
+        { // Closest to edge AC
+            b = a;
+            // simp_dim = 2;
+            search_dir = cross(cross(c - a, AO), c - a);
+            return;
         }
 
-        return true;
+        simp_dim = 3;
+        if (dot(n, AO) > 0)
+        { // Above triangle
+            d = c;
+            c = b;
+            b = a;
+            // simp_dim = 3;
+            search_dir = n;
+            return;
+        }
+        // else //Below triangle
+        d = b;
+        b = a;
+        // simp_dim = 3;
+        search_dir = -n;
+        return;
     }
 
-    bool tetrahedron(Simplex &simplex, vec3 &direction)
+    // Tetrahedral case
+    bool update_simplex4(vec3 &a, vec3 &b, vec3 &c, vec3 &d, int &simp_dim, vec3 &search_dir)
     {
+        // a is the summit of the pyramid and BCD is the base
+        // We know a priori that origin is above BCD and below a
 
-        // We check the 4 faces of the tetrahedron
-        // We are looking for a possible new point
-        // closer to origin
-        float maxDot = 0;
-        for (int i = 0; i < 4; i++)
-        {
-            vec3 a = simplex[i],
-                 b = simplex[(i + 1) % 4],
-                 c = simplex[(i + 2) % 4],
-                 ao = -a,
-                 ab = b - a;
+        // Get normals of three new faces
+        vec3 ABC = cross(b - a, c - a);
+        vec3 ACD = cross(c - a, d - a);
+        vec3 ADB = cross(d - a, b - a);
 
-            vec3 n = cross(ab, c - a);
-            std::cout << "JERENTRE!!! - " << dot(ao, n) << " - " << norm(n) << "\n";
-            maxDot = (maxDot < norm(n)) ? norm(b) : maxDot;
-            if (norm(n) == 0)
-            {
-                // AB and AC colineaire
-                n = {ab[1], ab[0], 0};
-            }
+        vec3 AO = -a; // dir to origin
+        simp_dim = 3; // hoisting this just cause
 
-            if (dot(ao, n) > 0)
-            {
-                // We remove the point wich is not contains by the closest face
-                simplex.remove((i + 3) % 4);
-                direction = n;
-                return false;
-            }
+        if (dot(ABC, AO) > 0)
+        { // In front of ABC
+            d = c;
+            c = b;
+            b = a;
+            search_dir = ABC;
+            return false;
+        }
+        if (dot(ACD, AO) > 0)
+        { // In front of ACD
+            b = a;
+            search_dir = ACD;
+            return false;
+        }
+        if (dot(ADB, AO) > 0)
+        { // In front of ADB
+            c = d;
+            d = b;
+            b = a;
+            search_dir = ADB;
+            return false;
         }
 
+        // else inside tetrahedron; enclosed!
         return true;
-    }
-
-    bool NextSimplex(Simplex &simplex, glm::vec3 &direction)
-    {
-        switch (simplex.size())
-        {
-        case 2:
-            return line(simplex, direction);
-        case 3:
-            return triangle(simplex, direction);
-        case 4:
-            return tetrahedron(simplex, direction);
-        }
-
-        return false;
     }
 
 }
