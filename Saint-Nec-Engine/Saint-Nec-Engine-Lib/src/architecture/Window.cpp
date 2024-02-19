@@ -42,6 +42,7 @@ namespace sne
     {
         glfwSetFramebufferSizeCallback(window, fun);
     }
+
     void Window::swapIntervals(const int& value)
     {
         glfwSwapInterval(value);
