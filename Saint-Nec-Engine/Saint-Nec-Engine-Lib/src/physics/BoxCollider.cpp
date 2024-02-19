@@ -4,10 +4,10 @@
 
 namespace sne::physics
 {
-    BoxCollider::BoxCollider(const glm::vec3 center, double width, double depth, double height)
+    BoxCollider::BoxCollider(const glm::vec3 center, float width, float depth, float height)
         : Collider(center)
     {
-        double offsetX = width / 2,
+        float offsetX = width / 2,
                offsetY = depth / 2,
                offsetZ = height / 2;
 

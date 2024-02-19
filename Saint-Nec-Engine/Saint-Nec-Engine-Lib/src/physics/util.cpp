@@ -3,7 +3,7 @@
 namespace sne::physics
 {
 
-    bool areDisjoint(double x1_min, double x1_max, double x2_min, double x2_max)
+    bool areDisjoint(float x1_min, float x1_max, float x2_min, float x2_max)
     {
         // Returns true if: [x1_min ; x1_max] ∩ [x2_min; x2_max] = ∅
         return x1_max < x2_min || x2_max < x1_min;
@@ -33,7 +33,7 @@ namespace sne::physics
     bool intersect(const SphereCollider &sphere1, const SphereCollider &sphere2, const glm::vec3 &axis)
     {
         (void)axis;
-        double distance = norm(sphere1.getCenter() - sphere2.getCenter());
+        float distance = norm(sphere1.getCenter() - sphere2.getCenter());
 
         return distance < (sphere1.getRadius() + sphere2.getRadius());
     }

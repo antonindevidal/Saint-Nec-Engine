@@ -139,6 +139,7 @@ namespace sne::physics
         _collideCounter++;
         obj._collideCounter++;
 
+        // Réflexion=Vitesse−2×(Vitesse⋅Normale)×Normale
         if (obj.isFix)
         {
             // std::cout << "fix: "
@@ -147,7 +148,10 @@ namespace sne::physics
             // std::cout << "pos" << _position << "- " << obj._position << "\n";
             translate(normal*1.1f);
             // glm::vec3 axis = _position - obj._position; // To update with impact point
-            setVelocity(norm(_velocity) * _amortissement * normal/norm(normal));
+            // setVelocity(norm(_velocity) * _amortissement * normal/norm(normal));
+            
+            normal = normal / norm(normal);
+            setVelocity(_velocity - 2 * dot(_velocity, normal) * normal);
 
             // float min = _collider->getMin(axis),
             //       max = _collider->getMax(axis),
@@ -173,7 +177,10 @@ namespace sne::physics
             // std::cout << "normal found:" << normal << "\n";
             obj.translate(-normal*1.1f);
             // glm::vec3 axis = obj._position - _position;
-            obj.setVelocity(norm(obj._velocity) * obj._amortissement * -normal/norm(normal));
+            // obj.setVelocity(norm(obj._velocity) * obj._amortissement * -normal/norm(normal));
+
+            normal = -normal / norm(normal);
+            setVelocity(obj._velocity - 2 * dot(obj._velocity, normal) * normal);
 
             // float min = obj._collider->getMin(axis),
             //       max = obj._collider->getMax(axis),

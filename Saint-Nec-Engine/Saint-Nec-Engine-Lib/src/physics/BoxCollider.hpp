@@ -36,7 +36,7 @@ namespace sne::physics
          * @param depth (Y axis)
          * @param height (Z axis)
          */
-        BoxCollider(const glm::vec3 center, double width, double depth, double height);
+        BoxCollider(const glm::vec3 center, float width, float depth, float height);
 
         /**
          * @brief Destroy the Box Collider object

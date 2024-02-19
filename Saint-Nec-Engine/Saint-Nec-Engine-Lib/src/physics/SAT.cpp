@@ -30,8 +30,8 @@ namespace sne::physics
     bool hasSATCollision(const SphereCollider &sphere1, const SphereCollider &sphere2)
     {
         // Evaluate the distance between the 2 centers
-        double distance = norm(sphere1.getCenter() - sphere2.getCenter());
-        return distance <= (sphere1.getRadius() + sphere2.getRadius());
+        float distance = norm(sphere1.getCenter() - sphere2.getCenter());
+        return distance < (sphere1.getRadius() + sphere2.getRadius());
     }
 
     bool hasSATCollision(const BoxCollider &boxe, const SphereCollider &sphere)

@@ -32,7 +32,7 @@ namespace sne::physics
      * @return true
      * @return false
      */
-    bool areDisjoint(double x1_min, double x1_max, double x2_min, double x2_max);
+    bool areDisjoint(float x1_min, float x1_max, float x2_min, float x2_max);
 
     /**
      * @brief check whether or not 2 Colliders intersect on 1 axis

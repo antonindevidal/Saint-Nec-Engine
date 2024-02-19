@@ -6,11 +6,11 @@ namespace sne::physics
 
 {
 
-    SphereCollider::SphereCollider(glm::vec3 center, double radius) : Collider(center), _radius(radius)
+    SphereCollider::SphereCollider(glm::vec3 center, float radius) : Collider(center), _radius(radius)
     {
     }
 
-    const double SphereCollider::getRadius() const
+    const float SphereCollider::getRadius() const
     {
         return _radius;
     }

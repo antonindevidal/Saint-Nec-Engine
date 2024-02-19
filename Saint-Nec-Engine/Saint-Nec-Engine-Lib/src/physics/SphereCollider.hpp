@@ -20,10 +20,10 @@ namespace sne::physics
     class SphereCollider : public Collider
     {
     private:
-        double _radius;
+        float _radius;
 
     public:
-        SphereCollider(glm::vec3 center, double radius);
+        SphereCollider(glm::vec3 center, float radius);
         /**
          * @brief Destroy the Sphere Collider object
          * 
@@ -33,9 +33,9 @@ namespace sne::physics
         /**
          * @brief Get the Radius object
          *
-         * @return const double
+         * @return const float
          */
-        const double getRadius() const;
+        const float getRadius() const;
 
         bool collide(const Collider *, glm::vec3& normal) const override;
         bool collide(const SphereCollider &, glm::vec3& normal) const override;
