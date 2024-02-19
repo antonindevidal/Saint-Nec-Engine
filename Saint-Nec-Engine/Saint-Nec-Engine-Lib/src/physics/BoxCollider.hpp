@@ -103,10 +103,10 @@ namespace sne::physics
          * @return std::vector<glm::vec3>
          */
         std::vector<glm::vec3> getAxis() const;
-
-        bool collide(const Collider *) const override;
-        bool collide(const SphereCollider &) const override;
-        bool collide(const BoxCollider &) const override;
+        
+        bool collide(const Collider *, glm::vec3& normal) const override;
+        bool collide(const SphereCollider &, glm::vec3& normal) const override;
+        bool collide(const BoxCollider &, glm::vec3& normal) const override;
 
         /**
          * @brief return true if it has an intersection with other object on axis
@@ -121,6 +121,7 @@ namespace sne::physics
 
         float getMin(const glm::vec3 &axis) const override;
         float getMax(const glm::vec3 &axis) const override;
+        glm::vec3 farthestPoint(const glm::vec3 &axis) const override;
     };
 
     std::ostream &operator<<(std::ostream &oss, const BoxCollider &b);

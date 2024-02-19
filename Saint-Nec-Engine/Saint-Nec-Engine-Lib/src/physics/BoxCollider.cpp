@@ -28,9 +28,9 @@ namespace sne::physics
 
     void BoxCollider::setCenter(const glm::vec3 &v)
     {
-        glm::vec3 diff = v-_center;
+        glm::vec3 diff = v - _center;
         _center = v;
-        for(auto &point: _points)
+        for (auto &point : _points)
             point += diff;
     }
 
@@ -100,18 +100,18 @@ namespace sne::physics
         return v;
     }
 
-    bool BoxCollider::collide(const Collider *c) const
+    bool BoxCollider::collide(const Collider *c, glm::vec3& normal) const
     {
-        return c->collide(*this);
+        return c->collide(*this, normal);
     }
 
-    bool BoxCollider::collide(const SphereCollider &s) const
+    bool BoxCollider::collide(const SphereCollider &s, glm::vec3& normal) const
     {
-        return hasSATCollision(*this, s);
+        return gjk(*this, s, normal);
     }
-    bool BoxCollider::collide(const BoxCollider &b) const
+    bool BoxCollider::collide(const BoxCollider &b, glm::vec3& normal) const
     {
-        return hasSATCollision(*this, b);
+        return gjk(*this, b, normal);
     }
 
     bool BoxCollider::intersection(const Collider *c, const glm::vec3 &axis) const
@@ -132,10 +132,10 @@ namespace sne::physics
     float BoxCollider::getMin(const glm::vec3 &axis) const
     {
         float min = dot(axis, _points[0]);
-        for(unsigned i=1; i<_points.size(); i++)
+        for (unsigned i = 1; i < _points.size(); i++)
         {
             float v = dot(axis, _points[i]);
-            min = (v<min)? v : min;
+            min = (v < min) ? v : min;
         }
 
         return min;
@@ -144,12 +144,31 @@ namespace sne::physics
     float BoxCollider::getMax(const glm::vec3 &axis) const
     {
         float max = dot(axis, _points[0]);
-        for(unsigned i=1; i<_points.size(); i++)
+        for (unsigned i = 1; i < _points.size(); i++)
         {
             float v = dot(axis, _points[i]);
-            max = (v>max)? v : max;
+            max = (v > max) ? v : max;
         }
 
         return max;
     }
+
+    glm::vec3 BoxCollider::farthestPoint(const glm::vec3 &axis) const
+    {
+        float max = dot(axis, _points[0]);
+        glm::vec3 res = _points[0];
+        for (unsigned i = 1; i < _points.size(); i++)
+        {
+            float projection = dot(_points[i], axis);
+            if(projection > max)
+            {
+                max = projection;
+                res = _points[i];
+            }
+            
+        }
+
+        return res;
+    }
+
 }

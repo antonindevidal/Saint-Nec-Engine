@@ -23,10 +23,9 @@ namespace sne::physics
         Collider(glm::vec3 center) : _center(center) {}
 
     public:
-
         /**
          * @brief Destroy the Collider object
-         * 
+         *
          */
         virtual ~Collider() = default;
 
@@ -45,9 +44,9 @@ namespace sne::physics
             _center = v;
         }
 
-        virtual bool collide(const Collider *) const = 0;
-        virtual bool collide(const SphereCollider &) const = 0;
-        virtual bool collide(const BoxCollider &) const = 0;
+        virtual bool collide(const Collider *, glm::vec3 &normal) const = 0;
+        virtual bool collide(const SphereCollider &, glm::vec3 &normal) const = 0;
+        virtual bool collide(const BoxCollider &, glm::vec3 &normal) const = 0;
 
         virtual bool intersection(const Collider *, const glm::vec3 &axis) const = 0;
         virtual bool intersection(const SphereCollider &, const glm::vec3 &axis) const = 0;
@@ -55,5 +54,7 @@ namespace sne::physics
 
         virtual float getMin(const glm::vec3 &axis) const = 0;
         virtual float getMax(const glm::vec3 &axis) const = 0;
+
+        virtual glm::vec3 farthestPoint(const glm::vec3 &axis) const = 0;
     };
 }

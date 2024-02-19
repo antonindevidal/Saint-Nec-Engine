@@ -16,25 +16,25 @@ void PICollisions::load()
 	glm::vec3 center2{0, 0, 0};
 	glm::vec3 center3{10, 0, 0};
 
-	sne::GameObject *wall = createCube(_physicManager, center, blue, true);
-	wall->setName("Wall");
-	addGameObject(wall);
+	// sne::GameObject *wall = createCube(_physicManager, center, blue, true);
+	// wall->setName("Wall");
+	// addGameObject(wall);
 
-	sne::GameObject *cube = createCube(_physicManager, center2, red);
-	cube->setName("cube1");
-	auto *cubePO = _physicManager.getLast();
-	cubePO->setAcceleration({0, 0, 0});
-	addGameObject(cube);
+	// sne::GameObject *cube = createCube(_physicManager, center2, red);
+	// cube->setName("cube1");
+	// auto *cubePO = _physicManager.getLast();
+	// cubePO->setAcceleration({0, 0, 0});
+	// addGameObject(cube);
 
-	sne::GameObject *bigCube = createCube(_physicManager, center3, blue);
-	bigCube->setName("bigCube");
-	auto *bigCubePO = _physicManager.getLast();
-	bigCubePO->setAcceleration({0, 0, 0});
-	addGameObject(bigCube);
+	// sne::GameObject *bigCube = createCube(_physicManager, center3, blue);
+	// bigCube->setName("bigCube");
+	// auto *bigCubePO = _physicManager.getLast();
+	// bigCubePO->setAcceleration({0, 0, 0});
+	// addGameObject(bigCube);
 
-	cubePO->setMass(1.f);
-	bigCubePO->setMass(1.f);
-	bigCubePO->setVelocity({-10, 0, 0});
+	// cubePO->setMass(1.f);
+	// bigCubePO->setMass(1.f);
+	// bigCubePO->setVelocity({-10, 0, 0});
 
 
 	// Mass * 100

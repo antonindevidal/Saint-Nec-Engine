@@ -9,20 +9,23 @@
 
 #include <algorithm>
 #include <glm/glm.hpp>
+#include <list>
 #include "BoxCollider.hpp"
 #include "SphereCollider.hpp"
 #include "Minkowski.hpp"
 
 namespace sne::physics
 {
+    const int GJK_MAX_NUM_ITERATIONS = 100;
+    const glm::vec3 ORIGIN{0, 0, 0};
+
     // A renommer => confusion ?
     /**
      * @brief Get the Normal of the 2 axis
-     * 
-     * @return glm::vec3 
+     *
+     * @return glm::vec3
      */
-    glm::vec3 getNormal(const glm::vec3 &, const glm::vec3 &); 
-    
+    glm::vec3 getNormal(const glm::vec3 &, const glm::vec3 &);
 
     /**
      * @brief tell if: [x1_min ; x1_max] ∩ [x2_min; x2_max] = ∅
@@ -47,12 +50,12 @@ namespace sne::physics
 
     /**
      * @brief check whether or not 2 Colliders intersect on 1 axis
-     * 
-     * @param boxe1 
-     * @param boxe2 
-     * @param axis 
-     * @return true 
-     * @return false 
+     *
+     * @param boxe1
+     * @param boxe2
+     * @param axis
+     * @return true
+     * @return false
      */
     bool intersect(const BoxCollider &boxe1, const BoxCollider &boxe2, const glm::vec3 &axis);
     bool intersect(const SphereCollider &sphere1, const SphereCollider &sphere2, const glm::vec3 &axis);
@@ -64,10 +67,10 @@ namespace sne::physics
      *
      * @param boxe1
      * @param boxe2
-     * 
+     *
      * @return  std::vector<Minkowski>
      */
-    std::vector<Minkowski> minkowskiDifference(const BoxCollider& boxe1, const BoxCollider& boxe2);
+    std::vector<Minkowski> minkowskiDifference(const BoxCollider &boxe1, const BoxCollider &boxe2);
 
     /**
      * @brief evaluate the normal of collision reaction
@@ -77,9 +80,108 @@ namespace sne::physics
      *
      * @return glm::vec3 representing the axis (normal)
      */
-    glm::vec3 collisionNormal(const BoxCollider& boxe1, const BoxCollider& boxe2);
-    glm::vec3 collisionNormal(const BoxCollider& boxe, const SphereCollider& sphere);
-    glm::vec3 collisionNormal(const SphereCollider& sphere, const BoxCollider& boxe);
-    glm::vec3 collisionNormal(const SphereCollider& sphere1, const SphereCollider& sphere2);
+    glm::vec3 collisionNormal(const BoxCollider &boxe1, const BoxCollider &boxe2);
+    glm::vec3 collisionNormal(const BoxCollider &boxe, const SphereCollider &sphere);
+    glm::vec3 collisionNormal(const SphereCollider &sphere, const BoxCollider &boxe);
+    glm::vec3 collisionNormal(const SphereCollider &sphere1, const SphereCollider &sphere2);
 
+    glm::vec3 support(const Collider &shape1, const Collider &shape2, const glm::vec3 &axis);
+    bool gjk(const Collider &coll1, const Collider &coll2, glm::vec3 &normal);
+    void update_simplex3(glm::vec3 &a, glm::vec3 &b, glm::vec3 &c, glm::vec3 &d, int &simp_dim, glm::vec3 &search_dir);
+    bool update_simplex4(glm::vec3 &a, glm::vec3 &b, glm::vec3 &c, glm::vec3 &d, int &simp_dim, glm::vec3 &search_dir);
+    // bool gjk(const Collider &A, const Collider &B);
+    // bool gjk(const SphereCollider &A, const SphereCollider &B);
+    // bool sameDirection(const vec3 &v1, const vec3 &v2);
+    // bool line(Simplex &simplex, vec3 &direction);
+    // bool triangle(Simplex &simplex, vec3 &direction);
+    // bool tetrahedron(Simplex &simplex, vec3 &direction);
+    // bool NextSimplex(Simplex &simplex, glm::vec3 &direction);
+
+    //  enum MANAGECOLLISION
+    // {
+    //     NOTHING,
+    //     COLLIDE,
+    //     DONTCOLLIDE,
+    //     OVERLOOP,
+    //     CHECKNEXTPOINT
+    // };
+
+    // class Simplex
+    // {
+    //     std::array<glm::vec3, 4> points;
+    //     unsigned int n;
+
+    // public:
+    //     MANAGECOLLISION INFO = MANAGECOLLISION::NOTHING;
+    //     Simplex() : n(0)
+    //     {
+    //         for (int i = 0; i < points.size(); i++)
+    //         {
+    //             points[i] = {0, 0, 0};
+    //         }
+    //     }
+
+    //     void push_front(glm::vec3 point)
+    //     {
+    //         points = {point, points[0], points[1], points[2]};
+    //         n++;
+    //     }
+
+    //     bool isPresent(const glm::vec3 &newPoint)
+    //     {
+    //         for (auto p : points)
+    //             if (newPoint[0] == p[0] && newPoint[1] == p[1] && newPoint[2] == p[2])
+    //                 return true;
+
+    //         return false;
+    //     }
+
+    //     glm::vec3 &operator[](unsigned int i)
+    //     {
+    //         return points[i];
+    //     }
+
+    //     auto size() const
+    //     {
+    //         return n;
+    //     }
+
+    //     glm::vec3 getClosestPointToOrigin()
+    //     {
+    //         glm::vec3 res = points[0];
+    //         float min = norm(res),
+    //               curr;
+
+    //         for (int i = 1; i < points.size(); i++)
+    //         {
+    //             curr = norm(points[i]);
+    //             if (curr < min)
+    //             {
+    //                 min = curr;
+    //                 res = points[i];
+    //             }
+    //         }
+
+    //         return res;
+    //     }
+
+    //     void remove(unsigned i)
+    //     {
+    //         for (int j = i - 1; j < 3; j++)
+    //         {
+    //             if (j >= 0)
+    //                 points[j] = points[j + 1];
+    //         }
+
+    //         n--;
+    //     }
+    // };
+
+    // Expanding Polytope Algorithm
+    // Find minimum translation vector to resolve collision
+    #define EPA_TOLERANCE 1E-1
+    #define EPA_MAX_NUM_FACES 6
+    #define EPA_MAX_NUM_LOOSE_EDGES 32
+    #define EPA_MAX_NUM_ITERATIONS 64
+    glm::vec3 EPA(glm::vec3 a, glm::vec3 b, glm::vec3 c, glm::vec3 d, const Collider &coll1, const Collider &coll2);
 }

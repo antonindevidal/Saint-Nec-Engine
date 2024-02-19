@@ -15,19 +15,19 @@ namespace sne::physics
         return _radius;
     }
 
-    bool SphereCollider::collide(const Collider *c) const
+    bool SphereCollider::collide(const Collider *c, glm::vec3& normal) const
     {
-        return c->collide(*this);
+        return c->collide(*this, normal);
     }
 
-    bool SphereCollider::collide(const SphereCollider &s) const
+    bool SphereCollider::collide(const SphereCollider &s, glm::vec3& normal) const
     {
-        return hasSATCollision(*this, s);
+        return gjk(*this, s, normal);
         // Used like that because in the futur, template foncteur
     }
-    bool SphereCollider::collide(const BoxCollider &b) const
+    bool SphereCollider::collide(const BoxCollider &b, glm::vec3& normal) const
     {
-        return hasSATCollision(*this, b);
+        return gjk(*this, b, normal);
     }
 
     bool SphereCollider::intersection(const Collider *c, const glm::vec3 &axis) const
@@ -53,5 +53,17 @@ namespace sne::physics
     float SphereCollider::getMax(const glm::vec3 &axis) const
     {
         return dot(axis, _center) + _radius;
+    }
+
+    glm::vec3 SphereCollider::farthestPoint(const glm::vec3 &axis) const
+    {
+
+        // Normalize axis
+        glm::vec3 directionNormalized = glm::normalize(axis);
+
+        // Incrementing with _radius
+        glm::vec3 surfacePoint = _center + (float)_radius * directionNormalized;
+
+        return surfacePoint;
     }
 }
