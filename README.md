@@ -44,7 +44,7 @@ This tasks will use various implementation techniques such as particles, complex
 - [Sprint 9](Doc/SprintReviews/Sprint_9.md)
 
 
-## Utilization
+## Run the demo
 
 ### On Linux
 
