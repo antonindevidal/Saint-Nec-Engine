@@ -12,7 +12,6 @@
 #include <list>
 #include "BoxCollider.hpp"
 #include "SphereCollider.hpp"
-#include "Minkowski.hpp"
 
 namespace sne::physics
 {

@@ -127,11 +127,21 @@ namespace sne::physics
             }
         };
 
+        /**
+         * @brief return the number of collisions
+         * 
+         * @return unsigned int 
+         */
         unsigned int numberOfCollisions() const
         {
             return _collideCounter;
         }
 
+        /**
+         * @brief Get the name of the object
+         * 
+         * @return std::string 
+         */
         std::string getName() const
         {
             if(parent)
@@ -140,5 +150,12 @@ namespace sne::physics
         }
     };
 
+    /**
+     * @brief applying impulsion on the 2 objects
+     * 
+     * @param o1 
+     * @param o2 
+     * @param normal 
+     */
     void addImpulsion(PhysicObject &o1, PhysicObject &o2, glm::vec3 &normal);
 }

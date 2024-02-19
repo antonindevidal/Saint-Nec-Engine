@@ -51,8 +51,29 @@ namespace sne::physics
         bool intersection(const Collider *, const glm::vec3 &axis) const override;
         bool intersection(const SphereCollider &, const glm::vec3 &axis) const override;
         bool intersection(const BoxCollider &, const glm::vec3 &axis) const override;
+        
+        /**
+         * @brief Get the Min point considering an axis
+         * 
+         * @param axis 
+         * @return float 
+         */
         float getMin(const glm::vec3 &axis) const override;
+
+        /**
+         * @brief Get the Max point considering an axis
+         * 
+         * @param axis 
+         * @return float 
+         */
         float getMax(const glm::vec3 &axis) const override;
+
+        /**
+         * @brief Return the farthest point considering a direction
+         * 
+         * @param axis 
+         * @return glm::vec3 
+         */
         glm::vec3 farthestPoint(const glm::vec3 &axis) const override;
     };
 }
