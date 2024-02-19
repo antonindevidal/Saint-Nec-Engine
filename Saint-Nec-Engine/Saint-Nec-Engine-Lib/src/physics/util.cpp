@@ -11,14 +11,14 @@ namespace sne::physics
 
     bool intersect(const BoxCollider &boxe1, const BoxCollider &boxe2, const glm::vec3 &axis)
     {
-        double boxe1_min = dot(axis, boxe1[0]),
+        float boxe1_min = dot(axis, boxe1[0]),
                boxe1_max = boxe1_min,
                boxe2_min = dot(axis, boxe2[0]),
                boxe2_max = boxe2_min;
 
         for (int i = 1; i < boxe1.getNbPoints(); i++)
         {
-            double boxe1_projection = dot(axis, boxe1[i]),
+            float boxe1_projection = dot(axis, boxe1[i]),
                    boxe2_projection = dot(axis, boxe2[i]);
 
             boxe1_min = (boxe1_min < boxe1_projection) ? boxe1_min : boxe1_projection;
@@ -35,19 +35,19 @@ namespace sne::physics
         (void)axis;
         double distance = norm(sphere1.getCenter() - sphere2.getCenter());
 
-        return distance > (sphere1.getRadius() + sphere2.getRadius());
+        return distance < (sphere1.getRadius() + sphere2.getRadius());
     }
 
     bool intersect(const SphereCollider &sphere, const BoxCollider &boxe, const glm::vec3 &axis)
     {
-        double boxe_min = dot(axis, boxe[0]),
+        float boxe_min = dot(axis, boxe[0]),
                boxe_max = boxe_min,
                sphere_min = dot(axis, sphere.getCenter()) - sphere.getRadius(),
                sphere_max = dot(axis, sphere.getCenter()) + sphere.getRadius();
 
         for (int i = 1; i < boxe.getNbPoints(); i++)
         {
-            double boxe_projection = dot(axis, boxe[i]);
+            float boxe_projection = dot(axis, boxe[i]);
 
             boxe_min = (boxe_min < boxe_projection) ? boxe_min : boxe_projection;
             boxe_max = (boxe_max > boxe_projection) ? boxe_max : boxe_projection;
