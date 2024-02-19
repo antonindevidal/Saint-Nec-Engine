@@ -17,6 +17,7 @@ set(_SAINT_NEC_ENGINE_SRC
 	"src/scenes/MouvementCoordination.cpp"
 	"src/scenes/PICollisions.cpp"
 	"src/scenes/EPAScene.cpp"
+	"src/scenes/WaterGenerationScene.cpp"
 	
 )
 
@@ -36,6 +37,7 @@ set(_SAINT_NEC_ENGINE_HDR
 	"src/Colors.hpp"
 	"src/scenes/PICollisions.hpp"
 	"src/scenes/EPAScene.hpp"
+	"src/scenes/WaterGenerationScene.hpp"
 )
 
 # Make the copy of the resource fil every time

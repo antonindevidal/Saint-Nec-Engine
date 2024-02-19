@@ -38,9 +38,13 @@ This tasks will use various implementation techniques such as particles, complex
 - [Sprint 3](Doc/SprintReviews/Sprint_3.md)
 - [Sprint 4](Doc/SprintReviews/Sprint_4.md)
 - [Sprint 5](Doc/SprintReviews/Sprint_5.md)
+- [Sprint 6](Doc/SprintReviews/Sprint_6.md)
+- [Sprint 7](Doc/SprintReviews/Sprint_7.md)
+- [Sprint 8](Doc/SprintReviews/Sprint_8.md)
+- [Sprint 9](Doc/SprintReviews/Sprint_9.md)
 
 
-## Utilization
+## Run the demo
 
 ### On Linux
 
@@ -59,4 +63,4 @@ You can move the camera with the touch:
 - Shift : up
 - Space : down
 - F1 : unlock mouse selector
-- F2 : visual effect
+- F2 : Wireframe mode

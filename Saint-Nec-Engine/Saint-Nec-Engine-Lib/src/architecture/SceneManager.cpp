@@ -81,6 +81,11 @@ namespace sne
 		}
 	}
 
+	void SceneManager::drawUI()
+	{
+		currentScene->drawUI();
+	}
+
 	const Scene* SceneManager::getCurrentScene() const
 	{
 		return currentScene;

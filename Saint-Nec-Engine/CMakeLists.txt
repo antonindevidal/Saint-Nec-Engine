@@ -14,8 +14,12 @@ set(CMAKE_CXX_EXTENSIONS OFF)
 
 project ("Saint-Nec-Engine")
 
-# Incluez les sous-projets.
+# Include subprojects
 add_subdirectory ("Saint-Nec-Engine")
 add_subdirectory ("Saint-Nec-Engine-Lib/src")
 add_subdirectory ("Saint-Nec-Engine-Test")
 
+# Check OS
+if(APPLE)
+    message(FATAL_ERROR "Program can't be run on macOS.")
+endif()
