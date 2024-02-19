@@ -16,16 +16,12 @@
 
 namespace sne::physics
 {
-    const int GJK_MAX_NUM_ITERATIONS = 100;
     const glm::vec3 ORIGIN{0, 0, 0};
-
-    // A renommer => confusion ?
-    /**
-     * @brief Get the Normal of the 2 axis
-     *
-     * @return glm::vec3
-     */
-    glm::vec3 getNormal(const glm::vec3 &, const glm::vec3 &);
+    const int GJK_MAX_NUM_ITERATIONS = 100;
+    const float EPA_TOLERANCE = 1E-1;
+    const int EPA_MAX_NUM_FACES = 6;
+    const int EPA_MAX_NUM_LOOSE_EDGES = 32;
+    const int EPA_MAX_NUM_ITERATIONS = 64;
 
     /**
      * @brief tell if: [x1_min ; x1_max] ∩ [x2_min; x2_max] = ∅
@@ -38,15 +34,6 @@ namespace sne::physics
      * @return false
      */
     bool areDisjoint(double x1_min, double x1_max, double x2_min, double x2_max);
-
-    /**
-     * @brief scalar product v1 . v2
-     *
-     * @param v1
-     * @param v2
-     * @return double
-     */
-    double dot(const glm::vec3 &v1, const glm::vec3 &v2);
 
     /**
      * @brief check whether or not 2 Colliders intersect on 1 axis
@@ -63,125 +50,63 @@ namespace sne::physics
     bool intersect(const BoxCollider &boxe, const SphereCollider &sphere, const glm::vec3 &axis);
 
     /**
-     * @brief evalute point obtained with Minkowski difference => C = A - B // { c | c = a-b, a € A et b € B}
-     *
-     * @param boxe1
-     * @param boxe2
-     *
-     * @return  std::vector<Minkowski>
+     * @brief calculate minkowski difference point from the 2 shape considering 1 direction
+     * 
+     * @param shape1 
+     * @param shape2 
+     * @param axis 
+     * @return glm::vec3 minkowski point
      */
-    std::vector<Minkowski> minkowskiDifference(const BoxCollider &boxe1, const BoxCollider &boxe2);
-
-    /**
-     * @brief evaluate the normal of collision reaction
-     *
-     * @param boxe1
-     * @param boxe2
-     *
-     * @return glm::vec3 representing the axis (normal)
-     */
-    glm::vec3 collisionNormal(const BoxCollider &boxe1, const BoxCollider &boxe2);
-    glm::vec3 collisionNormal(const BoxCollider &boxe, const SphereCollider &sphere);
-    glm::vec3 collisionNormal(const SphereCollider &sphere, const BoxCollider &boxe);
-    glm::vec3 collisionNormal(const SphereCollider &sphere1, const SphereCollider &sphere2);
-
     glm::vec3 support(const Collider &shape1, const Collider &shape2, const glm::vec3 &axis);
+    
+    /**
+     * @brief tell if there is a collision and, if it is the case, evalute
+     * the normal of collision
+     * 
+     * @param coll1 
+     * @param coll2 
+     * @param normal normal of collision calculated
+     * @return true => collision detected
+     * @return false => no collision detected
+     */
     bool gjk(const Collider &coll1, const Collider &coll2, glm::vec3 &normal);
+    
+    /**
+     * @brief algorithm used for gjk, triangle construction
+     * 
+     * @param a 
+     * @param b 
+     * @param c 
+     * @param d 
+     * @param simp_dim 
+     * @param search_dir 
+     */
     void update_simplex3(glm::vec3 &a, glm::vec3 &b, glm::vec3 &c, glm::vec3 &d, int &simp_dim, glm::vec3 &search_dir);
+    
+    /**
+     * @brief algorithm used for gjk, tetrahedron construction
+     * 
+     * @param a 
+     * @param b 
+     * @param c 
+     * @param d 
+     * @param simp_dim 
+     * @param search_dir 
+     * @return true the origine is contained => collision detected
+     * @return false 
+     */
     bool update_simplex4(glm::vec3 &a, glm::vec3 &b, glm::vec3 &c, glm::vec3 &d, int &simp_dim, glm::vec3 &search_dir);
-    // bool gjk(const Collider &A, const Collider &B);
-    // bool gjk(const SphereCollider &A, const SphereCollider &B);
-    // bool sameDirection(const vec3 &v1, const vec3 &v2);
-    // bool line(Simplex &simplex, vec3 &direction);
-    // bool triangle(Simplex &simplex, vec3 &direction);
-    // bool tetrahedron(Simplex &simplex, vec3 &direction);
-    // bool NextSimplex(Simplex &simplex, glm::vec3 &direction);
-
-    //  enum MANAGECOLLISION
-    // {
-    //     NOTHING,
-    //     COLLIDE,
-    //     DONTCOLLIDE,
-    //     OVERLOOP,
-    //     CHECKNEXTPOINT
-    // };
-
-    // class Simplex
-    // {
-    //     std::array<glm::vec3, 4> points;
-    //     unsigned int n;
-
-    // public:
-    //     MANAGECOLLISION INFO = MANAGECOLLISION::NOTHING;
-    //     Simplex() : n(0)
-    //     {
-    //         for (int i = 0; i < points.size(); i++)
-    //         {
-    //             points[i] = {0, 0, 0};
-    //         }
-    //     }
-
-    //     void push_front(glm::vec3 point)
-    //     {
-    //         points = {point, points[0], points[1], points[2]};
-    //         n++;
-    //     }
-
-    //     bool isPresent(const glm::vec3 &newPoint)
-    //     {
-    //         for (auto p : points)
-    //             if (newPoint[0] == p[0] && newPoint[1] == p[1] && newPoint[2] == p[2])
-    //                 return true;
-
-    //         return false;
-    //     }
-
-    //     glm::vec3 &operator[](unsigned int i)
-    //     {
-    //         return points[i];
-    //     }
-
-    //     auto size() const
-    //     {
-    //         return n;
-    //     }
-
-    //     glm::vec3 getClosestPointToOrigin()
-    //     {
-    //         glm::vec3 res = points[0];
-    //         float min = norm(res),
-    //               curr;
-
-    //         for (int i = 1; i < points.size(); i++)
-    //         {
-    //             curr = norm(points[i]);
-    //             if (curr < min)
-    //             {
-    //                 min = curr;
-    //                 res = points[i];
-    //             }
-    //         }
-
-    //         return res;
-    //     }
-
-    //     void remove(unsigned i)
-    //     {
-    //         for (int j = i - 1; j < 3; j++)
-    //         {
-    //             if (j >= 0)
-    //                 points[j] = points[j + 1];
-    //         }
-
-    //         n--;
-    //     }
-    // };
-
-    // Expanding Polytope Algorithm
-    // Find minimum translation vector to resolve collision
-    #define EPA_TOLERANCE 1E-1
-    #define EPA_MAX_NUM_FACES 6
-    #define EPA_MAX_NUM_LOOSE_EDGES 32
-    #define EPA_MAX_NUM_ITERATIONS 64
+    
+    /**
+     * @brief algorithm used after gjk to calculate the normal of collision
+     * 
+     * @param a 
+     * @param b 
+     * @param c 
+     * @param d 
+     * @param coll1 
+     * @param coll2 
+     * @return glm::vec3 
+     */
     glm::vec3 EPA(glm::vec3 a, glm::vec3 b, glm::vec3 c, glm::vec3 d, const Collider &coll1, const Collider &coll2);
 }

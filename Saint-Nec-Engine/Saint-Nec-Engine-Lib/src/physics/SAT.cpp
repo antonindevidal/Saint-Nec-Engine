@@ -36,6 +36,7 @@ namespace sne::physics
 
     bool hasSATCollision(const BoxCollider &boxe, const SphereCollider &sphere)
     {
+        using glm::dot;
         // Evaluate the distance between the 2 centers
         std::vector<glm::vec3> v = boxe.getAxis();
 
@@ -43,14 +44,14 @@ namespace sne::physics
         for (glm::vec3 axis : v)
         {
             // We check a if a gap exist on each axis
-            double boxe_min = dot(axis, boxe[0]),
+            float boxe_min = dot(axis, boxe[0]),
                    boxe_max = boxe_min,
                    sphere_min = dot(axis, sphere.getCenter()) - sphere.getRadius(),
                    sphere_max = dot(axis, sphere.getCenter()) + sphere.getRadius();
 
             for (int i = 1; i < boxe.getNbPoints(); i++)
             {
-                double boxe_projection = dot(axis, boxe[i]);
+                float boxe_projection = dot(axis, boxe[i]);
 
                 boxe_min = (boxe_min < boxe_projection) ? boxe_min : boxe_projection;
                 boxe_max = (boxe_max > boxe_projection) ? boxe_max : boxe_projection;
