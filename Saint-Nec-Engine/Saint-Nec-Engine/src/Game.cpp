@@ -7,6 +7,7 @@
 #include "scenes/PhysicScene2.hpp"
 #include "scenes/MouvementCoordination.hpp"
 #include "scenes/PICollisions.hpp"
+#include "scenes/EPAScene.hpp"
 
 Game::Game(): sceneManager(sne::SceneManager::getInstance())
 {
@@ -45,6 +46,11 @@ Game::Game(): sceneManager(sne::SceneManager::getInstance())
 	piCollisions->setName("PI Collisions counter");
 	sceneManager->addScene(piCollisions);
 	sceneManager->changeScene(piCollisions->getName());
+
+	auto* epaScene = new EPAScene{};
+	epaScene->setName("EPAScene normal visualization");
+	sceneManager->addScene(epaScene);
+	sceneManager->changeScene(epaScene->getName());
 }
 
 Game::~Game()

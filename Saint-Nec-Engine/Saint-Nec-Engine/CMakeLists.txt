@@ -16,6 +16,7 @@ set(_SAINT_NEC_ENGINE_SRC
 	"src/ui_builder/UIBuilder.cpp"
 	"src/scenes/MouvementCoordination.cpp"
 	"src/scenes/PICollisions.cpp"
+	"src/scenes/EPAScene.cpp"
 	
 )
 
@@ -34,6 +35,7 @@ set(_SAINT_NEC_ENGINE_HDR
 	"src/scenes/MouvementCoordination.hpp"
 	"src/Colors.hpp"
 	"src/scenes/PICollisions.hpp"
+	"src/scenes/EPAScene.hpp"
 )
 
 # Make the copy of the resource fil every time
