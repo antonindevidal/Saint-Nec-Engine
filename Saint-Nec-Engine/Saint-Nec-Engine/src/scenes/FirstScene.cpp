@@ -16,13 +16,13 @@ void FirstScene::load()
 	skybox->setName("skybox");
 	skybox->addComponent(new sne::graphics::Skybox({ "resources/textures/skybox/nx.png","resources/textures/skybox/px.png","resources/textures/skybox/py.png","resources/textures/skybox/ny.png","resources/textures/skybox/nz.png","resources/textures/skybox/pz.png" }, "resources/shaders/skybox.vert", "resources/shaders/skybox.frag"));
 
-
+	/*
 	// Multicolor cube example
 	auto* cube = new sne::GameObject();
 	cube->setName("Basic cube");
 	addGameObject(cube);
 	cube->addComponent(new sne::graphics::Cube("resources/shaders/basic.vert", "resources/shaders/basic.frag"));
-
+	*/
 
 
 	// Monochrome cube example
@@ -42,7 +42,12 @@ void FirstScene::load()
 	cubeTextured->addComponent(cubeComponent);
 	cubeTextured->translate(glm::vec3{ 1.0f, 0.0f, 0.0f });
 
-	}
+	auto* sphere = new sne::GameObject();
+	addGameObject(sphere);
+	sphere->setName("Sphere");
+	auto* sphereComponent = new sne::graphics::Sphere("resources/shaders/sphere.vert", "resources/shaders/sphere.frag");
+	sphere->addComponent(sphereComponent);
+}
 
 void FirstScene::unload()
 {
