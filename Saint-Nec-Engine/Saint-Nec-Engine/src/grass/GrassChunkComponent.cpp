@@ -21,15 +21,20 @@ GrassChunkComponent::GrassChunkComponent(const int& size, const int& chunkSize, 
 		}
 	}
 
+	std::random_device dev;
+	std::mt19937 gen{ dev()};
+	std::uniform_real_distribution<float> dist{ -0.1f, 0.1f }; //Distribution for grass offset
+
+
 	//Create grass blades position for a chunk
 	//Ideally this can be pregenerated and read from a file
 	std::vector<float> positions;
 	int sqrtInstances = sqrt(nbInstancesPerChunk);
 	for (int i = 0; i < nbInstancesPerChunk; i++)
 	{
-		positions.push_back((i % sqrtInstances) * (chunkSize * 1.0 / sqrtInstances)+ ((std::rand() %50) /100.0f));
+		positions.push_back((i % sqrtInstances) * (chunkSize * 1.0 / sqrtInstances) + dist(gen));
 		positions.push_back(0.0f);
-		positions.push_back((i / sqrtInstances) * (chunkSize * 1.0 / sqrtInstances) + ((std::rand() %50) /100.0f));
+		positions.push_back((i / sqrtInstances) * (chunkSize * 1.0 / sqrtInstances) + dist(gen));
 	}
 	//Generate geometry for two levels of LOD
 	genLOD1(positions);
@@ -47,6 +52,8 @@ GrassChunkComponent::GrassChunkComponent(const int& size, const int& chunkSize, 
 void GrassChunkComponent::update()
 {
 	GraphicComponent::update();
+	shader.use();
+	shader.setVec3("sunDir", sne::SceneManager::getInstance()->getCurrentScene()->getDirectionnalLight());
 }
 
 void GrassChunkComponent::genLOD1(const std::vector<float>& positions)

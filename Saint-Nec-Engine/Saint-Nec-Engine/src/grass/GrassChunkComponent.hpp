@@ -11,6 +11,9 @@
 #include <glm/glm.hpp>
 #include <graphics/GraphicComponent.hpp>
 #include <architecture/Scene.hpp>
+#include <architecture/SceneManager.hpp>
+#include <random>
+
 
 /**
 *	@class GrassChunkComponent.
