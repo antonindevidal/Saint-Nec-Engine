@@ -46,7 +46,9 @@ void FirstScene::load()
 	addGameObject(sphere);
 	sphere->setName("Sphere");
 	auto* sphereComponent = new sne::graphics::Sphere("resources/shaders/sphere.vert", "resources/shaders/sphere.frag");
+	sphereComponent->getShader().setVec3("color", { 1.0,1.0,0.0 });
 	sphere->addComponent(sphereComponent);
+
 }
 
 void FirstScene::unload()
