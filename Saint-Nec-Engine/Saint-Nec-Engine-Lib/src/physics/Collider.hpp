@@ -52,9 +52,28 @@ namespace sne::physics
         virtual bool intersection(const SphereCollider &, const glm::vec3 &axis) const = 0;
         virtual bool intersection(const BoxCollider &, const glm::vec3 &axis) const = 0;
 
+         /**
+         * @brief Get the Min value, of all the points, on an axis
+         * 
+         * @param axis 
+         * @return float 
+         */
         virtual float getMin(const glm::vec3 &axis) const = 0;
+
+        /**
+         * @brief Get the Max value, of all the points, on an axis
+         * 
+         * @param axis 
+         * @return float 
+         */
         virtual float getMax(const glm::vec3 &axis) const = 0;
 
+        /**
+         * @brief Get the farthest point considering an axis
+         * 
+         * @param axis 
+         * @return glm::vec3 
+         */
         virtual glm::vec3 farthestPoint(const glm::vec3 &axis) const = 0;
     };
 }
