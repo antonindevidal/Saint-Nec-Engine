@@ -123,13 +123,13 @@ namespace sne::physics
             if ((isFix && obj.isFix) || !_collider->collide(obj._collider, normal))
                 return;
         }
-        // catch (const SATIllegalUseException &e)
-        // {
-        //     if (parent == nullptr)
-        //         std::cout << " ";
-        //     else
-        //         std::cout << e.what() << " " << parent->getName() << "\n";
-        // }
+        catch (const SATIllegalUseException &e)
+        {
+            if (parent == nullptr)
+                std::cout << " ";
+            else
+                std::cout << e.what() << " " << parent->getName() << "\n";
+        }
         catch (const std::exception &e)
         {
             std::cout << e.what() << " " << parent->getName() << "\n";
@@ -142,72 +142,27 @@ namespace sne::physics
         // Réflexion=Vitesse−2×(Vitesse⋅Normale)×Normale
         if (obj.isFix)
         {
-            // std::cout << "fix: "
-            //           << "p1" << normal
-            //           << "\n";
-            // std::cout << "pos" << _position << "- " << obj._position << "\n";
-            translate(normal*1.1f);
-            // glm::vec3 axis = _position - obj._position; // To update with impact point
-            // setVelocity(norm(_velocity) * _amortissement * normal/norm(normal));
-            
+            translate(normal * 1.1f);
             normal = normal / norm(normal);
             setVelocity(_velocity - 2 * dot(_velocity, normal) * normal);
-
-            // float min = _collider->getMin(axis),
-            //       max = _collider->getMax(axis),
-            //       tmp = obj._collider->getMin(axis);
-            // float dist = 0;
-            // if (tmp < min)
-            // {
-            //     tmp = obj._collider->getMax(axis);
-            //     dist = min - tmp;
-            // }
-            // else
-            // {
-            //     dist = tmp - max;
-            // }
-
-            // _position -= dist * (axis / norm(axis));
         }
         else if (isFix)
         {
-            // std::cout << "fix: "
-            //           << "p0"
-            //           << "\n";
-            // std::cout << "normal found:" << normal << "\n";
-            obj.translate(-normal*1.1f);
-            // glm::vec3 axis = obj._position - _position;
-            // obj.setVelocity(norm(obj._velocity) * obj._amortissement * -normal/norm(normal));
-
+            obj.translate(-normal * 1.1f);
             normal = -normal / norm(normal);
             setVelocity(obj._velocity - 2 * dot(obj._velocity, normal) * normal);
-
-            // float min = obj._collider->getMin(axis),
-            //       max = obj._collider->getMax(axis),
-            //       tmp = _collider->getMin(axis);
-            // float dist = 0;
-            // if (tmp < min)
-            // {
-            //     tmp = _collider->getMax(axis);
-            //     dist = min - tmp;
-            // }
-            // else
-            // {
-            //     dist = tmp - max;
-            // }
-
-            // obj._position -= dist * (axis / norm(axis));
         }
         else
         {
             addImpulsion(*this, obj, normal);
         }
 
-        std::cout << "Collision " << getName() << " - " << obj.getName() << "\n";
-        if (getName() == "cube1" || getName() == "cube2")
-            std::cout << "Nombre de collision " << getName() << ": " << numberOfCollisions() << "\n";
-        if (obj.getName() == "cube1" || obj.getName() == "cube2")
-            std::cout << "Nombre de collision " << obj.getName() << ": " << obj.numberOfCollisions() << "\n";
+        // PI colision Proof purposes
+        // std::cout << "Collision " << getName() << " - " << obj.getName() << "\n";
+        // if (getName() == "cube1" || getName() == "cube2")
+        //     std::cout << "Nombre de collision " << getName() << ": " << numberOfCollisions() << "\n";
+        // if (obj.getName() == "cube1" || obj.getName() == "cube2")
+        //     std::cout << "Nombre de collision " << obj.getName() << ": " << obj.numberOfCollisions() << "\n";
     }
 
     void addImpulsion(PhysicObject &o1, PhysicObject &o2, glm::vec3 &normal)
@@ -229,55 +184,10 @@ namespace sne::physics
               newv2y = 2 * m1 * v1y / (m1 + m2) - (m1 - m2) / (m1 + m2) * v2y,
               newv2z = 2 * m1 * v1z / (m1 + m2) - (m1 - m2) / (m1 + m2) * v2z;
 
-        // Vector orientation
-        // Considering line between 2 centers
-        // TO UPDATE: considering plan where we touch the other and calcul with normal and angle ?
-
-        // Get the normal and old velocity direction
-        // glm::vec3 normal = o2.getPosition() - o1.getPosition(),
-        //           direction1 = o1.getVelocity() / v1,
-        //           direction2 = o2.getVelocity() / v2;
-        // normal /= norm(normal);
-
-        // Determine the angle between normal and velocity direction
-        // float angle1 = acos(dot(normal, direction1)),
-        //       angle2 = acos(dot(normal, direction2));
-
-        // Make rotation considering w
-        // glm::vec3 rotationAxis = getNormal(normal, direction1);
-        // glm::mat3 R = buildRotationMatrix()
-        //     direction1 =
-
-        // std::cout << "ancienne vitesse pour o1" << o1.getVelocity() << o1.parent->getName() << "\n";
-        // std::cout << "ancienne vitesse pour o2" << o2.getVelocity() << o2.parent->getName() << "\n";
         o1.setVelocity(glm::vec3{newv1x, newv1y, newv1z});
         o2.setVelocity(glm::vec3{newv2x, newv2y, newv2z});
-        // std::cout << "nouvelle vitesse pour o1" << o1.getVelocity() << o1.parent->getName() << "\n";
-        // std::cout << "nouvelle vitesse pour o2" << o2.getVelocity() << o2.parent->getName() << "\n";
-        // std::cout << "direction: " << direction << "\n";
-
-        // std::cout << "v1: " << v1 << "\n";
-        // std::cout << "v2: " << v2 << "\n";
-        // std::cout << "v1: " << newv1 << "\n";
-        // std::cout << "v2: " << newv2 << "\n";
-
-        glm::vec3 axis = normal; // To update with impact point
-
-        // float min = o2.getCollider()->getMin(axis),
-        //       max = o2.getCollider()->getMax(axis),
-        //       tmp = o1.getCollider()->getMin(axis);
-        // float dist = 0;
-        // if (tmp < min)
-        // {
-        //     tmp = o1.getCollider()->getMax(axis);
-        //     dist = min - tmp;
-        // }
-        // else
-        // {
-        //     dist = tmp - max;
-        // }
-        o2.translate(0.5f * -axis);
-        o1.translate(0.5f * axis);
-        // o2.setPosition(o2.getPosition() - dist * (axis / norm(axis)));
+        o2.translate(0.5f * -normal);
+        o1.translate(0.5f * normal);
     }
+
 }

@@ -12,25 +12,21 @@ namespace sne
 
 	void PhysicManager::computeCollision()
 	{
-		// sortObject(); TO USE LATER (sweep & prune)
 
-		// // If effect makes others collision we take
-		 /*for (int i = 0; i < _objects.size(); i++)
-		 {
-			for (int j = i + 1; j < _objects.size(); j++)
-		 	{
-		 		_objects[i]->computeCollide(*_objects[j]);
-			}
-		 }*/
+		// Comparaison purpose
+		/*for (int i = 0; i < _objects.size(); i++)
+		{
+		   for (int j = i + 1; j < _objects.size(); j++)
+		   {
+			   _objects[i]->computeCollide(*_objects[j]);
+		   }
+		}*/
 
 		// With sweep and prune
 		auto pairs = sweepAndPrune(_objects);
-		for(auto &elt : pairs)
+		for (auto &elt : pairs)
 		{
 			elt.first->computeCollide(*(elt.second));
-
-        	// std::cout << "Nombre de collision " << elt.first->parent->getName() << ": " << elt.first->numberOfCollisions() << "\n";
-        	// std::cout << "Nombre de collision " << elt.second->parent->getName() << ": " << elt.second->numberOfCollisions() << "\n";
 		}
 	}
 
@@ -44,16 +40,16 @@ namespace sne
 		std::sort(std::begin(_objects), std::end(_objects), ObjectComparator());
 	}
 
-	const std::vector<physics::PhysicObject*> &PhysicManager::getObjects() const
+	const std::vector<physics::PhysicObject *> &PhysicManager::getObjects() const
 	{
 		return _objects;
 	}
 
 	void PhysicManager::clear()
 	{
-		for(physics::PhysicObject* elt: _objects)
+		for (physics::PhysicObject *elt : _objects)
 		{
-			if(elt->getCollider() == nullptr)
+			if (elt->getCollider() == nullptr)
 				std::cout << "destruction de null\n";
 			delete elt;
 		}
