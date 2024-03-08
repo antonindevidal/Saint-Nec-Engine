@@ -36,7 +36,7 @@ namespace sne::physics
          * @param depth (Y axis)
          * @param height (Z axis)
          */
-        BoxCollider(const glm::vec3 center, double width, double depth, double height);
+        BoxCollider(const glm::vec3 center, float width, float depth, float height);
 
         /**
          * @brief Destroy the Box Collider object
@@ -54,8 +54,8 @@ namespace sne::physics
 
         /**
          * @brief Set the Center object and update _points
-         * 
-         * @param v 
+         *
+         * @param v
          */
         void setCenter(const glm::vec3 &v) override;
 
@@ -77,6 +77,13 @@ namespace sne::physics
         int getNbPoints() const;
 
         /**
+         * @brief Get Points 
+         *
+         * @return const std::array<glm::vec3, 8>
+         */
+        const std::array<glm::vec3, 8> getPoints() const;
+
+        /**
          * @brief Set the Rotation object and update points
          * angles must be passed as Radians
          * @param rotation
@@ -96,23 +103,44 @@ namespace sne::physics
          * @return std::vector<glm::vec3>
          */
         std::vector<glm::vec3> getAxis() const;
-
-        bool collide(const Collider *) const override;
-        bool collide(const SphereCollider &) const override;
-        bool collide(const BoxCollider &) const override;
+        
+        bool collide(const Collider *, glm::vec3& normal) const override;
+        bool collide(const SphereCollider &, glm::vec3& normal) const override;
+        bool collide(const BoxCollider &, glm::vec3& normal) const override;
 
         /**
-         * @brief return true if it has an intersection with other object on axis 
-         * 
-         * @param axis 
-         * @return true 
-         * @return false 
+         * @brief return true if it has an intersection with other object on axis
+         *
+         * @param axis
+         * @return true
+         * @return false
          */
         bool intersection(const Collider *, const glm::vec3 &axis) const override;
         bool intersection(const SphereCollider &, const glm::vec3 &axis) const override;
         bool intersection(const BoxCollider &, const glm::vec3 &axis) const override;
 
+        /**
+         * @brief Get the Min value, of all the points, on an axis
+         * 
+         * @param axis 
+         * @return float 
+         */
         float getMin(const glm::vec3 &axis) const override;
+        /**
+         * @brief Get the Max value, of all the points, on an axis
+         * 
+         * @param axis 
+         * @return float 
+         */
+        float getMax(const glm::vec3 &axis) const override;
+
+        /**
+         * @brief Get the farthest point considering an axis
+         * 
+         * @param axis 
+         * @return glm::vec3 
+         */
+        glm::vec3 farthestPoint(const glm::vec3 &axis) const override;
     };
 
     std::ostream &operator<<(std::ostream &oss, const BoxCollider &b);

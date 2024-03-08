@@ -15,6 +15,8 @@ set(_SAINT_NEC_ENGINE_SRC
 	"src/scenes/PhysicScene2.cpp"
 	"src/ui_builder/UIBuilder.cpp"
 	"src/scenes/MouvementCoordination.cpp"
+	"src/scenes/PICollisions.cpp"
+	"src/scenes/EPAScene.cpp"
 	"src/scenes/WaterGenerationScene.cpp"
 	
 )
@@ -33,6 +35,8 @@ set(_SAINT_NEC_ENGINE_HDR
 	"src/ui_builder/UIBuilder.hpp"
 	"src/scenes/MouvementCoordination.hpp"
 	"src/Colors.hpp"
+	"src/scenes/PICollisions.hpp"
+	"src/scenes/EPAScene.hpp"
 	"src/scenes/WaterGenerationScene.hpp"
 )
 

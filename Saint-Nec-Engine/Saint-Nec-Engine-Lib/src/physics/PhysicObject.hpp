@@ -7,7 +7,6 @@
  * @date november 17th 2023.
  */
 
-
 #include <glm/glm.hpp>
 #include <exception>
 #include <architecture/Component.hpp>
@@ -15,7 +14,6 @@
 #include <architecture/GameObject.hpp>
 #include <architecture/Time.hpp>
 #include "Collider.hpp"
-
 
 namespace sne::physics
 {
@@ -26,6 +24,7 @@ namespace sne::physics
      * s
      */
     using Force = glm::vec3;
+
     class PhysicObject : public Component
     {
         glm::vec3 _acceleration{0, -9.81, 0};
@@ -41,9 +40,9 @@ namespace sne::physics
         // To update with inheritence
         bool isFix = false;
 
+        unsigned int _collideCounter = 0;
+
     public:
-        bool hasBeenUpdated = false;
-        
         /**
          * @brief Construct a new PhysicObject object positionned on origin
          *
@@ -68,7 +67,7 @@ namespace sne::physics
         const glm::vec3 &getRotation() const;
         float getAmortissement() const;
         float getMass() const;
-        const Collider * getCollider() const;
+        const Collider *getCollider() const;
 
         void setAcceleration(const glm::vec3 &);
         void setVelocity(const glm::vec3 &);
@@ -79,11 +78,15 @@ namespace sne::physics
         void fix()
         {
             isFix = true;
-            setAcceleration({0,0,0});
-            setVelocity({0,0,0});
+            setAcceleration({0, 0, 0});
+            setVelocity({0, 0, 0});
         }
         /************************************************************************/
 
+        void translate(const glm::vec3 &v)
+        {
+            _position += v;
+        }
         /**
          * @brief applies a Force on the object
          * This one must be a constante force such as gravity
@@ -123,7 +126,36 @@ namespace sne::physics
                 return "Object must have a valide mass!";
             }
         };
+
+        /**
+         * @brief return the number of collisions
+         * 
+         * @return unsigned int 
+         */
+        unsigned int numberOfCollisions() const
+        {
+            return _collideCounter;
+        }
+
+        /**
+         * @brief Get the name of the object
+         * 
+         * @return std::string 
+         */
+        std::string getName() const
+        {
+            if(parent)
+                return parent->getName();
+            return "No name renseigned";
+        }
     };
 
-    void addImpulsion(PhysicObject &o1, PhysicObject &o2);
+    /**
+     * @brief applying impulsion on the 2 objects
+     * 
+     * @param o1 
+     * @param o2 
+     * @param normal 
+     */
+    void addImpulsion(PhysicObject &o1, PhysicObject &o2, glm::vec3 &normal);
 }
