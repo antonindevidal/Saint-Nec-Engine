@@ -22,6 +22,7 @@ Game::Game(): sceneManager(sne::SceneManager::getInstance())
 	grassScene->setName("GrassScene");
 	sceneManager->addScene(grassScene);
 
+
 	auto* physicScene = new PhysicScene{};
 	physicScene->setName("PhysicScene");
 	sceneManager->addScene(physicScene);
