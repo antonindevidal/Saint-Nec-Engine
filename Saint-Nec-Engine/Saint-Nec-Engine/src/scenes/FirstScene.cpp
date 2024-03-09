@@ -42,6 +42,14 @@ void FirstScene::load()
 	cubeTextured->addComponent(cubeComponent);
 	cubeTextured->translate(glm::vec3{ 1.0f, 0.0f, 0.0f });
 
+
+
+	// Scaled cube example
+	auto* cubeScaled = new sne::GameObject();
+	addGameObject(cubeScaled);
+	cubeScaled->setName("Scaled cube");
+	cubeScaled->addComponent(new sne::graphics::Cube("resources/shaders/color.vert", "resources/shaders/color.frag", glm::vec3{ 0.8,0.2,0.6 }, 1, 2, 3));
+	cubeScaled->translate(glm::vec3{ -3.0f, 0.0f, 3.0f });
 	auto* sphere = new sne::GameObject();
 	addGameObject(sphere);
 	sphere->setName("Sphere");

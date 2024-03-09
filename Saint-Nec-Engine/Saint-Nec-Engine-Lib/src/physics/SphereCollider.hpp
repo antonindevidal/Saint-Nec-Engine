@@ -20,10 +20,10 @@ namespace sne::physics
     class SphereCollider : public Collider
     {
     private:
-        double _radius;
+        float _radius;
 
     public:
-        SphereCollider(glm::vec3 center, double radius);
+        SphereCollider(glm::vec3 center, float radius);
         /**
          * @brief Destroy the Sphere Collider object
          * 
@@ -33,13 +33,13 @@ namespace sne::physics
         /**
          * @brief Get the Radius object
          *
-         * @return const double
+         * @return const float
          */
-        const double getRadius() const;
+        const float getRadius() const;
 
-        bool collide(const Collider *) const override;
-        bool collide(const SphereCollider &) const override;
-        bool collide(const BoxCollider &) const override;
+        bool collide(const Collider *, glm::vec3& normal) const override;
+        bool collide(const SphereCollider &, glm::vec3& normal) const override;
+        bool collide(const BoxCollider &, glm::vec3& normal) const override;
 
         /**
          * @brief return true if it has an intersection with other object on axis 
@@ -51,6 +51,29 @@ namespace sne::physics
         bool intersection(const Collider *, const glm::vec3 &axis) const override;
         bool intersection(const SphereCollider &, const glm::vec3 &axis) const override;
         bool intersection(const BoxCollider &, const glm::vec3 &axis) const override;
+        
+        /**
+         * @brief Get the Min point considering an axis
+         * 
+         * @param axis 
+         * @return float 
+         */
         float getMin(const glm::vec3 &axis) const override;
+
+        /**
+         * @brief Get the Max point considering an axis
+         * 
+         * @param axis 
+         * @return float 
+         */
+        float getMax(const glm::vec3 &axis) const override;
+
+        /**
+         * @brief Return the farthest point considering a direction
+         * 
+         * @param axis 
+         * @return glm::vec3 
+         */
+        glm::vec3 farthestPoint(const glm::vec3 &axis) const override;
     };
 }

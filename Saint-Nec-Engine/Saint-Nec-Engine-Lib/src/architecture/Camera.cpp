@@ -9,33 +9,32 @@ namespace sne
 		view = glm::lookAt(cameraPos, cameraPos + cameraFront, cameraUp);
 	}
 
-	void Camera::processInput(GLFWwindow* window, int mouseX, int mouseY)
+	void Camera::update()
 	{
-
 		if (firstMouse)
 		{
-			lastMouseX = mouseX;
-			lastMouseY = mouseY;
+			lastMouseX = Input::getMouseX();
+			lastMouseY = Input::getMouseY();
 		}
 		float speed = cameraSpeed * Time::getDeltaTime();
-		if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS)
+		if (Input::isKeyPressed(GLFW_KEY_W))
 			cameraPos += speed * cameraFront;
-		if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS)
+		if (Input::isKeyPressed(GLFW_KEY_S))
 			cameraPos -= speed * cameraFront;
-		if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS)
+		if (Input::isKeyPressed(GLFW_KEY_A))
 			cameraPos -= glm::normalize(glm::cross(cameraFront, cameraUp)) * speed;
-		if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS)
+		if (Input::isKeyPressed(GLFW_KEY_D))
 			cameraPos += glm::normalize(glm::cross(cameraFront, cameraUp)) * speed;
-		if (glfwGetKey(window, GLFW_KEY_LEFT_SHIFT) == GLFW_PRESS)
+		if (Input::isKeyPressed(GLFW_KEY_LEFT_SHIFT))
 			cameraPos.y -= speed;
-		if (glfwGetKey(window, GLFW_KEY_SPACE) == GLFW_PRESS)
+		if (Input::isKeyPressed(GLFW_KEY_SPACE))
 			cameraPos.y += speed;
 
 
-		float xoffset = mouseX - lastMouseX;
-		float yoffset = lastMouseY - mouseY; // reversed since y-coordinates range from bottom to top
-		lastMouseX = mouseX;
-		lastMouseY = mouseY;
+		float xoffset = Input::getMouseX() - lastMouseX;
+		float yoffset = lastMouseY - Input::getMouseY(); // reversed since y-coordinates range from bottom to top
+		lastMouseX = Input::getMouseX();
+		lastMouseY = Input::getMouseY();
 
 		const float sensitivity = 0.1f;
 		xoffset *= sensitivity;
@@ -47,8 +46,6 @@ namespace sne
 			pitch = 89.0f;
 		if (pitch < -89.0f)
 			pitch = -89.0f;
-		lastMouseX = mouseX;
-		lastMouseY = mouseY;
 
 		glm::vec3 direction;
 		direction.x = cos(glm::radians(yaw)) * cos(glm::radians(pitch));
@@ -56,11 +53,6 @@ namespace sne
 		direction.z = sin(glm::radians(yaw)) * cos(glm::radians(pitch));
 		cameraFront = glm::normalize(direction);
 
-
-	}
-
-	void Camera::update()
-	{
 		view = glm::lookAt(cameraPos, cameraPos + cameraFront, cameraUp);
 	}
 

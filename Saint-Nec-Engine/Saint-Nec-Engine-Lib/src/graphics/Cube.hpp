@@ -38,6 +38,8 @@ namespace sne::graphics
 		*/
 		Cube(const char* vertexShaderPath, const char* fragmentShaderPath);
 
+		Cube(const char* vertexShaderPath, const char* fragmentShaderPath, glm::vec3 color, const int& sizeX, const int sizeY, const int sizeZ);
+
 		/**
 		*
 		* Create a cube of size 1*1*1 of a specific color.

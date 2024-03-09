@@ -6,6 +6,8 @@
 #include "scenes/PhysicScene.hpp"
 #include "scenes/PhysicScene2.hpp"
 #include "scenes/MouvementCoordination.hpp"
+#include "scenes/PICollisions.hpp"
+#include "scenes/EPAScene.hpp"
 
 Game::Game(): sceneManager(sne::SceneManager::getInstance())
 {
@@ -29,9 +31,19 @@ Game::Game(): sceneManager(sne::SceneManager::getInstance())
 	physicScene2->setName("physicScene2");
 	sceneManager->addScene(physicScene2);
 	
+
 	auto* mouvementCoordination = new MouvementCoordination{};
 	mouvementCoordination->setName("mouvementCoordination");
 	sceneManager->addScene(mouvementCoordination);
+
+	auto* piCollisions = new PICollisions{};
+	piCollisions->setName("PI Collisions counter");
+	sceneManager->addScene(piCollisions);
+
+	auto* epaScene = new EPAScene{};
+	epaScene->setName("EPAScene normal visualization");
+	sceneManager->addScene(epaScene);
+
 
 	auto* waterScene = new WaterGenerationScene();
 	waterScene->setName("Water scene");
@@ -43,11 +55,6 @@ Game::Game(): sceneManager(sne::SceneManager::getInstance())
 
 Game::~Game()
 {
-}
-
-void Game::processInput(GLFWwindow* window, int mouseX, int mouseY)
-{
-	sceneManager->processInput(window, mouseX, mouseY);
 }
 
 void Game::update()

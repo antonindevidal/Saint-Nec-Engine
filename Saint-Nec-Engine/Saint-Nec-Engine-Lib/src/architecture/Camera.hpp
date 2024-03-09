@@ -7,7 +7,7 @@
  *
  */
 #include <glad/glad.h>
-#include <GLFW/glfw3.h>
+#include <architecture/Input.hpp>
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 
@@ -74,16 +74,6 @@ namespace sne
 
 	public:
 		Camera();
-
-
-		/**
-		 * Process GLFW inputs here.
-		 * 
-		 * @param window GLFW window.
-		 * @param mouseX Position of the mouse on horizontal axis.
-		 * @param mouseY Position of the mouse on vertical axis.
-		 */
-		virtual void processInput(GLFWwindow* window, int mouseX, int mouseY);
 
 		/**
 		 * Update function.

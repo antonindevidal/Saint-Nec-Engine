@@ -81,12 +81,15 @@ void main()
 	// Generate basic hash
 	uint h = lowbias32(gl_InstanceID + int(offset.x) + int(offset.z)); 
 	
+	vec3 heightenPos = vec3(aPos.x, aPos.y * (0.5 + ((h%100)/ 100.0)),aPos.z); // Multiply the height by 0.5-1.5
+
+
 	//Rotation for grass blade
 	float angle = (h/10.0) *2.0 *3.14 + 0.2;
 
 	// Generate wind with perlin noise
-	float windStrengthNoise = pNoise( (aInstancePos.xz+offset.xz) * windDir.xz  * 100.0+ time *200.0f, 2);
-	float windDirStrength = windStrengthNoise *1.4f;
+	float windStrengthNoise = pNoise( (aInstancePos.xz+offset.xz) * windDir.xz  * 100.0+ time *400.0f, 2);
+	float windDirStrength = windStrengthNoise *1.1f;
 
 	//Calculate normal for the blade 
 	vec3 normalvector = vec3(cos(angle) + sin(angle), 0.0f, -sin(angle)+ cos(angle));
@@ -98,7 +101,7 @@ void main()
 	float windCurvature = windDirStrength * aPos.y ;
 
 	// Calculate final curvature
-	float curvature =  naturalCurvature - windCurvature;
+	float curvature =  naturalCurvature + windCurvature;
 
 	// Create a rotation factor for the blade to "always" be visible even if parralel to the camera
 	float viewDotNormal = clamp(dot(camViewDir,normalvector),0.0f,1.0f);	
@@ -107,10 +110,17 @@ void main()
 	//Matrices are created by columns!!!!
 	//Calculate rotation matrices for the blade
 	//This can be simplified but I keep it that way to be readable
-	mat3 curvMat = mat3(1.0, 0.0, 0.0,
-						0.0, cos(curvature), sin(curvature),
-						0.0, -sin(curvature), cos(curvature));
-	
+
+	float xCurvatureFactor = dot(vec3(cos(angle),0.0,sin(angle)), windDir);
+	float zCurvatureFactor = dot(normalize(vec3(cos(angle + 1.57),0.0,sin(angle+ 1.57))), windDir) ;
+
+	mat3 curvMatX = mat3(1.0, 0.0, 0.0,
+						0.0, cos(curvature*xCurvatureFactor), sin(curvature*xCurvatureFactor),
+						0.0, -sin(curvature*xCurvatureFactor), cos(curvature*xCurvatureFactor));
+
+	mat3 curvMatZ = mat3(cos(curvature*zCurvatureFactor), -sin(curvature*zCurvatureFactor),0.0,
+						 sin(curvature*zCurvatureFactor),  cos(curvature*zCurvatureFactor),0.0,
+						 0.0		   , 0.0			,1.0);
 	mat3 rotBlade = mat3(cos(angle),0.0, -sin(angle),
 						 0.0, 1.0, 0.0,
 						 sin(angle), 0.0, cos(angle));
@@ -119,9 +129,9 @@ void main()
 									0.0, 1.0, 0.0,
 									sin(viewSpaceCenteringfactor), 0.0, cos(viewSpaceCenteringfactor));
 
-	mat3 finalRotMatrix = viewSpaceRotation * curvMat * rotBlade  ;
+	mat3 finalRotMatrix = viewSpaceRotation * curvMatZ *curvMatX * rotBlade  ;
 
-	vec3 finalPos = aPos * finalRotMatrix;
+	vec3 finalPos = heightenPos * finalRotMatrix;
 
 	vec3 newNormal = aNormal * finalRotMatrix;
 

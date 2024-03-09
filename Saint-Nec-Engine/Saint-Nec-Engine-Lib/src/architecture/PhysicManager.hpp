@@ -89,6 +89,11 @@ namespace sne
 		 */
 		void clear();
 
+		/**
+		 * @brief Get the Last object inserted
+		 * 
+		 * @return physics::PhysicObject* 
+		 */
 		physics::PhysicObject *getLast()
 		{
 			if (_objects.empty())

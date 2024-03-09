@@ -22,15 +22,15 @@ void PhysicScene2::load()
 	for (int i = -10; i < 11; i++)
 	{
 		// above
-		cube = createCube(_physicManager, center2 + glm::vec3{i, 0, 1}, bleu, true);
+		cube = createCube(_physicManager, center2 + glm::vec3{i, 0, 1}, blue, true);
 		addGameObject(cube);
 
 		// middle
-		cube = createCube(_physicManager, center2 + glm::vec3{i, 0, 0}, bleu, true);
+		cube = createCube(_physicManager, center2 + glm::vec3{i, 0, 0}, blue, true);
 		addGameObject(cube);
 
 		// behind
-		cube = createCube(_physicManager, center2 + glm::vec3{i, 0, -1}, bleu, true);
+		cube = createCube(_physicManager, center2 + glm::vec3{i, 0, -1}, blue, true);
 		addGameObject(cube);
 	}
 }

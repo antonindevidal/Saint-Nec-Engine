@@ -4,6 +4,8 @@
 #include <graphics/Cube.hpp>
 #include <graphics/Plane.hpp>
 #include <graphics/Skybox.hpp>
+#include <imgui.h>
+#include <glm/glm.hpp>
 
 
 class GrassScene : public sne::Scene
@@ -17,8 +19,19 @@ public:
 
 	void update() override;
 
+	void drawUI() override;
+
 
 private:
 
-	glm::vec3 sunPos;
+
+	/**
+	 * @brief Horizontal angle for the directionnal light (in radians).
+	 */
+	float sunAngle;
+
+	/**
+	 * Vertical orientation for the directionnal light.
+	 */
+	float sunOrbit;
 };

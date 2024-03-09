@@ -80,15 +80,6 @@ namespace sne
 		void changeScene(const std::string& name);
 
 		/**
-		 * Process GLFW inputs here.
-		 *
-		 * @param window GLFW window.
-		 * @param mouseX Position of the mouse on horizontal axis.
-		 * @param mouseY Position of the mouse on vertical axis.
-		 */
-		void processInput(GLFWwindow* window, int mouseX, int mouseY);
-
-		/**
 		 * Update function for the current scene.
 		 * All the logic happens here.
 		 */
