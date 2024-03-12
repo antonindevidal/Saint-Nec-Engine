@@ -59,7 +59,7 @@ TEST_CASE("TEST MANAGER TIME COMPARISON")
     {
         glm::vec3 center{i,0,0};
         po = new PhysicObject{center, 10};
-        collider = new BoxCollider{center, 4, 4, 4};
+        collider = new SphereCollider{center, 0.6};
         po->setAcceleration({0,0,0});
         po->setCollider(collider);
         manager.addObject(po);
@@ -70,7 +70,7 @@ TEST_CASE("TEST MANAGER TIME COMPARISON")
     auto end = std::chrono::high_resolution_clock::now();
     auto duration = std::chrono::duration_cast<std::chrono::microseconds>(end - start);
 
-    std::cout << "Temps d'execution collision total BoxCollider: " << duration.count() << "µs\n";
+    std::cout << "Temps d'execution collision total Collider: " << duration.count() << "µs\n";
     manager.clear();
 
     // 0 collision measure
@@ -78,7 +78,7 @@ TEST_CASE("TEST MANAGER TIME COMPARISON")
     {
         glm::vec3 center = {i*10,0,0};
         po = new PhysicObject{center, 10};
-        collider = new BoxCollider{center, 4, 4, 4};
+        collider = new SphereCollider{center, 0.6};
         po->setAcceleration({0,0,0});
         po->setCollider(collider);
         manager.addObject(po);
@@ -89,7 +89,7 @@ TEST_CASE("TEST MANAGER TIME COMPARISON")
     end = std::chrono::high_resolution_clock::now();
     duration = std::chrono::duration_cast<std::chrono::microseconds>(end - start);
 
-    std::cout << "Temps d'execution 0 collision BoxCollider: " << duration.count() << "µs.\n";
+    std::cout << "Temps d'execution 0 collision Collider: " << duration.count() << "µs.\n";
     manager.clear();
 }
 
