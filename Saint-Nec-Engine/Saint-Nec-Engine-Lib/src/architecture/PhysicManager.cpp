@@ -31,7 +31,12 @@ namespace sne
 			elt.first->computeCollide(*(elt.second));
 		}
 		
-	}
+
+		// Une méthode de résolution des collision est celle-ci :
+		// appliquer la physique ;
+		// détecter les collisions ;
+		// appliquer les réactions*.
+		}
 
 	void PhysicManager::addObject(physics::PhysicObject *o)
 	{
