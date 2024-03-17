@@ -1,4 +1,5 @@
 // Entetes //---------------------------------------------------------------------------------------
+#define _USE_MATH_DEFINES
 #include <iostream>
 #include <catch.hpp>
 #include <cmath>

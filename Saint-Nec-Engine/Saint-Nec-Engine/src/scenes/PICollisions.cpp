@@ -77,7 +77,7 @@ void PICollisions::load()
 	addGameObject(bigCube3);
 
 	cubePO3->setMass(1.f);
-	bigCubePO3->setMass(1000.f);
+	bigCubePO3->setMass(10000.f);
 	bigCubePO3->setVelocity({-1., 0, 0});
 }
 
