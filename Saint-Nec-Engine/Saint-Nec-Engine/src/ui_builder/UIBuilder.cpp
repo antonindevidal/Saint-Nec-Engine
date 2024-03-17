@@ -38,3 +38,22 @@ sne::GameObject *createBox(sne::PhysicManager &_physicManager, const glm::vec3 &
 
 	return box;
 }
+
+sne::GameObject *createSphere(sne::PhysicManager &_physicManager, const glm::vec3 &center, bool fix, float size)
+{
+	auto *box = new sne::GameObject{};
+	box->addComponent(new sne::graphics::Sphere("resources/shaders/color.vert", "resources/shaders/color.frag"));
+	box->translate(center);
+
+	auto *po = new sne::physics::PhysicObject{center, 10};
+	po->setCollider(new sne::physics::SphereCollider{center,size});
+	box->addComponent(po);
+	po->setAcceleration({0, 0, 0});
+	po->setVelocity({0, 0, 0});
+	_physicManager.addObject(po);
+
+	if (fix)
+		po->fix();
+
+	return box;
+}

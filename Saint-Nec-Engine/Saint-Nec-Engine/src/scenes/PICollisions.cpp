@@ -61,14 +61,14 @@ void PICollisions::load()
 
 	// Mass * 10000
 	// glm::vec3 center3_1{-10, 0, 20};
-	// glm::vec3 center3_2{0, 0, 20};
+	glm::vec3 center3_2{0, 0, 20};
 	// glm::vec3 center3_3{10, 0, 20};
 
-	// sne::GameObject *cube3 = createCube(_physicManager, center3_2, red);
-	// cube3->setName("cube3");
-	// auto *cubePO3 = _physicManager.getLast();
-	// cubePO3->setAcceleration({0, 0, 0});
-	// addGameObject(cube3);
+	sne::GameObject *cube3 = createSphere(_physicManager, center3_2, false, 1);
+	cube3->setName("cube3");
+	auto *cubePO3 = _physicManager.getLast();
+	cubePO3->setAcceleration({0, 0, 0});
+	addGameObject(cube3);
 
 	// sne::GameObject *bigCube3 = createCube(_physicManager, center3_3, purple, false, 5);
 	// bigCube3->setName("bigCube3");
