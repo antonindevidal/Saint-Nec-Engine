@@ -115,7 +115,7 @@ int main(void)
 	sne::Input::bindMouseCallbacks();
 
 	glEnable(GL_DEPTH_TEST);
-	sne::Window::swapIntervals(1);
+	sne::Window::swapIntervals(0);
 
 
     glEnable(GL_DEPTH_TEST);

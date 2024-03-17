@@ -60,25 +60,25 @@ void PICollisions::load()
 
 
 	// Mass * 10000
-	// glm::vec3 center3_1{-10, 0, 20};
+	glm::vec3 center3_1{-10, 0, 20};
 	glm::vec3 center3_2{0, 0, 20};
-	// glm::vec3 center3_3{10, 0, 20};
+	glm::vec3 center3_3{10, 0, 20};
 
-	sne::GameObject *cube3 = createSphere(_physicManager, center3_2, false, 1);
+	sne::GameObject *cube3 = createCube(_physicManager, center3_2, red, false, 1);
 	cube3->setName("cube3");
 	auto *cubePO3 = _physicManager.getLast();
 	cubePO3->setAcceleration({0, 0, 0});
 	addGameObject(cube3);
 
-	// sne::GameObject *bigCube3 = createCube(_physicManager, center3_3, purple, false, 5);
-	// bigCube3->setName("bigCube3");
-	// auto *bigCubePO3 = _physicManager.getLast();
-	// bigCubePO3->setAcceleration({0, 0, 0});
-	// addGameObject(bigCube3);
+	sne::GameObject *bigCube3 = createCube(_physicManager, center3_3, purple, false, 5);
+	bigCube3->setName("bigCube3");
+	auto *bigCubePO3 = _physicManager.getLast();
+	bigCubePO3->setAcceleration({0, 0, 0});
+	addGameObject(bigCube3);
 
-	// cubePO3->setMass(1.f);
-	// bigCubePO3->setMass(1000.f);
-	// bigCubePO3->setVelocity({-1., 0, 0});
+	cubePO3->setMass(1.f);
+	bigCubePO3->setMass(1000.f);
+	bigCubePO3->setVelocity({-1., 0, 0});
 }
 
 void PICollisions::unload()
