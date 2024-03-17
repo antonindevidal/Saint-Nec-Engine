@@ -22,12 +22,15 @@ namespace sne
 		   }
 		}*/
 
+
+
 		// With sweep and prune
 		auto pairs = sweepAndPrune(_objects);
 		for (auto &elt : pairs)
 		{
 			elt.first->computeCollide(*(elt.second));
 		}
+		
 	}
 
 	void PhysicManager::addObject(physics::PhysicObject *o)
