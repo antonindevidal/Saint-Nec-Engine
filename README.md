@@ -21,14 +21,14 @@ You can find Doxygen documentation enhanced with [Doxygen Theme - Flat Design](h
 
 ### Physics
 
-- [ ]  Basic objects collisions ( spheres, cubes)
+- [X]  Basic objects collisions ( spheres, cubes)
 - [ ]  Complex objects collisions ( terrain)
 
 ### Graphics
 
-- [ ]  Terrain generation
-- [ ]  Grass simulation
-- [ ]  Water simulation
+- [X]  Terrain generation
+- [X]  Grass simulation
+- [X]  Water simulation
 
 This tasks will use various implementation techniques such as particles, complex shaders, lighting, level of detail and multi-threading.
 
