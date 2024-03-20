@@ -116,8 +116,6 @@ int main(void)
 
 	glEnable(GL_DEPTH_TEST);
 	sne::Window::swapIntervals(0);
-
-	std::cout << "Yes je m'arrete \n\n\n\n";
     
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
     glEnable(GL_BLEND);

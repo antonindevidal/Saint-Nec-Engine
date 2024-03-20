@@ -351,4 +351,22 @@ namespace sne::physics
         // Return most recent closest point
         return faces[closest_face][3] * glm::dot(faces[closest_face][0], faces[closest_face][3]);
     }
+
+
+    bool gjk(const SphereCollider &sphere1, const SphereCollider &sphere2, glm::vec3 &normal)
+    {
+        // Evaluate the distance between the 2 centers
+        normal = sphere2.getCenter() - sphere1.getCenter();
+        
+        float distance = norm(normal);
+
+        float delta = distance - (sphere1.getRadius() + sphere2.getRadius());
+
+        normal /= distance;
+        normal *= (-delta);
+        
+        return delta < 0;
+
+    }
+
 }

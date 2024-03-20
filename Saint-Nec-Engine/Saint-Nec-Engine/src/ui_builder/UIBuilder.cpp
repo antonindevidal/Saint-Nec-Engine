@@ -42,7 +42,7 @@ sne::GameObject *createBox(sne::PhysicManager &_physicManager, const glm::vec3 &
 sne::GameObject *createSphere(sne::PhysicManager &_physicManager, const glm::vec3 &center, bool fix, float size)
 {
 	auto *box = new sne::GameObject{};
-	box->addComponent(new sne::graphics::Sphere("resources/shaders/color.vert", "resources/shaders/color.frag"));
+	box->addComponent(new sne::graphics::Sphere("resources/shaders/sphere.vert", "resources/shaders/sphere.frag"));
 	box->translate(center);
 
 	auto *po = new sne::physics::PhysicObject{center, 10};
