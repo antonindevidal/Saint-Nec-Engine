@@ -103,7 +103,7 @@ void PICollisions::unload()
 void PICollisions::update()
 {
 	lastUpdate += Time::getDeltaTime();
-	if (lastUpdate > 3)
+	if (lastUpdate > 2)
 	{
 		lastUpdate = 0;
 		// sphere qui tombe
