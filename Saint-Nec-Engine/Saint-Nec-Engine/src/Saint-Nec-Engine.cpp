@@ -115,11 +115,7 @@ int main(void)
 	sne::Input::bindMouseCallbacks();
 
 	glEnable(GL_DEPTH_TEST);
-	sne::Window::swapIntervals(1);
-
-
-    glEnable(GL_DEPTH_TEST);
-    glfwSwapInterval(1);
+	sne::Window::swapIntervals(0);
     
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
     glEnable(GL_BLEND);

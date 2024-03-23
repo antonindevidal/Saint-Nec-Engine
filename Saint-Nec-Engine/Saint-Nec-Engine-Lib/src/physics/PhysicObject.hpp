@@ -86,6 +86,8 @@ namespace sne::physics
         void translate(const glm::vec3 &v)
         {
             _position += v;
+            if (parent)
+                parent->translate(v);
         }
         /**
          * @brief applies a Force on the object

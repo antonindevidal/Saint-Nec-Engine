@@ -69,6 +69,18 @@ namespace sne::physics
      * @return false => no collision detected
      */
     bool gjk(const Collider &coll1, const Collider &coll2, glm::vec3 &normal);
+
+    /**
+     * @brief tell if there is a collision and, if it is the case, evalute
+     * the normal of collision
+     * 
+     * @param coll1 
+     * @param coll2 
+     * @param normal normal of collision calculated
+     * @return true => collision detected
+     * @return false => no collision detected
+     */
+    bool gjk(const SphereCollider &coll1, const SphereCollider &coll2, glm::vec3 &normal);
     
     /**
      * @brief algorithm used for gjk, triangle construction

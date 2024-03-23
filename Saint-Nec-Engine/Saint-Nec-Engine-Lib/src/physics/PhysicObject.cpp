@@ -157,12 +157,12 @@ namespace sne::physics
             addImpulsion(*this, obj, normal);
         }
 
-        // PI colision Proof purposes
-        // std::cout << "Collision " << getName() << " - " << obj.getName() << "\n";
-        // if (getName() == "cube1" || getName() == "cube2")
-        //     std::cout << "Nombre de collision " << getName() << ": " << numberOfCollisions() << "\n";
-        // if (obj.getName() == "cube1" || obj.getName() == "cube2")
-        //     std::cout << "Nombre de collision " << obj.getName() << ": " << obj.numberOfCollisions() << "\n";
+        // PI collision Proof purposes
+        std::cout << "Collision " << getName() << " - " << obj.getName() << "\n";
+        if (getName().find("cube") != std::string::npos)
+            std::cout << "Nombre de collision " << getName() << ": " << numberOfCollisions() << "\n";
+        if (obj.getName().find("cube") != std::string::npos)
+            std::cout << "Nombre de collision " << obj.getName() << ": " << obj.numberOfCollisions() << "\n";
     }
 
     void addImpulsion(PhysicObject &o1, PhysicObject &o2, glm::vec3 &normal)
@@ -186,8 +186,11 @@ namespace sne::physics
 
         o1.setVelocity(glm::vec3{newv1x, newv1y, newv1z});
         o2.setVelocity(glm::vec3{newv2x, newv2y, newv2z});
-        o2.translate(0.5f * -normal);
-        o1.translate(0.5f * normal);
+        float ratio = m1 / (m2+m1);
+        ratio = (m1>m2)? ratio : 1-ratio;
+        o2.translate(ratio * -normal);
+        o1.translate((1-ratio) * normal);
     }
 
 }
+
