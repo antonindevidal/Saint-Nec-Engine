@@ -16,6 +16,6 @@ TEST_CASE("TEST SPHERECOLLIDER CONSTRUCTORS")
 {
     const SphereCollider sphere{glm::vec3{2, 2, 1}, 2.7589};
 
-    CHECK(sphere.getRadius() == 2.7589);
+    CHECK(sphere.getRadius() == 2.7589f);
     CHECK(sphere.getCenter() == glm::vec3{2, 2, 1});
 }
