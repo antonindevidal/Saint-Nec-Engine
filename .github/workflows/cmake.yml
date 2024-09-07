@@ -51,20 +51,22 @@ jobs:
           cd Saint-Nec-Engine 
           mkdir buildCI 
           cd buildCI
-
-      - name: display current folder
-        run: pwd
+          echo "Current directory: $(pwd)" # Display current folder
 
       - name: Build cmake
-        run: cmake ..
+        run: |
+          cd Saint-Nec-Engine/buildCI
+          cmake ..
 
       - name: Build test
-        run: make -j
+        run: |
+          cd Saint-Nec-Engine/buildCI 
+          make -j
         # working-directory: ./Saint-Nec-Engine/build/Saint-Nec-Engine-Test
 
       # Runs a single command using the runners shell
       - name: Run test
-        run: cd Saint-Nec-Engine-Test && ./testCollision
+        run: cd Saint-Nec-Engine/buildCI/Saint-Nec-Engine-Test && ./testCollision
 
       # Runs a set of commands using the runners shell
       # - name: Run a multi-line script
