@@ -17,25 +17,25 @@ jobs:
         run: sudo apt-get install libgl1-mesa-dev -y
 
       - name: Create build directory
-        run: mkdir -p Saint-Nec-Engine/build
+        run: mkdir -p build
 
       - name: Configure libraries
         run: cmake ../../Saint-Nec-Engine-Lib
-        working-directory: ./Saint-Nec-Engine/build
+        working-directory: ./build
 
       - name: Build libraries
         run: make -j$(nproc)
-        working-directory: ./Saint-Nec-Engine/build
+        working-directory: ./build
 
       - name: Configure tests
         run: cmake ../../Saint-Nec-Engine-Test
-        working-directory: ./Saint-Nec-Engine/build
+        working-directory: ./build
 
       - name: Build tests
         run: make -j$(nproc)
-        working-directory: ./Saint-Nec-Engine/build
+        working-directory: ./build
 
       - name: Run tests
         run: |
-          ./Saint-Nec-Engine/build/Saint-Nec-Engine-Test/testBoxCollider
-          ./Saint-Nec-Engine/build/Saint-Nec-Engine-Test/testCollision
+          ./build/Saint-Nec-Engine-Test/testBoxCollider
+          ./build/Saint-Nec-Engine-Test/testCollision
