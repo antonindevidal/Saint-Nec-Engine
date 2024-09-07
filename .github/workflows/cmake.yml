@@ -50,6 +50,9 @@ jobs:
       - name: Create build directory
         run: cd Saint-Nec-Engine && mkdir build && cd build
 
+      - name: display current folder
+        run: pwd
+        
       - name: Build cmake
         run: cmake ..  -DBUILD_SAINT_NEC_ENGINE=OFF
         working-directory: ./Saint-Nec-Engine/build
