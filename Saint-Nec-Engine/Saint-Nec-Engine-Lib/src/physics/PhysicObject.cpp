@@ -158,11 +158,11 @@ namespace sne::physics
         }
 
         // PI collision Proof purposes
-        std::cout << "Collision " << getName() << " - " << obj.getName() << "\n";
-        if (getName().find("cube") != std::string::npos)
-            std::cout << "Nombre de collision " << getName() << ": " << numberOfCollisions() << "\n";
-        if (obj.getName().find("cube") != std::string::npos)
-            std::cout << "Nombre de collision " << obj.getName() << ": " << obj.numberOfCollisions() << "\n";
+        // std::cout << "Collision " << getName() << " - " << obj.getName() << "\n";
+        // if (getName().find("cube") != std::string::npos)
+        //     std::cout << "Nombre de collision " << getName() << ": " << numberOfCollisions() << "\n";
+        // if (obj.getName().find("cube") != std::string::npos)
+        //     std::cout << "Nombre de collision " << obj.getName() << ": " << obj.numberOfCollisions() << "\n";
     }
 
     void addImpulsion(PhysicObject &o1, PhysicObject &o2, glm::vec3 &normal)

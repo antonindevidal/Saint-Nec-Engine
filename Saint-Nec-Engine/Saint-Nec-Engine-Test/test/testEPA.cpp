@@ -77,13 +77,6 @@ TEST_CASE("TEST 2 differents shapes")
     // std::cout << "gauche :" << p0.getPosition() <<"\n";
     // std::cout << "droite :" << p1.getPosition() <<"\n";
 
-    std::cout << "\nShould converge\n";
-    std::cout << "gauche :" << p2.getPosition() << "\n";
-    std::cout << "droite :" << p1.getPosition() << "\n";
     REQUIRE(gjk(*p2.getCollider(), *p1.getCollider(), normal));
     p2.computeCollide(p1);
-    std::cout << "\nnormal found: " << normal << " expected:" << expected << "\n";
-
-    std::cout << "gauche :" << p2.getPosition() <<"\n";
-    std::cout << "droite :" << p1.getPosition() <<"\n";
 }
