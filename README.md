@@ -32,6 +32,21 @@ You can find Doxygen documentation enhanced with [Doxygen Theme - Flat Design](h
 
 This tasks will use various implementation techniques such as particles, complex shaders, lighting, level of detail and multi-threading.
 
+## Videos
+
+### Grass Generation with wind 
+
+<a href="http://www.youtube.com/watch?feature=player_embedded&v=Ft2P-KOoZWY
+" target="_blank"><img src="http://img.youtube.com/vi/Ft2P-KOoZWY/0.jpg" 
+alt="IMAGE ALT TEXT HERE" width="1280" height="720" border="10" /></a>
+
+### Terrain Generation with tesselation
+
+<a href="http://www.youtube.com/watch?feature=player_embedded&v=4_0hg54vT2w
+" target="_blank"><img src="http://img.youtube.com/vi/4_0hg54vT2w/0.jpg" 
+alt="IMAGE ALT TEXT HERE" width="1280" height="720" border="10" /></a>
+
+
 ## Sprints reviews
 - [Sprint 1](Doc/SprintReviews/Sprint_1.md)
 - [Sprint 2](Doc/SprintReviews/Sprint_2.md)
